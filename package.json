@@ -1,7 +1,9 @@
 {
-  "name": "components-core",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@kne/components-core",
+  "version": "0.1.0",
+  "files": [
+    "build"
+  ],
   "jest": {
     "moduleNameMapper": {
       "^@common/(.*)": "<rootDir>/src/common/$1",
