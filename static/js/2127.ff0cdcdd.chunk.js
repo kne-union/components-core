@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[2127],{12127:(e,t,c)=>{c.r(t),c.d(t,{default:()=>s});const s={modalTitle:"\u5bfc\u51fa\u6570\u636e",selectedTip:"\u8bf7\u9009\u62e9\u8981\u5bfc\u51fa\u7684\u5b57\u6bb5",actionText:"\u5bfc\u51fa\u6570\u636e",selectedAll:"\u5168\u9009",rightTitle:"\u5df2\u9009\u7684\u5b57\u6bb5",rightDesc:"\u6309\u4f4f\u62d6\u62fd\u53ef\u8fdb\u884c\u6392\u5e8f"}}}]);
+//# sourceMappingURL=2127.ff0cdcdd.chunk.js.map

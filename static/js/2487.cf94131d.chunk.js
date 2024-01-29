@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[2487],{22487:(e,c,n)=>{n.r(c),n.d(c,{default:()=>t});const t={selectedTextAdvanced:"\u5df2\u9009",pleaseSelect:"\u8bf7\u9009\u62e9",pleaseInput:"\u8bf7\u8f93\u5165",search:"\u641c\u7d22",maxSelectedCount:"\u6700\u591a\u9009\u62e9{count}\u4e2a"}}}]);
+//# sourceMappingURL=2487.cf94131d.chunk.js.map

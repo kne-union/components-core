@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/2350.0a414465.chunk.js","mappings":"2JAAA,MAMA,EANgB,CACdA,QAAS,UACTC,OAAQ,SACRC,MAAO,Q","sources":["components/Modal/locale/en-US.js"],"sourcesContent":["const message = {\n  Confirm: \"Confirm\",\n  Cancel: \"Cancel\",\n  reset: \"reset\",\n};\n\nexport default message;\n"],"names":["Confirm","Cancel","reset"],"sourceRoot":""}

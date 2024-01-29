@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[3189,1446],{38371:(e,t,n)=>{n.r(t),n.d(t,{Provider:()=>u,context:()=>o,usePreset:()=>a});var r=n(86122),c=n.n(r);const o=(0,r.createContext)({}),{Provider:s}=o,u=e=>{let{value:t,children:n}=e;const o=(0,r.useRef)(t);return o.current=t,c().createElement(s,{value:o},n)};u.defaultProps={value:{}};const a=()=>(0,r.useContext)(o).current||{}}}]);
+//# sourceMappingURL=3189.c80d8d80.chunk.js.map
