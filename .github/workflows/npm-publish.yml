@@ -20,7 +20,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i --legacy-peer-deps
       - run: npm run build
-      - run: npm publish --access=public
+      - run: CI=false &&  npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.KNE_PACKAGE_PUBLISH}}
       - run: npm i -g cnpm
