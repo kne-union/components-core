@@ -68,7 +68,7 @@
     "lint-staged": "lint-staged",
     "create": "modules-dev-create",
     "start": "cross-env PORT=3001 craco start",
-    "build": "craco build",
+    "build": "cross-env CI=false && craco build",
     "test": "craco test --coverage",
     "prepare": "husky install"
   },
