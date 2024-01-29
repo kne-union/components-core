@@ -1,25 +1,28 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { HashRouter } from "react-router-dom";
+import createEntry from "@kne/modules-dev/dist/create-entry";
+import "@kne/modules-dev/dist/create-entry.css";
+import readme from "readme";
 
-function App() {
+const ExampleRoutes = createEntry.ExampleRoutes;
+
+const App = ({ preset, themeToken, ...props }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+      <ExampleRoutes
+        {...props}
+        paths={[
+          {
+            key: "components",
+            path: "/",
+            title: "首页",
+          },
+        ]}
+        preset={preset}
+        themeToken={themeToken}
+        readme={readme}
+      />
+    </HashRouter>
   );
-}
+};
 
 export default App;

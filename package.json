@@ -31,7 +31,7 @@
     "@kne/react-file-type": "^1.0.5",
     "@kne/react-form-antd": "^3.0.34",
     "@kne/react-text-escape": "^0.1.4",
-    "@kne/remote-loader": "^1.0.8",
+    "@kne/remote-loader": "^1.2.2",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
@@ -93,7 +93,7 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "@kne/craco-module-federation": "^1.1.1",
-    "@kne/modules-dev": "^0.1.19",
+    "@kne/modules-dev": "^0.1.26",
     "@kne/react-error-boundary": "^0.1.1",
     "antd": "5.11.0",
     "http-proxy-middleware": "^2.0.6",

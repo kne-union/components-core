@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import get from "lodash/get";
 import { useEffect, useMemo, useRef, useState } from "react";
 import classnames from "classnames";
-import logo from "./logo.png";
+import logo from "./favicon.svg";
 import Image from "@components/Image";
 import importMessages from "./locale";
 import { FormattedMessage, IntlProvider } from "@components/Intl";

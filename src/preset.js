@@ -3,24 +3,20 @@ import { preset as fetchPreset } from "@kne/react-fetch";
 import axios from "axios";
 import { Empty, Result, Spin } from "antd";
 
-window.PUBLIC_URL = window.runtimePublicPath || process.env.PUBLIC_URL;
-window.STATIC_BASE_URL =
-  window.runtimeStaticBaseUrl || "http://uc.dev.fatalent.cn";
-window.ICONFONT_URL =
-  (window.runtimeStaticBaseUrl || "http://uc.dev.fatalent.cn") + "/iconfont";
+window.PUBLIC_URL = process.env.PUBLIC_URL;
+window.ICONFONT_URL = "http://uc.dev.fatalent.cn/iconfont";
+
+const remote = {
+  remote: "components-core",
+  url: "https://registry.npmmirror.com",
+  tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
+  defaultVersion: "0.1.1",
+};
 
 remoteLoaderPreset({
   remotes: {
-    default: {
-      remote: "components-core",
-      url: window.STATIC_BASE_URL,
-      defaultVersion: "1.0.0",
-    },
-    "components-function": {
-      remote: "components-function",
-      url: window.STATIC_BASE_URL,
-      defaultVersion: process.env.EXCEED_COMPONENTS_VERSION,
-    },
+    default: remote,
+    "components-core": remote,
   },
 });
 
