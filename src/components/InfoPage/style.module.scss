@@ -1,0 +1,133 @@
+.part {
+  &:global(.ant-card:not(.ant-card-bordered)) {
+    box-shadow: none;
+  }
+
+  :global(.ant-card-head) {
+    border: none;
+    padding: 0;
+    min-height: auto;
+  }
+
+  :global(.ant-card-body) {
+    padding: 8px 0 0 0;
+  }
+
+  :global(.ant-card-extra) {
+    padding: 0;
+  }
+
+  :global(.ant-card-head-title) {
+    font-size: var(--font-size-default);
+    color: var(--font-color);
+    font-weight: 600;
+    line-height: 20px;
+    padding: 0;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 14px;
+      background: var(--primary-color);
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 8px;
+      transform: translateY(-2px);
+    }
+  }
+
+  .part {
+    :global(.ant-card-head) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    :global(.ant-card-body) {
+      padding: 8px 0;
+    }
+
+    :global(.ant-card-head-title) {
+      border-radius: 12px;
+      background: rgba(
+        var(--primary-color-red),
+        var(--primary-color-green),
+        var(--primary-color-blue),
+        0.06
+      );
+      color: var(--primary-color);
+      font-size: var(--font-size-small);
+      line-height: 16px;
+      padding: 4px 8px;
+      flex: none;
+
+      &:before {
+        content: normal;
+      }
+    }
+
+    :global(.ant-card-extra) {
+      padding: 0;
+    }
+  }
+}
+
+:global(.ant-modal-body) .part,
+:global(.ant-drawer-body) .part {
+  &:global {
+    & > .ant-card-body,
+    & > .ant-card-head {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+.collapse {
+  background: #f8f8f8;
+  border: 1px solid #eeeeee;
+
+  :global(.ant-collapse-item) {
+    border-bottom: 1px solid #eeeeee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    :global(.ant-collapse-header) {
+      padding: 8px 16px;
+      line-height: 20px;
+      color: var(--font-color);
+
+      :global(.ant-collapse-arrow) {
+        transform: scale(0.6);
+
+        &:before {
+          transition: transform 300ms;
+        }
+      }
+
+      :global(.ant-collapse-expand-icon) {
+        padding-inline-end: 6px;
+      }
+    }
+  }
+
+  :global(.ant-collapse-content) {
+    border-top: 1px solid #eeeeee;
+
+    :global(.ant-collapse-content-box) {
+      padding: 16px 30px;
+
+      :global {
+        .ant-tabs {
+          margin-top: -16px;
+        }
+      }
+    }
+  }
+}
+
+.is-active:before {
+  transform: rotate(90deg);
+}

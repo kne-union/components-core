@@ -1,0 +1,47 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "space",
+          "packageName": "antd/lib/space"
+        },
+        {
+          "name": "formInfo",
+          "packageName": "@components/FormInfo"
+        }
+      ]
+    },
+    {
+      "title": "带有远程数据加载的提示",
+      "description": "展示带有远程数据加载的提示",
+      "code": "./tooltip-fetch.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "reactFetch",
+          "packageName": "@kne/react-fetch"
+        },
+        {
+          "name": "_Descriptions",
+          "packageName": "@components/Descriptions"
+        },
+        {
+          "name": "_StateTag",
+          "packageName": "@components/StateTag"
+        }
+      ]
+    }
+  ]
+}

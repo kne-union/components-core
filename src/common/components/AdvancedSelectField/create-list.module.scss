@@ -1,0 +1,28 @@
+.scroll-loader {
+  overflow-y: auto;
+
+  &.is-popup {
+    max-height: calc(315px - 35px);
+  }
+
+  &:not(.is-popup) {
+    max-height: calc(var(--modal-height) - 35px - 48px);
+    padding: 16px 20px;
+  }
+}
+
+.is-not-full {
+  .scroll-loader {
+    &:not(.is-popup) {
+      height: calc(100vh - 211px);
+      padding: 16px 0;
+    }
+  }
+  .search-input {
+    padding: 0 !important;
+  }
+  .left {
+    border-right: solid 1px var(--bg-color-grey-2);
+    padding: 16px 16px 0;
+  }
+}

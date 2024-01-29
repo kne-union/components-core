@@ -1,0 +1,38 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "基本示例",
+      "description": "展示了一个基本内容",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    },
+    {
+      "title": "labelAlign auto",
+      "description": "展示了设置labelAlign为auto的情况",
+      "code": "./labelAlignAuto.js",
+      "scope": [
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    },
+    {
+      "title": "多列",
+      "description": "展示了两列的情况",
+      "code": "./col.js",
+      "scope": [
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    }
+  ]
+}

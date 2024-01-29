@@ -1,0 +1,104 @@
+{
+  "blocks": [
+    {
+      "id": "dzRD2j0zcc",
+      "type": "header",
+      "data": {
+        "text": "Editor.js",
+        "level": 2
+      }
+    },
+    {
+      "id": "aE3Sg-WGvk",
+      "type": "paragraph",
+      "data": {
+        "text": "Hey. Meet the new Editor. On this page you can see it in action — try to edit this text."
+      }
+    },
+    {
+      "id": "BV6ezn5D3v",
+      "type": "header",
+      "data": {
+        "text": "Key features",
+        "level": 3
+      }
+    },
+    {
+      "id": "_Ywz2UM6B9",
+      "type": "header",
+      "data": {
+        "text": "What does it mean «block-styled editor»",
+        "level": 3
+      }
+    },
+    {
+      "id": "f9KCS3aJNy",
+      "type": "header",
+      "data": {
+        "text": "What does it mean clean data output",
+        "level": 3
+      }
+    },
+    {
+      "id": "VzhViVrrI7",
+      "type": "paragraph",
+      "data": {
+        "text": "<u class=\"cdx-underline\"><b>Classic WYSIWYG-editors pro</b></u>duce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below"
+      }
+    },
+    {
+      "id": "cQnYVyLj1Y",
+      "type": "paragraph",
+      "data": {
+        "text": "Clean data is useful to sanitize, validate and process on the backend."
+      }
+    },
+    {
+      "id": "QrCWlvfyzF",
+      "type": "delimiter",
+      "data": {}
+    },
+    {
+      "id": "j1STtxlcSy",
+      "type": "paragraph",
+      "data": {
+        "text": "We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make it's core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏"
+      }
+    },
+    {
+      "id": "Aj_kkPBaOm",
+      "type": "image",
+      "data": {
+        "file": {
+          "url": "https://codex.so/public/app/img/external/codex2x.png"
+        },
+        "caption": "",
+        "withBorder": false,
+        "stretched": false,
+        "withBackground": false
+      }
+    },
+    {
+      "id": "A0O3r__ljU",
+      "type": "attaches",
+      "data": {
+        "file": {
+          "id": "xDBhiYMBxoTGC6WmoMbu",
+          "title": "WechatIMG22副本.jpg",
+          "extension": "jpg"
+        },
+        "title": "WechatIMG22副本.jpg"
+      }
+    },
+    {
+      "id": "A0O3r__ljz",
+      "type": "image",
+      "data": {
+        "file": {
+          "id": "xDBhiYMBxoTGC6WmoMbu",
+          "filename": "WechatIMG22副本.jpg"
+        }
+      }
+    }
+  ]
+}

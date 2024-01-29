@@ -1,0 +1,32 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_FullCalendar",
+          "packageName": "@components/FullCalendar"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "_remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_lodash",
+          "packageName": "lodash"
+        },
+        {
+          "name": "_dayjs",
+          "packageName": "dayjs"
+        }
+      ]
+    }
+  ]
+}

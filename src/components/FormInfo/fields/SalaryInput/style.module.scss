@@ -1,0 +1,40 @@
+.salary {
+  .salary-type {
+    min-width: 80px;
+  }
+  :global {
+    .react-form__field-component {
+      border-color: #d9d9d9;
+    }
+    .error .ant-input-number {
+      border-color: #fc3333;
+    }
+  }
+}
+
+.input-number {
+  line-height: 30px;
+  padding: 0 3px;
+}
+
+.full {
+  width: 100% !important;
+}
+
+.input-group {
+  :global {
+    .react-form__field {
+      .react-form__field-describable {
+        width: 200%;
+        position: absolute;
+      }
+    }
+  }
+}
+.input-group-no-mb {
+  :global {
+    .react-form__field {
+      margin-bottom: 0 !important;
+    }
+  }
+}

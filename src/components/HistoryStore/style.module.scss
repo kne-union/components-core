@@ -1,0 +1,14 @@
+.overlay {
+  :global(.ant-popover-inner) {
+    padding: 0;
+  }
+}
+
+.overlay-content {
+  padding: 12px 16px;
+  box-sizing: border-box;
+}
+
+.state-tag {
+  margin-right: 0;
+}

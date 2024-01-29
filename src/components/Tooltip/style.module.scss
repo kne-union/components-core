@@ -1,0 +1,87 @@
+@import "../../common/warning-color";
+
+.tooltip {
+  max-width: 360px;
+  &.large {
+    max-width: unset;
+  }
+
+  &.small {
+    max-width: 240px;
+  }
+
+  :global {
+    .ant-tooltip-inner {
+      background: #ffffff;
+      color: var(--font-color);
+      padding: 16px 18px;
+    }
+
+    .ant-tooltip-arrow-content {
+      --antd-arrow-background-color: #fff;
+    }
+  }
+}
+
+.popup-content {
+  :global {
+    .react-form .ant-card-body {
+      padding: 0;
+    }
+
+    .ant-card {
+      background: transparent;
+    }
+  }
+}
+
+.title {
+  font-weight: bold;
+}
+
+.important-info {
+  font-size: var(--font-size-small);
+  padding: 8px 16px;
+  background: #{rgba($info-color, 0.06)};
+
+  &.error {
+    background: #{rgba($error-color, 0.06)};
+  }
+
+  &.warning {
+    background: #{rgba($warning-color, 0.06)};
+  }
+
+  &.success {
+    background: #{rgba($success-color, 0.06)};
+  }
+}
+
+.sub-title {
+  font-size: var(--font-size-small);
+}
+
+.content {
+  font-size: var(--font-size-small);
+  color: var(--font-color-grey-1);
+  word-break: break-all;
+
+  &.alone {
+    color: var(--font-color);
+  }
+}
+
+.fetch-content {
+  position: relative;
+  display: inline-flex;
+}
+
+.fetch-loading {
+  margin-left: 8px;
+}
+
+.title-info-icon {
+  margin-left: 6px;
+  color: var(--font-color-grey);
+  cursor: pointer;
+}

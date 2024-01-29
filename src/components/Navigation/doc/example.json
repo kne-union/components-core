@@ -1,0 +1,54 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./fold.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./permission.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    }
+  ]
+}

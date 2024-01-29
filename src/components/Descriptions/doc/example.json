@@ -1,0 +1,16 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "展示一个信息详情",
+      "description": "展示一个信息详情",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Descriptions",
+          "packageName": "@components/Descriptions"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+.scroller {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-color-white, #ffffff);
+  z-index: 1002;
+  border: solid 1px var(--font-color-grey-4, #eeeeee);
+}
+
+.scroller-inner {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--font-color-grey-2, #cccccc);
+  height: 60%;
+  border-radius: 5px / 50%;
+
+  &:hover,
+  &.is-moving {
+    background: var(--font-color-grey, #666666);
+  }
+}

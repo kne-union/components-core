@@ -1,0 +1,16 @@
+.file-modal-outer {
+  min-height: 100px;
+}
+
+.file-title {
+  margin-right: 30px;
+}
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}

@@ -1,0 +1,54 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "基本示例",
+      "description": "展示了文字大小颜色行高的设置",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "警告提示",
+      "description": "展示了警告提示的覆盖样式",
+      "code": "./alert.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "按钮",
+      "description": "展示了按钮的覆盖样式",
+      "code": "./button.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "icon",
+          "packageName": "@components/Icon"
+        }
+      ]
+    }
+  ]
+}

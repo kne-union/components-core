@@ -1,0 +1,24 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "展示权限不通过的几种形式",
+      "description": "通过切换不同的type，可以预览三种不同type的表现形式",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Permissions",
+          "packageName": "@components/Permissions"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}

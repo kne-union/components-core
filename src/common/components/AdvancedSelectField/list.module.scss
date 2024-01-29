@@ -1,0 +1,36 @@
+.list {
+  .list-item {
+    padding: 5px 12px;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background 300ms;
+    position: relative;
+
+    &:not(.is-selected):hover {
+      background: var(--bg-color-grey-1);
+    }
+
+    &.is-selected {
+      background: var(--primary-color-1);
+
+      .item-label,
+      .item-des {
+        color: var(--primary-color);
+      }
+    }
+
+    &.is-disabled {
+      color: var(--font-color-grey-2);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.item-label,
+.item-des {
+  transition: color 300ms;
+}
+
+.item-des {
+  color: var(--font-color-grey-1);
+}

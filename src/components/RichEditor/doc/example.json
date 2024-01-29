@@ -1,0 +1,89 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_RichEditor",
+          "packageName": "@components/RichEditor"
+        },
+        {
+          "name": "data",
+          "packageName": "@components/RichEditor/doc/data.json"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "只读模式",
+      "description": "展示只读模式",
+      "code": "./ready-only.js",
+      "scope": [
+        {
+          "name": "_RichEditor",
+          "packageName": "@components/RichEditor"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "在表单中使用",
+      "description": "展示在表单中使用",
+      "code": "./form.js",
+      "scope": [
+        {
+          "name": "_RichEditor",
+          "packageName": "@components/RichEditor"
+        },
+        {
+          "name": "reactForm",
+          "packageName": "@kne/react-form-antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "支持Editor格式数据",
+      "description": "支持Editor格式数据",
+      "code": "./editor.js",
+      "scope": [
+        {
+          "name": "_RichEditor",
+          "packageName": "@components/RichEditor"
+        },
+        {
+          "name": "data",
+          "packageName": "@components/RichEditor/doc/data.json"
+        },
+        {
+          "name": "reactForm",
+          "packageName": "@kne/react-form-antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
+    }
+  ]
+}

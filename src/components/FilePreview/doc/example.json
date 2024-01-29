@@ -1,0 +1,60 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "HtmlPreview",
+      "description": "这里填写示例说明",
+      "code": "./html.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        }
+      ]
+    },
+    {
+      "title": "PdfPreview",
+      "description": "这里填写示例说明",
+      "code": "./pdf.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        }
+      ]
+    },
+    {
+      "title": "TextPreview",
+      "description": "这里填写示例说明",
+      "code": "./text.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        }
+      ]
+    },
+    {
+      "title": "ImagePreview",
+      "description": "这里填写示例说明",
+      "code": "./img.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        }
+      ]
+    },
+    {
+      "title": "unknown",
+      "description": "这里填写示例说明",
+      "code": "./unknown.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        }
+      ]
+    }
+  ]
+}

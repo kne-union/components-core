@@ -1,0 +1,50 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "通过src加载一个普通图片",
+      "description": "通过src加载一个普通图片",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        }
+      ]
+    },
+    {
+      "title": "通过id加载一个oss图片",
+      "description": "图片一加载成功，图片二加载中，图片三加载失败",
+      "code": "./id-loader.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "显示一个头像",
+      "description": "显示图片头像和默认头像",
+      "code": "./avatar.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}

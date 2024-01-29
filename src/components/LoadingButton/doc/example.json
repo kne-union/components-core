@@ -1,0 +1,20 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "带有加载状态按钮",
+      "description": "点击按钮切换到加载状态，加载方法完成后自动切换为普通状态",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_LoadingButton",
+          "packageName": "@components/LoadingButton"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}

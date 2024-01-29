@@ -1,0 +1,39 @@
+.search-input {
+  &:not(.is-popup) {
+    padding: 16px 32px 0;
+  }
+  &.is-popup {
+    padding: 12px 9px;
+  }
+}
+
+.list {
+  .list-item {
+    padding: 5px 12px;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background 300ms;
+
+    &:not(.is-selected):hover {
+      background: var(--bg-color-grey-1);
+    }
+  }
+}
+
+.item-label,
+.item-des {
+  transition: color 300ms;
+}
+
+.is-selected {
+  background: var(--primary-color-1);
+
+  .item-label,
+  .item-des {
+    color: var(--primary-color);
+  }
+}
+
+.item-des {
+  color: var(--font-color-grey-1);
+}

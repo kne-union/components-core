@@ -1,0 +1,2589 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 12">
+<meta name=Originator content="Microsoft Word 12">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>dell</o:Author>
+  <o:LastAuthor>dell</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2015-08-07T06:24:00Z</o:Created>
+  <o:LastSaved>2015-08-07T06:24:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>217</o:Words>
+  <o:Characters>1241</o:Characters>
+  <o:Lines>10</o:Lines>
+  <o:Paragraphs>2</o:Paragraphs>
+  <o:CharactersWithSpaces>1456</o:CharactersWithSpaces>
+  <o:Version>12.00</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+   <w:View>Print</w:View>
+  <w:Zoom>100</w:Zoom>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridHorizontalSpacing>6 磅</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 磅</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>3</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:ValidateAgainstSchemas>false</w:ValidateAgainstSchemas>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotUnderlineInvalidXML/>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>ZH-CN</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:AdjustLineHeightInTable/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+   <w:UseWord97LineBreakingRules/>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+   <w:DontUseIndentAsNumberingTabStop/>
+   <w:FELineBreak11/>
+   <w:WW11IndentRules/>
+   <w:DontAutofitConstrainedTables/>
+   <w:AutofitLikeWW11/>
+   <w:UnderlineTabInNumList/>
+   <w:HangulWidthLikeWW11/>
+   <w:UseNormalStyleForList/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="--"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" SemiHidden="false" UnhideWhenUsed="false"
+   QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" SemiHidden="false" UnhideWhenUsed="false"
+   QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" SemiHidden="false" UnhideWhenUsed="false"
+   QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;
+	mso-font-alt:"Courier New";
+	mso-font-charset:0;
+	mso-generic-font-family:modern;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611985 1107304683 0 0 415 0;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611985 1073741899 0 0 415 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520092929 1073786111 9 0 415 0;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	color:black;}
+h1
+	{mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 1 Char";
+	mso-style-next:正文;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	mso-outline-level:1;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	color:black;
+	mso-font-kerning:0pt;}
+h2
+	{mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 2 Char";
+	mso-style-next:正文;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	mso-outline-level:2;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	color:black;
+	font-style:italic;}
+h3
+	{mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 3 Char";
+	mso-style-next:正文;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	mso-outline-level:3;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:13.0pt;
+	font-family:"Arial","sans-serif";
+	color:black;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:none;
+	tab-stops:center 207.65pt right 415.3pt;
+	layout-grid-mode:char;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 1.0pt 0cm;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	color:black;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:none;
+	tab-stops:center 207.65pt right 415.3pt;
+	layout-grid-mode:char;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	color:black;}
+span.3Char
+	{mso-style-name:"标题 3 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 3";
+	mso-ansi-font-size:16.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:black;
+	mso-font-kerning:0pt;
+	font-weight:bold;}
+span.2Char
+	{mso-style-name:"标题 2 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 2";
+	mso-ansi-font-size:16.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:"Cambria","serif";
+	mso-ascii-font-family:Cambria;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Cambria;
+	mso-bidi-font-family:"Times New Roman";
+	color:black;
+	mso-font-kerning:0pt;
+	font-weight:bold;}
+span.1Char
+	{mso-style-name:"标题 1 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 1";
+	mso-ansi-font-size:22.0pt;
+	mso-bidi-font-size:22.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:black;
+	mso-font-kerning:22.0pt;
+	font-weight:bold;}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:页眉;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:black;
+	mso-font-kerning:0pt;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:页脚;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:black;
+	mso-font-kerning:0pt;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	mso-ascii-font-family:Calibri;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Calibri;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:21.0cm 842.0pt;
+	margin:36.0pt 36.0pt 36.0pt 36.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:普通表格;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-bidi-font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="2"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=ZH-CN style='tab-interval:36.0pt;text-justify-trim:punctuation'>
+
+<div class=Section1>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=676 colspan=3 valign=top style='width:405.85pt;background:#f1f1f1;padding:0cm 0cm 0cm 0cm'>
+  </td>
+  <td rowspan=2 valign=middle style='text-align:right; width:130px;background:#f1f1f1;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'>
+  <!--[if gte vml 1]><v:shapetype
+   id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+   path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+   <v:stroke joinstyle="miter"/>
+   <v:formulas>
+    <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+    <v:f eqn="sum @0 1 0"/>
+    <v:f eqn="sum 0 0 @1"/>
+    <v:f eqn="prod @2 1 2"/>
+    <v:f eqn="prod @3 21600 pixelWidth"/>
+    <v:f eqn="prod @3 21600 pixelHeight"/>
+    <v:f eqn="sum @0 0 1"/>
+    <v:f eqn="prod @6 1 2"/>
+    <v:f eqn="prod @7 21600 pixelWidth"/>
+    <v:f eqn="sum @8 21600 0"/>
+    <v:f eqn="prod @7 21600 pixelHeight"/>
+    <v:f eqn="sum @10 21600 0"/>
+   </v:formulas>
+   <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+   <o:lock v:ext="edit" aspectratio="t"/>
+  </v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style="width:125px;height:50px;">
+   <v:imagedata src="https://image0.lietou-static.com/img/5ceba53ed3ced4486462762606u.png"/>
+  </v:shape><![endif]--><![if !vml]><img width=125 height=50
+  src="https://image0.lietou-static.com/img/5ceba53ed3ced4486462762606u.png" style="width:125px;height:50px;" v:shapes="_x0000_i1025"><![endif]><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+  <td valign=top style='width:230pt;text-align:left;background:#f1f1f1;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style="line-height: 26px; white-space: nowrap;"><span style='font-size:10pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>简历编号：</span><span lang=EN-US style='font-size:10pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+  <span lang=EN-US style='font-size:10pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>f7e56e9cY26c76b51<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='width:80pt;text-align:right;background:#f1f1f1;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style="line-height: 26px;"><span style='font-size:10pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>更新日期：</span>
+  <span lang=EN-US style='font-size:10pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='width:90pt;text-align:left;background:#f1f1f1;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style="line-height: 26px;">
+  <span lang=EN-US style='font-size:10pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>2019-09-08<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <![if !supportMisalignedColumns]>
+ <tr height=0>
+  <td width=116 style='border:none'></td>
+  <td width=144 style='border:none'></td>
+  <td width=194 style='border:none'></td>
+  <td width=222 style='border:none'></td>
+  <td width=196 style='border:none'></td>
+ </tr>
+ <![endif]>
+</table>
+
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<!-- 简历信息 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>个人信息</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+	<!-- 姓名 -->
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>姓名：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>林春</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 性别 -->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>性别：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>男</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=175 rowspan=6 valign=top style='width:104.9;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:16.0pt'><span lang=EN-US
+  style='font-family:"Times New Roman","serif";color:windowtext'><!--[if gte vml 1]><v:shape
+   id="_x0000_i1026" type="#_x0000_t75" style='width:100pt;height:100pt'>
+   <v:imagedata src="http://image0.lietou-static.com/normal/55557f3b28ee44a8919620ce01a.gif"/>
+  </v:shape><![endif]--><![if !vml]><img width=100 height=100
+  src="http://image0.lietou-static.com/normal/55557f3b28ee44a8919620ce01a.gif" v:shapes="_x0000_i1026"><![endif]><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+<!-- 手机号码 -->
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>手机号码：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>13122302405<o:p></o:p></span>
+  </p>
+  </td>
+   <!-- 年龄 -->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>年龄：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>43 岁<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 电子邮件 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>电子邮件：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>lin_chun_ascend@sina.com<o:p></o:p></span></p>
+  </td>
+  <!-- 教育程度 -->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>教育程度：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>硕士</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+ <!-- 工作年限 -->
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>工作年限：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>21 年</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 婚姻状况 -->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>婚姻状况：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>保密</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+ <!-- 职业状态 -->
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>职业状态：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>在职，看看新机会</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 所在地 -->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>所在地：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>上海-浦东新区</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 空条件判断 ，为空不显示 -->
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+ <!-- 国籍 -->
+  <td width=158 valign=top style='width:94.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>国籍：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=191 valign=top style='width:114.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>中国</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 户籍-->
+  <td width=243 valign=top style='width:145.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+ <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>户籍：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=106 valign=top style='width:63.8pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>上海</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<!-- 目前职业概况 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=872 colspan=4 valign=top style='width:523.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><b><span style='font-size:10.5pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>目前职业概况：</span></b><span lang=EN-US style='font-size:9.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+ <!-- 所在行业 -->
+  <td width=160 valign=top style='width:96.15pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>所在行业：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=265 valign=top style='width:159.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>互联网/移动互联网/电子商务</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 公司名称 -->
+  <td width=167 valign=top style='width:100.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司名称：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=279 valign=top style='width:167.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>兴业数字化金融有限公司</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
+ <!-- 所任职位 -->
+  <td width=160 valign=top style='width:96.15pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>所任职位：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=265 valign=top style='width:159.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>首席DBA</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 目前薪资 -->
+  <td width=167 valign=top style='width:100.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>目前年薪：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=279 valign=top style='width:167.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>保密</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<!-- 职业发展意向 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=872 colspan=2 valign=top style='width:523.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><b><span style='font-size:10.5pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>职业发展意向：</span></b><span lang=EN-US style='font-size:9.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+ <!-- 期望行业 -->
+  <td width=154 valign=top style='width:92.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>期望行业：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=718 valign=top style='width:430.95pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>互联网/移动互联网/电子商务</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+ <!-- 期望职位 -->
+  <td width=154 valign=top style='width:92.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>期望职位：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=718 valign=top style='width:430.95pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>信息技术经理/主管</span>
+  <span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <!-- 期望地点 -->
+  <td width=154 valign=top style='width:92.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>期望地点：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=718 valign=top style='width:430.95pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>上海</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+ <!-- 期望月薪 -->
+  <td width=154 valign=top style='width:92.4pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal align=right style='text-align:right;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>期望年薪：</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=718 valign=top style='width:430.95pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>面议</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+<!-- 工作经历 -->
+<!-- -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>工作经历</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<!-- -->
+ 
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ 
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2016/01-至今</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>兴业数字化金融有限公司</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>互联网/移动互联网/电子商务</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>首席DBA</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：上海</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'>4<o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'> 负责管理兴业数金生产环境超过4000套数据库实例、其中包括传统的金融云业务系统和互金云业务系统，其中数据库类型复杂，包括多套兴业银行重要业务系统。<br/>多次被评为优秀员工和IT明星，具备处理紧急突发状况的丰富经验和良好心理素质。既有甲方银行丰富的生产系统数据库架构优化、开发、运维管理经验；同时具有乙方良好的服务意识。具备团队管理、项目管理经验。注重合作、乐于知识分享、擅长培养团队整体技术能力。</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2009/04-至今</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>兴业数字金融服务股份有限公司</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>互联网/移动互联网/电子商务</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>数据库专家</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：上海</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>参与中国银行上海分行数据仓库的创建工作，对于商业智能分析和数据仓库设计与开发有较丰富的经验；具有多年TB级海量数据库开发与维护的经验，对数据库建模和体系结构有深刻理解。获得人行科技发展奖。<br/>管理上海中行信息科技部系统管理团队时间约3年，对于运维流程整合、规章制度、操作规范制订有着丰富的实际经验。协助制订过建设银行总行数据库检查规范。<br/>精通ORACLE 、DB2、INFORMIX、MYSQL数据库的管理、维护, 擅长ORACLE性能优化、备份恢复、数据迁移、高可用架构设计与实现，对于ORACLE、DB2、INFORMIX、MYSQL内部技术有深入的研究。多次解决了关键业务系统性能问题，有效地保证了应用系统的准确、高效地运行。<br/>具备丰富的AIX、LINUX系统管理经验，对AIX、LINUX操作系统架构有着很深的了解。<br/>具备丰富的培训经验，曾经在中国银行、惠普公司、兴业银行总行多次提供过高层次的ORACLE培训和HP-UNIX培训，均取得非常良好的培训效果。<br/>具备NBU实施及维护经验。</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2009/06-2016/01</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>兴业银行银行合作中心</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>银行</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>高级技术经理</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：上海</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'>0<o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>          2009.6~2015.12 以高级技术经理的角色，为兴业合作银行提供科技输出支持，并对兴业总行科技部提供数据库技术支持：<br/>              1)给兴业银行总行提供oracle性能调优、oracle管理培训、oracle dataguard培训，均取得非常良好的培训效果。 <br/>              2)开发数据库性能监控平台：实现对oracle、informix性能的监控、包括对oracle低效sql基于DB TIME、elaplsed time的监控预警、平均活动会话数监控、ora报错预警、空间容量管理等；对informix断言错、panic错、检查点阻塞、低效sql语句、空间容量管理等，实现在5分钟内定位问题并处理，取得良好效果。<br/>3) NBU备份oracle、informix、mysql数据库实施，包括日志优化、数据库配置参数优化、备份脚本优化、定期异机恢复演练。<br/>4)辽宁振兴银行网贷系统数据库迁移，采用dataguard failover迁移技术，2TB数据半小时顺利完成迁移。<br/>5)采用aix镜像、拆镜像方式完成同机房跨存储二代支付系统迁移。<br/>6) 对达州金卡系统db2 DPF分布式数据库进行优化，该数据库5TB左右，8个节点，定位大表，逐节点清理数据，降低高水位。并且对分布键进行优化，大表均匀分布在8个节点，小表分布在单节点，取得良好效果。<br/>7) 对邯郸银行金卡系统DB2数据库进行优化，该服务器上运行三套数据库实例，磁盘IO100%繁忙，先根据逻辑卷IO开销定位到问题数据库实例，再对该数据库做reorg,runstats，优化索引，获得良好性能提升。<br/>8)协助某合作银行紧急修复反洗钱数据库，当时该数据库当前在线重做日志被合作银行误删除无法启动，并且数据库没有备份。通过修改oracle内部隐含参数使oracle不访问在线重做日志强制拉起，紧急导出数据后重新搭建数据库恢复。<br/>9)对兴业银行总行零售系统性能进行优化，该系统上线后存在严重瓶颈，并且该系统的临时表空间经常会异常增大，通过抓取问题sql并分析sql执行计划，这是由于多表连接时某连接条件为false导致buffer sort构建超过上亿条记录的临时表造成，通过优化sql解决。同时通过分析字段的选择度以及sql语句，优化了索引架构，使该系统的主要sql查询性能提高了10倍以上。<br/>10)解决了浦发银行NBU备份oracle数据库，无法备份archivelog日志的问题。           <br/></span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2008/02-2009/06</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>上海惠普公司</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>IT服务/系统集成</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>二级技术专家</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：上海</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'>3<o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'> 2008.5~2009.6 以数据库专家的角色，为邮政储蓄银行，光大银行，上海银行等客户提供数据库优化服务，制订灾备方案等相关服务。 <br/>2008.2~2008.4 罗马银行异地容灾项目，搭建oracle RAC环境，并且在ORACLE RAC环境下配置Data guard实现。<br/></span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2003/04-2008/02</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>中国银行上海分行信科处</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>银行</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>系统管理团队技术经理</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：上海</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'>3<o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>          2007.8~2007.9 综合档案管理系统数据库版本升级，从oracle9.2.0.4升级到oracle10.2.0.5<br/>2007.5~2007.7 网上支付系统归档模式下的dataguard灾备方案实施、包括方案设计、脚本的编写及测试。<br/>2006.10~2007.4 NETAPP网络存储项目规划及实施，在该项目中，通过存储级调优，解决了小机oracle应用在NFS方式下投产到NETAPP存储的性能问题。<br/>2006.8~2006.9  事后监督系统性能优化 该系统上线后系统性能较差，表现为CPU占用率过高，同时I/O等待较严重。找出问题sql语句，发现问题是由于几张临时表没加索引造成CPU使用率过高；同时，大量用户对某个热点表大量并发DML操作造成I/O等待较严重，通过加索引以及增大freelists数解决该问题。<br/>2006.4~2006.7  上海某著名银行系统管理平台的方案设计及系统监控shell脚本编写。该系统管理平台充分满足了对生产系统操作系统、数据库、中间件等的实时监控和审计的需求，在实际投产后取得了良好的应用效果。该系统可以实现对核心系统进行短信报警，如在一定时间之内不能返回正确信息，立刻短信报警。并且能够做到数据库、系统的mail监控，通过编写shell＋crontab，实现对系统的监控，如有问题，立即发mail通知（cpu使用情况、同步程序是否成功、oracle alert log是否有异常、archive log大小、共享进程及时清理等等）。每月、每周、每天都会定时对系统生成log文件，并mail出来，观察系统的运行状况。（每周的statspack，每日的alert log、表空间使用情况、用户登陆情况等等）。<br/>2006.2~2006.3   对公客服系统归档模式下的RMAN备份方案、脚本的设计和实施(oracle8环境、采用catalog方式)以及恢复脚本的编写及测试。在该方案实施过程中克服了oracle8下RMAN不能批量delete obsolete的缺陷，模拟出oracle9下RMAN才具备的批量delete obsolete的功能。<br/>2005.12~2006.2  上海中行数据库异地灾备方案制定，采用dataguard技术实现<br/>2005.5~2005.7  零售在线审批系统性能优化 该系统上线一段时间后访问速度非常慢，通过观察发现I/O使用接近100%,同时存在大量data scattered read,找出问题sql语句，发现问题是由于调用该语句对一个两百万条记录左右的表做全表扫描引起，通过采用建临时表的办法减少全表扫描有效解决该问题。 （系统环境：AIX平台、Oracle, ASP）<br/>2005.1~2005.3  客户关系管理系统的性能优化 采用数据库复合缓存插入的技术将原系统的大批量insert插入操作(三千万级)的性能提高了7~8倍，大大提高了系统性能。<br/>               （系统环境：AIX平台、DB2、BRIO）<br/>2004.3-2004.11  外汇大额和可疑资金交易反洗钱系统   负责某著名银行上海分行新一代会计系统、新一代信贷系统、国际结算系统、RTS系统数据的数据库后台ETL加工工作。在项目开发中，提供SQL书写规范、向程序员提供必要的数据库技术支持。指导开发人员如何写出好的SQL，来提高性能。熟练编写PL/SQL，编写Package，Procedure，Function，View为项目提供更好的服务。在批加工作业中通过采用调用触发器刷新物化视图的方法大大提高了应用的整体性能。（软件环境：Oracle, DB2,ASP）<br/>2003.4-2004.3  清算业务分析系统   负责整个项目的业务调研、需求分析、系统分析设计、组织详细设计等开发工作。本项目采用数据库OLAP函数(例如grouping sets)提高了系统性能，并且利用DB２的递归ＳＱＬ语句大批量模拟出业务测试数据，大大加快了前端程序开发、测试的进度。（软件环境：Brio , DB2）<br/></span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>1998/08-2000/03</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>南京华晨电脑公司</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 公司描述-->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 valign=top style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=717 colspan=5 valign=top style='width:430.0pt;background:white;  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>公司行业：</span>
+	  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>IT服务/系统集成</span>
+  </p>
+  </td>
+ </tr>
+ 
+<tr style='mso-yfti-irow:2'>
+	<td width="156" valign="top" style='width:93.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="348" colspan="5" valign="top" style='width:209.05pt;background:#EAEAEA; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>			
+			<b><span style='font-size:10.0pt;font-family: 宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'>技术工程师</span></b><span lang="EN-US" style='font-size: 10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:3'>
+	<td width="156" rowspan="2" valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<!-- 所在地区 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在地区：南京</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 所在部门 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>所在部门：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 汇报对象 -->
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>汇报对象：</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+<tr style='mso-yfti-irow:4'>
+	<!-- 下属人数 -->
+	<td width="226" colspan="2" valign="top" style='width:135.4pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>下属人数：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'>0<o:p></o:p></span>
+		</p>
+	</td>
+	<!-- 薪酬状况 -->
+	<td width="246" colspan="2" valign="top" style='width:147.3pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>薪酬情况：
+				                	保密
+</span><span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="246" valign="top" style='width:147.3pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+</tr>
+
+<!-- 工作职责 -->
+<tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+	<td width="156"  valign="top" style='width:93.35pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal">
+			<span lang="EN-US" style='font-family:"Times New Roman","serif"; color:windowtext'><o:p>&nbsp;</o:p></span>
+		</p>
+	</td>
+	<td width="82" valign="top" style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>职责业绩：</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier; color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+	<td width="635" colspan="4" valign="top" style='width:381.0pt;background:white; padding:0cm 0cm 0cm 0cm'>
+		<p class="MsoNormal" style='line-height:15.0pt'>
+			<span style='font-size:10.0pt; font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier; mso-bidi-font-family:Courier;color:windowtext'>网络实时监控系统、南京自动化研究所的办公自动化系统(JAVA)、南京中北公交公司的进销存的仓储软件（Delphi）和小规模集成电路实时监控系统（C++）等项目。</span>
+			<span lang="EN-US" style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family: Courier;color:windowtext'><o:p></o:p></span>
+		</p>
+	</td>
+</tr>
+
+ <![if !supportMisalignedColumns]>
+ <tr height=0>
+  <td width=156 style='border:none'></td>
+  <td width=82 style='border:none'></td>
+  <td width=144 style='border:none'></td>
+  <td width=123 style='border:none'></td>
+  <td width=123 style='border:none'></td>
+  <td width=246 style='border:none'></td>
+ </tr>
+ <![endif]>
+</table>
+
+<!-- 项目经历 -->
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>项目经历</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2017/06–至今</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>好兴动业务系统数据库项目</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>数据库顾问</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业数字金融服务股份有限公司</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>互金云的好兴动业务系统是由兴业信用卡中心最重要的门户服务平台，被兴业银行总行纳入重要业务系统清单，数据库版本是mysql5.7</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>数据库性能优化、故障处理及高可用架构设计</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>A）数据库采用的是mysql半同步复制技术。应用特点是并发量大，尤其在该系统系统做秒杀活动时，业务系统压力大，通过分析好兴动数据库日志，定位了存在性能瓶颈的sql语句，并协助应用优化，通过设计冗余字段避免了多表连接及分组，取得良好的性能提升，避免了好兴动数据库主备频繁切换的问题。<br/>B）分析高可用平台日志，发现在主备数据库切换时不需要关闭原主库，优化了高可用平台配置和切换流程，把主备库切换时间从43~47秒提升到13~17秒。<br/>              C）定位好兴动业务系统内存溢出问题，定位mysql数据库在大量并发连接情况下，大量执行绑卡交易查询带了order by子项，导致分配大量排序内存，通过rows sent发现绝大部分语句返回0~2条记录，无需排序，优化了应用，并且优化了sort_buffer_size、read_rnd_buffer_size大小解决该问题，使内存开销减少近20G，取得良好效果。<br/>              D）采用读写分离技术优化应用系统性能<br/>E）解决数据库应用死锁问题<br/>F）解决LOB类型导出报错问题<br/></span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2016/01–至今</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>二代支付应用系统业务系统</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>数据库专家</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业数字金融服务股份有限公司</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>二代支付应用系统业务系统采用数据库版本为informix11.7，为重要的交易系统</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>数据库优化及故障处理</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>A）二代支付应用系统业务系统发生大面积交易阻塞、超时。同时磁盘繁忙率100%，客户无法进行任何交易。通过定位发现，是由于合作行打印往来账报表需要查询历史数据，消耗大量系统IO资源造成，随即对该模块进行了优化。在优化前系统空闲期打印模块执行单条sql超过670秒，磁盘繁忙率98%，在优化后降到不到1秒完成，大大节省了柜员处理时间，明显改善了客户体验；优化前，每周都会发生所有交易阻塞，优化后二代支付再未出现大面积交易阻塞。<br/>B）为面对二代支付系统双十一的峰值压力，对其进行了优化，包括数据库重构、extent size优化、内存优化、日志优化、对银银前置历史库索引架构进行了优化，清理了三个大表上从未使用的索引，节省了磁盘空间及提高了I/O性能。<br/>C）在informix数据库日志中有坏块报警，导致跑批时往一张有4600多万条记录的表中插入数据报错，但是这张表除了表之外有七八个索引，通过对日志进行trace分析，定位了逻辑数据库坏块导致故障的索引，和应用维护人员对sql进行了分析，确认这个索引不会被使用，删除了这个索引从而解决这个故障。<br/></span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2016/01–至今</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>全网收单系统</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>数据库专家</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业数字金融服务股份有限公司</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>对全网收系统为兴业银行数百万商户微信转账提供支持，被纳入兴业银行重要业务系统清单，该系统联机数据库约2TB，批量历史数据库约6TB。数据库版本是oracle12C。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>数据库优化与故障排查，定期主备库切换演练，异机恢复演练。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>A）定位全网收单归档日志暴增问题，该问题现象是产生大量归档日志，一天约产生了150G日志，对应用系统性能造成严重影响，通过logminer挖掘日志分析定位问题原因，并提交应用维护人员处理解决。<br/>B）优化全网收单联机数据库分区及索引设计，并清理不必要的分区，清理约1T左右数据库空间，取得良好效益。<br/>C）使用NBU备份软件定制数据库备份策略。<br/>D）多次优化问题SQL，包括采用标量子查询优化多表外连接问题SQL，改善了系统性能。<br/>E）定位并解决全网收单系统不定期连接中断问题<br/>F）配置dataguard高可用架构，采用一主两从架构，对全网收单定期dataguard主备数据库切换演练<br/>G）对全网收单数据库进行异机恢复演练<br/></span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2018/08–2018/12</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>兴业信用卡中心行为预测系统数据库迁移及系统上线</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>数据库顾问</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业银行信用卡中心</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业信用卡中心行为预测系统数据库迁移，数据库版本为oracle11.2.0.4，迁移的数据库量在8TB左右，行为预测系统系统上线</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>数据库系统架构优化、索引优化、应用优化、存储优化，迁移技术支持。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>实现了系统架构优化、索引优化、应用优化、存储优化，优化后跑批时间缩短为原来的15%左右。解决了某500G大表迁移过程中hang住的问题；解决了大量索引失效的问题；解决了系统内核参数设置不当导致expdp失败问题；解决了alter session enable parallel dml报错问题；解决了undo表空间损坏问题。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2018/04–2018/05</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>新疆银行异地容灾项目</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>项目经理</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业数字金融服务股份有限公司</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>新疆银行6套数据库异地容灾环境搭建，数据库环境是oracle12c</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>实施新疆银行异地容灾项目（ORACLE 12c RAC）</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>A)新疆银行6套数据库异地容灾环境搭建，新疆银行系统环境复杂，实施过程中加班加点，在短时期内顺利完成四大中心数据库、存贷款系统、统一支付平台、金融IC卡系统数据库、票据系统、银联卡系统容灾环境搭建。针对网络带宽较低的限制，使用数据库日志压缩技术提升了网络传输性能达60%以上，<br/>B）在2019年初新疆银行本地环境数据库出现问题时，启用上海侧容灾数据库提供数据恢复。<br/>C）解决加密系统数据库由于数据库损坏，导致数据库无法启动的问题，保障了新疆银行系统的顺利上线<br/>D）给新疆银行生产系统配置参数提出优化建议，并得到采纳<br/></span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=156 valign=top style='width:93.35pt;background:#EAEAEA;padding:
+  0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>2018/01–2018/03</span></b><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=717 colspan=2 valign=top style='width:430.0pt;background:#EAEAEA;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='margin-left:5.0pt;line-height:15.0pt'><b><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>辽宁振兴银行网贷系统优化项目</span></b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职务 -->
+ <tr style='mso-yfti-irow:1'>
+  <td width=156 rowspan=5 valign=top style='width:93.35pt;background:white;
+  padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif";
+  color:windowtext'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职务：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>项目经理</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 所在公司 -->
+ <tr style='mso-yfti-irow:2'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>所在公司：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>兴业数字金融服务股份有限公司</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目简介 -->
+ <tr style='mso-yfti-irow:3'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目简介：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>辽宁振兴银行网贷系统（mysql5.7）主备库日志延迟几万秒问题，严重影响了业务系统的高可用性，需要解决主备库日志延迟过大问题，该数据库约2TB。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <!-- 项目职责 -->
+ <tr style='mso-yfti-irow:4'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目职责：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal>
+  <span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>优化网贷系统性能，解决主备库日志延迟过大问题</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=82 valign=top style='width:49.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>项目业绩：</span><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <td width=635 valign=top style='width:381.0pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:
+  Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'>辽宁振兴银行网贷系统（mysql5.7）主备库日志延迟几万秒问题的优化，该数据库约2TB，通过存储性能优化、分库、优化应用、优化数据库配置参数解决该问题，并且优化了mysql备份策略，获得辽宁振兴银行行领导好评。</span>
+  <span lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+
+ <!-- 教育经历 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>教育经历</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+ <!-- 学校 -->
+  <td width=388 valign=top style='width:232.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>南京航空航天大学</span></b><b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><span style='mso-spacerun:yes'>&nbsp;
+  </span>2000/09–2003/04</span></b><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 专业 -->
+  <td width=242 valign=top style='width:145.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>计算机应用</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 学历 -->
+  <td width=242 valign=top style='width:145.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>硕士</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+ <!-- 学校 -->
+  <td width=388 valign=top style='width:232.55pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>江苏大学</span></b><b><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><span style='mso-spacerun:yes'>&nbsp;
+  </span>1994/09–1998/08</span></b><span lang=EN-US style='font-size:10.0pt;
+  font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 专业 -->
+  <td width=242 valign=top style='width:145.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>计算机应用</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+  <!-- 学历 -->
+  <td width=242 valign=top style='width:145.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><span style='font-size:10.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:windowtext'>本科</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<!-- 语言能力 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>语言能力</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt;font-family:宋体;
+  mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;mso-bidi-font-family:
+  Courier;color:windowtext'>普通话</span></b><span lang=EN-US style='font-size:
+  10.0pt;font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<!-- 自我评价 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>自我评价</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>有担当有作为，多次被评为优秀员工和总行级IT明星，具备处理紧急突发状况的丰富经验和良好心理素质。既有甲方银行丰富的生产系统数据库架构优化、开发、运维管理经验；同时具有乙方良好的服务意识。具备团队管理、项目管理经验。注重合作、乐于知识分享、擅长培养团队整体技术能力。<br/>	负责管理兴业数金生产环境超过4000套数据库实例、其中包括传统的金融云业务系统和互金云业务系统，其中数据库类型复杂，包括多套兴业银行重要业务系统。<br/>	协助修改、审订过民生银行科技部总经理牛新庄编写的《DB2数据库性能调整和优化》、《循序渐进DB2》、《高级进阶DB2》<br/>	做为兴业银行数据库专家评审过中信银行编写的《银行业分布式数据库设计实务》<br/>	DTCC第十届数据库大会特邀演讲嘉宾：http://dtcc.it168.com/yicheng.html、第三届mysql数据库技术嘉年华特邀演讲嘉宾<br/>	参与中国银行上海分行数据仓库的创建工作，对于商业智能分析和数据仓库设计与开发有较丰富的经验；具有多年TB级海量数据库开发与维护的经验，对数据库建模和体系结构有深刻理解。获得人行科技发展奖。<br/>	管理上海中行信息科技部系统管理团队时间约3年，对于运维流程整合、规章制度、操作规范制订有着丰富的实际经验。协助制订过建设银行总行oracle数据库检查规范。<br/>	精通ORACLE 、DB2、INFORMIX数据库的管理、维护, 擅长ORACLE性能调整、SQL性能优化、备份恢复、数据迁移，对于ORACLE、DB2内部技术有深入的研究。多次解决了有关系统性能方面的问题，有效地保证了应用系统的准确、高效地运行。目前为DB2CHINA论坛的版主。<br/>	精通MySQL高可用架构、主从复制；对高并发环境下复杂SQL有丰富的优化经验，具有很强的故障定位和问题解决能力<br/>	具备丰富的AIX、HP-UNIX系统管理经验，对AIX、HP-UNIX操作系统架构有着很深的了解。<br/>	具备丰富的培训经验，oracle WDP ocm讲师，在光大银行总行、花旗银行、上海银行总行、新加坡新电公司、九江银行、兴业银行、新乡银行、上海中行、青岛海尔、青岛海信、厦门航空、惠普公司、ORACLE公司多次提供过高层次的ORACLE、DB2、MYSQL和HP-UNIX培训，均取得非常良好的培训效果。
+  </span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:windowtext'><o:p>&nbsp;</o:p></span></p>
+<!-- 附加信息 -->
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;border:none;border-bottom:
+  solid #404040 2.25pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal style='line-height:15.0pt'><b><span style='font-size:15.0pt;
+  font-family:宋体;mso-ascii-font-family:Courier;mso-hansi-font-family:Courier;
+  mso-bidi-font-family:Courier;color:#404040'>附加信息</span></b><span lang=EN-US
+  style='font-size:15.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:#404040'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:15.0pt;font-family:Courier;
+mso-bidi-font-family:Courier;color:#404040'><o:p>&nbsp;</o:p></span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=872
+ style='width:523.35pt;border-collapse:collapse;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=872 valign=top style='width:523.35pt;background:white;padding:0cm 0cm 0cm 0cm'>
+  <p class=MsoNormal><span
+  style='font-size:10.0pt;font-family:宋体;mso-ascii-font-family:Courier;
+  mso-hansi-font-family:Courier;mso-bidi-font-family:Courier;color:windowtext'>获得2007年度人民银行颁发的银行科技发展奖<br/>获得2019年度兴业数金的IT服务明星称号<br/>DTCC第十届数据库大会演讲嘉宾：http://dtcc.it168.com/yicheng.html<br/>oracle wdp ocm讲师<br/>有oracle ocm认证、oracle ocp认证、aix系统管理员认证、vmware vcp认证<br/><br/>
+  </span><span lang=EN-US
+  style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Courier;
+  color:windowtext'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>

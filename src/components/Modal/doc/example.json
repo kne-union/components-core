@@ -1,0 +1,132 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "普通弹窗",
+      "description": "展示弹窗的基本用法，自定义footer等功能。\n注意:\n1.onConfirm和onCancel只对于默认的footerButtons生效，如果是自定义的footerButtons则不需要传这两个参数，直接定义按钮的onClick即可。\n2.自定义的footerButtons的onClick可以返回一个Promise来延迟关闭弹窗，resolve的值为false不关闭弹窗，其他情况会自动关闭弹窗。在resolve未返回之前按钮会变成loading状态",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "需要加载数据的弹窗",
+      "description": "可以通过withDecorator属性实现弹窗的加载数据或者加载远程组件的逻辑，在数据或者远程组件加载完成之前弹窗展示loading状态，加载完成之后children可以获取到加载的数据",
+      "code": "./fetch-data.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "fetch",
+          "packageName": "@kne/react-fetch"
+        },
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    },
+    {
+      "title": "可以弹出弹窗的按钮",
+      "description": "可以点击按钮弹出弹窗，并且在弹窗弹出之前可以加载数据，加载数据时，按钮为loading状态，数据加载完成之后再弹出弹窗",
+      "code": "./modal-button.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        },
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        }
+      ]
+    },
+    {
+      "title": "tabs弹窗",
+      "description": "展示一个tabs弹窗，tabs的选项的label会占据弹窗title位置，弹框的title将不显示\ntabs的items多加了withDecorator参数和Modal的withDecorator参数类似可以控制其外部显示及渲染内容\ntabs的items的children也可以是function，同样可以接收到TabsModal的withDecorator传回的参数",
+      "code": "./tabs-modal.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "fetch",
+          "packageName": "@kne/react-fetch"
+        },
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    },
+    {
+      "title": "消息确认和提示",
+      "description": "展示确认消息提醒",
+      "code": "./modal-method.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "fetch",
+          "packageName": "@kne/react-fetch"
+        },
+        {
+          "name": "_Content",
+          "packageName": "@components/Content"
+        }
+      ]
+    }
+  ]
+}

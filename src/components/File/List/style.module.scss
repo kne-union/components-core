@@ -1,0 +1,41 @@
+.list-item-outer {
+  padding: 8px !important;
+}
+
+.list-item {
+  width: 100%;
+
+  :global(.ant-col) {
+    align-self: center;
+
+    .split {
+      margin-right: 4px;
+    }
+    :global(.is-block) {
+      line-height: 32px;
+    }
+  }
+}
+
+.loading {
+  margin-right: 10px;
+  line-height: 32px;
+
+  :global(.ant-typography) {
+    color: var(--font-color-grey-2) !important;
+  }
+
+  :global(.ant-spin-dot-item) {
+    background-color: var(--font-color-grey-2);
+  }
+}
+
+.list-options {
+  text-align: right;
+  flex: 0 0 128px;
+}
+
+.list-time {
+  width: 150px;
+  flex: none;
+}

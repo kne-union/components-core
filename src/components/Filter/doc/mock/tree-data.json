@@ -1,0 +1,464 @@
+{
+  "id": 1,
+  "coId": 1,
+  "name": "消息简体",
+  "parentId": 0,
+  "enName": "xiaoxijianti",
+  "leaf": false,
+  "children": [
+    {
+      "id": 428,
+      "coId": 1,
+      "name": "a测试部门01",
+      "parentId": 1,
+      "enName": "Test BU1",
+      "leaf": false,
+      "children": [
+        {
+          "id": 430,
+          "coId": 1,
+          "name": "01开发部",
+          "parentId": 428,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 431,
+          "coId": 1,
+          "name": "01测试部",
+          "parentId": 428,
+          "enName": "Test bu-01",
+          "leaf": false,
+          "children": [
+            {
+              "id": 432,
+              "coId": 1,
+              "name": "01自动化部",
+              "parentId": 431,
+              "enName": null,
+              "leaf": false,
+              "children": [
+                {
+                  "id": 434,
+                  "coId": 1,
+                  "name": "02UI自动化",
+                  "parentId": 432,
+                  "enName": null,
+                  "leaf": false,
+                  "children": [
+                    {
+                      "id": 485,
+                      "coId": 1,
+                      "name": "代码编写员",
+                      "parentId": 434,
+                      "enName": null,
+                      "leaf": true,
+                      "children": []
+                    },
+                    {
+                      "id": 484,
+                      "coId": 1,
+                      "name": "自动化框架搭建员",
+                      "parentId": 434,
+                      "enName": null,
+                      "leaf": true,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 429,
+      "coId": 1,
+      "name": "a测试部门02",
+      "parentId": 1,
+      "enName": "YYY",
+      "leaf": false,
+      "children": [
+        {
+          "id": 483,
+          "coId": 1,
+          "name": "开发组",
+          "parentId": 429,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 482,
+          "coId": 1,
+          "name": "测试部",
+          "parentId": 429,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 184,
+      "coId": 1,
+      "name": "上海a",
+      "parentId": 1,
+      "enName": "shanghai",
+      "leaf": true,
+      "children": []
+    },
+    {
+      "id": 78,
+      "coId": 1,
+      "name": "事业一部",
+      "parentId": 1,
+      "enName": "shiyeyibu",
+      "leaf": false,
+      "children": [
+        {
+          "id": 89,
+          "coId": 1,
+          "name": "RPO-广州",
+          "parentId": 78,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 90,
+          "coId": 1,
+          "name": "RPO-苏州",
+          "parentId": 78,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 83,
+          "coId": 1,
+          "name": "上海-工业制造",
+          "parentId": 78,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 82,
+          "coId": 1,
+          "name": "上海-数字科技",
+          "parentId": 78,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "coId": 1,
+      "name": "事业三部",
+      "parentId": 1,
+      "enName": null,
+      "leaf": false,
+      "children": [
+        {
+          "id": 93,
+          "coId": 1,
+          "name": "RPO-北京-团队2",
+          "parentId": 80,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 92,
+          "coId": 1,
+          "name": "北京-高科技及互联网",
+          "parentId": 80,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "coId": 1,
+      "name": "事业二部",
+      "parentId": 1,
+      "enName": null,
+      "leaf": false,
+      "children": [
+        {
+          "id": 88,
+          "coId": 1,
+          "name": "PRO-工业制造",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 87,
+          "coId": 1,
+          "name": "PRO-生命科学-团队2",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 91,
+          "coId": 1,
+          "name": "RPO-快消零售",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 86,
+          "coId": 1,
+          "name": "RPO-生命科学",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 85,
+          "coId": 1,
+          "name": "上海-金融",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 84,
+          "coId": 1,
+          "name": "上海-零售",
+          "parentId": 79,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 173,
+      "coId": 1,
+      "name": "审批流部门",
+      "parentId": 1,
+      "enName": null,
+      "leaf": false,
+      "children": [
+        {
+          "id": 176,
+          "coId": 1,
+          "name": "GM",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 175,
+          "coId": 1,
+          "name": "VP",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 174,
+          "coId": 1,
+          "name": "出纳",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 180,
+          "coId": 1,
+          "name": "抄送人",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 178,
+          "coId": 1,
+          "name": "法务",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 177,
+          "coId": 1,
+          "name": "财务分析",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 179,
+          "coId": 1,
+          "name": "默认审批人",
+          "parentId": 173,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "coId": 1,
+      "name": "数字化团队",
+      "parentId": 1,
+      "enName": "Shu Zi-Hua",
+      "leaf": false,
+      "children": [
+        {
+          "id": 201,
+          "coId": 1,
+          "name": "测试团队",
+          "parentId": 81,
+          "enName": "ceshi---",
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "coId": 1,
+      "name": "星辰水",
+      "parentId": 1,
+      "enName": null,
+      "leaf": false,
+      "children": [
+        {
+          "id": 106,
+          "coId": 1,
+          "name": "星辰一部",
+          "parentId": 103,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 111,
+          "coId": 1,
+          "name": "星辰三部",
+          "parentId": 103,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 107,
+          "coId": 1,
+          "name": "星辰二部",
+          "parentId": 103,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 151,
+          "coId": 1,
+          "name": "星辰四部",
+          "parentId": 103,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "coId": 1,
+      "name": "智慧星",
+      "parentId": 1,
+      "enName": null,
+      "leaf": false,
+      "children": [
+        {
+          "id": 104,
+          "coId": 1,
+          "name": "智慧一部",
+          "parentId": 101,
+          "enName": null,
+          "leaf": false,
+          "children": [
+            {
+              "id": 150,
+              "coId": 1,
+              "name": "智慧一部-月亮星",
+              "parentId": 104,
+              "enName": null,
+              "leaf": true,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 109,
+          "coId": 1,
+          "name": "智慧三部",
+          "parentId": 101,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        },
+        {
+          "id": 105,
+          "coId": 1,
+          "name": "智慧二部",
+          "parentId": 101,
+          "enName": null,
+          "leaf": true,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 182,
+      "coId": 1,
+      "name": "智能后台（上海）",
+      "parentId": 1,
+      "enName": null,
+      "leaf": true,
+      "children": []
+    },
+    {
+      "id": 181,
+      "coId": 1,
+      "name": "管理中心",
+      "parentId": 1,
+      "enName": null,
+      "leaf": true,
+      "children": []
+    },
+    {
+      "id": 194,
+      "coId": 1,
+      "name": "自动化部门",
+      "parentId": 1,
+      "enName": null,
+      "leaf": true,
+      "children": []
+    }
+  ]
+}

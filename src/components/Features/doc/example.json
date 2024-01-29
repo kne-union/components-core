@@ -1,0 +1,70 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "展示了一个系统中功能一开启功能二关闭的情况",
+      "description": "展示了一个系统中功能一开启功能二关闭的情况",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Features",
+          "packageName": "@components/Features"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        }
+      ]
+    },
+    {
+      "title": "展示了打开页面特性配置开启和关闭的情况",
+      "description": "展示了打开页面特性配置开启和关闭的情况",
+      "code": "./module.js",
+      "scope": [
+        {
+          "name": "_Features",
+          "packageName": "@components/Features"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "Router",
+          "packageName": "react-router-dom"
+        }
+      ]
+    },
+    {
+      "title": "展示了一个系统中功能开启和关闭参数获取",
+      "description": "展示了一个系统中功能开启和关闭参数获取",
+      "code": "./options.js",
+      "scope": [
+        {
+          "name": "_Features",
+          "packageName": "@components/Features"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}

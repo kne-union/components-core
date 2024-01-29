@@ -1,0 +1,27 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "基本文字高亮",
+      "description": "展示基本文字高亮",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Highlight",
+          "packageName": "@components/Highlight"
+        }
+      ]
+    },
+    {
+      "title": "xss测试",
+      "description": "xss测试",
+      "code": "./xss.js",
+      "scope": [
+        {
+          "name": "_Highlight",
+          "packageName": "@components/Highlight"
+        }
+      ]
+    }
+  ]
+}
