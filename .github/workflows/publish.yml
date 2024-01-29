@@ -18,10 +18,23 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm i --legacy-peer-deps
-      - run: npm run build
-      - run: npm publish --access=public
+
+      - name: Install 🔧
+        run: npm install --legacy-peer-deps
+
+      - name: Build 🏗️
+        run: npm run build
+
+      - name: Deploy to GH Pages 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+
+      - name: Publish Npm
         env:
           NODE_AUTH_TOKEN: ${{secrets.KNE_PACKAGE_PUBLISH}}
-      - run: npm i -g cnpm
-      - run: cnpm sync @kne/components-core
+        run: npm publish --access=public
+
+      - name: Sync To Cnpm
+        run: npm i -g cnpm && cnpm sync @kne/components-core
