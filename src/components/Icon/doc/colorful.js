@@ -2,18 +2,13 @@ const { default: Icon } = _Icon;
 const { Space, Slider } = antd;
 const { useState } = React;
 const { createWithFetch } = ReactFetch;
-const { loadFont } = Global;
+const { createWithRemoteLoader } = remoteLoader;
 const { default: axios } = _axios;
 
-const BaseExample = createWithFetch({
-  loader: async () => {
-    const { colorful } = await loadFont;
-    const { data } = await axios.get(
-      window.ICONFONT_URL + "/" + colorful + "/iconfont.json"
-    );
-    return data.glyphs.map(({ font_class }) => font_class);
-  },
-})(({ data }) => {
+const BaseExample = createWithRemoteLoader({
+  modules: ["components-iconfont:ColorfulFont"],
+})(({ remoteModules }) => {
+  const [ColorfulFont] = remoteModules;
   const [value, setValue] = useState(30);
   return (
     <Space direction="vertical">
@@ -28,21 +23,25 @@ const BaseExample = createWithFetch({
         />
         <div>{value}px</div>
       </Space>
-      <Space wrap align="top" size="large">
-        {data.map((name) => {
-          return (
-            <Space
-              className="item"
-              direction="vertical"
-              align="center"
-              key={name}
-            >
-              <Icon colorful type={name} size={value} />
-              <div>{name}</div>
-            </Space>
-          );
-        })}
-      </Space>
+      <ColorfulFont>
+        {({ list }) => (
+          <Space wrap align="top" size="large">
+            {list.map(({ name }) => {
+              return (
+                <Space
+                  className="item"
+                  direction="vertical"
+                  align="center"
+                  key={name}
+                >
+                  <Icon colorful type={name} size={value} />
+                  <div>{name}</div>
+                </Space>
+              );
+            })}
+          </Space>
+        )}
+      </ColorfulFont>
     </Space>
   );
 });

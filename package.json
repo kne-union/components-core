@@ -1,6 +1,6 @@
 {
   "name": "@kne/components-core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "files": [
     "build"
   ],
@@ -67,7 +67,7 @@
   "scripts": {
     "lint-staged": "lint-staged",
     "create": "modules-dev-create",
-    "start": "cross-env PORT=3001 MODULES_DEV_PUBLIC_URL=/ craco start",
+    "start": "cross-env PORT=3001 COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/ craco start",
     "build": "cross-env COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/components-core  craco build",
     "test": "craco test --coverage",
     "prepare": "husky install"
