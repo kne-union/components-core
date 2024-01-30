@@ -4,18 +4,12 @@ const { useState } = React;
 const { createWithFetch } = ReactFetch;
 const { loadFont } = Global;
 const { default: axios } = _axios;
+const { createWithRemoteLoader } = remoteLoader;
 
-const BaseExample = createWithFetch({
-  loader: async () => {
-    const { font } = await loadFont;
-    const { data } = await axios.get(
-      window.ICONFONT_URL + "/" + font + "/iconfont.css"
-    );
-    return data
-      .match(/.icon-.*:before/g)
-      .map((name) => name.replace(":before", "").replace(/^./, ""));
-  },
-})(({ data }) => {
+const BaseExample = createWithRemoteLoader({
+  modules: ["components-iconfont:Font"],
+})(({ remoteModules }) => {
+  const [Font] = remoteModules;
   const [value, setValue] = useState(30);
   return (
     <Space direction="vertical">
@@ -30,21 +24,29 @@ const BaseExample = createWithFetch({
         />
         <div>{value}px</div>
       </Space>
-      <Space wrap align="top" size="large">
-        {data.map((name) => {
-          return (
-            <Space
-              className="item"
-              direction="vertical"
-              align="center"
-              key={name}
-            >
-              <Icon type={name} size={value} />
-              <div>{name}</div>
-            </Space>
-          );
-        })}
-      </Space>
+      {
+        <Font>
+          {({ list }) => {
+            return (
+              <Space wrap align="top" size="large">
+                {list.map(({ name, font_class }) => {
+                  return (
+                    <Space
+                      className="item"
+                      direction="vertical"
+                      align="center"
+                      key={name}
+                    >
+                      <Icon type={font_class} size={value} />
+                      <div>{name}</div>
+                    </Space>
+                  );
+                })}
+              </Space>
+            );
+          }}
+        </Font>
+      }
     </Space>
   );
 });

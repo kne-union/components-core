@@ -1,56 +1,50 @@
 import { AsYouType, getCountryCallingCode } from "libphonenumber-js";
 import { Input, Select, Space } from "antd";
 import { hooks } from "@kne/react-form-antd";
-import { createWithFetch } from "@kne/react-fetch";
 import useSimulationBlur from "@kne/use-simulation-blur";
 import useControlValue from "@kne/use-control-value";
 import get from "lodash/get";
 import style from "./style.module.scss";
-import loadFont from "@components/Global/loadFont";
-import axios from "axios";
+import { createWithRemoteLoader } from "@kne/remote-loader";
 
 const { useDecorator } = hooks;
 
-const CountrySelect = createWithFetch({
-  loader: async () => {
-    const { country_flag } = await loadFont;
-    const { data: countries } = await axios.get(
-      window.ICONFONT_URL + "/" + country_flag + "/countries.json"
-    );
-    return countries;
-  },
-  cache: "country-list",
-  isLocal: true,
-  ttl: 0,
-  showError: false,
-  transformResponse: (response) => {
-    return { data: { code: 200, results: response.data } };
-  },
-})(({ value, onChange, data }) => {
+const CountrySelect = createWithRemoteLoader({
+  modules: ["components-iconfont:CountyFlag"],
+})(({ remoteModules, value, onChange }) => {
+  const [CountyFlag] = remoteModules;
   return (
-    <Select
-      popupMatchSelectWidth={300}
-      className={style["country-select"]}
-      value={value || "CN"}
-      onChange={onChange}
-      placeholder="请选择国家"
-      showSearch
-      filterOption={(input, option) => {
-        return option.name.indexOf(input) > -1;
+    <CountyFlag>
+      {({ list }) => {
+        return (
+          <Select
+            popupMatchSelectWidth={300}
+            className={style["country-select"]}
+            value={value || "CN"}
+            onChange={onChange}
+            placeholder="请选择国家"
+            showSearch
+            filterOption={(input, option) => {
+              return option.name.indexOf(input) > -1;
+            }}
+            optionLabelProp="code"
+            options={list.map(({ country_name_cn, country_code, ab }) => ({
+              value: ab,
+              code: `(+${country_code})`,
+              name: country_name_cn,
+              label: (
+                <Space align="center">
+                  <span className={style["country-name"]}>
+                    {country_name_cn}
+                  </span>
+                  <div>(+{country_code})</div>
+                </Space>
+              ),
+            }))}
+          />
+        );
       }}
-      optionLabelProp="code"
-      options={data.map(({ country_name_cn, country_code, ab }) => ({
-        value: ab,
-        code: `(+${country_code})`,
-        name: country_name_cn,
-        label: (
-          <Space align="center">
-            <span className={style["country-name"]}>{country_name_cn}</span>
-            <div>(+{country_code})</div>
-          </Space>
-        ),
-      }))}
-    />
+    </CountyFlag>
   );
 });
 

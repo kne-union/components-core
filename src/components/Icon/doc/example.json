@@ -25,6 +25,10 @@
         {
           "name": "_axios",
           "packageName": "axios"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -52,6 +56,10 @@
         {
           "name": "_axios",
           "packageName": "axios"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     }

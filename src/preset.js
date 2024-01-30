@@ -4,19 +4,32 @@ import axios from "axios";
 import { Empty, Result, Spin } from "antd";
 
 window.PUBLIC_URL = process.env.PUBLIC_URL;
-window.ICONFONT_URL = "http://uc.dev.fatalent.cn/iconfont";
 
-const remote = {
-  remote: "components-core",
-  url: "https://registry.npmmirror.com",
-  tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
-  defaultVersion: process.env.DEFAULT_VERSION,
-};
+const remote =
+  process.env.NODE_ENV === "development"
+    ? {
+        remote: "components-core",
+        url: "/",
+        tpl: "{{url}}",
+        defaultVersion: process.env.DEFAULT_VERSION,
+      }
+    : {
+        remote: "components-core",
+        url: "https://registry.npmmirror.com",
+        tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
+        defaultVersion: process.env.DEFAULT_VERSION,
+      };
 
 remoteLoaderPreset({
   remotes: {
     default: remote,
     "components-core": remote,
+    "components-iconfont": {
+      remote: "components-iconfont",
+      url: "https://registry.npmmirror.com",
+      tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
+      defaultVersion: "0.1.1",
+    },
   },
 });
 

@@ -1,5 +1,4 @@
 import "./polyfill";
-import loadFont from "./loadFont";
 import "simplebar/dist/simplebar.css";
 import "./override.scss";
 import classnames from "classnames";
@@ -19,6 +18,7 @@ import useRefCallback from "@kne/use-ref-callback";
 import transform from "lodash/transform";
 import range from "lodash/range";
 import Color from "color";
+import { createWithRemoteLoader } from "@kne/remote-loader";
 
 new SimpleBar(document.body);
 document.body.classList.add(style["container"]);
@@ -111,7 +111,19 @@ ConfigProvider.defaultProps = {
   },
 };
 
-export { loadFont };
+const GlobalFontLoader = createWithRemoteLoader({
+  modules: [
+    "components-iconfont:Font@load",
+    "components-iconfont:ColorfulFont@load",
+  ],
+})(({ remoteModules }) => {
+  const [loadFont, loadColorfulFont] = remoteModules;
+  useEffect(() => {
+    loadFont();
+    loadColorfulFont();
+  }, []);
+  return null;
+});
 
 export const GlobalProvider = ({ preset, children, themeToken, ...props }) => {
   const locale = get(preset, "locale", "zh-CN");
@@ -145,6 +157,7 @@ export const GlobalProvider = ({ preset, children, themeToken, ...props }) => {
           >
             <AppDrawer>{children}</AppDrawer>
           </App>
+          <GlobalFontLoader />
         </ConfigProvider>
       </PresetProvider>
     </Provider>
