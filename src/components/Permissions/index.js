@@ -3,7 +3,7 @@ import { Result, Tooltip } from "antd";
 import get from "lodash/get";
 import classnames from "classnames";
 import style from "./style.module.scss";
-import { Provider, useGlobalContext as useContext } from "@kne/global-context";
+import { useGlobalContext as useContext } from "@kne/global-context";
 
 export const computedIsPass = ({ permissions, request }) => {
   return Array.isArray(request) && request.length > 0

@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { withFetch } from "@kne/react-fetch";
 import { useGlobalContext, usePreset } from "@components/Global";
-import clone from "lodash/clone";
 import memoize from "lodash/memoize";
 import isNil from "lodash/isNil";
 

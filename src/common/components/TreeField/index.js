@@ -1,11 +1,9 @@
 import SelectInnerInput from "@common/components/SelectInnerInput";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import useRefCallback from "@kne/use-ref-callback";
 import style from "./style.module.scss";
 import classnames from "classnames";
 import { Space, Tree } from "antd";
-import SearchInput from "@common/components/SearchInput";
-import commonStyle from "@common/components/SelectInnerInput/common.module.scss";
 import SimpleBar from "@common/components/SimpleBar";
 import get from "lodash/get";
 import omit from "lodash/omit";
@@ -15,7 +13,6 @@ const useSelectInnerContext = SelectInnerInput.useContext;
 
 const TreeFieldInner = ({ value: selected, setValue: setSelect, size }) => {
   const { fetchApi, props } = useSelectInnerContext();
-  const [searchText, setSearchText] = useState("");
   const dataFormat = useRefCallback(props.dataFormat);
   const { single, isPopup, searchPlaceholder, ...others } = props;
   const fieldNamesRef = useRef(props.fieldNames);
@@ -24,31 +21,13 @@ const TreeFieldInner = ({ value: selected, setValue: setSelect, size }) => {
   const { treeData } = useMemo(
     () =>
       dataFormat(fetchData, {
-        searchText,
         fieldNames: fieldNamesRef.current,
       }),
-    [dataFormat, searchText, fetchData]
+    [dataFormat, fetchData]
   );
-
-  const searchTreeData = useMemo(() => {}, [
-    treeData,
-    searchText,
-    props.fieldNames,
-  ]);
 
   return (
     <Space direction="vertical" size={16}>
-      {/*<SearchInput
-          isPopup={isPopup}
-          className={classnames(commonStyle["search-input"], {
-            [commonStyle["is-popup"]]: isPopup,
-          })}
-          placeholder={searchPlaceholder}
-          value={searchText}
-          onSearch={(value) => {
-            setSearchText(value);
-          }}
-        />*/}
       <SimpleBar
         className={classnames(style["scroll-loader"], {
           [style["is-popup"]]: props.isPopup,

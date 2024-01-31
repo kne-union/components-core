@@ -19,7 +19,7 @@ const DataEnumInner = withFetch(
           },
         ])
       );
-    }, [data]);
+    }, [data, getLabel]);
     const output = mapping.get(name);
     dataEnumCache.set(`${name}_${type}`, output);
     return children(output, props);

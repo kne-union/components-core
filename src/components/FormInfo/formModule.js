@@ -27,6 +27,7 @@ import Upload from "./fields/Upload";
 import Avatar from "./fields/Avatar";
 import SalaryInput from "./fields/SalaryInput";
 import InputUpperCaseField from "./fields/InputUpperCase";
+import TypeDateRangePicker from "./fields/TypeDateRangePicker";
 import TableInput from "./fields/TableInput";
 import Text from "./fields/Text";
 import Rate from "./fields/Rate";
@@ -124,28 +125,20 @@ export const AdvancedSelect = withSelectDefaultPlaceholder(AdvancedSelectField);
 export { default as AddressSelect } from "./fields/AddressSelect";
 export const AddressInput = withSelectDefaultPlaceholder(AddressInputField);
 
-export { default as Cascader } from "./fields/Cascader";
-
-export { default as FunctionSelect } from "./fields/FunctionSelect";
-
-export { default as IndustrySelect } from "./fields/IndustrySelect";
-
-export { default as MoneyInput } from "./fields/MoneyInput";
-
-export { default as PhoneNumber } from "./fields/PhoneNumber";
-
-export { default as Upload } from "./fields/Upload";
-
-export { default as Avatar } from "./fields/Avatar";
-
-export { default as SalaryInput } from "./fields/SalaryInput";
-
-export { default as TableInput } from "./fields/TableInput";
-
-export { default as Text } from "./fields/Text";
-
-export { default as Rate } from "./fields/Rate";
-
+export {
+  Cascader,
+  FunctionSelect,
+  IndustrySelect,
+  MoneyInput,
+  PhoneNumber,
+  Upload,
+  Avatar,
+  SalaryInput,
+  TableInput,
+  Text,
+  Rate,
+  TypeDateRangePicker,
+};
 export const InputUpperCase = withInputDefaultPlaceholder(InputUpperCaseField);
 export const Input = withInputDefaultPlaceholder(ReactInput);
 Input.Password = withInputDefaultPlaceholder(ReactInput.Password);
@@ -225,6 +218,7 @@ export const formModule = Object.assign({}, reactFormAntd, {
   Cascader,
   FunctionSelect,
   IndustrySelect,
+  TypeDateRangePicker,
   Upload,
   Avatar,
   SalaryInput,

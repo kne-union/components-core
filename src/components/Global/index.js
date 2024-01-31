@@ -118,10 +118,13 @@ const GlobalFontLoader = createWithRemoteLoader({
   ],
 })(({ remoteModules }) => {
   const [loadFont, loadColorfulFont] = remoteModules;
-  useEffect(() => {
+  const loadCallback = useRefCallback(() => {
     loadFont();
     loadColorfulFont();
-  }, []);
+  });
+  useEffect(() => {
+    loadCallback();
+  }, [loadCallback]);
   return null;
 });
 

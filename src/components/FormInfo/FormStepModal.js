@@ -1,6 +1,6 @@
 import FormModal, { FormModalButton, useFormModal } from "./FormModal";
 import { Space, Steps } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   CancelButton,
   SubmitButton,
@@ -14,7 +14,6 @@ const StepsContent = ({
   setStepData,
   stepData,
 }) => {
-  const currentData = stepData[current];
   const currentItem = items[current];
   const { formData } = useFormContext();
   return (
