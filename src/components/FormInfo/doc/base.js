@@ -3,7 +3,7 @@ const { PureGlobal } = global;
 const { useModal } = _Modal;
 const { uniqueId } = lodash;
 
-const { Input, TextArea, Upload, Avatar } = fields;
+const { Input, TextArea, Upload, Avatar, TypeDateRangePicker } = fields;
 
 const BaseExample = () => {
   const modal = useModal();
@@ -18,8 +18,7 @@ const BaseExample = () => {
           options: {
             //labelTransform: (label) => label + "(en)",
             ignore: [{ name: "avatar" }, { name: "photo" }],
-            disabled: [{ name: "file" }],
-            //fields:[{name:'name'}]
+            disabled: [{ name: "file" }], //fields:[{name:'name'}]
           },
         },
       ]}
@@ -78,6 +77,11 @@ const BaseExample = () => {
           <Input name="phone" label="手机" rule="REQ TEL" />,
           <Input name="email" label="邮箱" rule="EMAIL" />,
           <Upload name="file" label="文件" block />,
+          <TypeDateRangePicker
+            name="type_date"
+            label="日期时间段"
+            rule="REQ"
+          />,
           <TextArea name="des" label="备注" block />,
           <SubmitButton>提交</SubmitButton>,
         ]}

@@ -30,6 +30,7 @@ import { useGroup } from "@kne/react-form-antd";
 import get from "lodash/get";
 import { get as _get } from "lodash";
 import { useFormLang } from "@components/FormInfo/FormLangProvider";
+import TypeDateRangePicker from "./TypeDateRangePicker";
 
 const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
   const TargetComponent = compose(...decoratorList)(
@@ -212,6 +213,9 @@ const fields = {
   Rate: createWithFieldDecorator([withLang])(Rate),
   TableInput: createWithFieldDecorator([withLang])(TableInput),
   SalaryInput: createWithFieldDecorator([withLang])(SalaryInput),
+  TypeDateRangePicker: createWithFieldDecorator([withLang])(
+    TypeDateRangePicker
+  ),
   MoneyInput: createWithFieldDecorator([withLang])(MoneyInput),
   PhoneNumber: createWithFieldDecorator([withLang])(PhoneNumber),
   Upload: createWithFieldDecorator([withLang])(Upload),
