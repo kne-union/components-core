@@ -1,14 +1,16 @@
 import { DatePicker, Select, Space } from "antd";
 import useControlValue from "@kne/use-control-value";
 import dayjs from "dayjs";
-
-const typeList = new Map([
-  ["date", "自定义时间"],
-  ["month", "按月"],
-  ["week", "按周"],
-]);
+import importMessages from "../locale";
+import { createWithIntl, useIntl } from "@components/Intl";
 
 const TypeDatePickerField = ({ ...props }) => {
+  const { formatMessage } = useIntl({ moduleName: "Common" });
+  const typeList = new Map([
+    ["date", formatMessage({ id: "customTime" })],
+    ["month", formatMessage({ id: "monthly" })],
+    ["week", formatMessage({ id: "weekly" })],
+  ]);
   const [value, onChange] = useControlValue(props);
   return (
     <Space.Compact>
@@ -60,4 +62,6 @@ const TypeDatePickerField = ({ ...props }) => {
   );
 };
 
-export default TypeDatePickerField;
+export default createWithIntl({ importMessages, moduleName: "Common" })(
+  TypeDatePickerField
+);
