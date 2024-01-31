@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/2381.50e912a8.chunk.css","mappings":"AAAA,gCACE,aAAc","sources":["components/Highlight/style.module.scss"],"sourcesContent":[".high-color {\n  color: #ffb566;\n}\n"],"names":[],"sourceRoot":""}
