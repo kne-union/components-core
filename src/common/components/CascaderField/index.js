@@ -12,7 +12,7 @@ import SimpleBar from "@common/components/SimpleBar";
 import classnames from "classnames";
 import style from "./style.module.scss";
 import { withFetch } from "@kne/react-fetch";
-import { FormattedMessage, IntlProvider, useIntl } from "@components/Intl";
+import { useIntl } from "@components/Intl";
 import commonStyle from "@common/components/SelectInnerInput/common.module.scss";
 
 const useSelectInnerContext = SelectInnerInput.useContext;

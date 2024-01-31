@@ -576,7 +576,7 @@ const _SelectInnerInput = ({
                 : ""
             }`
           ],
-          { ["select-input-disabled"]: !!props.disabled },
+          { "select-input-disabled": !!props.disabled },
           className
         )}
       >
