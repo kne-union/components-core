@@ -1,6 +1,13 @@
 const { default: Tooltip, TooltipInfoLabel } = _Tooltip;
 const { default: Space } = space;
-const { default: FormInfo, Form, Input, SubmitButton, CancelButton } = formInfo;
+const {
+  default: FormInfo,
+  Form,
+  Input,
+  TypeDateRangePicker,
+  SubmitButton,
+  CancelButton,
+} = formInfo;
 
 const MoreInfo = () => {
   return (
@@ -9,6 +16,11 @@ const MoreInfo = () => {
         column={1}
         list={[
           <Input label="姓名" name="name" rule="REQ" />,
+          <TypeDateRangePicker
+            name="type_date"
+            label="日期时间段"
+            rule="REQ"
+          />,
           <Space
             style={{
               width: "100%",
@@ -61,6 +73,7 @@ const BaseExample = () => {
         }}
       />
       <Tooltip
+        trigger="click"
         title="标题"
         content="辅助信息描述内容辅助信息描述内容辅助信息描述内容辅助信息描述内容辅助信息描述内容"
         moreInfo={<MoreInfo />}

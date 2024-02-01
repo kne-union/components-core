@@ -45,15 +45,27 @@ const TypeDatePickerField = ({ ...props }) => {
         }
         onChange={(dateValue) => {
           onChange((value) => {
-            return Object.assign({ type: "date" }, value, {
-              value: [
-                dateValue &&
+            console.log(
+              Object.assign({ type: "date" }, value, {
+                value: dateValue && [
                   dateValue[0] &&
+                    new Date(
+                      dateValue[0].startOf(value?.type || "date").valueOf()
+                    ),
+                  dateValue[1] &&
+                    new Date(
+                      dateValue[1].endOf(value?.type || "date").valueOf()
+                    ),
+                ],
+              })
+            );
+            return Object.assign({ type: "date" }, value, {
+              value: dateValue && [
+                dateValue[0] &&
                   new Date(
                     dateValue[0].startOf(value?.type || "date").valueOf()
                   ),
-                dateValue &&
-                  dateValue[1] &&
+                dateValue[1] &&
                   new Date(dateValue[1].endOf(value?.type || "date").valueOf()),
               ],
             });
