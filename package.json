@@ -1,5 +1,5 @@
 {
-  "name": "@kne/components-core",
+  "name": "@kne-components/components-core",
   "version": "0.1.10",
   "files": [
     "build"
