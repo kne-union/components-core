@@ -52,7 +52,7 @@
 
     :global(.ant-menu-title-content) {
       font-weight: 500;
-
+      color: var(--bg-color-white);
       &:hover {
         color: var(--bg-color-white);
       }
