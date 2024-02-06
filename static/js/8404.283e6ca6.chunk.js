@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[8404,9821],{68404:(e,o,n)=>{n.r(o),n.d(o,{Consumer:()=>c,Provider:()=>s,context:()=>r,default:()=>r,useGlobalContext:()=>u});var t=n(86122);const r=(0,t.createContext)({}),{Provider:s,Consumer:c}=r,u=()=>(0,t.useContext)(r)}}]);
-//# sourceMappingURL=8404.283e6ca6.chunk.js.map

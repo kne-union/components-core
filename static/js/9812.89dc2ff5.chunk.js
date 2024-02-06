@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[9812],{29812:(e,n,c)=>{c.r(n),c.d(n,{default:()=>o});const o={message:"\u786e\u5b9a\u8981\u5220\u9664\u5417\uff1f",confirm:"\u786e\u5b9a",delete:"\u5220\u9664",cancel:"\u53d6\u6d88"}}}]);
+//# sourceMappingURL=9812.89dc2ff5.chunk.js.map

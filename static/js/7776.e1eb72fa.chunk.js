@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[7776],{97776:(e,n,o)=>{o.r(n),o.d(n,{default:()=>c});const c={message:"Are you sure you want to delete?",confirm:"Confirm",delete:"Delete",cancel:"Cancel"}}}]);
+//# sourceMappingURL=7776.e1eb72fa.chunk.js.map

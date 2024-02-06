@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[5510],{15510:(e,c,s)=>{s.r(c),s.d(c,{default:()=>n});const n={searchCity:"\u641c\u7d22\u57ce\u5e02",domestic:"\u56fd\u5185",abroad:"\u56fd\u5916"}}}]);
-//# sourceMappingURL=5510.de476ae8.chunk.js.map

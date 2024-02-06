@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[7472],{97472:(e,n,o)=>{o.r(n),o.d(n,{default:()=>t});const t={Page_Total:"\u5171",Page_TotalCount:"\u6761"}}}]);
+//# sourceMappingURL=7472.78a4fd79.chunk.js.map

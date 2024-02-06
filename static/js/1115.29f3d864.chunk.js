@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[1115,4345],{1115:(e,n,t)=>{t.r(n),t.d(n,{default:()=>r});var c=t(86122),r=(e,n)=>{const t=(0,c.useRef)(null),r=(0,c.useRef)(e);r.current=e;const u=(0,c.useCallback)((e=>{t.current&&!t.current.contains(e.target)&&r.current&&r.current(e)}),[]);return(0,c.useEffect)((()=>{const e=n||document.body;return e.addEventListener("click",u),()=>{e.removeEventListener("click",u)}}),[n,u]),t}}}]);
-//# sourceMappingURL=1115.29f3d864.chunk.js.map

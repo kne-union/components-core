@@ -1,0 +1,2 @@
+(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[4760],{94760:n=>{n.exports=function(n,e){var o=n.endsWith("/");return o&&!e?n.substr(0,n.length-1):!o&&e?n+"/":n}}}]);
+//# sourceMappingURL=4760.48c831ac.chunk.js.map

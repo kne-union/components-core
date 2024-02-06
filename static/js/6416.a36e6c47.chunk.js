@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_kne_components_core=self.webpackChunk_kne_components_core||[]).push([[6416],{6416:(e,t,l)=>{l.r(t),l.d(t,{default:()=>s});const s={modalTitle:"Export Data",selectedTip:"Please select the fields to export",actionText:"Export Data",selectedAll:"Select All",rightTitle:"Selected Fields",rightDesc:"Press and drag to sort"}}}]);
-//# sourceMappingURL=6416.a36e6c47.chunk.js.map

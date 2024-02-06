@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/1177.3eeab5c2.chunk.js","mappings":"0JAAA,MAKA,EALgB,CACdA,WAAY,SACZC,gBAAiB,S","sources":["components/Table/locale/zh-CN.js"],"sourcesContent":["const message = {\n  Page_Total: \"共\",\n  Page_TotalCount: \"条\",\n};\n\nexport default message;\n"],"names":["Page_Total","Page_TotalCount"],"sourceRoot":""}
