@@ -18,7 +18,14 @@
 ```jsx
 const { default: Tooltip, TooltipInfoLabel } = _Tooltip;
 const { default: Space } = space;
-const { default: FormInfo, Form, Input, TypeDateRangePicker, SubmitButton, CancelButton } = formInfo;
+const {
+  default: FormInfo,
+  Form,
+  Input,
+  TypeDateRangePicker,
+  SubmitButton,
+  CancelButton,
+} = formInfo;
 
 const MoreInfo = () => {
   return (
@@ -27,7 +34,11 @@ const MoreInfo = () => {
         column={1}
         list={[
           <Input label="姓名" name="name" rule="REQ" />,
-          <TypeDateRangePicker name="type_date" label="日期时间段" rule="REQ"/>,
+          <TypeDateRangePicker
+            name="type_date"
+            label="日期时间段"
+            rule="REQ"
+          />,
           <Space
             style={{
               width: "100%",
@@ -79,7 +90,8 @@ const BaseExample = () => {
             "2022.10.21在系统操作顾问面试，但填写的顾问面试时间为2022.10.20，则数据会统计在2022.10.20，而非2022.10.21 。",
         }}
       />
-      <Tooltip trigger="click"
+      <Tooltip
+        trigger="click"
         title="标题"
         content="辅助信息描述内容辅助信息描述内容辅助信息描述内容辅助信息描述内容辅助信息描述内容"
         moreInfo={<MoreInfo />}
