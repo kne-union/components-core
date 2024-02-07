@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import { getScrollEl } from "@common/utils/importantContainer";
-import { withFetch } from "@kne/react-fetch";
+import Fetch, { withFetch } from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
 import get from "lodash/get";
@@ -128,7 +128,13 @@ const GlobalFontLoader = createWithRemoteLoader({
   return null;
 });
 
-export const GlobalProvider = ({ preset, children, themeToken, ...props }) => {
+export const GlobalProvider = ({
+  preset,
+  children,
+  themeToken,
+  init,
+  ...props
+}) => {
   const locale = get(preset, "locale", "zh-CN");
   const localMessageRef = useRef({});
   const enumsRef = useRef(new Map());
@@ -153,12 +159,23 @@ export const GlobalProvider = ({ preset, children, themeToken, ...props }) => {
           params={{ locale }}
           themeToken={global.themeToken}
         >
-          <App
-            message={{
-              top: 100,
-            }}
-          >
-            <AppDrawer>{children}</AppDrawer>
+          <App message={{ top: 100 }}>
+            <AppDrawer>
+              {typeof init === "function" ? (
+                <Fetch
+                  loader={() =>
+                    init({
+                      preset,
+                      global,
+                      setGlobal,
+                    })
+                  }
+                  render={() => children}
+                />
+              ) : (
+                children
+              )}
+            </AppDrawer>
           </App>
           <GlobalFontLoader />
         </ConfigProvider>
