@@ -37,4 +37,4 @@ jobs:
         run: npm publish --access=public
 
       - name: Sync To Cnpm
-        run: npm i -g cnpm && cnpm sync @kne/components-core
+        run: npm i -g cnpm && cnpm sync @kne-components/components-core
