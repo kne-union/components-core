@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/399.4600ece3.chunk.js","mappings":"gLAAA,MAKA,EALgB,CACdA,WAAY,QACZC,gBAAiB,S","sources":["components/Table/locale/en-US.js"],"sourcesContent":["const message = {\n  Page_Total: \"Total\",\n  Page_TotalCount: \" Items\",\n};\n\nexport default message;\n"],"names":["Page_Total","Page_TotalCount"],"sourceRoot":""}

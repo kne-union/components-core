@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[257],{30257:(e,n,o)=>{o.r(n),o.d(n,{default:()=>t});const t={defaultTitle:"FA Talent",indexLabel:"Home",overflowedIndicator:"More"}}}]);
+//# sourceMappingURL=257.c4c6912e.chunk.js.map

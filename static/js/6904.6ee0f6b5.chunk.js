@@ -1,1 +1,0 @@
-(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[6904,4523],{22892:()=>{},45344:()=>{},10440:()=>{},22224:()=>{},65724:()=>{},8160:()=>{}}]);

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[6707],{26707:(e,n,o)=>{o.r(n),o.d(n,{default:()=>c});const c={uploading:"\u6b63\u5728\u4e0a\u4f20",documentName:"\u6587\u4ef6\u540d\u79f0",editDocumentName:"\u4fee\u6539\u6587\u4ef6\u540d\u79f0"}}}]);
+//# sourceMappingURL=6707.df6faa31.chunk.js.map

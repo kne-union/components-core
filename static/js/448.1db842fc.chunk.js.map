@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/448.1db842fc.chunk.js","mappings":"gLAAA,MAKA,EALgB,CACdA,WAAY,QACZC,gBAAiB,S","sources":["components/TablePage/locale/en-US.js"],"sourcesContent":["const message = {\n  Page_Total: \"Total\",\n  Page_TotalCount: \" Items\",\n};\n\nexport default message;\n"],"names":["Page_Total","Page_TotalCount"],"sourceRoot":""}

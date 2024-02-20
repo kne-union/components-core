@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[6222],{86222:(e,o,n)=>{n.r(o),n.d(o,{default:()=>t});const t={Page_Total:"Total",Page_TotalCount:" Items"}}}]);
+//# sourceMappingURL=6222.1e86b0cc.chunk.js.map

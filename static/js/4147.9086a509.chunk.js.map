@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/4147.9086a509.chunk.js","mappings":"gLAAA,MAMA,EANgB,CACdA,QAAS,eACTC,OAAQ,eACRC,MAAO,e","sources":["components/Modal/locale/zh-CN.js"],"sourcesContent":["const message = {\n  Confirm: \"确定\",\n  Cancel: \"取消\",\n  reset: \"重置\",\n};\n\nexport default message;\n"],"names":["Confirm","Cancel","reset"],"sourceRoot":""}

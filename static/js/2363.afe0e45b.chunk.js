@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[2363],{92363:(e,t,c)=>{c.r(t),c.d(t,{default:()=>n});const n={filterText:"\u7b5b\u9009",moreText:"\u66f4\u591a",selectedText:"\u60a8\u5df2\u9009\u62e9",clearAllText:"\u6e05\u7a7a\u5168\u90e8",toggleUpText:"\u6536\u8d77",selectedTextAdvanced:"\u5df2\u9009",clearText:"\u6e05\u7a7a\u7b5b\u9009",otherText:"\u5176\u4ed6",cancelText:"\u53d6\u6d88",determineText:"\u786e\u5b9a"}}}]);
+//# sourceMappingURL=2363.afe0e45b.chunk.js.map

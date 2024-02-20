@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[3264],{3264:(e,n,o)=>{o.r(n),o.d(n,{default:()=>c});const c={}}}]);
-//# sourceMappingURL=3264.9112f4da.chunk.js.map

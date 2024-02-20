@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_kne_components_components_core=self.webpackChunk_kne_components_components_core||[]).push([[5645],{75645:(e,n,o)=>{o.r(n),o.d(n,{default:()=>c});const c={uploading:"Uploading",documentName:"Document name",editDocumentName:"Edit document name"}}}]);
+//# sourceMappingURL=5645.f6f47683.chunk.js.map
