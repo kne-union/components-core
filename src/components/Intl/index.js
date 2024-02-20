@@ -25,10 +25,9 @@ export const IntlProvider = ({
   children,
 }) => {
   const {
-    preset,
-    global: { localMessageRef },
+    global: { localMessageRef, locale },
   } = useGlobalContext();
-  const currentLocale = baseLocale || get(preset, "locale") || "zh-CN";
+  const currentLocale = baseLocale || locale || "zh-CN";
   return (
     <InnerProvider
       locale={currentLocale}

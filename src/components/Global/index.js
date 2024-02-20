@@ -140,7 +140,7 @@ export const GlobalProvider = ({
   const enumsRef = useRef(new Map());
   const [global, setGlobal] = useState(
     Object.assign(
-      { themeToken, localMessageRef, enumsRef },
+      { themeToken, localMessageRef, enumsRef, locale },
       get(preset, "global")
     )
   );
@@ -156,7 +156,7 @@ export const GlobalProvider = ({
       <PresetProvider value={preset}>
         <ConfigProvider
           loader={loadAntdLocale}
-          params={{ locale }}
+          params={{ locale: global.locale }}
           themeToken={global.themeToken}
         >
           <App message={{ top: 100 }}>
