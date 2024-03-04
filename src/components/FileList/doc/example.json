@@ -1,0 +1,58 @@
+{
+  "isFull": true,
+  "list": [
+    {
+      "title": "完整示例",
+      "description": "提供一个上传文件，显示文件列表，预览文件的我去年正示例",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_FileList",
+          "packageName": "@components/FileList"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "lodash",
+          "packageName": "lodash"
+        }
+      ]
+    },
+    {
+      "title": "上传文件列表",
+      "description": "展示一个上传文件展示上传成功文件列表",
+      "code": "./file-upload.js",
+      "scope": [
+        {
+          "name": "_FileList",
+          "packageName": "@components/FileList"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "lodash",
+          "packageName": "lodash"
+        }
+      ]
+    },
+    {
+      "title": "拖拽上传",
+      "description": "展示一个拖拽上传文件，得到File对象",
+      "code": "./drag-area.js",
+      "scope": [
+        {
+          "name": "_FileList",
+          "packageName": "@components/FileList"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 const { List } = _FileList;
 const { Space } = antd;
 const { PureGlobal } = global;
+const { getPublicPath } = remoteLoader;
 
 const BaseExample = () => {
   return (
@@ -34,7 +35,7 @@ render(
             console.log(params);
             return new Promise((resolve) => {
               setTimeout(() => {
-                resolve(window.PUBLIC_URL + "/mock/demo.pdf");
+                resolve(getPublicPath("components-core") + "/mock/demo.pdf");
               }, 1000);
             });
           },

@@ -9,6 +9,10 @@
         {
           "name": "_FilePreview",
           "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -20,6 +24,10 @@
         {
           "name": "_FilePreview",
           "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -31,6 +39,10 @@
         {
           "name": "_FilePreview",
           "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -42,6 +54,10 @@
         {
           "name": "_FilePreview",
           "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -53,6 +69,10 @@
         {
           "name": "_FilePreview",
           "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     }

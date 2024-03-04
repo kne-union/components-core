@@ -13,45 +13,45 @@
 
 - 获取文件地址
 - 通过一个ossId获取文件地址
-- _File(@components/File),global(@components/Global)
+- _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { default: File } = _File;
-const { PureGlobal } = global;
+const {default: File} = _File;
+const {PureGlobal} = global;
+const {getPublicPath} = remoteLoader;
 const BaseExample = () => {
-  return <File id="qqq">{({ url }) => url}</File>;
+    return <File id="qqq">{({url}) => url}</File>;
 };
 
-render(
-  <PureGlobal
+render(<PureGlobal
     preset={{
-      apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(window.PUBLIC_URL + "/avatar.png");
-              }, 1000);
-            });
-          },
+        apis: {
+            oss: {
+                loader: async ({params}) => {
+                    console.log(params);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve(getPublicPath('components-core') + "/avatar.png");
+                        }, 1000);
+                    });
+                },
+            },
         },
-      },
     }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
+>
+    <BaseExample/>
+</PureGlobal>);
 
 ```
 
 - 文件下载
 - 展示文件下载
-- _File(@components/File),global(@components/Global)
+- _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { Download } = _File;
 const { PureGlobal } = global;
+const {getPublicPath} = remoteLoader;
 const BaseExample = () => {
   return (
     <Download
@@ -75,7 +75,7 @@ render(
             console.log(params);
             return new Promise((resolve) => {
               setTimeout(() => {
-                resolve(window.PUBLIC_URL + "/avatar.png");
+                resolve(getPublicPath('components-core') + "/avatar.png");
               }, 1000);
             });
           },
@@ -91,56 +91,48 @@ render(
 
 - 文件列表
 - 展示文件列表
-- _FileList(@components/File),lodash(lodash),global(@components/Global),antd(antd)
+- _FileList(@components/File),lodash(lodash),global(@components/Global),antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { List } = _FileList;
-const { Space } = antd;
-const { PureGlobal } = global;
+const {List} = _FileList;
+const {Space} = antd;
+const {PureGlobal} = global;
+const {getPublicPath} = remoteLoader;
 
 const BaseExample = () => {
-  return (
-    <Space direction="vertical">
-      <List
-        dataSource={[
-          {
-            uuid: "121233",
-            type: "uploading",
-            filename: "张三的简历.doc",
-          },
-          {
-            id: "xxxxx",
-            filename: "我是一份简历.pdf",
-            date: "2022-07-15T11:09:15.000+08:00",
-            userName: "用户名",
-          },
-        ]}
-      />
-      <List dataSource={[]} />
-    </Space>
-  );
+    return (<Space direction="vertical">
+            <List
+                dataSource={[{
+                    uuid: "121233", type: "uploading", filename: "张三的简历.doc",
+                }, {
+                    id: "xxxxx",
+                    filename: "我是一份简历.pdf",
+                    date: "2022-07-15T11:09:15.000+08:00",
+                    userName: "用户名",
+                },]}
+            />
+            <List dataSource={[]}/>
+        </Space>);
 };
 
-render(
-  <PureGlobal
+render(<PureGlobal
     preset={{
-      apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(window.PUBLIC_URL + "/mock/demo.pdf");
-              }, 1000);
-            });
-          },
+        apis: {
+            oss: {
+                loader: async ({params}) => {
+                    console.log(params);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve(getPublicPath('components-core') + "/mock/demo.pdf");
+                        }, 1000);
+                    });
+                },
+            },
         },
-      },
     }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
+>
+    <BaseExample/>
+</PureGlobal>);
 
 ```
 

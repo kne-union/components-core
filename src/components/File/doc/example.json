@@ -13,6 +13,10 @@
         {
           "name": "global",
           "packageName": "@components/Global"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -28,6 +32,10 @@
         {
           "name": "global",
           "packageName": "@components/Global"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },
@@ -51,6 +59,10 @@
         {
           "name": "antd",
           "packageName": "antd"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         }
       ]
     },

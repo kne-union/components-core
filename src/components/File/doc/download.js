@@ -1,5 +1,6 @@
 const { Download } = _File;
 const { PureGlobal } = global;
+const { getPublicPath } = remoteLoader;
 const BaseExample = () => {
   return (
     <Download
@@ -23,7 +24,7 @@ render(
             console.log(params);
             return new Promise((resolve) => {
               setTimeout(() => {
-                resolve(window.PUBLIC_URL + "/avatar.png");
+                resolve(getPublicPath("components-core") + "/avatar.png");
               }, 1000);
             });
           },

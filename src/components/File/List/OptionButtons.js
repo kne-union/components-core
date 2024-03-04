@@ -3,12 +3,16 @@ import Icon from "@components/Icon";
 import ConfirmButton from "@components/ConfirmButton";
 import DownloadButton from "../Download";
 import FormInfo, { Input, useFormModal } from "@components/FormInfo";
-import { useIntl } from "@components/Intl";
+import { createWithIntl, useIntl } from "@components/Intl";
 import last from "lodash/last";
 import dropRight from "lodash/dropRight";
 import useFileModal from "../useFileModal";
+import importMessages from "../locale";
 
-const OptionButtons = ({ item, hasPreview, getPermission, apis }) => {
+const OptionButtons = createWithIntl({
+  moduleName: "File",
+  importMessages,
+})(({ item, hasPreview, getPermission, apis }) => {
   const { filename, id } = item;
   const { formatMessage } = useIntl({ moduleName: "File" });
   const formModal = useFormModal();
@@ -82,7 +86,7 @@ const OptionButtons = ({ item, hasPreview, getPermission, apis }) => {
       )}
     </Space>
   );
-};
+});
 
 OptionButtons.defaultProps = {
   hasPreview: true,

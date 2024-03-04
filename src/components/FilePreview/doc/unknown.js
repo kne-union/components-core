@@ -1,7 +1,8 @@
 const { UnknownPreview } = _FilePreview;
+const { getPublicPath } = remoteLoader;
 const BaseExample = () => {
   return (
-    <UnknownPreview url="/ui_components/components-core/1.0.0/mock/demo.des" />
+    <UnknownPreview url={getPublicPath("components-core") + "/mock/demo.des"} />
   );
 };
 

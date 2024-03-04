@@ -1,10 +1,8 @@
 const { ImagePreview } = _FilePreview;
+const { getPublicPath } = remoteLoader;
 const BaseExample = () => {
   return (
-    <ImagePreview
-      url={`/ui_components/components-core/1.0.0/mock/demo2.jpg`}
-      renderTextLayer={true}
-    />
+    <ImagePreview url={getPublicPath("components-core") + "/mock/demo2.jpg"} />
   );
 };
 
