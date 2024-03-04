@@ -57,65 +57,57 @@ const OptionsList = ({ className, list, width }) => {
         "--max-width": width + "px",
       }}
     >
-      <div ref={ref}>
-        <div
-          style={{
-            width: 0,
-            height: 0,
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          <div style={{ position: "absolute" }} ref={targetRef}>
-            <Space>
-              {list.map(({ className, ...props }, index) => (
-                <LoadingButton
-                  {...props}
-                  key={index}
-                  className={classnames(
-                    "option-item",
-                    "btn-no-padding",
-                    style["options-btn"],
-                    className
-                  )}
-                  type="link"
-                />
-              ))}
-            </Space>
-          </div>
-        </div>
-        <Space>
-          {list.slice(0, showLength).map(({ className, ...props }, index) => (
-            <LoadingButton
-              {...props}
-              key={index}
-              className={classnames(
-                "btn-no-padding",
-                style["options-btn"],
-                className
-              )}
-              type="link"
-            />
-          ))}
-          {otherList.length > 0 && (
-            <Dropdown
-              menu={{
-                items: otherList.map(({ children, ...props }, key) => ({
-                  ...props,
-                  key,
-                  label: children,
-                })),
-              }}
-            >
-              <Button
-                icon={<Icon type="icon-gengduo2" />}
-                className="btn-no-padding"
+      <div className={style["options-width-container"]} ref={ref} />
+      <div className={style["options-hidden-container"]}>
+        <div className={style["options-hidden-inner"]} ref={targetRef}>
+          <Space>
+            {list.map(({ className, ...props }, index) => (
+              <LoadingButton
+                {...props}
+                key={index}
+                className={classnames(
+                  "option-item",
+                  "btn-no-padding",
+                  style["options-btn"],
+                  className
+                )}
                 type="link"
               />
-            </Dropdown>
-          )}
-        </Space>
+            ))}
+          </Space>
+        </div>
       </div>
+      <Space>
+        {list.slice(0, showLength).map(({ className, ...props }, index) => (
+          <LoadingButton
+            {...props}
+            key={index}
+            className={classnames(
+              "btn-no-padding",
+              style["options-btn"],
+              className
+            )}
+            type="link"
+          />
+        ))}
+        {otherList.length > 0 && (
+          <Dropdown
+            menu={{
+              items: otherList.map(({ children, ...props }, key) => ({
+                ...props,
+                key,
+                label: children,
+              })),
+            }}
+          >
+            <Button
+              icon={<Icon type="icon-gengduo2" />}
+              className="btn-no-padding"
+              type="link"
+            />
+          </Dropdown>
+        )}
+      </Space>
     </div>
   );
 };
