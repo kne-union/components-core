@@ -51,60 +51,64 @@ const ControlMenu = () => {
 const BaseExample = () => {
   return (
     <Space>
-      <Menu
-        defaultItems={[
-          {
-            label: "父级标题1",
-            iconType: "icon-zhanghaodenglu",
-            children: [
-              {
-                label: "子标题1",
-                path: "/link1",
-              },
-              {
-                label: "子标题2",
-                path: "/link2",
-              },
-            ],
-          },
-          {
-            label: "父级标题2",
-            iconType: "icon-zhanghaodenglu",
-            children: [
-              {
-                label: "子标题1",
-                path: "/link3",
-              },
-              {
-                label: "子标题2",
-                path: "/link4",
-              },
-            ],
-          },
-          {
-            label: "父级标题3",
-            iconType: "icon-zhanghaodenglu",
-            fetchOptions: {
-              loader: () => {
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve([
-                      {
-                        label: "子标题1",
-                        path: "/link5",
-                      },
-                      {
-                        label: "子标题2",
-                        path: "/link6",
-                      },
-                    ]);
-                  }, 1000);
-                });
+      <div style={{ "max-width": "200px" }}>
+        <Menu
+          defaultItems={[
+            {
+              label: "父级标题1",
+              iconType: "icon-zhanghaodenglu",
+              children: [
+                {
+                  label:
+                    "子标题1超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长子标题1超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长子标题1超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长子标题1超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级",
+                  path: "/link1",
+                },
+                {
+                  label: "子标题2",
+                  path: "/link2",
+                },
+              ],
+            },
+            {
+              label: "父级标题2",
+              iconType: "icon-zhanghaodenglu",
+              children: [
+                {
+                  label: "子标题1",
+                  path: "/link3",
+                },
+                {
+                  label: "子标题2",
+                  path: "/link4",
+                },
+              ],
+            },
+            {
+              label: "父级标题3",
+              iconType: "icon-zhanghaodenglu",
+              fetchOptions: {
+                loader: () => {
+                  return new Promise((resolve) => {
+                    setTimeout(() => {
+                      resolve([
+                        {
+                          label: "子标题1",
+                          path: "/link5",
+                        },
+                        {
+                          label: "子标题2",
+                          path: "/link6",
+                        },
+                      ]);
+                    }, 1000);
+                  });
+                },
               },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </div>
+
       <Menu
         items={[
           {
