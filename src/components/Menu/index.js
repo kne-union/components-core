@@ -197,7 +197,7 @@ const Menu = ({ className, allowCollapsed, ...props }) => {
     const matchedPath = links.find(({ path }) => {
       return (
         ensureSlash(pathname.replace(/[#,?].*/, "")) === ensureSlash(path) ||
-        ensureSlash(pathname + search, "") === ensureSlash(path)
+        ensureSlash(pathname + search) === ensureSlash(path)
       );
     });
     if (matchedPath) {

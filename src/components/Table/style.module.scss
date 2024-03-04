@@ -211,6 +211,7 @@
       table {
         margin-bottom: calc(0px + var(--scroller-bar-height));
       }
+
       :global(.ant-table-cell) {
         word-break: break-all;
         height: var(--cell-height);
@@ -242,6 +243,24 @@
     color: var(--primary-color) !important;
     background: var(--primary-color-1) !important;
   }
+}
+
+.options-width-container {
+  position: absolute;
+  width: calc(100% - 8px * 2);
+  pointer-events: none;
+}
+
+.options-hidden-container {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+}
+
+.options-hidden-inner {
+  position: absolute;
 }
 
 .options-btn[disabled] {
