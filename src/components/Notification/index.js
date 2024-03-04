@@ -222,6 +222,16 @@ const Notification = () => {
                       <div key={`group-${groupKey}-${index}`}>
                         <NotificationItem
                           {...Object.assign({}, notification)}
+                          className={classnames({
+                            [style["is-last-item"]]:
+                              +groupKey + 1 ===
+                                Math.min(
+                                  groupList.filter(
+                                    (item) => item && item.length
+                                  )?.length,
+                                  3
+                                ) && index === item?.length - 1,
+                          })}
                         />
                       </div>
                     )
