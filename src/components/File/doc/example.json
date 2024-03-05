@@ -67,8 +67,8 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "文件链接",
+      "description": "展示文件链接",
       "code": "./file-link.js",
       "scope": [
         {

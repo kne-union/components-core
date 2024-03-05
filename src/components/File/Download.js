@@ -43,7 +43,7 @@ export const downloadBlobFile = async (res, filename) => {
   );
 };
 
-const useDownload = ({
+export const useDownload = ({
   id,
   filename,
   apis: currentApis,

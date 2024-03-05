@@ -1,5 +1,4 @@
 import style from "./style.module.scss";
-import { createWithRemoteLoader } from "@kne/remote-loader";
 import { useRef, useState } from "react";
 import { Button, Space, Typography } from "antd";
 import importMessages from "./locale";

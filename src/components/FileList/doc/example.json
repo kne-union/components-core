@@ -3,7 +3,7 @@
   "list": [
     {
       "title": "完整示例",
-      "description": "提供一个上传文件，显示文件列表，预览文件的我去年正示例",
+      "description": "提供一个上传文件，显示文件列表，预览文件的展示",
       "code": "./base.js",
       "scope": [
         {

@@ -1,4 +1,4 @@
-export { default as Download, downloadBlobFile } from "./Download";
+export { default as Download, downloadBlobFile, useDownload } from "./Download";
 export { default as List, OptionButtons } from "./List";
 export { default } from "./File";
 export { default as useFileModal } from "./useFileModal";
