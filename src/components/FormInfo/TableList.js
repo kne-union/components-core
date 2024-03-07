@@ -39,7 +39,7 @@ const TableHeader = forwardRef((props, ref) => {
         <Col
           key={key}
           className={classnames({
-            [style["is-req"]]: rule.split(" ").indexOf("REQ") === 0,
+            [style["is-req"]]: (rule || "").split(" ").indexOf("REQ") === 0,
           })}
         >
           {label}
