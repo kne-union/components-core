@@ -130,6 +130,6 @@ Upload.defaultProps = {
   interceptor: "file-format",
 };
 
-Upload.field = UploadField;
+Upload.Field = UploadField;
 
 export default Upload;
