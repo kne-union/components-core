@@ -450,6 +450,18 @@ const columnTypes = {
     min: 120,
     max: 400,
   },
+  otherSmall: {
+    render: other,
+    width: 100,
+    min: 70,
+    max: 400,
+  },
+  otherLarge: {
+    render: other,
+    width: 300,
+    min: 120,
+    max: 500,
+  },
 };
 
 export default columnTypes;
