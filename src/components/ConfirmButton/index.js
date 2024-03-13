@@ -147,5 +147,6 @@ export const withConfirm = (WrappedComponent) => {
 };
 
 export const ConfirmLink = withConfirm(Typography.Link);
+export const ConfirmText = withConfirm(Typography.Text);
 
 export default withConfirm(Button);
