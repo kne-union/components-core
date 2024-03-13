@@ -248,8 +248,10 @@ const BaseExample = () => {
                     }, 1000);
                   });
                 },
-                children: "分配Program及教练",
-              } /*,
+                children: "分配",
+                message: "确定要分配吗",
+                isDelete: false,
+              },
               {
                 children: "审核",
               },
@@ -267,7 +269,11 @@ const BaseExample = () => {
               },
               {
                 children: "删除",
-              },*/,
+                confirm: true,
+                onClick: () => {
+                  console.log("删除");
+                },
+              },
             ],
           },
         ]}

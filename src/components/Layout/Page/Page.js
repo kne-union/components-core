@@ -21,6 +21,7 @@ const PageInner = ({ children, isPass, ...props }) => {
        * */
       const targetProps = Object.assign(
         {},
+        defaultProps,
         props,
         typeof localMenuOpenRef.current === "boolean"
           ? { menuOpen: localMenuOpenRef.current }

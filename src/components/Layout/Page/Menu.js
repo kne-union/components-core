@@ -45,10 +45,9 @@ const Menu = () => {
       </FixedContainer>
       {menuCloseButton ? (
         <FixedContainer
-          className={classnames(
-            style["page-menu-btn-outer"],
-            style["page-menu-btn-outer"]
-          )}
+          className={classnames(style["page-menu-btn-outer"], {
+            [style["is-fixed"]]: menuFixed,
+          })}
           isFixed={menuFixed}
         >
           <Button

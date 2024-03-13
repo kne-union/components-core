@@ -79,6 +79,10 @@
       }
     }
 
+    .ant-table-wrapper .ant-table {
+      scrollbar-color: unset !important;
+    }
+
     .ant-table-content {
       //overflow: hidden !important;
     }
