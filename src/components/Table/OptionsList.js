@@ -13,8 +13,17 @@ const OptionsList = ({ className, list, width }) => {
   const confirmModal = useConfirmModal();
   const computedLength = () => {
     const el = targetRef.current;
-    const buttonEls = el.querySelectorAll(".option-item"),
-      buttonElLength = buttonEls.length;
+    if (!el) {
+      return;
+    }
+    const buttonEls = el.querySelectorAll(".option-item");
+    if (!buttonEls) {
+      return;
+    }
+    const buttonElLength = buttonEls.length;
+    if (buttonEls.length === 0) {
+      return;
+    }
     const amountWidth = ref.current.clientWidth,
       moreBtnWidth = 32,
       spaceWidth = 8;

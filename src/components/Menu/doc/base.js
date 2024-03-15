@@ -51,7 +51,7 @@ const ControlMenu = () => {
 const BaseExample = () => {
   return (
     <Space>
-      <div style={{ "max-width": "200px" }}>
+      <div style={{ maxWidth: "200px" }}>
         <Menu
           defaultItems={[
             {
