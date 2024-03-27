@@ -1,5 +1,7 @@
+import { PureGlobal } from "../../Global";
+
 const { default: ExportTable } = _ExportTable;
-const { default: Global } = global;
+const { PureGlobal: Global } = global;
 const { preset } = reactFetch;
 
 const ajax = (config) => {

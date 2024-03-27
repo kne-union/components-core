@@ -140,7 +140,12 @@ export const GlobalProvider = ({
   const enumsRef = useRef(new Map());
   const [global, setGlobal] = useState(
     Object.assign(
-      { themeToken, localMessageRef, enumsRef, locale },
+      {
+        themeToken,
+        localMessageRef,
+        enumsRef,
+        locale,
+      },
       get(preset, "global")
     )
   );

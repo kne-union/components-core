@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { startTransition, useState } from "react";
 import Icon from "@components/Icon";
 import LoadingButton from "@components/LoadingButton";
-import ConfirmButton, { ConfirmText } from "@components/ConfirmButton";
+import ConfirmButton from "@components/ConfirmButton";
 import { useConfirmModal } from "@components/Modal";
 import useResize from "@common/hooks/useResize";
 import style from "./style.module.scss";
