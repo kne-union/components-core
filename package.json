@@ -69,8 +69,7 @@
     "create": "modules-dev-create",
     "start": "cross-env PORT=3001 COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/ craco start",
     "build": "cross-env COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/components-core  craco build",
-    "test": "craco test --coverage",
-    "prepare": "husky install"
+    "test": "craco test --coverage"
   },
   "eslintConfig": {
     "extends": [
