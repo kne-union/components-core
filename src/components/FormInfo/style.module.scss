@@ -143,13 +143,14 @@
 
   :global {
     .ant-col {
-      padding: 13px 16px;
+      padding: 8px 16px;
     }
   }
 }
 
 .table-list-extra {
-  flex-basis: 150px;
+  flex-basis: 100px;
+  text-align: right;
 }
 
 .list-btn {
@@ -165,6 +166,17 @@
 }
 
 .list-part {
+  > :global(.ant-card-head) .list-btn {
+    border-radius: 2px;
+    border: 1px solid var(--font-color-grey-2);
+    padding: 6px 12px;
+  }
+
+  .list-part .list-btn {
+    padding: 0;
+    border: none;
+  }
+
   &:global {
     &.ant-card .ant-card-body {
       padding: 16px 0 0;
@@ -174,6 +186,41 @@
 }
 
 .list-item {
+  &.is-important {
+    > .list-item-part:global(.ant-card > .ant-card-head) {
+      background: var(--primary-color-06);
+    }
+
+    > .list-item-part:global(.ant-card > .ant-card-head .ant-card-head-title) {
+      color: var(--primary-color);
+    }
+
+    .list-item-part:global(.ant-card .ant-card-head-title) {
+      font-weight: 500;
+    }
+
+    > .list-item-part:global(.ant-card)
+      .list-part:global(.ant-card > .ant-card-head) {
+      background: transparent;
+      padding: 0;
+      border: none;
+      line-height: 1;
+    }
+
+    > .list-item-part:global(.ant-card)
+      .list-part:global(.ant-card > .ant-card-body) {
+      padding: 16px 0;
+    }
+
+    > .list-item-part {
+      border-color: var(--primary-color-5);
+    }
+
+    .table-list-inner {
+      border: none;
+    }
+  }
+
   .list-item-part {
     &:global {
       &.ant-card {
@@ -181,6 +228,7 @@
           background: #f8f8f8;
           border-bottom: 1px solid var(--font-color-grey-4);
           line-height: 36px;
+          height: 36px;
           padding: 0 16px;
         }
 

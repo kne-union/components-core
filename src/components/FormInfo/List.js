@@ -1,5 +1,5 @@
 import { cloneElement, useRef } from "react";
-import { Divider, Typography } from "antd";
+import { Button, Divider, Typography } from "antd";
 import ConfirmButton from "@components/ConfirmButton";
 import Icon from "@components/Icon";
 import InfoPage from "@components/InfoPage";
@@ -29,10 +29,23 @@ const List = ({
   outer,
   renderChildren,
   className,
+  important,
 }) => {
   const groupRef = useRef(null);
   const context = useFormContext();
   const { formData } = context;
+  const allowAdd = !(
+    maxLength && maxLength <= get(formData, `${name}.length`, 0)
+  );
+  const addHandler = () => {
+    if (
+      typeof beforeAdd === "function"
+        ? beforeAdd(name, context) !== false
+        : true
+    ) {
+      groupRef.current.onAdd({ isUnshift: isUnshift });
+    }
+  };
   return (
     <IntlProvider importMessages={importMessages} moduleName="FormInfo">
       {cloneElement(
@@ -41,18 +54,8 @@ const List = ({
           title,
           addText,
           className: classnames(className, style["list-part"]),
-          allowAdd: !(
-            maxLength && maxLength <= get(formData, `${name}.length`, 0)
-          ),
-          add: () => {
-            if (
-              typeof beforeAdd === "function"
-                ? beforeAdd(name, context) !== false
-                : true
-            ) {
-              groupRef.current.onAdd({ isUnshift: isUnshift });
-            }
-          },
+          allowAdd: isUnshift && allowAdd,
+          add: addHandler,
         },
         renderChildren(
           <GroupList name={name} defaultLength={defaultLength} ref={groupRef}>
@@ -72,33 +75,39 @@ const List = ({
                 groupArgs,
                 extra: (
                   <FormattedMessage id="delText" moduleName="FormInfo">
-                    {(text) => (
-                      <ConfirmButton
-                        disabled={minLength && minLength >= length}
-                        danger
-                        className={"btn-no-padding"}
-                        message={
-                          <FormattedMessage
-                            id="delConfirm"
-                            moduleName="FormInfo"
-                            values={{ name: label || title }}
-                          />
-                        }
-                        type="link"
-                        onClick={() => {
-                          onRemove(key);
-                          afterDelete && afterDelete(...groupArgs, context);
-                        }}
-                      >
-                        <Icon type="icon-shanchu" />
-                        {text}
-                      </ConfirmButton>
-                    )}
+                    {(text) =>
+                      !(minLength && minLength >= length) ? (
+                        <ConfirmButton
+                          danger
+                          className={"btn-no-padding"}
+                          message={
+                            <FormattedMessage
+                              id="delConfirm"
+                              moduleName="FormInfo"
+                              values={{ name: label || title }}
+                            />
+                          }
+                          type="link"
+                          onClick={() => {
+                            onRemove(key);
+                            afterDelete && afterDelete(...groupArgs, context);
+                          }}
+                        >
+                          <Icon type="icon-shanchu" />
+                          {text}
+                        </ConfirmButton>
+                      ) : null
+                    }
                   </FormattedMessage>
                 ),
               };
               return (
-                <div key={key} className={style["list-item"]}>
+                <div
+                  key={key}
+                  className={classnames(style["list-item"], {
+                    [style["is-important"]]: important,
+                  })}
+                >
                   {typeof listRender === "function" ? (
                     listRender(formInfoProps)
                   ) : (
@@ -115,6 +124,16 @@ const List = ({
           </GroupList>
         )
       )}
+      {!isUnshift && allowAdd ? (
+        <FormattedMessage id="addText" moduleName="FormInfo">
+          {(text) => (
+            <Button onClick={addHandler}>
+              <Icon type="icon-tianjia" />
+              {addText || text}
+            </Button>
+          )}
+        </FormattedMessage>
+      ) : null}
     </IntlProvider>
   );
 };

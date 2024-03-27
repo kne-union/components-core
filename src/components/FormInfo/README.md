@@ -412,6 +412,79 @@ const BaseExample = () => {
             />,
           ]}
         />
+          <List
+              name="mult-list" important
+              title="复杂列表"
+              itemTitle={({ index }) => `经历${index + 1}`}
+              maxLength={5}
+              minLength={1}
+              list={[
+                  <Input name="name" label="名称" rule="REQ" />,
+                  <Input name="title" label="标题" rule="REQ" />,
+                  <TextArea name="des" label="描述" block rule="REQ" />,
+                  <TableList block isUnshift={false}
+                      name="tableList"
+                      title="表格列表"
+                      maxLength={5}
+                      minLength={1}
+                      list={[
+                          <Input name="name" label="名称" rule="REQ" value="xxxxx" />,
+                          <Input name="title" label="标题" rule="REQ" />,
+                          <AdvancedSelect
+                              name="select"
+                              label="选项"
+                              rule="REQ"
+                              value={[1]}
+                              api={{
+                                  loader: () => {
+                                      return {
+                                          pageData: [
+                                              {
+                                                  label: "第一项",
+                                                  value: 1,
+                                              },
+                                              {
+                                                  label: "第二项",
+                                                  value: 2,
+                                                  disabled: true,
+                                              },
+                                              {
+                                                  label: "第三项",
+                                                  value: 3,
+                                              },
+                                          ],
+                                      };
+                                  },
+                              }}
+                          />,
+                      ]}
+                  />
+              ]}
+          />
+
+          <List
+              name="mult-list-2" important
+              title="复杂列表2"
+              itemTitle={({ index }) => `经历${index + 1}`}
+              maxLength={5}
+              minLength={1}
+              list={[
+                  <Input name="name" label="名称" rule="REQ" />,
+                  <Input name="title" label="标题" rule="REQ" />,
+                  <TextArea name="des" label="描述" block rule="REQ" />,
+                  <List block
+                             name="tableList"
+                             title="列表"
+                             maxLength={5}
+                             minLength={1}
+                             list={[
+                                 <Input name="name" label="名称" rule="REQ" value="xxxxx" />,
+                                 <Input name="title" label="标题" rule="REQ" />,
+                                 <TextArea name="des" label="描述" block rule="REQ" />,
+                             ]}
+                  />
+              ]}
+          />
         <FormInfo
           list={[
             <SubmitButton>提交</SubmitButton>,
