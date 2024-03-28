@@ -1,0 +1,16 @@
+.width-container {
+  width: 100%;
+  pointer-events: none;
+}
+
+.hidden-container {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+}
+
+.hidden-inner {
+  position: absolute;
+}

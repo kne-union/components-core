@@ -1,0 +1,35 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./base.js",
+      "scope": [
+        {
+          "name": "_ButtonGroup",
+          "packageName": "@components/ButtonGroup"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "紧凑模式",
+      "description": "紧凑模式",
+      "code": "./compact.js",
+      "scope": [
+        {
+          "name": "_ButtonGroup",
+          "packageName": "@components/ButtonGroup"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
+}
