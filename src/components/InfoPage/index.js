@@ -3,7 +3,7 @@ import classnames from "classnames";
 import Collapse from "./Collapse";
 import style from "./style.module.scss";
 
-const Part = ({ className, title, sutTitle, extra, children, ...props }) => {
+const Part = ({ className, title, subTitle, extra, children, ...props }) => {
   return (
     <Card
       className={classnames(style["part"], "part", className, {
@@ -16,14 +16,14 @@ const Part = ({ className, title, sutTitle, extra, children, ...props }) => {
             <div className={classnames("part-title", style["part-title"])}>
               {title}
             </div>
-            {sutTitle && (
+            {subTitle && (
               <div
                 className={classnames(
                   "part-title-sub",
                   style["part-title-sub"]
                 )}
               >
-                {sutTitle}
+                {subTitle}
               </div>
             )}
           </>
