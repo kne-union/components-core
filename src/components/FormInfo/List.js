@@ -30,7 +30,6 @@ const List = ({
   renderChildren,
   className,
   important,
-  onAdd,
 }) => {
   const groupRef = useRef(null);
   const context = useFormContext();
@@ -41,12 +40,12 @@ const List = ({
   const addHandler = () => {
     if (
       typeof beforeAdd === "function"
-        ? beforeAdd(name, context) !== false
+        ? beforeAdd(name, context, {
+            isUnshift,
+            group: groupRef.current,
+          }) !== false
         : true
     ) {
-      if (onAdd && onAdd({ isUnshift }) === false) {
-        return;
-      }
       groupRef.current.onAdd({ isUnshift });
     }
   };
