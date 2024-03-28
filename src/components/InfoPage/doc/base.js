@@ -7,7 +7,7 @@ const BaseExample = () => {
     <InfoPage>
       <InfoPage.Part
         title="退票信息"
-        sutTitle="我是一个退票信息"
+        subTitle="我是一个退票信息"
         extra={<Button>操作</Button>}
       >
         <Descriptions
