@@ -68,7 +68,7 @@ const TableList = ({ list, className, ...props }) => {
           <Row
             key={key}
             wrap={false}
-            align="middle"
+            align="top"
             style={{
               "--col-width": `${100 / list.length}%`,
             }}
