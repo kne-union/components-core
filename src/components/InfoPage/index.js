@@ -3,14 +3,32 @@ import classnames from "classnames";
 import Collapse from "./Collapse";
 import style from "./style.module.scss";
 
-const Part = ({ className, title, extra, children, ...props }) => {
+const Part = ({ className, title, sutTitle, extra, children, ...props }) => {
   return (
     <Card
-      className={classnames(style["part"], className, {
+      className={classnames(style["part"], "part", className, {
         "no-title": !title,
       })}
       bordered={false}
-      title={title}
+      title={
+        title && (
+          <>
+            <div className={classnames("part-title", style["part-title"])}>
+              {title}
+            </div>
+            {sutTitle && (
+              <div
+                className={classnames(
+                  "part-title-sub",
+                  style["part-title-sub"]
+                )}
+              >
+                {sutTitle}
+              </div>
+            )}
+          </>
+        )
+      }
       extra={extra}
       {...props}
     >
@@ -19,9 +37,9 @@ const Part = ({ className, title, extra, children, ...props }) => {
   );
 };
 
-const InfoPage = ({ className, children }) => {
+const InfoPage = ({ className, children, ...props }) => {
   return (
-    <Space className={className} direction="vertical" size={24}>
+    <Space {...props} className={className} direction="vertical" size={24}>
       {children}
     </Space>
   );
