@@ -35,7 +35,7 @@ const Content = ({ list, labelAlign, col, gutter, className, size }) => {
   return (
     <Row
       data-testid="components-core-content"
-      className={classnames(style["content"], className, {
+      className={classnames(style["content"], "content", className, {
         [style["size-small"]]: size === "small",
       })}
       gutter={gutter}
@@ -54,7 +54,10 @@ const Content = ({ list, labelAlign, col, gutter, className, size }) => {
               key={index}
               className={style["item"]}
             >
-              <Space key={index} className={style["item"]}>
+              <Space
+                key={index}
+                className={classnames(style["item"], "content-item")}
+              >
                 {label ? (
                   <div
                     style={

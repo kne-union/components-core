@@ -1,20 +1,30 @@
 const { default: InfoPage } = _InfoPage;
 const { default: Content } = _Content;
 const { default: Descriptions } = _Descriptions;
-const { Space } = antd;
+const { Space, Button } = antd;
 const BaseExample = () => {
   return (
     <InfoPage>
-      <InfoPage.Part title="退票信息">
+      <InfoPage.Part
+        title="退票信息"
+        sutTitle="我是一个退票信息"
+        extra={<Button>操作</Button>}
+      >
         <Descriptions
           dataSource={[
             [
               { label: "客户名称", content: "腾讯" },
-              { label: "发票抬头", content: "腾讯科技公司" },
+              {
+                label: "发票抬头",
+                content: "腾讯科技公司",
+              },
             ],
             [
               { label: "发票类型", content: "增值税专用发票" },
-              { label: "发票开具日期", content: "2022-08-15" },
+              {
+                label: "发票开具日期",
+                content: "2022-08-15",
+              },
             ],
             [{ label: "退票金额", content: "22000.00元" }],
             [
@@ -32,7 +42,10 @@ const BaseExample = () => {
             ],
             [
               { label: "是否需要重开发票", content: "否" },
-              { label: "是否涉及金融变动", content: "否" },
+              {
+                label: "是否涉及金融变动",
+                content: "否",
+              },
             ],
             [
               { label: "是否造成实质损失", content: "否" },
@@ -46,7 +59,10 @@ const BaseExample = () => {
             ],
             [{ label: "附件", content: "附件名称" }],
             [
-              { label: "操作时间", content: "2022-08-01 16:32" },
+              {
+                label: "操作时间",
+                content: "2022-08-01 16:32",
+              },
               { label: "操作人", content: "西西歪" },
             ],
           ]}
@@ -70,11 +86,20 @@ const BaseExample = () => {
                     gutter={[0, 12]}
                     list={[
                       { label: "项目类型", content: "面试到岗" },
-                      { label: "费用类型", content: "服务费" },
+                      {
+                        label: "费用类型",
+                        content: "服务费",
+                      },
                       { label: "费用总金额", content: "10,000元" },
-                      { label: "本次支付费用比例", content: "30%" },
+                      {
+                        label: "本次支付费用比例",
+                        content: "30%",
+                      },
                       { label: "本次支付费用金额", content: "3,000元" },
-                      { label: "开票候选人", content: "李小萌" },
+                      {
+                        label: "开票候选人",
+                        content: "李小萌",
+                      },
                     ]}
                   />
                 </InfoPage.Collapse.Panel>
@@ -85,11 +110,20 @@ const BaseExample = () => {
                     gutter={[0, 12]}
                     list={[
                       { label: "项目类型", content: "面试到岗" },
-                      { label: "费用类型", content: "服务费" },
+                      {
+                        label: "费用类型",
+                        content: "服务费",
+                      },
                       { label: "费用总金额", content: "10,000元" },
-                      { label: "本次支付费用比例", content: "30%" },
+                      {
+                        label: "本次支付费用比例",
+                        content: "30%",
+                      },
                       { label: "本次支付费用金额", content: "3,000元" },
-                      { label: "开票候选人", content: "李小萌" },
+                      {
+                        label: "开票候选人",
+                        content: "李小萌",
+                      },
                     ]}
                   />
                 </InfoPage.Collapse.Panel>
@@ -98,11 +132,17 @@ const BaseExample = () => {
                 dataSource={[
                   [
                     { label: "客户付税比例", content: "1%" },
-                    { label: "客户所付税金", content: "30元" },
+                    {
+                      label: "客户所付税金",
+                      content: "30元",
+                    },
                   ],
                   [
                     { label: "服务费", content: "2886.29元" },
-                    { label: "发票增值税", content: "172.38元" },
+                    {
+                      label: "发票增值税",
+                      content: "172.38元",
+                    },
                   ],
                   [{ label: "发票金额", content: "22000.00元" }],
                   [
@@ -119,9 +159,19 @@ const BaseExample = () => {
             <Descriptions
               dataSource={[
                 [{ label: "付款信息", content: "ASB54492789374983798" }],
-                [{ label: "发票收件人", content: "西西歪" }],
+                [
+                  {
+                    label: "发票收件人",
+                    content: "西西歪",
+                  },
+                ],
                 [{ label: "附件", content: "附件名称" }],
-                [{ label: "预计入职日期", content: "2022-08-15" }],
+                [
+                  {
+                    label: "预计入职日期",
+                    content: "2022-08-15",
+                  },
+                ],
               ]}
             />
           </InfoPage.Part>
@@ -134,7 +184,10 @@ const BaseExample = () => {
                   gutter={[0, 12]}
                   list={[
                     { label: "分配用户", content: "王亚男" },
-                    { label: "分配比例", content: "40%" },
+                    {
+                      label: "分配比例",
+                      content: "40%",
+                    },
                     { label: "分配金额", content: "1,200元" },
                   ]}
                 />
@@ -146,7 +199,10 @@ const BaseExample = () => {
                   gutter={[0, 12]}
                   list={[
                     { label: "分配用户", content: "王亚男" },
-                    { label: "分配比例", content: "40%" },
+                    {
+                      label: "分配比例",
+                      content: "40%",
+                    },
                     { label: "分配金额", content: "1,200元" },
                   ]}
                 />

@@ -236,41 +236,20 @@
   }
 }
 
-.options-btn {
+.options-column {
+  width: 100% !important;
+}
+
+.options-btn:global(.ant-btn) {
   :global(.ant-btn-loading-icon) {
     display: none;
   }
 
   padding: 0 8px !important;
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: var(--primary-color) !important;
     background: var(--primary-color-1) !important;
-  }
-}
-
-.options-width-container {
-  position: absolute;
-  width: calc(100% - 8px * 2);
-  pointer-events: none;
-}
-
-.options-hidden-container {
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  position: relative;
-  pointer-events: none;
-}
-
-.options-hidden-inner {
-  position: absolute;
-}
-
-.options-btn[disabled] {
-  &:hover {
-    color: rgba(34, 34, 34, 0.25) !important;
-    background: transparent !important;
   }
 }
 

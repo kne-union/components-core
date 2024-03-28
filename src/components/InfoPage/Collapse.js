@@ -7,12 +7,13 @@ const Collapse = ({ children, className, ...props }) => {
   return (
     <CollapseAntd
       {...props}
-      className={classnames(style["collapse"], className)}
+      className={classnames(style["collapse"], "collapse", className)}
       expandIcon={({ isActive }) => (
         <Icon
           size={12}
           className={classnames({
             [style["is-active"]]: isActive,
+            "is-active": isActive,
           })}
           type="icon-triangle-right"
         />
