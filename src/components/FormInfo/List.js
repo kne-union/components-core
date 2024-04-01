@@ -73,7 +73,11 @@ const List = ({
                     : list,
                 title:
                   typeof itemTitle === "function"
-                    ? itemTitle({ index, key, onRemove })
+                    ? itemTitle({
+                        index: isUnshift ? length - index - 1 : index,
+                        key,
+                        onRemove,
+                      })
                     : itemTitle,
                 groupArgs,
                 extra: (
