@@ -20,6 +20,10 @@
 
 .item {
   align-items: start;
+
+  :global(.ant-space-item):last-child {
+    flex: 1;
+  }
 }
 
 .label {
