@@ -5,7 +5,6 @@ import classnames from "classnames";
 import Icon from "@components/Icon";
 import LoadingButton from "@components/LoadingButton";
 import ConfirmButton from "@components/ConfirmButton";
-import { useConfirmModal } from "@components/Modal";
 import useResize from "@common/hooks/useResize";
 import pick from "lodash/pick";
 import style from "./style.module.scss";
@@ -13,7 +12,6 @@ import style from "./style.module.scss";
 const ButtonGroup = ({ list, more, compact, ...props }) => {
   const spaceProps = pick(props, ["size", "split", "align", "style"]);
   const [showLength, setShowLength] = useState(list.length);
-  const confirmModal = useConfirmModal();
   const computedLength = useRefCallback(() => {
     const el = targetRef.current,
       moreEl = moreRef.current,
@@ -78,18 +76,38 @@ const ButtonGroup = ({ list, more, compact, ...props }) => {
   const ref = useResize(computedLength);
   const targetRef = useResize(computedLength);
   const moreRef = useResize(computedLength);
-
   const otherList = list.slice(showLength);
 
-  const renderButton = ({ className, confirm, ...props }, index) => {
+  const renderButton = (renderItem, index, isDropdown) => {
+    if (typeof renderItem === "function") {
+      return renderItem({
+        key: index,
+        className: classnames("button-group-item", style["btn-item"]),
+        isDropdown,
+      });
+    }
+    const { className, confirm, ...props } = renderItem;
     const isConfirm = confirm || props.message;
     const CurrentButton = isConfirm ? ConfirmButton : LoadingButton;
+
     return (
       <CurrentButton
         danger={isConfirm && props.isDelete !== false}
-        {...props}
+        {...Object.assign(
+          {},
+          props,
+          isConfirm && (props.isModal || isDropdown)
+            ? {
+                isModal: true,
+              }
+            : {}
+        )}
         key={index}
-        className={classnames("button-group-item", className)}
+        className={classnames(
+          "button-group-item",
+          style["btn-item"],
+          className
+        )}
       />
     );
   };
@@ -110,42 +128,19 @@ const ButtonGroup = ({ list, more, compact, ...props }) => {
         </div>
       </div>
       <SpaceComponent {...spaceProps}>
-        {list.slice(0, showLength).map(renderButton)}
+        {list
+          .slice(0, showLength)
+          .map((item, index) => renderButton(item, index, false))}
         {otherList.length > 0 && (
           <Dropdown
+            overlayClassName={style["menu-list"]}
             menu={{
-              items: otherList.map(
-                (
-                  {
-                    children,
-                    confirm,
-                    message,
-                    onClick,
-                    title,
-                    isDelete,
-                    okText,
-                    ...props
-                  },
-                  key
-                ) => ({
-                  ...props,
-                  key,
-                  label: children,
-                  onClick: (e) => {
-                    const isConfirm = confirm || message;
-                    isConfirm
-                      ? confirmModal({
-                          danger: isDelete !== false,
-                          type: "confirm",
-                          title,
-                          message: message || "确定要删除吗?",
-                          onOk: onClick,
-                          okText: okText || (isDelete !== false && "删除"),
-                        })
-                      : onClick && onClick(e);
-                  },
-                })
-              ),
+              items: otherList.map((item, index) => {
+                return {
+                  key: index,
+                  label: renderButton(item, index, true),
+                };
+              }),
             }}
           >
             {more}

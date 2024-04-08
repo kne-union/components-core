@@ -3,7 +3,7 @@ import { Button, Popconfirm, Space, Typography } from "antd";
 import importMessages from "./locale";
 import Icon from "@components/Icon";
 import { createWithIntl, useIntl } from "@components/Intl";
-import { useModal } from "@components/Modal";
+import { useConfirmModal } from "@components/Modal";
 import classnames from "classnames";
 import style from "./style.module.scss";
 
@@ -28,56 +28,26 @@ export const withConfirm = (WrappedComponent) => {
       ...props
     }) => {
       const { formatMessage } = useIntl({ moduleName: "ConfirmButton" });
-      const modal = useModal();
+      const modal = useConfirmModal();
       if (isModal) {
         return (
           <WrappedComponent
             {...props}
             onClick={(e) => {
-              const cancelButton = {
-                children: cancelText || formatMessage({ id: "cancel" }),
-                onClick: onCancel,
-              };
-              const confirmButton = {
-                type: "primary",
-                children: okText
+              modal({
+                type: "confirm",
+                title: title,
+                getContainer,
+                danger: isDelete,
+                message: message || formatMessage({ id: "message" }),
+                okText: okText
                   ? okText
                   : isDelete
                   ? formatMessage({ id: "delete" })
                   : formatMessage({ id: "confirm" }),
-                onClick: () => onClick(e),
-                danger: isDelete,
-              };
-              modal({
-                title: title && (
-                  <Space size={0} className={style["title"]}>
-                    <Icon className="title-icon" type="icon-tishi-tianchong" />
-                    {title}
-                  </Space>
-                ),
-                getContainer,
-                wrapClassName: classnames(style["overlay"], {
-                  [style["is-danger"]]: isDelete,
-                }),
-                children: (
-                  <Space
-                    size={0}
-                    className={classnames(style["content"], {
-                      [style["has-title"]]: title,
-                    })}
-                  >
-                    {!title && (
-                      <Icon
-                        className="title-icon"
-                        type="icon-tishi-tianchong"
-                      />
-                    )}
-                    {message || formatMessage({ id: "message" })}
-                  </Space>
-                ),
-                footerButtons: showCancel
-                  ? [cancelButton, confirmButton]
-                  : [confirmButton],
+                cancelText: cancelText || formatMessage({ id: "cancel" }),
+                onCancel,
+                onOk: onClick,
               });
             }}
           />
@@ -141,6 +111,7 @@ export const withConfirm = (WrappedComponent) => {
 
   ConfirmComponent.defaultProps = {
     isModal: false,
+    showCancel: true,
   };
 
   return ConfirmComponent;

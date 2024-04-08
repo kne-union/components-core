@@ -248,7 +248,7 @@
   padding: 0 8px !important;
 
   &:hover:not(:disabled) {
-    color: var(--primary-color) !important;
+    color: var(--primary-color);
     background: var(--primary-color-1) !important;
   }
 }
