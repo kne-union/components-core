@@ -30,6 +30,25 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "渲染函数",
+      "description": "渲染函数",
+      "code": "./function-props.js",
+      "scope": [
+        {
+          "name": "_ButtonGroup",
+          "packageName": "@components/ButtonGroup"
+        },
+        {
+          "name": "_ConfirmButton",
+          "packageName": "@components/ConfirmButton"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

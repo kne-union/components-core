@@ -14,3 +14,25 @@
 .hidden-inner {
   position: absolute;
 }
+
+.menu-list {
+  :global {
+    .ant-dropdown-menu-item {
+      padding: 0 !important;
+    }
+  }
+
+  .btn-item {
+    padding: 5px 8px !important;
+    border: none;
+    width: 100%;
+    color: var(--primary-color);
+    :global(.ant-btn-loading-icon) {
+      display: none;
+    }
+    &:hover:not(:disabled) {
+      color: var(--primary-color);
+      background: var(--primary-color-1) !important;
+    }
+  }
+}
