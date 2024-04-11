@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { Col, Row, Space } from "antd";
 import classnames from "classnames";
 import style from "./style.module.scss";
+import Features from "@components/Features";
 
 export const Label = ({ className, children, setWidth }) => {
   const ref = useRef(null);
@@ -47,8 +48,8 @@ const Content = ({ list, labelAlign, col, gutter, className, size }) => {
           }
           return item.display !== false;
         })
-        .map(({ label, content, block }, index) => {
-          return (
+        .map(({ label, content, block, featureId }, index) => {
+          const render = (
             <Col
               span={block === true ? 24 : 24 / col}
               key={index}
@@ -92,6 +93,11 @@ const Content = ({ list, labelAlign, col, gutter, className, size }) => {
                 </div>
               </Space>
             </Col>
+          );
+          return featureId ? (
+            <Features id={featureId}>{render}</Features>
+          ) : (
+            render
           );
         })}
     </Row>
