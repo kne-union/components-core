@@ -4,7 +4,10 @@ import { useFlexBox } from "@components/FlexBox";
 import FieldList from "./FieldList";
 
 const FormInfo = ({ list, groupArgs, column, gap, ...props }) => {
-  const { ref: flexBoxRef, column: flexBoxColumn } = useFlexBox();
+  const isFlexBox = !(Number.isInteger(column) && column > 0);
+  const { ref: flexBoxRef, column: flexBoxColumn } = useFlexBox(
+    isFlexBox ? column : {}
+  );
 
   const renderInner = (column) => {
     return (
@@ -31,7 +34,7 @@ const FormInfo = ({ list, groupArgs, column, gap, ...props }) => {
   };
 
   const renderColumn = () => {
-    if (Number.isInteger(column) && column > 0) {
+    if (!isFlexBox) {
       return renderInner(column);
     }
     if (flexBoxColumn) {
