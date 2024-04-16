@@ -2,16 +2,23 @@ import { Col, Row } from "antd";
 import InfoPage from "@components/InfoPage";
 import { useFlexBox } from "@components/FlexBox";
 import FieldList from "./FieldList";
+import style from "./style.module.scss";
+import classnames from "classnames";
 
-const FormInfo = ({ list, groupArgs, column, gap, ...props }) => {
+const FormInfo = ({ list, groupArgs, column, gap, className, ...props }) => {
   const isFlexBox = !(Number.isInteger(column) && column > 0);
   const { ref: flexBoxRef, column: flexBoxColumn } = useFlexBox(
     isFlexBox ? column : {}
   );
 
-  const renderInner = (column) => {
+  const renderInner = (column, notLayout) => {
     return (
-      <Row gutter={[gap || 24, 0]}>
+      <Row
+        gutter={[gap || 24, 0]}
+        className={classnames({
+          [style["column-not-layout"]]: notLayout,
+        })}
+      >
         <FieldList
           list={list}
           groupArgs={groupArgs}
@@ -41,12 +48,16 @@ const FormInfo = ({ list, groupArgs, column, gap, ...props }) => {
       return renderInner(flexBoxColumn.col);
     }
 
-    return renderInner(2);
+    return renderInner(2, true);
   };
 
   return (
-    <InfoPage.Part {...props}>
-      <div ref={flexBoxRef}>{renderColumn()}</div>
+    <InfoPage.Part
+      {...props}
+      className={classnames(className, style["form-info"])}
+    >
+      <div ref={flexBoxRef} />
+      {renderColumn()}
     </InfoPage.Part>
   );
 };
