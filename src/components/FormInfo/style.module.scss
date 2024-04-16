@@ -165,6 +165,12 @@
   }
 }
 
+.form-info {
+  > :global(.ant-card-head .part-title) {
+    font-size: var(--font-size-large);
+  }
+}
+
 .list-part {
   > :global(.ant-card-head .part-title) {
     font-size: var(--font-size-large);
@@ -402,4 +408,8 @@
 .error-tip-overlay-content {
   padding: 12px 16px;
   box-sizing: border-box;
+}
+
+.column-not-layout {
+  display: none;
 }
