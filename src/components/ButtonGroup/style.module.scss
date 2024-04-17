@@ -27,6 +27,9 @@
     border: none;
     width: 100%;
     color: var(--primary-color);
+    &:global(.ant-btn-primary) {
+      color: #ffffff;
+    }
     :global(.ant-btn-loading-icon) {
       display: none;
     }
