@@ -53,7 +53,6 @@ const SalaryInputField = ({
   ...props
 }) => {
   const [value, onChange] = useControlValue(props);
-  console.log(value, "薪资");
   const { formatMessage } = useIntl({ moduleName: "FormInfo" });
   const _placeholder = formatMessage(
     { id: "defaultSelectPlaceholder" },
