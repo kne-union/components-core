@@ -1,4 +1,8 @@
-import { AsYouType, getCountryCallingCode } from "libphonenumber-js";
+import {
+  AsYouType,
+  getCountryCallingCode,
+  parsePhoneNumber,
+} from "libphonenumber-js";
 import { Input, Select, Space } from "antd";
 import { hooks } from "@kne/react-form-antd";
 import useSimulationBlur from "@kne/use-simulation-blur";
@@ -135,6 +139,17 @@ PhoneNumber.format = ({ code, value }) => {
     return "";
   }
   return `+${phoneCode} ${value}`;
+};
+
+PhoneNumber.parsePhoneNumber = ({ phoneNumber }) => {
+  const { country, countryCallingCode, nationalNumber } = phoneNumber
+    ? parsePhoneNumber(phoneNumber)
+    : null;
+
+  if (!nationalNumber || !phoneNumber) {
+    return "";
+  }
+  return { country, countryCallingCode, nationalNumber };
 };
 
 export const PHONE_NUMBER = async (value, { field }) => {
