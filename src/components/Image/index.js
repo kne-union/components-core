@@ -17,6 +17,7 @@ const ImageInner = ({
   error,
   innerError,
   children,
+  onClick,
 }) => {
   return (
     <Fetch
@@ -37,6 +38,7 @@ const ImageInner = ({
             alt={alt}
             className={classnames(className, style["img"])}
             src={data}
+            onClick={onClick}
           />
         );
       }}
