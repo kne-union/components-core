@@ -51,6 +51,7 @@ const BaseExample = () => {
           name="salaryRange"
           label="薪资范围"
           rule="REQ SALARYRANGE"
+          showMonth
           remindUnit
         />
       </Form>
