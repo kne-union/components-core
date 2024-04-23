@@ -1,7 +1,7 @@
 import React, { cloneElement } from "react";
 import { hooks, Select } from "@kne/react-form-antd";
 import useSimulationBlur from "@kne/use-simulation-blur";
-import { Col, Input, InputNumber, Row, Space } from "antd";
+import { Col, Input, InputNumber, Row } from "antd";
 import style from "./style.module.scss";
 import { IntlProvider, useIntl } from "@components/Intl";
 import importMessages from "../../locale";
@@ -106,118 +106,122 @@ const SalaryInputField = ({
         {isFace ? null : (
           <Col flex={1}>
             {isRange && (
-              <Space.Compact
+              <Row
                 className={
                   remindUnit && [5, 6].includes(value?.type)
                     ? style["input-group"]
                     : style["input-group-no-mb"]
                 }
+                wrap={false}
               >
-                <FormField isError={!get(value, "min") && req}>
-                  <InputNumber
-                    disabled={disabled}
-                    placeholder={_placeholderInput}
-                    formatter={numberFormat}
-                    value={transform(get(value, "min"))}
-                    style={{
-                      width: 100,
-                      textAlign: "center",
-                    }}
-                    onChange={(min) => {
-                      onChange(
-                        Object.assign({}, value, {
-                          min: isTenThousand ? min * 10000 : min,
-                        })
-                      );
-                    }}
-                    // status={'warning'}
-                    description={
-                      remindUnit && [5, 6].includes(value?.type) ? (
-                        <span style={{ color: "#fc3333" }}>
-                          注意：
-                          <Enum
-                            name={value?.type}
-                            moduleName="salaryTypeEnum"
-                          />
-                          的单位为
-                          {isTenThousand
-                            ? formatMessage({ id: "thousand" })
-                            : isOther
-                            ? ""
-                            : formatMessage({ id: "yuan" })}
-                        </span>
-                      ) : null
-                    }
-                  />
-                </FormField>
-                <Input
-                  style={{
-                    width: 30,
-                    borderLeft: 0,
-                    borderRight: 0,
-                    pointerEvents: "none",
-                  }}
-                  placeholder="~"
-                  disabled
-                />
-                <FormField isError={!get(value, "max") && req}>
-                  <InputNumber
-                    disabled={disabled}
-                    placeholder={_placeholderInput}
-                    formatter={numberFormat}
-                    value={transform(get(value, "max"))}
-                    style={{
-                      width: showMonth ? 108 : 131,
-                      textAlign: "center",
-                    }}
-                    addonAfter={
-                      isTenThousand
-                        ? formatMessage({ id: "thousand" })
-                        : isOther
-                        ? ""
-                        : formatMessage({ id: "yuan" })
-                    }
-                    onChange={(max) => {
-                      onChange(
-                        Object.assign({}, value, {
-                          max: isTenThousand ? max * 10000 : max,
-                        })
-                      );
-                    }}
-                  />
-                </FormField>
-                {/*<span className={!get(value, 'max') && get(value, 'min') && req ? 'error' : ''}>*/}
-                {/*  */}
-                {/*</span>*/}
-                {get(value, "type") === 5 && showMonth && (
-                  <span
-                    className={
-                      get(value, "max") &&
-                      get(value, "min") &&
-                      !get(value, "month") &&
-                      req
-                        ? "error"
-                        : ""
-                    }
-                  >
-                    <span className={style["input-number"]}>X</span>
+                <Col flex={1}>
+                  <FormField isError={!get(value, "min") && req}>
                     <InputNumber
-                      min={12}
                       disabled={disabled}
-                      value={get(value, "month")}
-                      onChange={(v) => {
-                        onChange(Object.assign({}, value, { month: v }));
-                      }}
+                      placeholder={_placeholderInput}
+                      formatter={numberFormat}
+                      value={transform(get(value, "min"))}
                       style={{
-                        width: 100,
                         textAlign: "center",
                       }}
-                      placeholder="数量"
-                      addonAfter="月"
+                      onChange={(min) => {
+                        onChange(
+                          Object.assign({}, value, {
+                            min: isTenThousand ? min * 10000 : min,
+                          })
+                        );
+                      }}
+                      // status={'warning'}
+                      description={
+                        remindUnit && [5, 6].includes(value?.type) ? (
+                          <span style={{ color: "#fc3333" }}>
+                            注意：
+                            <Enum
+                              name={value?.type}
+                              moduleName="salaryTypeEnum"
+                            />
+                            的单位为
+                            {isTenThousand
+                              ? formatMessage({ id: "thousand" })
+                              : isOther
+                              ? ""
+                              : formatMessage({ id: "yuan" })}
+                          </span>
+                        ) : null
+                      }
                     />
-                  </span>
+                  </FormField>
+                </Col>
+                <Col>
+                  <Input
+                    style={{
+                      width: 30,
+                      borderLeft: 0,
+                      borderRight: 0,
+                      pointerEvents: "none",
+                    }}
+                    placeholder="~"
+                    disabled
+                  />
+                </Col>
+                <Col flex={1}>
+                  <FormField isError={!get(value, "max") && req}>
+                    <InputNumber
+                      disabled={disabled}
+                      placeholder={_placeholderInput}
+                      formatter={numberFormat}
+                      value={transform(get(value, "max"))}
+                      style={{
+                        textAlign: "center",
+                      }}
+                      addonAfter={
+                        isTenThousand
+                          ? formatMessage({ id: "thousand" })
+                          : isOther
+                          ? ""
+                          : formatMessage({ id: "yuan" })
+                      }
+                      onChange={(max) => {
+                        onChange(
+                          Object.assign({}, value, {
+                            max: isTenThousand ? max * 10000 : max,
+                          })
+                        );
+                      }}
+                    />
+                  </FormField>
+                </Col>
+                {get(value, "type") === 5 && showMonth && (
+                  <Col>
+                    <span
+                      className={
+                        get(value, "max") &&
+                        get(value, "min") &&
+                        !get(value, "month") &&
+                        req
+                          ? "error"
+                          : ""
+                      }
+                    >
+                      <span className={style["input-number"]}>X</span>
+                      <InputNumber
+                        min={12}
+                        disabled={disabled}
+                        value={get(value, "month")}
+                        onChange={(v) => {
+                          onChange(Object.assign({}, value, { month: v }));
+                        }}
+                        style={{
+                          width: 100,
+                          textAlign: "center",
+                        }}
+                        placeholder="数量"
+                        addonAfter="月"
+                      />
+                    </span>
+                  </Col>
                 )}
-              </Space.Compact>
+              </Row>
             )}
             {!isRange && !isOther && (
               <InputNumber
@@ -229,7 +233,6 @@ const SalaryInputField = ({
                 formatter={numberFormat}
                 value={transform(get(value, "max"))}
                 style={{
-                  width: 151,
                   textAlign: "center",
                 }}
                 addonAfter={
@@ -258,7 +261,6 @@ const SalaryInputField = ({
                 }}
                 value={get(value, "max")}
                 style={{
-                  width: 151,
                   textAlign: "center",
                 }}
               />
