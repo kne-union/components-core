@@ -37,7 +37,14 @@ const sizeMap = (type) => {
   return { width: "1000px" };
 };
 
-const Footer = ({ footer, footerButtons, onConfirm, onCancel, onClose }) => {
+const Footer = ({
+  footer,
+  footerButtons,
+  onConfirm,
+  onCancel,
+  onClose,
+  targetProps,
+}) => {
   return (
     <Row gutter={10} wrap={false}>
       <Col flex={1}>{footer}</Col>
@@ -101,7 +108,7 @@ const Footer = ({ footer, footerButtons, onConfirm, onCancel, onClose }) => {
                       key={index}
                       onClick={async (...args) => {
                         const res = await Promise.resolve(
-                          onClick && onClick(...args)
+                          onClick && onClick(...args, targetProps)
                         );
                         autoClose && res !== false && onClose && onClose();
                         return res;
@@ -127,6 +134,7 @@ const ModalOuter = ({
   onConfirm,
   onCancel,
   children,
+  targetProps,
 }) => {
   const modalBodyRef = useRef(null);
   return (
@@ -168,6 +176,7 @@ const ModalOuter = ({
             onConfirm={onConfirm}
             onCancel={onCancel}
             onClose={onClose}
+            targetProps={targetProps}
           />
         </div>
       )}
@@ -206,6 +215,7 @@ const runWithDecorator = ({
         })}
         disabledScroller={disabledScroller}
         footer={renderWithOptions(footer, { ...props, close: onClose })}
+        targetProps={props}
       >
         <RightOptions
           options={renderWithOptions(rightOptions, {
