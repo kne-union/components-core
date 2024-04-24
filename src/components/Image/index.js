@@ -17,6 +17,7 @@ const ImageInner = ({
   error,
   innerError,
   children,
+  onClick,
 }) => {
   return (
     <Fetch
@@ -37,6 +38,7 @@ const ImageInner = ({
             alt={alt}
             className={classnames(className, style["img"])}
             src={data}
+            onClick={onClick}
           />
         );
       }}
@@ -55,6 +57,7 @@ const renderInner = ({
   className,
   children,
   apis,
+  onClick,
 }) => {
   const imageLoading =
     loading &&
@@ -75,6 +78,7 @@ const renderInner = ({
         data={src}
         loading={imageLoading}
         error={imageError}
+        onClick={onClick}
       >
         {children}
       </ImageInner>
@@ -92,6 +96,7 @@ const renderInner = ({
         error={imageError}
         innerError={imageError}
         apis={apis}
+        onClick={onClick}
       >
         {children}
       </FetchImageInner>
@@ -101,7 +106,17 @@ const renderInner = ({
   return imageError;
 };
 
-const Image = ({ id, src, alt, loading, error, className, apis, ...props }) => {
+const Image = ({
+  id,
+  src,
+  alt,
+  onClick,
+  loading,
+  error,
+  className,
+  apis,
+  ...props
+}) => {
   return (
     <div
       {...props}
@@ -116,6 +131,7 @@ const Image = ({ id, src, alt, loading, error, className, apis, ...props }) => {
         alt,
         className,
         apis,
+        onClick,
       })}
     </div>
   );
