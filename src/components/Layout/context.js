@@ -11,6 +11,8 @@ export const defaultProps = {
   header: null,
   headerHeight: 0,
   headerFixed: true,
+  footerHeight: 0,
+  footerFixed: false,
   headerInfo: null,
   backUrl: null,
   title: null,

@@ -98,7 +98,9 @@
   background: var(--bg-color-white);
   border-radius: 2px;
   transition: transform 300ms;
-  height: calc(100vh - 2 * var(--margin-width) - var(--nav-height));
+  height: calc(
+    100vh - 2 * var(--margin-width) - var(--nav-height) - var(--footer-height)
+  );
   width: var(--width);
 }
 
@@ -201,6 +203,14 @@
     top: var(--nav-height-base) !important;
     background: var(--bg-color-white);
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
+.page-footer {
+  background: var(--footer-bg-color);
+
+  :global(.ant-affix) {
+    background: var(--footer-bg-color);
   }
 }
 

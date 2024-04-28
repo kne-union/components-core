@@ -30,6 +30,9 @@ const PageInner = ({ children, isPass, ...props }) => {
       if (targetProps.header && targetProps.headerHeight === 0) {
         delete targetProps["headerHeight"];
       }
+      if (targetProps.footer && targetProps.footerHeight === 0) {
+        delete targetProps["footerHeight"];
+      }
       if (targetProps.optionFooter && targetProps.optionFooterHeight === 0) {
         delete targetProps["optionFooter"];
       }

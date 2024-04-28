@@ -4,7 +4,7 @@ import { defaultProps, Provider } from "./context";
 import Navigation, { navigationHeight } from "@components/Navigation";
 import { getScrollEl } from "@common/utils/importantContainer";
 import ReactErrorBoundary from "@kne/react-error-boundary";
-import { Header, HeaderInfo, Menu, Option, PageTitle } from "./Page";
+import { Header, HeaderInfo, Menu, Option, PageTitle, Footer } from "./Page";
 import classnames from "classnames";
 import style from "./style.module.scss";
 import HelperGuide from "@components/HelperGuide";
@@ -57,6 +57,8 @@ const Layout = ({ children, theme, navigation }) => {
         {
           "--nav-height": navigationHeight + "px",
           "--nav-height-base": "var(--nav-height)",
+          "--footer-height": 0 + "px",
+          "--footer-height-base": "var(--footer-height)",
           "--scroll-left": -scrollLeft + "px",
         },
         theme
@@ -88,6 +90,8 @@ const Layout = ({ children, theme, navigation }) => {
                 style={{
                   "--nav-height": `calc(${pageProps.headerHeight}px + var(--nav-height-base))`,
                   "--nav-only-height": `var(--nav-height-base)`,
+                  "--footer-height": `calc(${pageProps.footerHeight}px + var(--footer-height-base))`,
+                  "--footer-only-height": `var(--footer-height-base)`,
                 }}
               >
                 <ErrorBoundary>
@@ -131,6 +135,9 @@ const Layout = ({ children, theme, navigation }) => {
                   <Option />
                 </ErrorBoundary>
               </Row>
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <Footer />
             </ErrorBoundary>
           </Provider>
         </Content>

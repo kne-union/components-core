@@ -23,6 +23,14 @@ const Example = () => {
         header={<div className="header">header</div>}
         headerFixed={false}
         menuFixed={false}
+        footer={
+          <div
+            style={{ backgroundColor: "pink", height: "50px", clolr: "#FFF" }}
+          >
+            footer
+          </div>
+        }
+        footerFixed
       >
         <div>内容区</div>
       </Page>
