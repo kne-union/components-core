@@ -186,7 +186,7 @@ Image.Avatar = ({
       return (
         <Avatar
           {...props}
-          src={defaultAvatar || <Icon role="touxiang" colorful type={type} />}
+          src={<Icon role="touxiang" colorful type={type} />}
           gap={gap}
           shape={shape}
           {...styleProps}
