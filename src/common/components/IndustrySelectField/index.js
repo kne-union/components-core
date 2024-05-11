@@ -89,5 +89,7 @@ const Enum = ({ apis: currentApis, ...props }) => {
   );
 };
 
-IndustrySelectField.Enum = Enum;
+IndustrySelectField.IndustryEnum = IndustrySelectField.Enum = Enum;
+
 export default IndustrySelectField;
+export { Enum as IndustryEnum };
