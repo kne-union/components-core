@@ -392,7 +392,7 @@ const withAddressApi = (WrappedComponent) => {
   return AddressApi;
 };
 
-AddressSelectField.AddressEnum = AddressEnum;
+AddressSelectField.AddressEnum = AddressSelectField.Enum = AddressEnum;
 AddressSelectField.createAddressApi = createAddressApi;
 AddressSelectField.withAddressApi = withAddressApi;
 
