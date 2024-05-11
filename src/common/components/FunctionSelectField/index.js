@@ -92,6 +92,7 @@ const Enum = ({ apis: currentApis, ...props }) => {
   );
 };
 
-FunctionSelectField.Enum = Enum;
+FunctionSelectField.FunctionEnum = FunctionSelectField.Enum = Enum;
 
 export default FunctionSelectField;
+export { Enum as FunctionEnum };

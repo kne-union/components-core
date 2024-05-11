@@ -34,8 +34,14 @@ export {
   default as CascaderField,
   createTreeUtils,
 } from "@common/components/CascaderField";
-export { default as FunctionSelectField } from "@common/components/FunctionSelectField";
-export { default as IndustrySelectField } from "@common/components/IndustrySelectField";
+export {
+  default as FunctionSelectField,
+  FunctionEnum,
+} from "@common/components/FunctionSelectField";
+export {
+  default as IndustrySelectField,
+  IndustryEnum,
+} from "@common/components/IndustrySelectField";
 export { default as TypeDateRangePickerField } from "@common/components/TypeDateRangePickerField";
 
 export { default as useResize } from "@common/hooks/useResize";
