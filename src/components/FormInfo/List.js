@@ -162,10 +162,10 @@ const Outer = ({ add, addText, className, allowAdd, ...props }) => {
         allowAdd && (
           <FormattedMessage id="addText" moduleName="FormInfo">
             {(text) => (
-              <Typography.Link className={style["list-btn"]} onClick={add}>
+              <Typography.Text className={style["list-btn"]} onClick={add}>
                 <Icon type="icon-tianjia" />
                 {addText || text}
-              </Typography.Link>
+              </Typography.Text>
             )}
           </FormattedMessage>
         )
