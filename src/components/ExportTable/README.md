@@ -16,8 +16,6 @@
 - _ExportTable(@components/ExportTable),global(@components/Global),reactFetch(@kne/react-fetch)
 
 ```jsx
-import { PureGlobal } from "../../Global";
-
 const { default: ExportTable } = _ExportTable;
 const { PureGlobal: Global } = global;
 const { preset } = reactFetch;
