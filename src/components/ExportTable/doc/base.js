@@ -1,5 +1,3 @@
-import { PureGlobal } from "../../Global";
-
 const { default: ExportTable } = _ExportTable;
 const { PureGlobal: Global } = global;
 const { preset } = reactFetch;
