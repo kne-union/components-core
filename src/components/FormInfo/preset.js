@@ -5,8 +5,9 @@ import get from "lodash/get";
 import "@kne/react-form-antd/dist/index.css";
 import { PHONE_NUMBER } from "./fields/PhoneNumber";
 import HelperGuideLabel from "@components/FormInfo/HelperGuideLabel";
+import { loadModule } from "@kne/remote-loader";
 
-const formPreset = (options, otherOptions) => {
+const formPreset = async (options, otherOptions) => {
   const { locale } = Object.assign({}, otherOptions);
 
   interceptors.output.use("photo-string", (value) => {
@@ -100,12 +101,24 @@ const formPreset = (options, otherOptions) => {
     }));
   });
 
+  const { default: loadCountyList } = await loadModule(
+    "components-iconfont:CountyFlag@load"
+  );
+  const countyList = await loadCountyList();
+
+  const countyAbMap = new Map(
+    countyList.map(({ ab, country_code }) => [ab, country_code])
+  );
+  const countyCodeMap = new Map(
+    countyList.map(({ ab, country_code }) => [country_code, ab])
+  );
+
   interceptors.output.use("phone-number-string", (value) => {
     if (!(value.code && value.value)) {
       return "";
     }
 
-    return `+${value.code} ${value.value.replace(/\s+/g, "")}`;
+    return `+${countyAbMap.get(value.code)} ${value.value.replace(/\s+/g, "")}`;
   });
 
   interceptors.input.use("phone-number-string", (value) => {
@@ -116,7 +129,7 @@ const formPreset = (options, otherOptions) => {
     if (matcher.length < 3) {
       return {};
     }
-    return { code: matcher[1], value: matcher[2] };
+    return { code: countyCodeMap.get(Number(matcher[1])), value: matcher[2] };
   });
 
   const _olderREQ = RULES.REQ;
