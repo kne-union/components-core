@@ -24,7 +24,7 @@ const CountrySelect = createWithRemoteLoader({
           <Select
             popupMatchSelectWidth={300}
             className={style["country-select"]}
-            value={value || "CN"}
+            value={value || type === "code" ? "86" : "CN"}
             onChange={onChange}
             placeholder="请选择国家"
             showSearch
@@ -33,7 +33,7 @@ const CountrySelect = createWithRemoteLoader({
             }}
             optionLabelProp="code"
             options={list.map(({ country_name_cn, country_code, ab }) => ({
-              value: type === "code" ? country_code : ab,
+              value: type === "code" ? `${country_code}` : ab,
               code: `(+${country_code})`,
               name: country_name_cn,
               label: (
