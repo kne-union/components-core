@@ -100,6 +100,25 @@ const formPreset = (options, otherOptions) => {
     }));
   });
 
+  interceptors.output.use("phone-number-string", (value) => {
+    if (!(value.code && value.value)) {
+      return "";
+    }
+
+    return `+${value.code} ${value.value.replace(/\s+/g, "")}`;
+  });
+
+  interceptors.input.use("phone-number-string", (value) => {
+    if (!value) {
+      return {};
+    }
+    const matcher = value.match(/^\+(\d+)\s(.*)/);
+    if (matcher.length < 3) {
+      return {};
+    }
+    return { code: matcher[1], value: matcher[2] };
+  });
+
   const _olderREQ = RULES.REQ;
   const _olderLEN = RULES.LEN;
 
