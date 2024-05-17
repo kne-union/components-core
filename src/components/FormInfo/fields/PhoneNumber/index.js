@@ -24,7 +24,7 @@ const CountrySelect = createWithRemoteLoader({
           <Select
             popupMatchSelectWidth={300}
             className={style["country-select"]}
-            value={value || "CN"}
+            value={value || type === "code" ? "86" : "CN"}
             onChange={onChange}
             placeholder="请选择国家"
             showSearch
