@@ -15,7 +15,7 @@ const { useDecorator } = hooks;
 
 const CountrySelect = createWithRemoteLoader({
   modules: ["components-iconfont:CountyFlag"],
-})(({ remoteModules, value, type, onChange }) => {
+})(({ remoteModules, value, onChange }) => {
   const [CountyFlag] = remoteModules;
   return (
     <CountyFlag>
@@ -24,7 +24,7 @@ const CountrySelect = createWithRemoteLoader({
           <Select
             popupMatchSelectWidth={300}
             className={style["country-select"]}
-            value={value || type === "code" ? "86" : "CN"}
+            value={value || "CN"}
             onChange={onChange}
             placeholder="请选择国家"
             showSearch
@@ -33,7 +33,7 @@ const CountrySelect = createWithRemoteLoader({
             }}
             optionLabelProp="code"
             options={list.map(({ country_name_cn, country_code, ab }) => ({
-              value: type === "code" ? `${country_code}` : ab,
+              value: ab,
               code: `(+${country_code})`,
               name: country_name_cn,
               label: (
@@ -53,7 +53,7 @@ const CountrySelect = createWithRemoteLoader({
 });
 
 const PhoneNumberField = (props) => {
-  const { className, onBlur, name, codeType, ...others } = props;
+  const { className, onBlur, name, ...others } = props;
   const [value, onChange] = useControlValue(props);
   const ref = useSimulationBlur(onBlur || (() => {}));
   const parsePhone = (value) => {
@@ -66,7 +66,6 @@ const PhoneNumberField = (props) => {
         {...others}
         addonBefore={
           <CountrySelect
-            type={codeType}
             value={get(value, "code", "CN")}
             onChange={(code) => {
               onChange &&
