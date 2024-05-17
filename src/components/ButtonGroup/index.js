@@ -16,6 +16,9 @@ const ButtonGroup = ({ list, more, compact, ...props }) => {
     const el = targetRef.current,
       moreEl = moreRef.current,
       widthEl = ref.current;
+    if (!el) {
+      return;
+    }
 
     const buttonEls = el.querySelectorAll(".button-group-item");
     if (!buttonEls) {
