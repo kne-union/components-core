@@ -17,8 +17,9 @@ const SetPreset = ({ children }) => {
   const formInfo = get(preset, "formInfo", {}),
     locale = get(preset, "locale");
   useEffect(() => {
-    formPreset(formInfo, { locale });
-    setIsPreset(true);
+    Promise.resolve(formPreset(formInfo, { locale })).then(() => {
+      setIsPreset(true);
+    });
   }, [formInfo, locale]);
   if (!isPreset) {
     return null;
