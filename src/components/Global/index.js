@@ -70,7 +70,7 @@ const ConfigProvider = withFetch(({ data: message, themeToken, children }) => {
       getPopupContainer={getScrollEl}
       locale={message}
       wave={{ disabled: true }}
-      autoInsertSpaceInButton={false}
+      autoInsertSpace={false}
       theme={{
         token: Object.assign(
           {},
