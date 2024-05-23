@@ -186,8 +186,7 @@ const TablePage = forwardRef(({ pagination, ...props }, ref) => {
       requestType: "reload",
       currentName: "currentPage",
       pageSizeName: "perPage",
-      pageSize: 20,
-      //size: "small",
+      pageSize: 20, //size: "small",
     },
     pagination
   );
@@ -198,21 +197,18 @@ const TablePage = forwardRef(({ pagination, ...props }, ref) => {
     localStorage.getItem(pageSizeKey) || pagination.pageSize
   );
   const fetchParams = useMemo(() => {
-    const fetchParams = {};
-    if (props.params && Object.keys(props.params).length > 0) {
-      fetchParams["params"] = {
-        ...props.params,
+    return {
+      [pagination.paramsType]: Object.assign({}, props[pagination.paramsType], {
         [pagination.pageSizeName]: pageSize,
-      };
-    }
-    if (props.data && Object.keys(props.data).length > 0) {
-      fetchParams["data"] = {
-        ...props.data,
-        [pagination.pageSizeName]: pageSize,
-      };
-    }
-    return fetchParams;
-  }, [props.params, props.data, pagination.pageSizeName, pageSize]);
+      }),
+    };
+  }, [
+    props.params,
+    props.data,
+    pagination.pageSizeName,
+    pagination.paramsType,
+    pageSize,
+  ]);
   return (
     <TablePageInner
       {...props}
