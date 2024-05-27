@@ -10,6 +10,14 @@ import { loadModule } from "@kne/remote-loader";
 const formPreset = async (options, otherOptions) => {
   const { locale } = Object.assign({}, otherOptions);
 
+  interceptors.input.use("photo-string", (value) => {
+    if (value && typeof value === "string") {
+      const id = value.id.split("?")[0];
+      return { id };
+    }
+    return value;
+  });
+
   interceptors.output.use("photo-string", (value) => {
     if (!value || typeof value === "string") {
       return value;
@@ -84,10 +92,12 @@ const formPreset = async (options, otherOptions) => {
     if (!Array.isArray(value)) {
       return [];
     }
-    return value.map((item) => ({
-      id: item.id || item.ossId,
-      originalName: item.filename,
-    }));
+    return value.map((item) =>
+      Object.assign({}, item, {
+        id: item.id || item.ossId,
+        originalName: item.filename,
+      })
+    );
   });
 
   interceptors.input.use("file-format", (value) => {
@@ -97,7 +107,7 @@ const formPreset = async (options, otherOptions) => {
     return value.map((item) => ({
       id: item.id || item.ossId,
       ossId: item.id || item.ossId,
-      filename: item.originalName,
+      filename: item.originalName || item.filename,
     }));
   });
 
