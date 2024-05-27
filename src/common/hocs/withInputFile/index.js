@@ -150,7 +150,8 @@ export const useFileUpload = (props) => {
             const outputData = onSave
               ? await Promise.resolve(onSave(data, file, uuid))
               : {
-                  filename: data.data.originalName || file.name,
+                  filename:
+                    data.data.originalName || data.data.filename || file.name,
                   id: data.data.id,
                   ossId: data.data.id,
                   uuid,
