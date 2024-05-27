@@ -19,13 +19,19 @@ const withOSSFile = (WrappedComponent) => {
     if (!apis.oss) {
       throw new Error("请在Global组件设置preset.apis.oss参数");
     }
+
+    const { paramsType, paramsName, ...oss } = Object.assign(
+      { paramsType: "params", paramsName: "id" },
+      apis.oss
+    );
+    const fetchProps = {};
+    fetchProps[paramsType] = { [paramsName]: id };
     return (
       <Fetch
-        {...apis.oss}
+        {...Object.assign({}, oss, fetchProps)}
         updateType="refresh"
         error={error}
         loading={loading}
-        params={{ id }}
         cache="oss-file"
         ttl={1000 * 60 * 100}
         render={({ data }) => (
