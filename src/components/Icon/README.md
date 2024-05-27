@@ -13,9 +13,22 @@
 #### 示例样式
 
 ```scss
-.item{
+.item {
   width: 150px;
-  word-break:break-all;
+  word-break: break-all;
+  .ant-typography {
+    position: relative;
+  }
+  .ant-typography-copy {
+    visibility: hidden;
+    position: absolute;
+    right: -20px;
+  }
+  &:hover {
+    .ant-typography-copy {
+      visibility: visible;
+    }
+  }
 }
 ```
 
@@ -27,7 +40,7 @@
 
 ```jsx
 const { default: Icon } = _Icon;
-const { Slider, Space } = antd;
+const { Slider, Space, Typography } = antd;
 const { useState } = React;
 const { createWithFetch } = ReactFetch;
 const { loadFont } = Global;
@@ -66,7 +79,18 @@ const BaseExample = createWithRemoteLoader({
                       key={name}
                     >
                       <Icon type={font_class} size={value} />
-                      <div>{name}</div>
+                      <Typography.Text
+                        copyable={{
+                          text:
+                            '<Icon type="' +
+                            font_class +
+                            '" size={' +
+                            value +
+                            "} />",
+                        }}
+                      >
+                        {font_class}
+                      </Typography.Text>
                     </Space>
                   );
                 })}
@@ -89,7 +113,7 @@ render(<BaseExample />);
 
 ```jsx
 const { default: Icon } = _Icon;
-const { Space, Slider } = antd;
+const { Space, Slider, Typography } = antd;
 const { useState } = React;
 const { createWithFetch } = ReactFetch;
 const { createWithRemoteLoader } = remoteLoader;
@@ -125,7 +149,18 @@ const BaseExample = createWithRemoteLoader({
                   key={name}
                 >
                   <Icon colorful type={name} size={value} />
-                  <div>{name}</div>
+                  <Typography.Text
+                    copyable={{
+                      text:
+                        '<Icon colorful type="' +
+                        name +
+                        '" size={' +
+                        value +
+                        "} />",
+                    }}
+                  >
+                    {name}
+                  </Typography.Text>
                 </Space>
               );
             })}
