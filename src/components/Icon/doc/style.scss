@@ -1,4 +1,17 @@
-.item{
+.item {
   width: 150px;
-  word-break:break-all;
+  word-break: break-all;
+  .ant-typography {
+    position: relative;
+  }
+  .ant-typography-copy {
+    visibility: hidden;
+    position: absolute;
+    right: -20px;
+  }
+  &:hover {
+    .ant-typography-copy {
+      visibility: visible;
+    }
+  }
 }

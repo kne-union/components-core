@@ -1,5 +1,5 @@
 const { default: Icon } = _Icon;
-const { Space, Slider } = antd;
+const { Space, Slider, Typography } = antd;
 const { useState } = React;
 const { createWithFetch } = ReactFetch;
 const { createWithRemoteLoader } = remoteLoader;
@@ -35,7 +35,18 @@ const BaseExample = createWithRemoteLoader({
                   key={name}
                 >
                   <Icon colorful type={name} size={value} />
-                  <div>{name}</div>
+                  <Typography.Text
+                    copyable={{
+                      text:
+                        '<Icon colorful type="' +
+                        name +
+                        '" size={' +
+                        value +
+                        "} />",
+                    }}
+                  >
+                    {name}
+                  </Typography.Text>
                 </Space>
               );
             })}
