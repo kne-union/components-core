@@ -12,7 +12,7 @@ const formPreset = async (options, otherOptions) => {
 
   interceptors.input.use("photo-string", (value) => {
     if (value && typeof value === "string") {
-      const id = value.id.split("?")[0];
+      const id = value.split("?")[0];
       return { id };
     }
     return value;
