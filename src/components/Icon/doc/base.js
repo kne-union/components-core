@@ -1,5 +1,5 @@
 const { default: Icon } = _Icon;
-const { Slider, Space } = antd;
+const { Slider, Space, Typography } = antd;
 const { useState } = React;
 const { createWithFetch } = ReactFetch;
 const { loadFont } = Global;
@@ -38,7 +38,18 @@ const BaseExample = createWithRemoteLoader({
                       key={name}
                     >
                       <Icon type={font_class} size={value} />
-                      <div>{name}</div>
+                      <Typography.Text
+                        copyable={{
+                          text:
+                            '<Icon type="' +
+                            font_class +
+                            '" size={' +
+                            value +
+                            "} />",
+                        }}
+                      >
+                        {font_class}
+                      </Typography.Text>
                     </Space>
                   );
                 })}
