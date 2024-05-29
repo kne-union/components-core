@@ -8,6 +8,61 @@ import ConfirmButton from "@components/ConfirmButton";
 import useResize from "@common/hooks/useResize";
 import pick from "lodash/pick";
 import style from "./style.module.scss";
+import memoize from "lodash/memoize";
+
+const areaWidthComputed = memoize(
+  ({ amountWidth, moreBtnWidth, buttonWidthList, spaceProps, compact }) => {
+    const spaceWidth = (() => {
+      if (compact) {
+        return 0;
+      }
+
+      if (["small", "middle", "large"].indexOf(spaceProps.size) > -1) {
+        return (["small", "middle", "large"].indexOf(spaceProps.size) + 1) * 8;
+      }
+
+      if (Number.isInteger(spaceProps.size)) {
+        return spaceProps.size;
+      }
+      return 8;
+    })();
+
+    let targetLength = 0,
+      targetWidth = 0;
+
+    // 采取先加后减策略
+    while (
+      amountWidth >=
+        targetWidth +
+          buttonWidthList[targetLength] +
+          targetLength * spaceWidth &&
+      targetLength < buttonWidthList.length
+    ) {
+      targetWidth += buttonWidthList[targetLength];
+      targetLength += 1;
+    }
+
+    while (
+      amountWidth <
+        targetWidth +
+          (targetLength - 1) * spaceWidth +
+          (targetLength < buttonWidthList.length
+            ? moreBtnWidth + spaceWidth
+            : 0) &&
+      targetLength > 0
+    ) {
+      targetWidth -= buttonWidthList[targetLength - 1];
+      targetLength -= 1;
+    }
+
+    return targetLength;
+  },
+  ({ amountWidth, moreBtnWidth, buttonWidthList, spaceProps, compact }) => {
+    return `${amountWidth}${moreBtnWidth}${buttonWidthList.join(
+      ","
+    )}${Object.values(spaceProps).join(",")}${compact && compact.toString()}`;
+  }
+);
 
 const ButtonGroup = ({ list, more, compact, ...props }) => {
   const spaceProps = pick(props, ["size", "split", "align", "style"]);
@@ -24,54 +79,20 @@ const ButtonGroup = ({ list, more, compact, ...props }) => {
     if (!buttonEls) {
       return;
     }
-    const buttonElLength = buttonEls.length;
     if (buttonEls.length === 0) {
       return;
     }
+
     const amountWidth = widthEl.clientWidth,
       moreBtnWidth = moreEl.clientWidth,
-      spaceWidth = (() => {
-        if (compact) {
-          return 0;
-        }
-
-        if (["small", "middle", "large"].indexOf(spaceProps.size) > -1) {
-          return (
-            (["small", "middle", "large"].indexOf(spaceProps.size) + 1) * 8
-          );
-        }
-
-        if (Number.isInteger(spaceProps.size)) {
-          return spaceProps.size;
-        }
-        return 8;
-      })();
-    let targetLength = 0,
-      targetWidth = 0,
       buttonWidthList = [].map.call(buttonEls, (el) => el.offsetWidth);
-    // 采取先加后减策略
-    while (
-      amountWidth >=
-        targetWidth +
-          buttonWidthList[targetLength] +
-          targetLength * spaceWidth &&
-      targetLength < buttonElLength
-    ) {
-      targetWidth += buttonWidthList[targetLength];
-      targetLength += 1;
-    }
-
-    while (
-      amountWidth <
-        targetWidth +
-          (targetLength - 1) * spaceWidth +
-          (targetLength < buttonElLength ? moreBtnWidth + spaceWidth : 0) &&
-      targetLength > 0
-    ) {
-      targetWidth -= buttonWidthList[targetLength - 1];
-      targetLength -= 1;
-    }
-
+    const targetLength = areaWidthComputed({
+      amountWidth,
+      moreBtnWidth,
+      buttonWidthList,
+      spaceProps,
+      compact,
+    });
     startTransition(() => {
       setShowLength(targetLength);
     });
