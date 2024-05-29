@@ -10,6 +10,7 @@ const withFieldItem =
     return (
       <FilterItem label={label} open={open} active={isNotEmpty(value)}>
         <WrappedComponent
+          allowClear={false}
           {...props}
           className={style["filter-item-inner"]}
           value={value}
