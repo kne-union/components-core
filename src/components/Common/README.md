@@ -83,6 +83,30 @@ render(<BaseExample />);
 
 ```
 
+- Enum
+- 这里填写示例说明
+- _Common(@components/Common),_antd(antd)
+
+```jsx
+const Common = _Common;
+const { Space } = _antd;
+
+const { AddressEnum, FunctionEnum, IndustryEnum } = Common;
+
+const BaseExample = () => {
+  return (
+    <Space direction={"vertical"}>
+      <AddressEnum name={"010"} />
+      <FunctionEnum name={"010"} />
+      <IndustryEnum name={"010"} />
+    </Space>
+  );
+};
+
+render(<BaseExample />);
+
+```
+
 - ScrollLoader
 - 这里填写示例说明
 - _Common(@components/Common),_reactFetch(@kne/react-fetch),lodash(lodash)
