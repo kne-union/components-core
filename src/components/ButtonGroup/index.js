@@ -66,7 +66,7 @@ const areaWidthComputed = memoize(
 
 const ButtonGroup = ({ list, more, compact, ...props }) => {
   const spaceProps = pick(props, ["size", "split", "align", "style"]);
-  const [showLength, setShowLength] = useState(list.length);
+  const [showLength, setShowLength] = useState(list.length && 1);
   const computedLength = useRefCallback(() => {
     const el = targetRef.current,
       moreEl = moreRef.current,

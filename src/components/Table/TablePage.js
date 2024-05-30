@@ -196,19 +196,14 @@ const TablePage = forwardRef(({ pagination, ...props }, ref) => {
   const [pageSize, setPageSize] = useState(
     localStorage.getItem(pageSizeKey) || pagination.pageSize
   );
+  const params = props[pagination.paramsType];
   const fetchParams = useMemo(() => {
     return {
-      [pagination.paramsType]: Object.assign({}, props[pagination.paramsType], {
+      [pagination.paramsType]: Object.assign({}, params, {
         [pagination.pageSizeName]: pageSize,
       }),
     };
-  }, [
-    props.params,
-    props.data,
-    pagination.pageSizeName,
-    pagination.paramsType,
-    pageSize,
-  ]);
+  }, [params, pagination.pageSizeName, pagination.paramsType, pageSize]);
   return (
     <TablePageInner
       {...props}
