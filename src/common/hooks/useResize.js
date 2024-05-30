@@ -1,4 +1,4 @@
-import { startTransition, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import throttle from "lodash/throttle";
 import debounce from "lodash/debounce";
 import useRefCallback from "@kne/use-ref-callback";
@@ -14,10 +14,7 @@ const useResize = (callback, options) => {
   const callbackHandler = useRefCallback(callback);
   useLayoutEffect(() => {
     const el = ref.current;
-    const computed = () =>
-      startTransition(() => {
-        el && callbackHandler(el);
-      });
+    const computed = () => el && callbackHandler(el);
     computed();
     const resizeObserver = new ResizeObserver(
       (optionsRef.current.isDebounce ? debounce : throttle)(
