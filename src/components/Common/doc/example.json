@@ -13,6 +13,21 @@
       ]
     },
     {
+      "title": "Enum",
+      "description": "这里填写示例说明",
+      "code": "./enum.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "ScrollLoader",
       "description": "这里填写示例说明",
       "code": "./scrollLoader.js",

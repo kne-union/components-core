@@ -8,6 +8,9 @@ import {
   TextArea as ReactTextArea,
   TimePicker as ReactTimePicker,
   TreeSelect as ReactTreeSelect,
+  Rate,
+  Switch,
+  Slider,
 } from "@kne/react-form-antd";
 import Form from "./Form";
 import { FormattedMessage, useIntl } from "@components/Intl";
@@ -30,7 +33,6 @@ import InputUpperCaseField from "./fields/InputUpperCase";
 import TypeDateRangePicker from "./fields/TypeDateRangePicker";
 import TableInput from "./fields/TableInput";
 import Text from "./fields/Text";
-import Rate from "./fields/Rate";
 import ErrorTip from "./ErrorTip";
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
@@ -137,6 +139,8 @@ export {
   TableInput,
   Text,
   Rate,
+  Switch,
+  Slider,
   TypeDateRangePicker,
 };
 export const InputUpperCase = withInputDefaultPlaceholder(InputUpperCaseField);
@@ -225,5 +229,7 @@ export const formModule = Object.assign({}, reactFormAntd, {
   TableInput,
   Text,
   Rate,
+  Switch,
+  Slider,
   ErrorTip,
 });
