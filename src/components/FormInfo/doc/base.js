@@ -3,7 +3,16 @@ const { PureGlobal } = global;
 const { useModal } = _Modal;
 const { uniqueId } = lodash;
 
-const { Input, TextArea, Upload, Avatar, TypeDateRangePicker } = fields;
+const {
+  Input,
+  TextArea,
+  Upload,
+  Avatar,
+  TypeDateRangePicker,
+  Rate,
+  Switch,
+  Slider,
+} = fields;
 
 const BaseExample = () => {
   const modal = useModal();
@@ -77,6 +86,9 @@ const BaseExample = () => {
           <Input name="phone" label="手机" rule="REQ TEL" />,
           <Input name="email" label="邮箱" rule="EMAIL" />,
           <Upload name="file" label="文件" block />,
+          <Rate name="rate" label="评分" />,
+          <Switch name="switch" label="开关" />,
+          <Slider name="slider" label="滑动条" />,
           <TypeDateRangePicker
             name="type_date"
             label="日期时间段"

@@ -9,6 +9,9 @@ import {
   TreeSelect as ReactTreeSelect,
   RadioGroup,
   CheckboxGroup,
+  Switch,
+  Rate,
+  Slider,
 } from "@kne/react-form-antd";
 import AdvancedSelectField from "./AdvancedSelect";
 import AddressSelect, { AddressInput } from "./AddressSelect";
@@ -22,7 +25,6 @@ import Avatar from "./Avatar";
 import SalaryInput from "./SalaryInput";
 import InputUpperCaseField from "./InputUpperCase";
 import TableInput from "./TableInput";
-import Rate from "./Rate";
 import compose from "@kne/compose";
 import { forwardRef } from "react";
 import { FormattedMessage, useIntl } from "@components/Intl";
@@ -211,6 +213,8 @@ const fields = {
   RadioGroup: createWithFieldDecorator([withLang])(RadioGroup),
   CheckboxGroup: createWithFieldDecorator([withLang])(CheckboxGroup),
   Rate: createWithFieldDecorator([withLang])(Rate),
+  Switch: createWithFieldDecorator([withLang])(Switch),
+  Slider: createWithFieldDecorator([withLang])(Slider),
   TableInput: createWithFieldDecorator([withLang])(TableInput),
   SalaryInput: createWithFieldDecorator([withLang])(SalaryInput),
   TypeDateRangePicker: createWithFieldDecorator([withLang])(
