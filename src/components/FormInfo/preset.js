@@ -41,6 +41,14 @@ const formPreset = async (options, otherOptions) => {
     return value ? value[0] : null;
   });
 
+  interceptors.input.use("boolean-number", (value) => {
+    return value === 1 || value === "1";
+  });
+
+  interceptors.output.use("boolean-number", (value) => {
+    return value ? 1 : 0;
+  });
+
   interceptors.input.use("date-string", (value) => {
     return value ? dayjs(value) : null;
   });
