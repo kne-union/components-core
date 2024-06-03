@@ -33,6 +33,7 @@ export const withConfirm = (WrappedComponent) => {
         return (
           <WrappedComponent
             {...props}
+            disabled={disabled}
             onClick={(e) => {
               modal({
                 type: "confirm",
