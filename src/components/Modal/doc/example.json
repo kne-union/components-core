@@ -21,6 +21,21 @@
       ]
     },
     {
+      "title": "childrenRef的使用",
+      "description": "",
+      "code": "./children-ref.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "需要加载数据的弹窗",
       "description": "可以通过withDecorator属性实现弹窗的加载数据或者加载远程组件的逻辑，在数据或者远程组件加载完成之前弹窗展示loading状态，加载完成之后children可以获取到加载的数据",
       "code": "./fetch-data.js",
