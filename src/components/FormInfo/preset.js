@@ -49,6 +49,14 @@ const formPreset = async (options, otherOptions) => {
     return value ? 1 : 0;
   });
 
+  interceptors.input.use("un-boolean", (value) => {
+    return !value;
+  });
+
+  interceptors.output.use("un-boolean", (value) => {
+    return !value;
+  });
+
   interceptors.input.use("date-string", (value) => {
     return value ? dayjs(value) : null;
   });
