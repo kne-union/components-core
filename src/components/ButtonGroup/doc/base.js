@@ -21,6 +21,7 @@ const BaseExample = () => {
             {
               children: "操作3",
               message: "确定要执行操作吗？",
+              disabled: true,
             },
           ]}
         />
