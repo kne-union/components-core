@@ -192,6 +192,31 @@ render(
 
 ```
 
+- childrenRef的使用
+- 
+- _Modal(@components/Modal),antd(antd)
+
+```jsx
+const {default: Modal, useModal} = _Modal;
+const {Button} = antd;
+const BaseExample = () => {
+    const modal = useModal();
+
+    return <Button onClick={() => {
+        modal({
+            title: '示例弹框', children: ({childrenRef}) => {
+                return <div ref={childrenRef}>示例弹框示例弹框示例弹框示例弹框示例弹框示例弹框</div>;
+            }, onConfirm: (e, {childrenRef}) => {
+                console.log(childrenRef.current);
+            }
+        });
+    }}>点击弹出弹框</Button>
+};
+
+render(<BaseExample/>);
+
+```
+
 - 需要加载数据的弹窗
 - 可以通过withDecorator属性实现弹窗的加载数据或者加载远程组件的逻辑，在数据或者远程组件加载完成之前弹窗展示loading状态，加载完成之后children可以获取到加载的数据
 - _Modal(@components/Modal),global(@components/Global),antd(antd),fetch(@kne/react-fetch),_Content(@components/Content)
