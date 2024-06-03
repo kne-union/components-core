@@ -1,5 +1,5 @@
 const renderWithOptions = (footer, options) => {
-  if (typeof footer === 'function') {
+  if (typeof footer === "function") {
     return footer(options);
   }
   return footer;

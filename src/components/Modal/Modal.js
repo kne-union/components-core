@@ -195,6 +195,7 @@ const runWithDecorator = ({
   footer,
   rightOptions,
   disabledScroller,
+  childrenRef,
   children,
 }) => {
   const getInner = (props) => {
@@ -203,6 +204,7 @@ const runWithDecorator = ({
       <ModalOuter
         title={renderWithOptions(props.title, {
           ...props,
+          childrenRef,
           close: onClose,
         })}
         closable={closable}
@@ -214,17 +216,23 @@ const runWithDecorator = ({
           close: onClose,
         })}
         disabledScroller={disabledScroller}
-        footer={renderWithOptions(footer, { ...props, close: onClose })}
-        targetProps={props}
+        footer={renderWithOptions(footer, {
+          ...props,
+          childrenRef,
+          close: onClose,
+        })}
+        targetProps={Object.assign({}, props, { childrenRef, close: onClose })}
       >
         <RightOptions
           options={renderWithOptions(rightOptions, {
             ...props,
+            childrenRef,
             close: onClose,
           })}
         >
           {renderWithOptions(children, {
             ...props,
+            childrenRef,
             close: onClose,
           })}
         </RightOptions>
@@ -250,6 +258,7 @@ const computedCommonProps = ({
   closable,
   disabledScroller,
   withDecorator,
+  childrenRef,
   ...props
 }) => {
   return {
@@ -282,6 +291,7 @@ const computedCommonProps = ({
           rightOptions,
           disabledScroller,
           children,
+          childrenRef,
         })}
       </IntlProvider>
     ),
@@ -289,7 +299,12 @@ const computedCommonProps = ({
 };
 
 const Modal = (props) => {
-  return <AntdModal {...computedCommonProps(props)} />;
+  const childrenRef = useRef(null);
+  return (
+    <AntdModal
+      {...computedCommonProps(Object.assign({}, props, { childrenRef }))}
+    />
+  );
 };
 
 Modal.defaultProps = {
@@ -298,11 +313,12 @@ Modal.defaultProps = {
 
 export const useModal = () => {
   const { modal } = App.useApp();
+  const childrenRef = useRef(null);
   return (props) => {
     const api = {};
-
     const { children, ...otherProps } = computedCommonProps({
       onClose: () => api.close(),
+      childrenRef,
       ...props,
     });
     const { destroy } = modal.info({
