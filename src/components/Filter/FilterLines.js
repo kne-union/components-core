@@ -41,14 +41,21 @@ const Line = ({ list, children }) => {
   );
 };
 
-const FilterLines = ({ list, displayLine, label, extra, children }) => {
+const FilterLines = ({
+  className,
+  list,
+  displayLine,
+  label,
+  extra,
+  children,
+}) => {
   const hasMore = list.length > displayLine;
   const [isExpand, setIsExpand] = useState(false);
 
   return (
     <IntlProvider importMessages={importMessages} moduleName="Filter">
       <Space
-        className={classnames(style["filter-title"])}
+        className={classnames(style["filter-title"], className)}
         align="top"
         size={16}
       >

@@ -405,3 +405,31 @@
 .cascader-dropdown-menu {
   font-size: 14px;
 }
+
+.filter-advanced {
+  padding: 24px 16px 18px;
+  border-bottom: solid 1px rgba(126, 134, 142, 0.16);
+  .filter-label {
+    min-width: 60px;
+  }
+}
+
+.filter-advanced-item-other {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-advanced-item-other-inner {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  min-width: auto !important;
+}
+
+.filter-advanced-more {
+  padding: 0 !important;
+  border-bottom: none !important;
+}
