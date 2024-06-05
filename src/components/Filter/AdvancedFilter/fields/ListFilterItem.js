@@ -1,8 +1,17 @@
 import { Tag, App } from "antd";
 import isEqual from "lodash/isEqual";
+import * as fields from "../../fields";
 
 const { CheckableTag } = Tag;
-const ListFilterItem = ({ value, onChange, single, maxLength, items }) => {
+const ListFilterItem = ({
+  value,
+  onChange,
+  label,
+  single,
+  maxLength,
+  items,
+  custom,
+}) => {
   const { message } = App.useApp();
   return (
     <>
@@ -41,6 +50,23 @@ const ListFilterItem = ({ value, onChange, single, maxLength, items }) => {
           </CheckableTag>
         );
       })}
+      {custom &&
+        (() => {
+          const ComponentItem = Object.values(fields).find(
+            (item) => item === custom.type
+          );
+          if (!ComponentItem) {
+            return null;
+          }
+          return (
+            <ComponentItem
+              {...custom.props}
+              value={value}
+              placeholder={`请输入${label}`}
+              onChange={onChange}
+            />
+          );
+        })()}
     </>
   );
 };
