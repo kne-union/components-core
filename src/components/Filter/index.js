@@ -14,6 +14,7 @@ export { default as PopoverItem } from "./PopoverItem";
 export { default as withFieldItem } from "./withFieldItem";
 export { default as FilterItemContainer } from "./FilterItemContainer";
 export {
+  NumberRangeFilterItem,
   InputFilterItem,
   CityFilterItem,
   AdvancedSelectFilterItem,

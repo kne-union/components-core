@@ -10,6 +10,7 @@ const {
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
+  NumberRangeFilterItem,
   getFilterValue,
   FilterItemContainer,
 } = _Filter;
@@ -45,6 +46,7 @@ const BaseExample = () => {
               },
               { value: [5, null], label: "5年以上" },
             ]}
+            custom={<NumberRangeFilterItem label="自定义" unit="年" />}
           />,
         ],
       ]}

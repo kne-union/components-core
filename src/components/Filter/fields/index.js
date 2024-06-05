@@ -9,6 +9,7 @@ import IndustrySelectField from "@common/components/IndustrySelectField";
 import CascaderField from "@common/components/CascaderField";
 import TreeField from "@common/components/TreeField";
 import InputFilterItemField from "./InputFilterItem";
+import NumberRangeFilterItemField from "./NumberRangeFilterItem";
 
 const withInputDefaultPlaceholder =
   (WrappedComponent) =>
@@ -43,6 +44,9 @@ export const CascaderFilterItem = withFieldItem(CascaderField);
 export const TreeFilterItem = withFieldItem(TreeField);
 export const InputFilterItem =
   withInputDefaultPlaceholder(InputFilterItemField);
+export const NumberRangeFilterItem = withInputDefaultPlaceholder(
+  NumberRangeFilterItemField
+);
 
 export { default as DatePickerFilterItem } from "./DatePickerFilterItem";
 export { default as DateRangePickerFilterItem } from "./DateRangePickerFilterItem";
