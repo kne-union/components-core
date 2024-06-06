@@ -8,11 +8,14 @@ import classnames from "classnames";
 import style from "./user.module.scss";
 
 export default createListField({
-  renderList: ({ list, onSelect, itemIsSelected }) => {
+  renderList: ({ list, onSelect, itemIsSelected, isSelectedAll }) => {
     return (
       <AntdList
         size="small"
-        className={listStyle["list"]}
+        className={classnames(listStyle["list"], {
+          [listStyle["is-selected-all"]]: isSelectedAll,
+          [style["is-selected-all"]]: isSelectedAll,
+        })}
         dataSource={list}
         renderItem={(item) => {
           const isSelected = itemIsSelected(item);
@@ -44,7 +47,7 @@ export default createListField({
                   </Space>
                 </Col>
                 <Col>
-                  {isSelected ? (
+                  {isSelectedAll || isSelected ? (
                     <Icon
                       className={style["selected-icon"]}
                       type="icon-gouxuan"

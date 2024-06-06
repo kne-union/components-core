@@ -43,7 +43,14 @@ const createValueWithMaxLength =
       })()
     );
 
-const renderDisplayLabel = ({ single, value, mapping, onClose }) => {
+const renderDisplayLabel = ({
+  single,
+  value,
+  mapping,
+  allValue,
+  allLabel,
+  onClose,
+}) => {
   if (!value || !Array.isArray(value) || value.length === 0) {
     return null;
   }
@@ -54,6 +61,10 @@ const renderDisplayLabel = ({ single, value, mapping, onClose }) => {
         {get(mapping.get(value[0]), "label") || value[0]}
       </span>
     );
+  }
+
+  if (value.length === 1 && value[0] === (allValue || "all")) {
+    return <span className={style["text-inner"]}>{allLabel || "全部"}</span>;
   }
 
   return value.map((item) => {
@@ -286,6 +297,8 @@ const DisplayLabel = withFetch(
       single,
       value,
       mapping,
+      allValue: props.allValue,
+      allLabel: props.allLabel,
       onClose: (item) => {
         setValue((value) => {
           const newValue = value.slice(0);
@@ -316,6 +329,8 @@ const DisplayLabel = withFetch(
             {renderDisplayLabel({
               value,
               mapping,
+              allValue: props.allValue,
+              allLabel: props.allLabel,
               onClose: (item) => {
                 setValue((value) => {
                   const newValue = value.slice(0);
