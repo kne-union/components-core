@@ -1,2 +1,16 @@
 .list {
 }
+
+.is-selected-all {
+  :global {
+    .ant-table {
+      pointer-events: none;
+    }
+
+    .ant-table .ant-table-cell {
+      background: var(--bg-color-grey-3) !important;
+      color: var(--font-color-grey-2) !important;
+      cursor: not-allowed;
+    }
+  }
+}

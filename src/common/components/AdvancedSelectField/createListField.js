@@ -6,7 +6,7 @@ import get from "lodash/get";
 import merge from "lodash/merge";
 import style from "./create-list.module.scss";
 import SearchInput from "@common/components/SearchInput";
-import { Col, Row } from "antd";
+import { Col, Row, Flex, Checkbox, Typography, Space } from "antd";
 
 const useSelectInnerContext = SelectInnerInput.useContext;
 
@@ -37,6 +37,7 @@ const createListField = ({ renderList, defaultProps }) => {
 
     const formatData = props.dataFormat(fetchApi.data);
     const { right, leftBottom, leftSpan = 24 } = props;
+    const isSelectedAll = value.length === 1 && value[0] === "all";
     return (
       <Row wrap={false} className={right ? style["is-not-full"] : ""}>
         <Col
@@ -60,6 +61,44 @@ const createListField = ({ renderList, defaultProps }) => {
                 setSearchText(value);
               }}
             />
+          ) : null}
+          {!props.single &&
+          (props.showSelectedCount || props.allowSelectAll) ? (
+            <Flex
+              className={classnames(style["list-header"], {
+                [style["is-modal"]]: !props.isPopup,
+              })}
+              justify="space-between"
+            >
+              {props.showSelectedCount ? (
+                <Space>
+                  <Typography>已选:</Typography>
+                  <Typography.Link>
+                    {isSelectedAll
+                      ? props.allLabel || "全部"
+                      : `${value.length}${props.countUnit || "项"}`}
+                  </Typography.Link>
+                </Space>
+              ) : (
+                <div />
+              )}
+              {props.allowSelectAll ? (
+                <div>
+                  <Checkbox
+                    checked={isSelectedAll}
+                    onChange={(e) => {
+                      setValue(
+                        e.target.checked ? [props.allValue || "all"] : []
+                      );
+                    }}
+                  >
+                    选择{props.allLabel || "全部"}
+                  </Checkbox>
+                </div>
+              ) : (
+                <div />
+              )}
+            </Flex>
           ) : null}
           <ScrollLoader
             completeTips=""
@@ -90,6 +129,7 @@ const createListField = ({ renderList, defaultProps }) => {
               setValue,
               list: formatData.list,
               itemIsSelected: (item) => value.indexOf(item.value) > -1,
+              isSelectedAll,
               onSelect: (item) => {
                 if (props.single) {
                   setValue([item.value]);

@@ -13,3 +13,10 @@
 .item-des {
   color: var(--font-color-grey-1);
 }
+
+.is-selected-all {
+  .selected-icon,
+  .item-des {
+    color: var(--font-color-grey-2);
+  }
+}

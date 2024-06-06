@@ -2,8 +2,15 @@ import { preset as remoteLoaderPreset } from "@kne/remote-loader";
 import { preset as fetchPreset } from "@kne/react-fetch";
 import axios from "axios";
 import { Empty, Result, Spin } from "antd";
+import monacoLoader from "@monaco-editor/loader";
 
 window.PUBLIC_URL = process.env.PUBLIC_URL;
+
+monacoLoader.config({
+  paths: {
+    vs: "https://uc.fatalent.cn/packages/monaco-editor/0.48.0/min/vs",
+  },
+});
 
 const remote =
   process.env.NODE_ENV === "development"

@@ -3,15 +3,27 @@ import classnames from "classnames";
 import style from "./table.module.scss";
 
 import createListField from "./createListField";
+import listStyle from "./list.module.scss";
 
 export default createListField({
   defaultProps: {
     overlayWidth: "450px",
   },
-  renderList: ({ props, list, onSelect, value, setValue, itemIsSelected }) => {
+  renderList: ({
+    props,
+    list,
+    onSelect,
+    value,
+    setValue,
+    itemIsSelected,
+    isSelectedAll,
+  }) => {
     return (
       <Table
-        className={style["list"]}
+        className={classnames(style["list"], listStyle["list"], {
+          [listStyle["is-selected-all"]]: isSelectedAll,
+          [style["is-selected-all"]]: isSelectedAll,
+        })}
         size="small"
         dataSource={list}
         columns={props.columns}
@@ -24,12 +36,19 @@ export default createListField({
         pagination={false}
         rowSelection={
           !props.single
-            ? {
-                selectedRowKeys: value,
-                onChange: (values) => {
-                  setValue(values);
-                },
-              }
+            ? isSelectedAll
+              ? {
+                  selectedRowKeys: list.map(({ value }) => value),
+                  getCheckboxProps: () => {
+                    return { disabled: true };
+                  },
+                }
+              : {
+                  selectedRowKeys: value,
+                  onChange: (values) => {
+                    setValue(values);
+                  },
+                }
             : null
         }
         sticky

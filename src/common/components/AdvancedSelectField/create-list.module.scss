@@ -18,11 +18,31 @@
       padding: 16px 0;
     }
   }
+
   .search-input {
     padding: 0 !important;
   }
+
   .left {
     border-right: solid 1px var(--bg-color-grey-2);
     padding: 16px 16px 0;
+  }
+}
+
+.list-header {
+  padding: 5px 12px;
+
+  &.is-modal {
+    padding: 16px 32px 0;
+  }
+
+  :global {
+    .ant-checkbox + span {
+      padding-inline-end: 0;
+    }
+
+    .ant-checkbox-wrapper {
+      margin-inline-end: 0 !important;
+    }
   }
 }
