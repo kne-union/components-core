@@ -16,8 +16,11 @@ const {
 } = _Filter;
 const { useState } = React;
 
-const { CityFilterItem: CityAdvancedFilterItem, ListFilterItem } =
-  AdvancedFilter.fields;
+const {
+  CityFilterItem: CityAdvancedFilterItem,
+  ListFilterItem,
+  InputFilterItem: InputAdvancedFilterItem,
+} = AdvancedFilter.fields;
 const BaseExample = () => {
   const [value, onChange] = useState([]);
   return (
@@ -49,6 +52,7 @@ const BaseExample = () => {
             custom={<NumberRangeFilterItem label="自定义" unit="年" />}
           />,
         ],
+        [<InputAdvancedFilterItem name="company" label="公司" />],
       ]}
       more={[
         <InputFilterItem label="文字" name="text" />,

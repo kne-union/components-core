@@ -15,7 +15,7 @@ const Line = ({ list }) => {
         const ComponentItem = item.type;
         return (
           <Flex gap={16} key={item.key || item.props.name || index}>
-            <div className={style["filter-label"]}>{item.props.label}</div>
+            <div className={style["filter-label"]}>{item.props.label}:</div>
             <Flex>
               <ComponentItem
                 {...item.props}
