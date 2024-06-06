@@ -24,6 +24,19 @@
       cursor: not-allowed;
     }
   }
+
+  &.is-selected-all {
+    background: var(--bg-color-grey-3);
+    cursor: not-allowed;
+
+    .item-label {
+      color: var(--font-color-grey-2);
+    }
+
+    .list-item {
+      pointer-events: none;
+    }
+  }
 }
 
 .item-label,

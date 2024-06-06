@@ -4,11 +4,13 @@ import createListField from "./createListField";
 import style from "./list.module.scss";
 
 const AdvancedSelectField = createListField({
-  renderList: ({ props, list, itemIsSelected, onSelect }) => {
+  renderList: ({ props, list, itemIsSelected, isSelectedAll, onSelect }) => {
     const { listClassName = "", selectIcon = null } = props || {};
     return (
       <AntdList
-        className={classnames(style["list"], listClassName)}
+        className={classnames(style["list"], listClassName, {
+          [style["is-selected-all"]]: isSelectedAll,
+        })}
         size="small"
         dataSource={list}
         renderItem={(item) => {
@@ -17,7 +19,7 @@ const AdvancedSelectField = createListField({
             <AntdList.Item
               className={classnames(style["list-item"], {
                 [style["is-selected"]]: props.single && isSelected,
-                [style["is-disabled"]]: item.disabled,
+                [style["is-disabled"]]: isSelectedAll || item.disabled,
               })}
               onClick={() => {
                 if (item.disabled) {
@@ -29,7 +31,10 @@ const AdvancedSelectField = createListField({
               <Row wrap={false}>
                 {props.single ? null : (
                   <Col>
-                    <Checkbox checked={isSelected} disabled={item.disabled} />
+                    <Checkbox
+                      checked={isSelectedAll || isSelected}
+                      disabled={isSelectedAll || item.disabled}
+                    />
                   </Col>
                 )}
                 <Col>

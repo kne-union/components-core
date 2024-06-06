@@ -56,6 +56,21 @@
           "packageName": "@components/Common"
         }
       ]
+    },
+    {
+      "title": "AdvancedSelect",
+      "description": "高级选择",
+      "code": "./advanced-select.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
