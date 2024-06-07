@@ -14,7 +14,11 @@ const useResize = (callback, options) => {
   const callbackHandler = useRefCallback(callback);
   useLayoutEffect(() => {
     const el = ref.current;
-    const computed = () => el && callbackHandler(el);
+    const computed = () => {
+      return window.requestAnimationFrame(() => {
+        el && callbackHandler(el);
+      });
+    };
     computed();
     const resizeObserver = new ResizeObserver(
       (optionsRef.current.isDebounce ? debounce : throttle)(
