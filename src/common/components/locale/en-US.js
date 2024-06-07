@@ -7,6 +7,9 @@ const message = {
   customTime: "Custom Time",
   monthly: "Monthly",
   weekly: "Weekly",
+  all: "All",
+  items: "Items",
+  selectAll: "Select {label}",
 };
 
 export default message;

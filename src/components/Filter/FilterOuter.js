@@ -5,7 +5,8 @@ import classnames from "classnames";
 import style from "./style.module.scss";
 import { useMemo } from "react";
 import { isNotEmpty } from "@components/Common";
-import importMessages from "@components/FormInfo/locale";
+import importMessages from "./locale";
+
 import { IntlProvider } from "@components/Intl";
 
 const FilterOuter = ({ children, className, ...props }) => {

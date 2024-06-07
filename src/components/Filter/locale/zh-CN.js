@@ -1,3 +1,6 @@
+import formInfoMessage from "@components/FormInfo/locale/zh-CN.js";
+import commonMessage from "@common/components/locale/zh-CN.js";
+
 const message = {
   filterText: "筛选",
   moreText: "更多",
@@ -9,6 +12,9 @@ const message = {
   otherText: "其他",
   cancelText: "取消",
   determineText: "确定",
+  year: "年",
+  over: "{count}{unit}以上",
+  lessThan: "{count}{unit}以下",
 };
 
-export default message;
+export default Object.assign({}, commonMessage, formInfoMessage, message);
