@@ -2,10 +2,11 @@ import PopoverItem from "../PopoverItem";
 import { Input, InputNumber, Space } from "antd";
 import get from "lodash/get";
 import isNumber from "lodash/isNumber";
+import { useIntl } from "@components/Intl";
 import style from "../style.module.scss";
 import React from "react";
 
-const computedFilterValue = (range, unit) => {
+const computedFilterValue = (range, unit, formatMessage) => {
   if (!isNumber(range[0]) && !isNumber(range[1])) {
     return null;
   }
@@ -16,10 +17,10 @@ const computedFilterValue = (range, unit) => {
         return `${range[0]}-${range[1]}${unit || ""}`;
       }
       if (isNumber(range[0])) {
-        return `${range[0]}${unit || ""}以上`;
+        return formatMessage({ id: "over" }, { count: range[0], unit });
       }
       if (isNumber(range[1])) {
-        return `${range[1]}${unit || ""}以下`;
+        return formatMessage({ id: "lessThan" }, { count: range[1], unit });
       }
     })(range),
     value: [range[0] || null, range[1] || null],
@@ -38,6 +39,7 @@ const InputFilterItem = ({
   unit,
   ...props
 }) => {
+  const { formatMessage } = useIntl({ moduleName: "Filter" });
   return (
     <PopoverItem
       label={label}
@@ -49,12 +51,18 @@ const InputFilterItem = ({
         <Space.Compact>
           <InputNumber
             {...props}
-            placeholder={placeholder || `请输入${label}`}
+            placeholder={
+              placeholder || `${formatMessage({ id: "pleaseInput" })}${label}`
+            }
             className={style["filter-item-number-range"]}
             value={get(value, "value[0]", "")}
             onChange={(target) => {
               onChange(
-                computedFilterValue([target, get(value, "value[1]")], unit)
+                computedFilterValue(
+                  [target, get(value, "value[1]")],
+                  unit,
+                  formatMessage
+                )
               );
             }}
           />
@@ -70,23 +78,29 @@ const InputFilterItem = ({
           />
           <InputNumber
             {...props}
-            placeholder={placeholder || `请输入${label}`}
+            placeholder={
+              placeholder || `${formatMessage({ id: "pleaseInput" })}${label}`
+            }
             className={style["filter-item-number-range"]}
             value={get(value, "value[1]", "")}
             onChange={(target) => {
               onChange(
-                computedFilterValue([get(value, "value[0]"), target], unit)
+                computedFilterValue(
+                  [get(value, "value[0]"), target],
+                  unit,
+                  formatMessage
+                )
               );
             }}
           />
           {unit && (
             <Input
               style={{
-                width: 40,
+                width: 50,
                 borderLeft: 0,
               }}
-              value="年"
-              readOnly
+              value={unit}
+              disabled
             />
           )}
         </Space.Compact>

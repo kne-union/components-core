@@ -64,7 +64,11 @@ const renderDisplayLabel = ({
   }
 
   if (value.length === 1 && value[0] === (allValue || "all")) {
-    return <span className={style["text-inner"]}>{allLabel || "全部"}</span>;
+    return (
+      <span className={style["text-inner"]}>
+        {allLabel || <FormattedMessage id="all" moduleName="Common" />}
+      </span>
+    );
   }
 
   return value.map((item) => {

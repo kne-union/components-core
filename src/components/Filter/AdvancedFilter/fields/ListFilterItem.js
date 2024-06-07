@@ -1,6 +1,7 @@
 import { Tag, App } from "antd";
 import isEqual from "lodash/isEqual";
 import * as fields from "../../fields";
+import { useIntl } from "@components/Intl";
 
 const { CheckableTag } = Tag;
 const ListFilterItem = ({
@@ -13,6 +14,7 @@ const ListFilterItem = ({
   custom,
 }) => {
   const { message } = App.useApp();
+  const { formatMessage } = useIntl({ moduleName: "Filter" });
   return (
     <>
       {items.map(({ label, value: itemValue }) => {
@@ -40,7 +42,12 @@ const ListFilterItem = ({
                     newValue.splice(index, 1);
                   })();
               if (newValue.length > maxLength) {
-                message.error(`最多选择${maxLength}个`);
+                message.error(
+                  formatMessage(
+                    { id: "maxSelectedCount" },
+                    { count: maxLength }
+                  )
+                );
                 return;
               }
               onChange(newValue);
@@ -62,7 +69,7 @@ const ListFilterItem = ({
             <ComponentItem
               {...custom.props}
               value={value}
-              placeholder={`请输入${label}`}
+              placeholder={`${formatMessage({ id: "pleaseInput" })}${label}`}
               onChange={onChange}
             />
           );
