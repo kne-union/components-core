@@ -1,7 +1,10 @@
-import { Tag, App } from "antd";
+import { App, Tag } from "antd";
 import AddressSelectField, {
+  getLabelForLocal,
   withAddressApi,
 } from "@common/components/AddressSelectField";
+import { FormattedMessage, useIntl } from "@components/Intl";
+import { usePreset } from "@components/Global";
 import { useMemo } from "react";
 import style from "../../style.module.scss";
 
@@ -16,12 +19,16 @@ const CityFilterItemInner = ({
   ...props
 }) => {
   const { message } = App.useApp();
+  const { locale } = usePreset();
+  const { formatMessage } = useIntl({ moduleName: "Filter" });
   const cityList = useMemo(() => {
     return addressApi.getChinaHotCities();
   }, [addressApi]);
   return (
     <>
-      {cityList.map(({ name, code }) => {
+      {cityList.map((city) => {
+        const { code } = city;
+        const name = getLabelForLocal(city, locale);
         return (
           <CheckableTag
             key={code}
@@ -46,7 +53,12 @@ const CityFilterItemInner = ({
                     newValue.splice(index, 1);
                   })();
               if (newValue.length > maxLength) {
-                message.error(`最多选择${maxLength}个城市`);
+                message.error(
+                  formatMessage(
+                    { id: "maxSelectedCount" },
+                    { count: maxLength }
+                  )
+                );
                 return;
               }
               onChange(newValue);
@@ -68,7 +80,11 @@ const CityFilterItemInner = ({
           )
         }
       >
-        其他
+        <FormattedMessage
+          id={"otherText"}
+          moduleName="Filter"
+          defaultMessage="其他"
+        />
         <AddressSelectField
           {...props}
           className={style["filter-advanced-item-other-inner"]}

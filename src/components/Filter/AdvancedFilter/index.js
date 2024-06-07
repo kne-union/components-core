@@ -2,10 +2,12 @@ import FilterOuter from "../FilterOuter";
 import MoreFilterLines from "../FilterLines";
 import { Flex } from "antd";
 import advancedFields from "./fields";
+import { createWithIntl, useIntl } from "@components/Intl";
 import get from "lodash/get";
 import { useContext } from "../context";
 import style from "../style.module.scss";
 import FilterValueDisplay from "../FilterValueDisplay";
+import importMessages from "../locale";
 
 const Line = ({ list }) => {
   const { value, onChange } = useContext();
@@ -43,34 +45,37 @@ const Line = ({ list }) => {
   );
 };
 
-const AdvancedFilter = (props) => {
-  return (
-    <FilterOuter {...props}>
-      {({ value, onChange, props }) => {
-        const { list, more } = props;
-        return (
-          <div>
-            <Flex gap={8} vertical className={style["filter-advanced"]}>
-              {list.map((item, index) => {
-                return <Line key={index} list={item} />;
-              })}
-              {more && (
-                <MoreFilterLines
-                  className={style["filter-advanced-more"]}
-                  label="更多"
-                  list={[more]}
-                />
+const AdvancedFilter = createWithIntl({ importMessages, moduleName: "Filter" })(
+  (props) => {
+    const { formatMessage } = useIntl({ moduleName: "Filter" });
+    return (
+      <FilterOuter {...props}>
+        {({ value, onChange, props }) => {
+          const { list, more } = props;
+          return (
+            <div>
+              <Flex gap={8} vertical className={style["filter-advanced"]}>
+                {list.map((item, index) => {
+                  return <Line key={index} list={item} />;
+                })}
+                {more && (
+                  <MoreFilterLines
+                    className={style["filter-advanced-more"]}
+                    label={`${formatMessage({ id: "moreText" })}:`}
+                    list={[more]}
+                  />
+                )}
+              </Flex>
+              {value && value.length > 0 && (
+                <FilterValueDisplay value={value} onChange={onChange} />
               )}
-            </Flex>
-            {value && value.length > 0 && (
-              <FilterValueDisplay value={value} onChange={onChange} />
-            )}
-          </div>
-        );
-      }}
-    </FilterOuter>
-  );
-};
+            </div>
+          );
+        }}
+      </FilterOuter>
+    );
+  }
+);
 
 AdvancedFilter.fields = advancedFields;
 export default AdvancedFilter;

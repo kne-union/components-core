@@ -1,11 +1,13 @@
 import { Input, Space, Button } from "antd";
 import { useState, useEffect, useRef } from "react";
 import useSimulationBlur from "@kne/use-simulation-blur";
+import { useIntl } from "@components/Intl";
 
 const InputFilterItem = ({ value, label, onChange, ...props }) => {
   const propsValue = value?.value;
   const [inputValue, setInputValue] = useState(propsValue || "");
   const [active, setActive] = useState(false);
+  const { formatMessage } = useIntl({ moduleName: "Filter" });
   const searchHandler = () => {
     onChange(inputValue ? { label: inputValue, value: inputValue } : null);
   };
@@ -25,7 +27,7 @@ const InputFilterItem = ({ value, label, onChange, ...props }) => {
     <span ref={ref}>
       <Space.Compact>
         <Input
-          placeholder={`请输入${label}`}
+          placeholder={`${formatMessage({ id: "pleaseInput" })}${label}`}
           {...props}
           size="small"
           value={inputValue}
@@ -39,7 +41,7 @@ const InputFilterItem = ({ value, label, onChange, ...props }) => {
         />
         {active && (
           <Button size="small" type="primary" onClick={searchHandler}>
-            搜索
+            {formatMessage({ id: "search" })}
           </Button>
         )}
       </Space.Compact>

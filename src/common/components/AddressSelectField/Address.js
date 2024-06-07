@@ -343,7 +343,7 @@ const AddressSelectField = (props) => {
 };
 
 AddressSelectField.defaultProps = {
-  overlayWidth: "450px",
+  overlayWidth: "500px",
   isPopup: true,
   api: addressDefaultApi,
   dataFormat: ({ city }, options) => {
@@ -395,6 +395,7 @@ const withAddressApi = (WrappedComponent) => {
 AddressSelectField.AddressEnum = AddressSelectField.Enum = AddressEnum;
 AddressSelectField.createAddressApi = createAddressApi;
 AddressSelectField.withAddressApi = withAddressApi;
+AddressSelectField.getLabelForLocal = getLabelForLocal;
 
 export default AddressSelectField;
-export { AddressEnum, createAddressApi, withAddressApi };
+export { AddressEnum, createAddressApi, withAddressApi, getLabelForLocal };

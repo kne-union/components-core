@@ -7,6 +7,9 @@ const message = {
   customTime: "自定义时间",
   monthly: "按月",
   weekly: "按周",
+  all: "全部",
+  items: "项",
+  selectAll: "选择{label}",
 };
 
 export default message;

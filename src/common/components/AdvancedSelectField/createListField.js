@@ -7,6 +7,7 @@ import merge from "lodash/merge";
 import style from "./create-list.module.scss";
 import SearchInput from "@common/components/SearchInput";
 import { Col, Row, Flex, Checkbox, Typography, Space } from "antd";
+import { FormattedMessage, useIntl } from "@components/Intl";
 
 const useSelectInnerContext = SelectInnerInput.useContext;
 
@@ -34,7 +35,7 @@ const createListField = ({ renderList, defaultProps }) => {
           pagination.paramsType,
           pagination.pageSizeName,
         ]) || pagination.pageSize;
-
+    const { formatMessage } = useIntl({ moduleName: "Common" });
     const formatData = props.dataFormat(fetchApi.data);
     const { right, leftBottom, leftSpan = 24 } = props;
     const isSelectedAll = value.length === 1 && value[0] === "all";
@@ -54,7 +55,9 @@ const createListField = ({ renderList, defaultProps }) => {
                   [commonStyle["is-popup"]]: props.isPopup,
                 }
               )}
-              placeholder={props.searchPlaceholder}
+              placeholder={
+                props.searchPlaceholder || formatMessage({ id: "search" })
+              }
               value={searchText}
               onSearch={(value) => {
                 fetchApi.reload(props.getSearchProps(value));
@@ -75,8 +78,12 @@ const createListField = ({ renderList, defaultProps }) => {
                   <Typography>已选:</Typography>
                   <Typography.Link>
                     {isSelectedAll
-                      ? props.allLabel || "全部"
-                      : `${value.length}${props.countUnit || "项"}`}
+                      ? props.allLabel || (
+                          <FormattedMessage id="all" moduleName="Common" />
+                        )
+                      : `${value.length}${
+                          props.countUnit || formatMessage({ id: "items" })
+                        }`}
                   </Typography.Link>
                 </Space>
               ) : (
@@ -92,7 +99,15 @@ const createListField = ({ renderList, defaultProps }) => {
                       );
                     }}
                   >
-                    选择{props.allLabel || "全部"}
+                    <FormattedMessage
+                      id="selectAll"
+                      moduleName="Common"
+                      values={{
+                        label: props.allLabel || (
+                          <FormattedMessage id="all" moduleName="Common" />
+                        ),
+                      }}
+                    />
                   </Checkbox>
                 </div>
               ) : (
@@ -178,7 +193,6 @@ const createListField = ({ renderList, defaultProps }) => {
     {},
     {
       isPopup: true,
-      searchPlaceholder: "搜索",
       pagination: {},
       mergeList: (data, newData) => {
         return Object.assign({}, newData, {
