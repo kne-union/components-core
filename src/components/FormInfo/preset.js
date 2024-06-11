@@ -57,6 +57,13 @@ const formPreset = async (options, otherOptions) => {
     return !value;
   });
 
+  interceptors.output.use("object-output-value", (value) => {
+    if (!value) {
+      return value;
+    }
+    return value.value || value.id;
+  });
+
   interceptors.input.use("date-string", (value) => {
     return value ? dayjs(value) : null;
   });
