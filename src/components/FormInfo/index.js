@@ -13,6 +13,7 @@ import FormDrawer, { useFormDrawer, FormDrawerButton } from "./FormDrawer";
 import Form from "./Form";
 import FormItem from "./FormItem";
 import ErrorTip from "./ErrorTip";
+import MultiField from "./MultiField";
 import { SubmitButton, CancelButton } from "@kne/react-form-antd";
 
 preset();
@@ -36,6 +37,7 @@ FormInfo.ErrorTip = ErrorTip;
 FormInfo.SubmitButton = SubmitButton;
 FormInfo.CancelButton = CancelButton;
 FormInfo.fieldDecorator = fieldDecorator;
+FormInfo.MultiField = MultiField;
 
 export * from "@kne/react-form-antd";
 
@@ -59,6 +61,7 @@ export {
   FormDrawer,
   useFormDrawer,
   FormDrawerButton,
+  MultiField,
 };
 
 export { default as SelectInnerInput } from "./SelectInnerInput";

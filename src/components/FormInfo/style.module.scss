@@ -413,3 +413,38 @@
 .column-not-layout {
   display: none;
 }
+
+.mult-field {
+}
+
+.mult-field-item {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+
+  &.first-item {
+    :global {
+      .ant-btn {
+        margin-top: 28px;
+      }
+    }
+  }
+
+  &:not(.first-item) {
+    :global {
+      .react-form__field-label {
+        display: none;
+      }
+    }
+  }
+
+  :global {
+    .react-form__field {
+      flex: 1;
+    }
+  }
+}
+
+.mult-field-add-btn {
+  margin-bottom: 16px;
+}

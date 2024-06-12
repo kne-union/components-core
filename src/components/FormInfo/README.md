@@ -337,6 +337,36 @@ render(
 
 ```
 
+- 多行
+- 展示了一个多行字段示例
+- _FormInfo(@components/FormInfo),_Modal(@components/Modal)
+
+```jsx
+const {default: FormInfo, Form, MultiField, SubmitButton, fields} = _FormInfo;
+const {useModal} = _Modal;
+
+const {
+    Input, TextArea
+} = fields;
+
+const BaseExample = () => {
+    const modal = useModal();
+    return (<Form onSubmit={(data) => {
+        modal({
+            title: "表单提交数据", children: <pre>{JSON.stringify(data, null, 2)}</pre>,
+        });
+    }}>
+        <FormInfo list={[<MultiField name="no" label="单号" rule="REQ" field={Input} maxLength={5}/>,
+            <Input name="name" label="名称"/>,
+            <MultiField name="description" label="说明" field={TextArea}/>]}/>
+        <SubmitButton>提交</SubmitButton>
+    </Form>);
+};
+
+render(<BaseExample/>);
+
+```
+
 - 一个含有多段列表的表单示例
 - 展示了一个含有多段列表的表单示例，列表的最大长度为5，在添加5段之后添加按钮自动隐藏
 - _FormInfo(@components/FormInfo),global(@components/Global),_Modal(@components/Modal),antd(antd)
