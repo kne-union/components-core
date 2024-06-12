@@ -25,6 +25,21 @@
       ]
     },
     {
+      "title": "多行",
+      "description": "展示了一个多行字段示例",
+      "code": "./multi-field.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        }
+      ]
+    },
+    {
       "title": "一个含有多段列表的表单示例",
       "description": "展示了一个含有多段列表的表单示例，列表的最大长度为5，在添加5段之后添加按钮自动隐藏",
       "code": "./list.js",

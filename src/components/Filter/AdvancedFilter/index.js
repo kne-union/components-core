@@ -18,7 +18,7 @@ const Line = ({ list }) => {
         return (
           <Flex gap={16} key={item.key || item.props.name || index}>
             <div className={style["filter-label"]}>{item.props.label}:</div>
-            <Flex>
+            <Flex wrap={true}>
               <ComponentItem
                 {...item.props}
                 value={
