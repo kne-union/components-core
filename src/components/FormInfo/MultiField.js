@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Button, Flex } from "antd";
+import { Button } from "antd";
 import { GroupList, useFormContext } from "@kne/react-form-antd";
 import Icon from "@components/Icon";
 import get from "lodash/get";
@@ -12,6 +12,7 @@ const MultiField = ({
   rule,
   field,
   defaultLength,
+  className,
   minLength,
   maxLength,
   ...props
@@ -24,7 +25,7 @@ const MultiField = ({
     maxLength && maxLength <= get(formData, `${name}.length`, 0)
   );
   return (
-    <div className={style["mult-field"]}>
+    <div className={classnames(style["mult-field"], "mult-field")}>
       <GroupList
         ref={ref}
         name={name}
@@ -34,16 +35,23 @@ const MultiField = ({
           return (
             <div
               key={key}
-              className={classnames(style["mult-field-item"], {
-                [style["first-item"]]: index === 0,
-              })}
+              className={classnames(
+                style["mult-field-item"],
+                "mult-field-item",
+                {
+                  [style["first-item"]]: index === 0,
+                }
+              )}
             >
               <CurrentFiled {...props} name={name} label={label} rule={rule} />
-              <Button
-                icon={<Icon type="shanchu" />}
-                onClick={onRemove}
-                disabled={length <= Math.max(minLength, 1)}
-              />
+              <div>
+                <div className="react-form__field-label" />
+                <Button
+                  icon={<Icon type="shanchu" />}
+                  onClick={onRemove}
+                  disabled={length <= Math.max(minLength, 1)}
+                />
+              </div>
             </div>
           );
         }}
