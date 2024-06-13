@@ -12,7 +12,6 @@ const MultiField = ({
   rule,
   field,
   defaultLength,
-  className,
   minLength,
   maxLength,
   ...props
