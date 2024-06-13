@@ -422,14 +422,6 @@
   flex-wrap: nowrap;
   gap: 8px;
 
-  &.first-item {
-    :global {
-      .ant-btn {
-        margin-top: 28px;
-      }
-    }
-  }
-
   &:not(.first-item) {
     :global {
       .react-form__field-label {
