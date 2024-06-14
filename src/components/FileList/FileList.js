@@ -16,6 +16,7 @@ const FileListInner = ({
   list: previewList,
   setList,
   defaultTab,
+  defaultPreviewFileId,
   apis: currentApis,
   getPermission,
   titleExtra,
@@ -48,7 +49,7 @@ const FileListInner = ({
     );
   }, [previewList]);
   const [currentPreviewFileId, setCurrentPreviewFileId] = useState(
-    get(previewList, "[0].ossId", null)
+    defaultPreviewFileId || get(previewList, "[0].ossId", null)
   );
   useEffect(() => {
     if (currentPreviewFileId && previewMap.get(currentPreviewFileId)) {

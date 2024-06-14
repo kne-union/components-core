@@ -58,7 +58,7 @@ const Title = ({
                 <>
                   <Select
                     className={style["file-select"]}
-                    bordered={false}
+                    variant="borderless"
                     popupMatchSelectWidth={false}
                     value={currentPreviewFileId}
                     onChange={setCurrentPreviewFileId}

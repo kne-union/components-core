@@ -79,11 +79,25 @@ const BaseExample = createWithRemoteLoader({
   modules: ["components-core:Global@PureGlobal"],
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([
+    {
+      ossId: "uBFNeYQBnHRXlZaTGZpA",
+      filename: "avatar.pdf",
+    },
+    {
+      ossId: "gWw26Y0BeK_D6zxND5vh",
+      filename: "测试开发_夏永昱_本科_5年.docx",
+    },
+  ]);
   console.log(list);
   return (
     <PureGlobal preset={preset}>
-      <FileList list={list} setList={setList} apis={apis} />
+      <FileList
+        defaultPreviewFileId="gWw26Y0BeK_D6zxND5vh"
+        list={list}
+        setList={setList}
+        apis={apis}
+      />
     </PureGlobal>
   );
 });
