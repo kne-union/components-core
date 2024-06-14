@@ -13,7 +13,7 @@ const PdfPreview = memo(({ url, maxWidth, scale, rotate, className }) => {
     getPublicPath("components-core") + "/pdfjs/build/pdf.worker.js";
   const [width, setWidth] = useState(maxWidth);
   const ref = useResize(() => {
-    if (ref.current.clientWidth) {
+    if (ref.current && ref.current.clientWidth) {
       setWidth(Math.min(ref.current.clientWidth, maxWidth));
     }
   });

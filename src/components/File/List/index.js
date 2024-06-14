@@ -24,7 +24,9 @@ const List = ({
         })}
         rowKey={(item) =>
           `item_${
-            (item.uuid && `uuid_${item.uuid}`) || (item.id && `id_${item.id}`)
+            (item.uuid && `uuid_${item.uuid}`) ||
+            (item.id && `id_${item.id}`) ||
+            (item.ossId && `id_${item.ossId}`)
           }`
         }
         renderItem={(item) => {
