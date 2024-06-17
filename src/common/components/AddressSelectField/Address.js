@@ -359,11 +359,18 @@ AddressSelectField.defaultProps = {
   },
 };
 
-const AddressEnum = withFetch(({ name, data, children, ...props }) => {
-  const { locale } = usePreset();
-  const { getCity } = useMemo(() => createAddressApi(data), [data]);
-  return children(getCity(name), Object.assign({}, props, { locale }));
-});
+const AddressEnum = withFetch(
+  ({ name, data, getAddressApi, children, ...props }) => {
+    const { locale } = usePreset();
+    const addressApi = useMemo(() => createAddressApi(data), [data]);
+    return getAddressApi
+      ? children(addressApi)
+      : children(
+          addressApi.getCity(name),
+          Object.assign({}, props, { locale })
+        );
+  }
+);
 
 AddressEnum.defaultProps = {
   ...addressDefaultApi,
