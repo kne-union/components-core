@@ -42,7 +42,7 @@ const FieldList = ({ list, groupArgs, itemRender }) => {
             "setExtraProps",
             "isBlock",
             "featureId",
-            "tips",
+            // "tips",
           ].forEach((key) => {
             if (item.props.hasOwnProperty(key)) {
               targetProps[key] = item.props[key];

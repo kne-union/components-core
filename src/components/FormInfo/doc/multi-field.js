@@ -22,6 +22,7 @@ const BaseExample = () => {
             rule="REQ"
             field={Input}
             maxLength={5}
+            tips={"单号"}
           />,
           <Input name="name" label="名称" />,
           <MultiField name="description" label="说明" field={TextArea} />,
