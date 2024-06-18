@@ -33,11 +33,38 @@ import get from "lodash/get";
 import { get as _get } from "lodash";
 import { useFormLang } from "@components/FormInfo/FormLangProvider";
 import TypeDateRangePicker from "./TypeDateRangePicker";
+import Tooltip from "@components/Tooltip";
+import Icon from "@components/Icon";
+import { Space } from "antd";
+import classnames from "classnames";
+import style from "../style.module.scss";
 
 const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
   const TargetComponent = compose(...decoratorList)(
-    ({ forwardedRef, ...props }) => (
-      <WrappedComponent {...props} ref={forwardedRef} />
+    ({ forwardedRef, label, placeholder, ...props }) => (
+      <WrappedComponent
+        {...props}
+        label={label}
+        labelRender={() =>
+          props.tips ? (
+            <Space>
+              {label}
+              <Tooltip content={props.tips}>
+                <span
+                  className={classnames(style["field-tips"], {
+                    [style["label-hidden"]]: props.labelHidden,
+                  })}
+                >
+                  <Icon type="icon-xinxi-miaobian" />
+                </span>
+              </Tooltip>
+            </Space>
+          ) : (
+            label
+          )
+        }
+        ref={forwardedRef}
+      />
     )
   );
   const ForwardComponent = forwardRef((props, ref) => {

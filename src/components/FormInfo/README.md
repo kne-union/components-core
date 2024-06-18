@@ -202,6 +202,7 @@ const {
   Rate,
   Switch,
   Slider,
+  MoneyInput,
 } = fields;
 
 const BaseExample = () => {
@@ -270,21 +271,23 @@ const BaseExample = () => {
               name="name"
               label="姓名"
               rule="REQ LEN-3-10 REP"
-              tips="请输入姓名"
+              tips="姓名"
             />
           </ErrorTip>,
+          <MoneyInput name="money" label="金额" rule="REQ" tips={"money"} />,
           <Input name="phone" label="手机" rule="REQ TEL" />,
           <Input name="email" label="邮箱" rule="EMAIL" />,
-          <Upload name="file" label="文件" block />,
-          <Rate name="rate" label="评分" />,
-          <Switch name="switch" label="开关" />,
-          <Slider name="slider" label="滑动条" />,
+          <Upload name="file" label="文件" tips="文件" block />,
+          <Rate name="rate" label="评分" tips="评分" />,
+          <Switch name="switch" label="开关" tips="开关" />,
+          <Slider name="slider" label="滑动条" tips="滑动条" />,
           <TypeDateRangePicker
             name="type_date"
             label="日期时间段"
+            tips="日期时间段"
             rule="REQ"
           />,
-          <TextArea name="des" label="备注" block />,
+          <TextArea name="des" label="备注" tips="备注" block />,
           <SubmitButton>提交</SubmitButton>,
         ]}
       />
@@ -366,6 +369,7 @@ const BaseExample = () => {
             rule="REQ"
             field={Input}
             maxLength={5}
+            tips={"单号"}
           />,
           <Input name="name" label="名称" />,
           <MultiField name="description" label="说明" field={TextArea} />,
