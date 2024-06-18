@@ -155,6 +155,7 @@
 
 .list-btn {
   padding: 0;
+  cursor: pointer;
 
   &:global(.ant-btn-text.ant-btn-dangerous) {
     background: transparent;
