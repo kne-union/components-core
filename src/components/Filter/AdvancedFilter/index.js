@@ -16,9 +16,13 @@ const Line = ({ list }) => {
       {list.map((item, index) => {
         const ComponentItem = item.type;
         return (
-          <Flex gap={16} key={item.key || item.props.name || index}>
+          <Flex
+            gap={16}
+            key={item.key || item.props.name || index}
+            align="center"
+          >
             <div className={style["filter-label"]}>{item.props.label}:</div>
-            <Flex wrap={true}>
+            <Flex wrap={true} align="center">
               <ComponentItem
                 {...item.props}
                 value={
