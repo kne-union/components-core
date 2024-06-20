@@ -5,7 +5,7 @@ import style from "./style.module.scss";
 
 const withFieldItem =
   (WrappedComponent) =>
-  ({ value, onChange, label, ...props }) => {
+  ({ value, onChange, interceptor, label, ...props }) => {
     const [open, setOpen] = useState(false);
     return (
       <FilterItem label={label} open={open} active={isNotEmpty(value)}>
@@ -14,7 +14,11 @@ const withFieldItem =
           {...props}
           className={style["filter-item-inner"]}
           value={value}
-          onChange={onChange}
+          onChange={
+            typeof interceptor === "function"
+              ? (...args) => interceptor(onChange(...args))
+              : onChange
+          }
           valueType="all"
           onOpenChange={setOpen}
         />
