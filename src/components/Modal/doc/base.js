@@ -2,6 +2,7 @@ const { default: Modal, useModal } = _Modal;
 const { useState } = React;
 const { Button, Space, message, Radio } = antd;
 const { PureGlobal } = global;
+
 const BaseExample = () => {
   const modal = useModal();
   const [size, setSize] = useState("default");
@@ -146,6 +147,43 @@ const BaseExample = () => {
           }}
         >
           有rightOptions的弹窗
+        </Button>
+        <Button
+          onClick={() => {
+            const StateContainer = ({ children }) => {
+              const [disabled, setDisabled] = useState(false);
+              return children({ disabled, setDisabled });
+            };
+
+            modal({
+              title: "有rightOptions的弹窗",
+              size,
+              withDecorator: (render) => {
+                return <StateContainer>{render}</StateContainer>;
+              },
+              footerButtons: ({ disabled }) => [
+                {
+                  type: "primary",
+                  disabled,
+                  children: "确定",
+                },
+              ],
+              children: ({ disabled, setDisabled }) => (
+                <div>
+                  弹窗弹窗弹窗弹窗弹窗弹窗弹窗[{String(disabled)}]
+                  <Button
+                    onClick={() => {
+                      setDisabled((disabled) => !disabled);
+                    }}
+                  >
+                    切换确定按钮disabled
+                  </Button>
+                </div>
+              ),
+            });
+          }}
+        >
+          children控制footerButtons状态
         </Button>
       </Space>
     </Space>
