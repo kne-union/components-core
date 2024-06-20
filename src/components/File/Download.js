@@ -55,8 +55,14 @@ export const useDownload = ({
   const apis = Object.assign({}, baseApis, currentApis);
   const [downLoading, setDownLoading] = useState(false);
 
-  const { isLoading, data, error, refresh, ...fetchProps } = useFetch(
-    Object.assign({}, apis.oss, { auto: false })
+  const { paramsType, paramsName, ...oss } = Object.assign(
+    { paramsType: "params", paramsName: "id" },
+    apis.oss
+  );
+  const fetchProps = {};
+  fetchProps[paramsType] = { [paramsName]: id };
+  const { isLoading, data, error, refresh, ...otherProps } = useFetch(
+    Object.assign({}, oss, fetchProps, { auto: false })
   );
 
   const showError = useRefCallback(onError || message.error);
@@ -84,9 +90,9 @@ export const useDownload = ({
       });
   }, [isLoading, error, data, filename, showError, successHandler]);
   return {
-    ...fetchProps,
+    ...otherProps,
     isLoading: isLoading || downLoading,
-    download: () => refresh(id && { params: { id } }),
+    download: () => refresh(id && fetchProps),
   };
 };
 
