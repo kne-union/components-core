@@ -16,7 +16,7 @@ const withFieldItem =
           value={value}
           onChange={
             typeof interceptor === "function"
-              ? (...args) => interceptor(onChange(...args))
+              ? (...args) => onChange(interceptor(...args))
               : onChange
           }
           valueType="all"
