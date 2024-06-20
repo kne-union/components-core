@@ -110,9 +110,11 @@ const ButtonGroup = ({ list, more, compact, ...props }) => {
         isDropdown,
       });
     }
-    const { className, confirm, ...props } = renderItem;
+    const { className, confirm, buttonComponent, ...props } = renderItem;
     const isConfirm = confirm || props.message;
-    const CurrentButton = isConfirm ? ConfirmButton : LoadingButton;
+    const CurrentButton = isConfirm
+      ? ConfirmButton
+      : buttonComponent || LoadingButton;
 
     return (
       <CurrentButton
