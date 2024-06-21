@@ -222,7 +222,8 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
                               )}
                               disabled={
                                 selectLevel > 1 &&
-                                (value || []).indexOf(node.parentCode) > -1
+                                (value.indexOf(node.parentCode) > -1 ||
+                                  value.indexOf(node.code.slice(0, 3)) > -1)
                               }
                               key={node.id}
                               onChange={(e) =>
@@ -256,6 +257,7 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
                           index === selectedIds.length - 1 ? [] : selectedIds
                         }
                         items={list.map((node) => {
+                          console.log("list---", list, node);
                           return {
                             key: node.id,
                             label: (
@@ -272,6 +274,10 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
                                       node.id,
                                       value
                                     )}
+                                    disabled={
+                                      selectLevel > 1 &&
+                                      value.indexOf(node.parentCode) > -1
+                                    }
                                     onChange={(e) =>
                                       onCheckedChange(e.target.checked, node.id)
                                     }
