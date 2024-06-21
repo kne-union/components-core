@@ -166,7 +166,7 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
       }}
     />
   );
-  // console.log(selectLevel, selectedIds);
+
   return (
     <div
       className={classnames(style["content"], {
