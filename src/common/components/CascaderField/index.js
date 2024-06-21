@@ -42,7 +42,7 @@ const SearchInner = withFetch(({ data, computedIsChecked, onSelect }) => {
     </SimpleBar>
   );
 });
-const CascaderInner = ({ value, setValue, size }) => {
+const CascaderInner = ({ value, setValue, size, selectLevel }) => {
   const { fetchApi, props } = useSelectInnerContext();
   const [searchText, setSearchText] = useState("");
   const dataFormat = useRefCallback(props.dataFormat);
@@ -166,7 +166,7 @@ const CascaderInner = ({ value, setValue, size }) => {
       }}
     />
   );
-
+  // console.log(selectLevel, selectedIds);
   return (
     <div
       className={classnames(style["content"], {
@@ -220,6 +220,10 @@ const CascaderInner = ({ value, setValue, size }) => {
                                 node.id,
                                 value
                               )}
+                              disabled={
+                                selectLevel > 1 &&
+                                (value || []).indexOf(node.parentCode) > -1
+                              }
                               key={node.id}
                               onChange={(e) =>
                                 onCheckedChange(e.target.checked, node.id)
@@ -315,7 +319,12 @@ const CascaderField = ({ maxLength, nodeFormat, dataFormat, ...props }) => {
     >
       {({ value, setValue }) => {
         return (
-          <CascaderInner size={maxLength} value={value} setValue={setValue} />
+          <CascaderInner
+            {...props}
+            size={maxLength}
+            value={value}
+            setValue={setValue}
+          />
         );
       }}
     </SelectInnerInput>
