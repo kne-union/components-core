@@ -95,8 +95,19 @@ const BaseExample = () => {
           />,
           <IndustrySelectFilterItem
             label="行业选择"
-            name="industry"
+            name="industryLast"
             onlyAllowLastLevel
+          />,
+          <IndustrySelectFilterItem
+            label="行业选择"
+            name="industry"
+            selectLevel={2}
+            maxLength={3}
+          />,
+          <IndustrySelectFilterItem
+            label="行业选择"
+            name="industrySingle"
+            single
           />,
         ],
       ]}
