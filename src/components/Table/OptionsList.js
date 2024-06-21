@@ -4,7 +4,7 @@ import Icon from "@components/Icon";
 import ButtonGroup from "@components/ButtonGroup";
 import style from "./style.module.scss";
 
-const OptionsList = ({ className, list, width }) => {
+const OptionsList = ({ className, list = [], width }) => {
   return (
     <div
       className={classnames(className, style["options-column"])}
@@ -13,16 +13,18 @@ const OptionsList = ({ className, list, width }) => {
       }}
     >
       <ButtonGroup
-        list={list.map(({ className, ...props }) =>
-          Object.assign({}, props, {
-            className: classnames(
-              className,
-              "btn-no-padding",
-              style["options-btn"]
-            ),
-            type: "link",
-          })
-        )}
+        list={list
+          .filter((item) => !item?.hidden)
+          .map(({ className, ...props }) =>
+            Object.assign({}, props, {
+              className: classnames(
+                className,
+                "btn-no-padding",
+                style["options-btn"]
+              ),
+              type: "link",
+            })
+          )}
         more={
           <Button
             icon={<Icon type="icon-gengduo2" />}
