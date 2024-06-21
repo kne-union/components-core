@@ -89,8 +89,18 @@ const BaseExample = () => {
           />,
           <FunctionSelectFilterItem
             label="职能选择"
-            name="function"
+            name="functionLast"
             onlyAllowLastLevel
+          />,
+          <FunctionSelectFilterItem
+            label="职能选择"
+            name="function"
+            selectLevel={3}
+            maxLength={3}
+          />,
+          <FunctionSelectFilterItem
+            label="职能选择"
+            name="functionSingle"
             single
           />,
           <IndustrySelectFilterItem
