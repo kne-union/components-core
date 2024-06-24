@@ -361,6 +361,7 @@ export const useConfirmModal = () => {
       },
       iconSetting
     );
+    console.log("danger---", danger);
     if (modal[type]) {
       const { destroy } = modal[type]({
         ...otherProps,
@@ -377,15 +378,17 @@ export const useConfirmModal = () => {
           >
             {title && (
               <Space size={0} align="start" className={style["title"]}>
-                <Icon
-                  className={classnames(
-                    "title-icon",
-                    `title-icon-${type === "confirm" ? confirmType : type}`
-                  )}
-                  type={
-                    icon || typeEnum[type === "confirm" ? confirmType : type]
-                  }
-                />
+                {danger ? (
+                  <Icon
+                    className={classnames(
+                      "title-icon",
+                      `title-icon-${type === "confirm" ? confirmType : type}`
+                    )}
+                    type={
+                      icon || typeEnum[type === "confirm" ? confirmType : type]
+                    }
+                  />
+                ) : null}
                 {title}
               </Space>
             )}
@@ -399,7 +402,7 @@ export const useConfirmModal = () => {
               [style["has-title"]]: title,
             })}
           >
-            {!title && (
+            {!title && danger ? (
               <Icon
                 className={classnames(
                   "title-icon",
@@ -407,7 +410,7 @@ export const useConfirmModal = () => {
                 )}
                 type={icon || typeEnum[type === "confirm" ? confirmType : type]}
               />
-            )}
+            ) : null}
             {message}
           </Space>
         ),

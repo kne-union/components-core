@@ -195,6 +195,25 @@
       + .ant-modal-confirm-content {
       max-width: 100% !important;
     }
+
+    .ant-modal-confirm-body-wrapper {
+      min-height: 96px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ant-modal-content {
+      border-radius: 8px;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+    .ant-modal-confirm-btns {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex: 1;
+    }
   }
 
   &.is-danger {
@@ -217,11 +236,13 @@
     color: #222222;
     font-weight: bold;
     font-size: 14px;
+    line-height: 20px;
   }
 
   .content {
     &.has-title {
       color: var(--font-color-grey-1);
+      line-height: 20px;
     }
   }
 }
