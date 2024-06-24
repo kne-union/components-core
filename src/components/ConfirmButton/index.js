@@ -40,6 +40,7 @@ export const withConfirm = (WrappedComponent) => {
                 title: title,
                 getContainer,
                 danger: isDelete,
+                confirmType: isDelete ? "warning" : "info",
                 message: message || formatMessage({ id: "message" }),
                 okText: okText
                   ? okText

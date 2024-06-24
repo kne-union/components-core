@@ -2,6 +2,24 @@
 
 .overlay {
   :global {
+    .ant-popover-inner {
+      border-radius: 8px;
+      padding: 18px 24px;
+      box-sizing: border-box;
+      max-width: 400px;
+      .ant-popconfirm-inner-content {
+        min-height: 60px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .ant-popconfirm-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        flex: 1;
+      }
+    }
     .ant-popconfirm-message-icon {
       display: none;
     }
