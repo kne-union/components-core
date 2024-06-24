@@ -23,7 +23,7 @@ const { Space } = antd;
 const { PureGlobal } = global;
 const BaseExample = () => {
   return (
-    <Space direction={'vertical'}>
+    <Space direction={"vertical"}>
       <Space>
         <ConfirmButton
           isDelete={false}
