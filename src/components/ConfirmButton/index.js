@@ -66,7 +66,9 @@ export const withConfirm = (WrappedComponent) => {
             >
               {title && (
                 <Space size={0} align="start" className={style["title"]}>
-                  <Icon className="title-icon" type="icon-tishi-tianchong" />
+                  {isDelete && (
+                    <Icon className="title-icon" type="icon-tishi-tianchong" />
+                  )}
                   {title}
                 </Space>
               )}
@@ -77,9 +79,9 @@ export const withConfirm = (WrappedComponent) => {
                   [style["has-title"]]: title,
                 })}
               >
-                {!title && (
+                {!title && isDelete ? (
                   <Icon className="title-icon" type="icon-tishi-tianchong" />
-                )}
+                ) : null}
                 {message || formatMessage({ id: "message" })}
               </Space>
             </Space>
