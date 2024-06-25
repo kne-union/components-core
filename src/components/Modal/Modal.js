@@ -361,7 +361,6 @@ export const useConfirmModal = () => {
       },
       iconSetting
     );
-    console.log("danger---", danger);
     if (modal[type]) {
       const { destroy } = modal[type]({
         ...otherProps,
