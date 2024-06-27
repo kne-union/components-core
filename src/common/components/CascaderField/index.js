@@ -257,7 +257,6 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
                           index === selectedIds.length - 1 ? [] : selectedIds
                         }
                         items={list.map((node) => {
-                          console.log("list---", list, node);
                           return {
                             key: node.id,
                             label: (
