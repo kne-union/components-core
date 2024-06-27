@@ -21,7 +21,7 @@ import SimpleBarBox from "@common/components/SimpleBarBox";
 import useRefCallback from "@kne/use-ref-callback";
 import useResize from "@common/hooks/useResize";
 import { numberToPx, pxToNumber } from "@common/utils/px";
-import { FormattedMessage, useIntl, createWithIntl } from "@components/Intl";
+import { createWithIntl, FormattedMessage, useIntl } from "@components/Intl";
 import importMessages from "../locale";
 import usePreset from "@common/hooks/usePreset";
 
@@ -150,18 +150,16 @@ const ModalContent = forwardRef(
           setModalOpen(false);
         }}
         footer={
-          (showSelectedTag || extra) && (
-            <Space direction="vertical" className={style["overlay-footer"]}>
-              {extra && (
-                <div className={style["overlay-footer-extra"]}>{extra}</div>
-              )}
-              {showSelectedTag &&
-                renderSelectedContent({
-                  value,
-                  setValue: setValueWithMaxLength,
-                })}
-            </Space>
-          )
+          <Space direction="vertical" className={style["overlay-footer"]}>
+            {extra && (
+              <div className={style["overlay-footer-extra"]}>{extra}</div>
+            )}
+            {showSelectedTag &&
+              renderSelectedContent({
+                value,
+                setValue: setValueWithMaxLength,
+              })}
+          </Space>
         }
       >
         {typeof children === "function"
