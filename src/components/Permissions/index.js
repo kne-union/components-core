@@ -3,7 +3,7 @@ import { Result, Tooltip } from "antd";
 import get from "lodash/get";
 import classnames from "classnames";
 import style from "./style.module.scss";
-import { useGlobalContext as useContext } from "@kne/global-context";
+import { useGlobalContext, usePreset } from "@components/Global";
 
 export const computedIsPass = ({ permissions, request }) => {
   return Array.isArray(request) && request.length > 0
@@ -12,9 +12,14 @@ export const computedIsPass = ({ permissions, request }) => {
 };
 
 export const usePermissions = () => {
-  const preset = useContext();
+  const { global } = useGlobalContext();
+  const { permissions, permissionsPath } = usePreset();
   return {
-    permissions: get(preset, "global.accountInfo.permissions", []),
+    permissions:
+      global.permissions ||
+      permissions ||
+      (permissionsPath && get(global, permissionsPath)) ||
+      [],
   };
 };
 
