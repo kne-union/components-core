@@ -28,6 +28,9 @@ const BaseExample = () => {
       <TablePage
         featureId="test"
         sticky={false}
+        rowSelection={{
+          type: "checkbox",
+        }}
         loader={() => {
           return {
             addUserName: "我是大魔王",
