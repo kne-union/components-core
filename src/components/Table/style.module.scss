@@ -108,6 +108,12 @@
       border-bottom-color: transparent;
     }*/
 
+    .ant-table-row.ant-table-row-selected > .ant-table-cell {
+      background: #ffffff !important;
+      &.ant-table-cell-row-hover {
+        background: var(--bg-color-grey-1) !important;
+      }
+    }
     .ant-table-cell.ant-table-cell-row-hover,
     th.ant-table-cell {
       background: var(--bg-color-grey-1) !important;
