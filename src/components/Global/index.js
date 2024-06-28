@@ -265,6 +265,20 @@ export const GetGlobal = ({ globalKey, children }) => {
   return children({ value: global });
 };
 
+export const GlobalInfo = ({ globalKey, value, needReady, children }) => {
+  const { global, setGlobal } = useGlobalContext(globalKey);
+  const setGlobalHandler = useRefCallback(setGlobal);
+
+  useEffect(() => {
+    setGlobalHandler(value);
+  }, [value, setGlobalHandler]);
+
+  if (needReady && !global) {
+    return null;
+  }
+  return children({ global, setGlobal });
+};
+
 const Global = ({ children, className, ...props }) => {
   return (
     <ErrorBoundary

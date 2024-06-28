@@ -28,9 +28,14 @@ const BaseExample = () => {
           optionType="button"
           buttonStyle="solid"
         />
+        <Permissions type={type} request={["permission_2"]}>
+          <div className="box">
+            <Button onClick={() => console.log("执行操作")}>有权限操作</Button>
+          </div>
+        </Permissions>
         <Permissions type={type} request={["permission_3"]}>
           <div className="box">
-            <Button onClick={() => console.log("执行操作")}>操作</Button>
+            <Button onClick={() => console.log("执行操作")}>无权限操作</Button>
           </div>
         </Permissions>
       </Space>
