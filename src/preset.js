@@ -35,7 +35,7 @@ remoteLoaderPreset({
       remote: "components-iconfont",
       url: "https://registry.npmmirror.com",
       tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
-      defaultVersion: "0.1.1",
+      defaultVersion: "0.1.8",
     },
   },
 });
