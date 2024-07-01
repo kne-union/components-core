@@ -8,6 +8,7 @@ import { Header, HeaderInfo, Menu, Option, PageTitle } from "./Page";
 import classnames from "classnames";
 import style from "./style.module.scss";
 import HelperGuide from "@components/HelperGuide";
+import { usePermissions } from "../Permissions";
 
 const { Content } = AntdLayout;
 
@@ -33,6 +34,7 @@ const ErrorBoundary = (props) => {
 const Layout = ({ children, theme, navigation }) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [pageProps, _setPageProps] = useState(Object.assign({}, defaultProps));
+  const { permissions } = usePermissions();
   const setPageProps = useCallback((value) => {
     return _setPageProps((pageProps) => {
       return Object.assign({}, pageProps, value);
@@ -65,6 +67,7 @@ const Layout = ({ children, theme, navigation }) => {
       {navigation && (
         <ErrorBoundary>
           <Navigation
+            permissions={permissions}
             {...navigation}
             onChange={(path) => {
               navigation?.onChange && navigation.onChange(path);
