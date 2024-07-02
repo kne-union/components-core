@@ -106,6 +106,7 @@ const BaseExample = () => {
           onClick={() => {
             modal({
               title: "无footer弹框",
+              size,
               children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
               footer: null,
             });
