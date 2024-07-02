@@ -23,13 +23,13 @@
     }
 
     .scroll-box {
-      height: calc(var(--modal-height) - 105px);
+      height: calc(var(--min-modal-height) - 105px);
       max-height: calc(580px - 58px);
     }
 
     .scroll-plus-box,
     .content {
-      height: calc(var(--modal-height) - 48px);
+      height: calc(var(--min-modal-height) - 48px);
       max-height: 580px;
     }
 
@@ -43,7 +43,7 @@
 
     .scroll-plus-box {
       padding: 16px 20px;
-      height: calc(var(--modal-height) - 48px - 32px);
+      height: calc(var(--min-modal-height) - 48px - 32px);
       max-height: calc(580px - 32px);
     }
   }
@@ -61,11 +61,10 @@
       border: none !important;
     }
   }
-
-  border-right: solid var(--bg-color-grey-2) 1px;
 }
 
 .col-right {
+  border-left: solid var(--bg-color-grey-2) 1px;
   .scroll-box,
   .title {
     padding: 0 16px;

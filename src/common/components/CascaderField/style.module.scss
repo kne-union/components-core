@@ -32,6 +32,7 @@
 
     .last-level-area {
       padding: 24px 0 0 12px;
+      box-sizing: border-box;
     }
 
     .scroll-plus-box {
@@ -40,6 +41,7 @@
 
     .scroll-plus-box,
     .content-item {
+      min-height: calc(var(--min-modal-height) - 48px);
       max-height: calc(var(--modal-height) - 48px - 32px);
     }
   }
@@ -57,6 +59,7 @@
   padding: 12px;
   flex-basis: auto;
   flex-grow: 1;
+  box-sizing: border-box;
 }
 
 .menu {

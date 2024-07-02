@@ -6,7 +6,7 @@
   }
 
   &:not(.is-popup) {
-    max-height: calc(var(--modal-height) - 35px - 48px);
+    max-height: calc(var(--min-modal-height) - 35px - 48px);
     padding: 16px 20px;
   }
 }

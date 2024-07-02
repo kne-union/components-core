@@ -8,6 +8,7 @@ const Part = ({ className, title, subTitle, extra, children, ...props }) => {
     <Card
       className={classnames(style["part"], "part", className, {
         "no-title": !title,
+        [style["no-title"]]: !title,
       })}
       bordered={false}
       title={

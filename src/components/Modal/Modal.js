@@ -16,7 +16,7 @@ export const RightOptions = ({ options, children }) => {
     return children;
   }
   return (
-    <Row wrap={false}>
+    <Row wrap={false} className={style["right-options-row"]}>
       <Col span={18} className={style["right-options-col"]}>
         {children}
       </Col>
@@ -27,14 +27,27 @@ export const RightOptions = ({ options, children }) => {
   );
 };
 
-const sizeMap = (type) => {
+const calcHeight = (height, footer) => {
+  return `${height - 48 - (footer ? 58 : 0)}px`;
+};
+
+const sizeMap = (type, footer) => {
   if (type === "large") {
-    return { width: `${Math.min(window.innerWidth - 64, 1500)}px` };
+    return {
+      width: `${Math.min(window.innerWidth - 64, 1500)}px`,
+      style: { "--min-modal-height": calcHeight(500, footer) },
+    };
   }
   if (type === "small") {
-    return { width: "600px" };
+    return {
+      width: "600px",
+      style: { "--min-modal-height": calcHeight(300, footer) },
+    };
   }
-  return { width: "1000px" };
+  return {
+    width: "1000px",
+    style: { "--min-modal-height": calcHeight(500, footer) },
+  };
 };
 
 const Footer = ({
@@ -276,7 +289,7 @@ const computedCommonProps = ({
     className: classnames(className, style["modal"], style[size], {
       [style["right-options-modal"]]: rightOptions,
     }),
-    ...sizeMap(size),
+    ...sizeMap(size, !(footer === null && !footerButtons)),
     children: (
       <IntlProvider importMessages={importMessages} moduleName="Modal">
         {runWithDecorator({

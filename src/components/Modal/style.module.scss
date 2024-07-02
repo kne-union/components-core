@@ -88,11 +88,17 @@
 
   .modal-body-inner {
     padding: 0;
+    height: 100%;
   }
+}
+
+.right-options-row {
+  height: 100%;
 }
 
 .right-options-col {
   padding: 24px;
+  box-sizing: border-box;
 
   &:first-child {
     border-right: solid 1px var(--bg-color-grey-3);
@@ -117,6 +123,17 @@
 .modal-body {
   --modal-height: calc(95vh - 160px);
   max-height: var(--modal-height);
+  min-height: var(--min-modal-height);
+
+  :global {
+    .simplebar-content-wrapper:nth-child(1) {
+      height: 100% !important;
+      .simplebar-content:nth-child(1) {
+        height: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
 
   &.is-disabled-scroller {
     .modal-body-inner {
@@ -131,6 +148,12 @@
 
 .modal-body-inner {
   padding: 24px;
+  height: 100%;
+  box-sizing: border-box;
+
+  .content {
+    height: 100%;
+  }
 }
 
 .modal-footer {

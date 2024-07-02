@@ -6,15 +6,17 @@
   }
 
   &:not(.is-popup) {
-    max-height: calc(var(--modal-height) - 35px - 48px);
+    max-height: calc(var(--modal-height) - 38px);
     padding: 16px 20px;
+    box-sizing: border-box;
   }
 }
 
 .is-not-full {
+  min-height: 100%;
   .scroll-loader {
     &:not(.is-popup) {
-      height: calc(100vh - 211px);
+      //height: calc(100vh - 211px);
       padding: 16px 0;
     }
   }
@@ -26,6 +28,7 @@
   .left {
     border-right: solid 1px var(--bg-color-grey-2);
     padding: 16px 16px 0;
+    box-sizing: border-box;
   }
 }
 
