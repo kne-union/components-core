@@ -40,7 +40,10 @@ const createListField = ({ renderList, defaultProps }) => {
     const { right, leftBottom, leftSpan = 24 } = props;
     const isSelectedAll = value.length === 1 && value[0] === "all";
     return (
-      <Row wrap={false} className={right ? style["is-not-full"] : ""}>
+      <Row
+        wrap={false}
+        className={right ? classnames("is-not-full", style["is-not-full"]) : ""}
+      >
         <Col
           span={leftSpan}
           className={classnames(style["left"], "advance-select-left")}

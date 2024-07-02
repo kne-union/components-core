@@ -33,9 +33,9 @@ remoteLoaderPreset({
     "components-core": remote,
     "components-iconfont": {
       remote: "components-iconfont",
-      url: "https://registry.npmmirror.com",
-      tpl: "{{url}}/@kne%2f{{remote}}/{{version}}/files/build",
-      defaultVersion: "0.1.1",
+      url: "https://uc.fatalent.cn",
+      tpl: "{{url}}/packages/@kne-components/{{remote}}/{{version}}/build",
+      defaultVersion: "0.1.8",
     },
   },
 });
