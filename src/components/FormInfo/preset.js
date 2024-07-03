@@ -159,8 +159,8 @@ const formPreset = async (options, otherOptions) => {
       return {};
     }
     const matcher = value.match(/^\+(\d+)\s(.*)/);
-    if (matcher.length < 3) {
-      return {};
+    if (!(matcher && matcher.length >= 3)) {
+      return { code: countyCodeMap.get(81), value };
     }
     return { code: countyCodeMap.get(Number(matcher[1])), value: matcher[2] };
   });
