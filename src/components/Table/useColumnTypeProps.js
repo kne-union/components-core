@@ -5,6 +5,7 @@ import pick from "lodash/pick";
 import memoize from "lodash/memoize";
 import get from "lodash/get";
 import useRefCallback from "@kne/use-ref-callback";
+import isColValueEmpty from "./isColValueEmpty";
 
 const useColumnTypeProps = ({ rowKey, renderProps }) => {
   const [expandInfo, setExpandInfo] = useState(null);
@@ -62,10 +63,7 @@ const useColumnTypeProps = ({ rowKey, renderProps }) => {
           );
 
           const targetRenderWithProps = (colValue) => {
-            const isEmpty = (
-              emptyOf ||
-              ((value) => value === "" || value === void 0 || value === null)
-            )(colValue);
+            const isEmpty = isColValueEmpty(colValue, emptyOf);
             return targetRender(colValue, {
               ...otherColProps,
               name,
