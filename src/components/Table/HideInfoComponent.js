@@ -2,6 +2,7 @@ import { createWithFetch } from "@kne/react-fetch";
 import Ellipsis from "./Ellipsis";
 import { Button } from "antd";
 import ColItem from "./ColItem";
+import isColValueEmpty from "./isColValueEmpty";
 
 const DisplayInfo = createWithFetch({
   loading: null,
@@ -19,9 +20,10 @@ const HideInfoComponent = ({
   emptyRender,
   isEmpty,
 }) => {
+  const targetApi = Object.assign({}, api);
   if (expand) {
     return (
-      <DisplayInfo {...api}>
+      <DisplayInfo {...targetApi}>
         {(data) => {
           return (
             <ColItem
@@ -30,10 +32,12 @@ const HideInfoComponent = ({
               hover={hover}
               primary={primary}
               emptyRender={emptyRender}
-              isEmpty={isEmpty}
+              isEmpty={isColValueEmpty(data)}
             >
               <Ellipsis ellipsis={ellipsis}>
-                {typeof api.children === "function" ? api.children(data) : data}
+                {typeof targetApi.children === "function"
+                  ? targetApi.children(data)
+                  : data}
               </Ellipsis>
             </ColItem>
           );
@@ -42,12 +46,7 @@ const HideInfoComponent = ({
     );
   }
   return (
-    <ColItem
-      type="hide-info"
-      primary
-      isEmpty={isEmpty}
-      emptyRender={emptyRender}
-    >
+    <ColItem type="hide-info" primary emptyRender={emptyRender}>
       <Button className="btn-no-padding" type="link" onClick={onExpand}>
         查看
       </Button>
