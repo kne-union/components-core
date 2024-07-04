@@ -46,14 +46,17 @@ export const downloadBlobFile = async (res, filename) => {
 export const useDownload = ({
   id,
   filename,
+  staticUrl: staticUrlProps,
   apis: currentApis,
   onError,
   onSuccess,
 }) => {
   const { message } = App.useApp();
-  const { apis: baseApis } = usePreset();
+  const { apis: baseApis, staticUrl: staticUrlBase } = usePreset();
   const apis = Object.assign({}, baseApis, currentApis);
   const [downLoading, setDownLoading] = useState(false);
+
+  const staticUrl = staticUrlProps || staticUrlBase || "";
 
   const { paramsType, paramsName, ...oss } = Object.assign(
     { paramsType: "params", paramsName: "id" },
@@ -80,7 +83,10 @@ export const useDownload = ({
       return;
     }
     setDownLoading(true);
-    downloadBlobFile(data, filename)
+    downloadBlobFile(
+      /^https?:\/\//.test(data) ? data : staticUrl + data,
+      filename
+    )
       .then(successHandler)
       .catch((e) => {
         showError(e.message);
@@ -88,7 +94,7 @@ export const useDownload = ({
       .then(() => {
         setDownLoading(false);
       });
-  }, [isLoading, error, data, filename, showError, successHandler]);
+  }, [isLoading, error, staticUrl, data, filename, showError, successHandler]);
   return {
     ...otherProps,
     isLoading: isLoading || downLoading,
