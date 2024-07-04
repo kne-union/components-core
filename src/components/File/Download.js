@@ -95,6 +95,7 @@ export const useDownload = ({
         setDownLoading(false);
       });
   }, [isLoading, error, staticUrl, data, filename, showError, successHandler]);
+
   return {
     ...otherProps,
     isLoading: isLoading || downLoading,
