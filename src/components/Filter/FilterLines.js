@@ -68,7 +68,7 @@ const FilterLines = ({
             />
           )}
         </span>
-        <Row justify="space-between" wrap={false} align="middle">
+        <Row justify="space-between" wrap={false} align="top">
           <Col className={style["filter-list"]} flex={1}>
             {list.slice(0, displayLine).map((item, index) => (
               <Line key={index} list={item}>
