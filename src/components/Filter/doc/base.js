@@ -22,6 +22,7 @@ const BaseExample = () => {
         console.log(getFilterValue(value));
         onChange(value);
       }}
+      extra={<Filter.SearchInput name="name" label="姓名" />}
       list={[
         [
           <InputFilterItem label="文字" name="text" />,
