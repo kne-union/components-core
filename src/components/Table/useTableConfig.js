@@ -15,6 +15,7 @@ import { useDebouncedCallback } from "use-debounce";
 import style from "./style.module.scss";
 import isEqual from "lodash/isEqual";
 import findLastIndex from "lodash/findLastIndex";
+import tableLocalApis from "./tableLocalApis";
 
 const TableConfig = ({ title, columns, config, setConfig }) => {
   const [open, setOpen] = useState(false);
@@ -69,7 +70,11 @@ const useTableConfig = ({ columns, name, controllerOpen, tableWidth }) => {
   const currentMoveColumnRef = useRef(null);
   const startPointRef = useRef(null);
   const [config, setConfigBase] = useState({});
-  const { tableServerApis } = usePreset();
+  const { tableServerApis: presetTableServerApis } = usePreset();
+  const tableServerApis = presetTableServerApis
+    ? presetTableServerApis
+    : tableLocalApis;
+
   const tablePageServerParams = tableServerApis?.getDataApi(name);
 
   const saveConfig = useDebouncedCallback((name, target) => {

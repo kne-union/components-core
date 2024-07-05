@@ -34,7 +34,7 @@ const BaseExample = () => {
     <PureGlobal
       preset={{
         ajax,
-        tableServerApis: {
+        /*tableServerApis: {
           getDataApi: (name) => {
             return {
               url: "/api/v1/user/user/user_key_get",
@@ -75,7 +75,7 @@ const BaseExample = () => {
               },
             });
           },
-        },
+        },*/
       }}
     >
       <Table

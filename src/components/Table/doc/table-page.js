@@ -27,6 +27,7 @@ const BaseExample = () => {
     >
       <TablePage
         featureId="test"
+        name="test-2"
         sticky={false}
         rowSelection={{
           type: "checkbox",
