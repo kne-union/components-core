@@ -66,6 +66,8 @@ const PhoneNumberField = (props) => {
         {...others}
         addonBefore={
           <CountrySelect
+            disabled={others.disabled}
+            readOnly={others.readOnly}
             value={get(value, "code", "CN")}
             onChange={(code) => {
               onChange &&
