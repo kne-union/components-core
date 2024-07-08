@@ -3,18 +3,23 @@ import DragArea, { DragAreaOuter, DragButton, UploadButton } from "./DragArea";
 import { List } from "@components/File";
 import { useFileUpload } from "@common/hocs/withInputFile";
 import { usePreset } from "@components/Global";
+import useControlValue from "@kne/use-control-value";
 
 const FileUpload = ({
   maxLength,
-  list: previewList,
-  setList,
   apis: currentApis,
   getPermission,
   fileSize,
   accept,
+  ...props
 }) => {
   const { apis: baseApis } = usePreset();
   const apis = Object.assign({}, baseApis, currentApis);
+  const [previewList, setList] = useControlValue(props, {
+    defaultValue: "defaultList",
+    value: "list",
+    onChange: "setList",
+  });
   const { fileList: uploadingList, onFileSelected } = useFileUpload({
     maxLength,
     multiple: true,
@@ -54,6 +59,7 @@ const FileUpload = ({
 
 FileUpload.defaultProps = {
   accept: [".png", ".jpg", ".pdf", ".docx", ".doc"],
+  defaultList: [],
   fileSize: 20,
   maxLength: Number.MAX_VALUE,
   getPermission: () => true,

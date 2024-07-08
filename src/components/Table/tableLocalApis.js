@@ -14,10 +14,9 @@ const getDataApi = (name) => {
 };
 
 const setDataFunc = (name, data) => {
-  if (!(name && typeof data === "object" && Object.values(data).length > 0)) {
+  if (!name) {
     return;
   }
-
   return localStorage.setItem(
     storageKey,
     Object.assign({}, localStorage.getItem(storageKey), { [name]: data })

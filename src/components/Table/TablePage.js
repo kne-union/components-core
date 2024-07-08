@@ -112,6 +112,7 @@ const TablePageInner = withFetch(
             size: pagination.size,
             showSizeChanger: pagination.showSizeChanger,
             showQuickJumper: pagination.showQuickJumper,
+            pageSizeOptions: pagination.pageSizeOptions,
           }
         : false,
     };
