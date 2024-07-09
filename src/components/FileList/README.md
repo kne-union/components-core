@@ -198,9 +198,12 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal preset={preset}>
       <FileUpload list={list} setList={setList} apis={apis} />
       <div>非受控情况</div>
-      <FileUpload setList={(fileList)=>{
-        console.log('>>>>>>>>>>',fileList);
-      }} apis={apis} />
+      <FileUpload
+        setList={(fileList) => {
+          console.log(">>>>>>>>>>", fileList);
+        }}
+        apis={apis}
+      />
     </PureGlobal>
   );
 });
