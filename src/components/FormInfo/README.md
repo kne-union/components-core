@@ -198,6 +198,7 @@ const {
   TextArea,
   Upload,
   Avatar,
+  PhoneNumber,
   TypeDateRangePicker,
   Rate,
   Switch,
@@ -275,7 +276,7 @@ const BaseExample = () => {
             />
           </ErrorTip>,
           <MoneyInput name="money" label="金额" rule="REQ" tips={"money"} />,
-          <Input name="phone" label="手机" rule="REQ TEL" />,
+          <PhoneNumber name="phone" label="手机" rule="REQ" disabled />,
           <Input name="email" label="邮箱" rule="EMAIL" />,
           <Upload name="file" label="文件" tips="文件" block />,
           <Rate name="rate" label="评分" tips="评分" />,

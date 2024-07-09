@@ -30,7 +30,7 @@ const useColumnTypeProps = ({ rowKey, renderProps }) => {
       } = col;
       const { render, width, min, max } = Object.assign(
         {},
-        columnTypes[type],
+        columnTypes[type || "other"],
         type === "hideInfo" &&
           !isNil(expandInfo) &&
           pick(columnTypes[expandType || "other"], ["width", "min", "max"])

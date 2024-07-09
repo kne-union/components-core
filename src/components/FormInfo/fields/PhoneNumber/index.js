@@ -15,13 +15,14 @@ const { useDecorator } = hooks;
 
 const CountrySelect = createWithRemoteLoader({
   modules: ["components-iconfont:CountyFlag"],
-})(({ remoteModules, value, onChange }) => {
+})(({ remoteModules, value, onChange, ...props }) => {
   const [CountyFlag] = remoteModules;
   return (
     <CountyFlag>
       {({ list }) => {
         return (
           <Select
+            {...props}
             popupMatchSelectWidth={300}
             className={style["country-select"]}
             value={value || "CN"}
