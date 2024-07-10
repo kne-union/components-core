@@ -28,15 +28,15 @@ const typeFormat = (url) => {
 
 export default typeFormat;
 
-export const typeFormatComponent = (url) => {
-  const mapping = {
-    txt: TextPreview,
-    pdf: PdfPreview,
-    image: ImagePreview,
-    html: HtmlPreview,
-    office: OfficePreview,
-    unknown: UnknownPreview,
-  };
+export const typeComponentMapping = {
+  txt: TextPreview,
+  pdf: PdfPreview,
+  image: ImagePreview,
+  html: HtmlPreview,
+  office: OfficePreview,
+  unknown: UnknownPreview,
+};
 
-  return mapping[typeFormat(url)];
+export const typeFormatComponent = (url) => {
+  return typeComponentMapping[typeFormat(url)];
 };
