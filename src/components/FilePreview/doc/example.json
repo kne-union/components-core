@@ -75,6 +75,25 @@
           "packageName": "@kne/remote-loader"
         }
       ]
+    },
+    {
+      "title": "office",
+      "description": "这里填写示例说明",
+      "code": "./office.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        }
+      ]
     }
   ]
 }
