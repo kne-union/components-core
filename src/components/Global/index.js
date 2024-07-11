@@ -9,6 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import { getScrollEl } from "@common/utils/importantContainer";
+import isMobile from "@common/utils/isMobile";
 import Fetch, { withFetch } from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
@@ -20,9 +21,13 @@ import range from "lodash/range";
 import Color from "color";
 import { createWithRemoteLoader } from "@kne/remote-loader";
 
-new SimpleBar(document.body);
 document.body.classList.add(style["container"]);
-getScrollEl().classList.add(style["container"]);
+if (!isMobile()) {
+  new SimpleBar(document.body);
+  getScrollEl().classList.add(style["container"]);
+} else {
+  document.body.classList.add("simplebar-content-wrapper");
+}
 
 const ConfigProvider = withFetch(({ data: message, themeToken, children }) => {
   const [isInit, setIsInit] = useState(false);
