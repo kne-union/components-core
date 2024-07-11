@@ -43,13 +43,13 @@ const PdfPreview = memo(({ url, maxWidth, scale, rotate, className }) => {
         noData="未指定PDF文件"
         onLoadSuccess={({ numPages }) => {
           setNumPages(numPages);
-          console.log("onLoadSuccess");
+          //console.log("onLoadSuccess");
         }}
         onLoadError={(props) => {
-          console.log("onLoadError", props);
+          //console.log("onLoadError", props);
         }}
         onSourceError={(props) => {
-          console.log("onSourceError", props);
+          //console.log("onSourceError", props);
         }}
       >
         <Space direction="vertical">
