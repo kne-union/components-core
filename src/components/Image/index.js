@@ -7,6 +7,7 @@ import { cloneElement } from "react";
 import loadImage from "./loadImage";
 import style from "./style.module.scss";
 import defaultAvatar from "../../defaultAvatar.svg";
+import { usePreset } from "@components/Global";
 
 const ImageInner = ({
   data,
@@ -18,11 +19,14 @@ const ImageInner = ({
   innerError,
   children,
   onClick,
+  staticUrl: staticUrlProps,
 }) => {
+  const { staticUrl: staticUrlBase } = usePreset();
+  const staticUrl = staticUrlProps || staticUrlBase || "";
   return (
     <Fetch
       loader={loadImage}
-      params={{ data }}
+      params={{ data: /^https?:\/\//.test(data) ? data : staticUrl + data }}
       error={innerError || error}
       loading={innerLoading || loading}
       render={({ data }) => {
