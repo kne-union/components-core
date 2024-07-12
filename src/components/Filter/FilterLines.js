@@ -13,26 +13,41 @@ const Line = ({ list, children }) => {
   return (
     <div className={style["filter-line"]}>
       {list.map((item, index) => {
+        if (typeof item === "function") {
+          return item((props) => {
+            return {
+              index,
+              value: value
+                ? get(value.get(props?.name), "value")
+                : props?.value,
+              onChange: onChange
+                ? (value) =>
+                    onChange({
+                      name: props?.name,
+                      label: props?.label,
+                      value,
+                    })
+                : props?.onChange,
+            };
+          });
+        }
         const ComponentItem = item.type;
         return (
           <ComponentItem
-            {...item.props}
-            key={item.key || item.props.name || index}
-            value={
-              value
+            {...Object.assign({}, item.props, {
+              key: item.key || item.props.name || index,
+              value: value
                 ? get(value.get(item.props.name), "value")
-                : item.props.value
-            }
-            onChange={
-              onChange
+                : item.props.value,
+              onChange: onChange
                 ? (value) =>
                     onChange({
                       name: item.props.name,
                       label: item.props.label,
                       value,
                     })
-                : item.props.onChange
-            }
+                : item.props.onChange,
+            })}
           />
         );
       })}

@@ -89,7 +89,9 @@ const Layout = ({ children, theme, navigation }) => {
                 className={classnames(pageProps.className, style["page-outer"])}
                 wrap={false}
                 style={{
-                  "--nav-height": `calc(${pageProps.headerHeight}px + var(--nav-height-base))`,
+                  "--nav-height": `calc(${
+                    pageProps.headerFixed ? pageProps.headerHeight : 0
+                  }px + var(--nav-height-base))`,
                   "--nav-only-height": `var(--nav-height-base)`,
                 }}
               >
