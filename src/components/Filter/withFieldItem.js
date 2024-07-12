@@ -13,10 +13,14 @@ const withFieldItem =
           allowClear={false}
           {...props}
           className={style["filter-item-inner"]}
-          value={value}
+          value={
+            typeof interceptor?.input === "function"
+              ? interceptor.input(value)
+              : value
+          }
           onChange={
-            typeof interceptor === "function"
-              ? (...args) => onChange(interceptor(...args))
+            typeof interceptor?.output === "function"
+              ? (...args) => onChange(interceptor.output(...args))
               : onChange
           }
           valueType="all"
