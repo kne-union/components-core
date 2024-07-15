@@ -255,6 +255,11 @@ const formPreset = async (options, otherOptions) => {
               interceptor: "date-range-string",
             },
           },
+          inputNumber: {
+            defaultProps: {
+              changeOnWheel: false,
+            },
+          },
           textArea: {
             defaultProps: {
               autoSize: {
