@@ -6,7 +6,7 @@ const getFilterValue = (filterValue) => {
     (result, { name, value }) => {
       result[name] = Array.isArray(value)
         ? value.map(({ value }) => value)
-        : value.value;
+        : value?.value;
     },
     {}
   );
