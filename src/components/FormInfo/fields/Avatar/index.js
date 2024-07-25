@@ -475,7 +475,7 @@ const Avatar = (props) => {
 
 Avatar.defaultProps = {};
 
-Avatar.Field = Avatar;
+Avatar.Field = AvatarField;
 Avatar.useDropModal = useDropModal;
 
 export default Avatar;
