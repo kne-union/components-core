@@ -1,11 +1,20 @@
-import { Col, Row } from "antd";
+import { Col, Row, Typography } from "antd";
+import { cloneElement } from "react";
 import InfoPage from "@components/InfoPage";
 import { useFlexBox } from "@components/FlexBox";
 import FieldList from "./FieldList";
 import style from "./style.module.scss";
 import classnames from "classnames";
 
-const FormInfo = ({ list, groupArgs, column, gap, className, ...props }) => {
+const FormInfo = ({
+  list,
+  groupArgs,
+  column,
+  gap,
+  className,
+  outer,
+  ...props
+}) => {
   const isFlexBox = !(Number.isInteger(column) && column > 0);
   const { ref: flexBoxRef, column: flexBoxColumn } = useFlexBox(
     isFlexBox ? column : {}
@@ -51,20 +60,22 @@ const FormInfo = ({ list, groupArgs, column, gap, className, ...props }) => {
     return renderInner(2, true);
   };
 
-  return (
-    <InfoPage.Part
-      {...props}
-      className={classnames(className, style["form-info"])}
-    >
+  return cloneElement(
+    outer,
+    Object.assign({}, props, {
+      className: classnames(className, style["form-info"]),
+    }),
+    <>
       <div ref={flexBoxRef} />
       {renderColumn()}
-    </InfoPage.Part>
+    </>
   );
 };
 
 FormInfo.defaultProps = {
   column: 2,
   list: [],
+  outer: <InfoPage.Part />,
 };
 
 export default FormInfo;
