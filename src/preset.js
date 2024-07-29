@@ -35,7 +35,7 @@ remoteLoaderPreset({
       remote: "components-iconfont",
       url: "https://uc.fatalent.cn",
       tpl: "{{url}}/packages/@kne-components/{{remote}}/{{version}}/build",
-      defaultVersion: "0.1.8",
+      defaultVersion: "0.1.9",
     },
   },
 });

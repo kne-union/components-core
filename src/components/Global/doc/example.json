@@ -28,6 +28,10 @@
         {
           "name": "antd",
           "packageName": "antd"
+        },
+        {
+          "name": "icon",
+          "packageName": "@components/Icon"
         }
       ]
     },
