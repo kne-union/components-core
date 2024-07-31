@@ -431,6 +431,14 @@
     }
   }
 
+  .react-form__field-label {
+    color: var(--font-color-grey);
+    font-size: 14px;
+    line-height: 20px;
+    height: 20px;
+    margin-bottom: 8px;
+  }
+
   :global {
     .react-form__field {
       flex: 1;
