@@ -44,7 +44,13 @@ const MultiField = ({
             >
               <CurrentFiled {...props} name={name} label={label} rule={rule} />
               <div>
-                <div className="react-form__field-label" />
+                <div
+                  className={classnames(
+                    style["react-form__field-label"],
+                    "react-form__field-label",
+                    "mult-field-delete--label"
+                  )}
+                />
                 <Button
                   icon={<Icon type="shanchu" />}
                   onClick={onRemove}
