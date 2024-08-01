@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { cloneElement } from "react";
 import InfoPage from "@components/InfoPage";
 import { useFlexBox } from "@components/FlexBox";

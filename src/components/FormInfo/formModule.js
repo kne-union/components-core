@@ -151,14 +151,9 @@ export const TextArea = withTextAreaDefaultPlaceholder(ReactTextArea);
 
 export const Select = withSelectDefaultPlaceholder(ReactSelect);
 
-Select.Fetch = withSelectDefaultPlaceholder(ReactSelect.Fetch);
-Select.Fetch.field = ReactSelect.Fetch.field;
-
 export const InputNumber = withInputDefaultPlaceholder(ReactInputNumber);
 
 export const TreeSelect = withSelectDefaultPlaceholder(ReactTreeSelect);
-TreeSelect.Fetch = withSelectDefaultPlaceholder(ReactTreeSelect.Fetch);
-TreeSelect.Fetch.field = ReactTreeSelect.Fetch.field;
 
 export const TimePicker = withSelectDefaultPlaceholder(ReactTimePicker);
 

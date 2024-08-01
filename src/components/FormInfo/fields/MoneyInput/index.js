@@ -1,5 +1,5 @@
 import useControlValue from "@kne/use-control-value";
-import { hooks, util } from "@kne/react-form-antd";
+import { hooks, util, formUtils } from "@kne/react-form-antd";
 import { InputNumber } from "antd";
 import changeMoneyToChinese, {
   MAX_NUM,
@@ -9,7 +9,7 @@ import classnames from "classnames";
 import merge from "lodash/merge";
 import { useState } from "react";
 
-const { isNotEmpty } = util;
+const { isNotEmpty } = util || formUtils;
 const { useOnChange } = hooks;
 const MoneyInputField = ({
   chineseEmpty,
