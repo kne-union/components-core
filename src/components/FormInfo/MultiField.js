@@ -30,7 +30,21 @@ const MultiField = ({
         name={name}
         defaultLength={Math.max(defaultLength, minLength, 1)}
       >
-        {(key, { index, onRemove, length }) => {
+        {(...groupArgs) => {
+          //这里兼容一下新老版本
+          const {
+            id: key,
+            index,
+            onRemove,
+            length,
+          } = ((groupArgs) => {
+            if (typeof groupArgs[0] === "object") {
+              return groupArgs[0];
+            }
+            const [key, { index, onRemove, length }] = groupArgs;
+            return { id: key, index, onRemove, length };
+          })(groupArgs);
+
           return (
             <div
               key={key}
