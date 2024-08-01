@@ -24,6 +24,7 @@ import style from "./style.module.scss";
 import defaultAvatar from "../../../../defaultAvatar.svg";
 import { IntlProvider, FormattedMessage, useIntl } from "@components/Intl";
 import importMessages from "@components/FormInfo/locale";
+import { createWithIntl } from "../../../Intl";
 
 const { useOnChange } = hooks;
 
@@ -357,96 +358,98 @@ const useDropModal = () => {
   };
 };
 
-const AvatarField = ({
-  value,
-  gender,
-  fileSize,
-  accept,
-  openEditor,
-  apis: currentApis,
-  renderTips,
-  onChange,
-  shape,
-  width,
-  height,
-  title,
-  border,
-  icon,
-  dropModalSize,
-  defaultAvatar,
-}) => {
-  const [loading, setLoading] = useState(false);
-  const { apis: baseApis } = usePreset();
-  const apis = merge({}, baseApis, currentApis);
-  const { ossUpload } = apis;
-  const dropRef = useRef(null);
-  const dropModal = useDropModal();
-  const intl = useIntl({ moduleName: localeModuleName });
-  return (
-    <UploadButton
-      value={value}
-      gender={gender}
-      accept={accept}
-      width={width}
-      height={height}
-      shape={shape}
-      icon={icon}
-      loading={loading}
-      defaultAvatar={defaultAvatar}
-      apis={apis}
-      onChange={(fileList) => {
-        if (fileList[0].size > fileSize * 1024 * 1024) {
-          message.error(
-            intl.formatMessage(
-              { id: "FileNotExceeding" },
-              { name: fileList[0].name, size: fileSize }
-            )
-          );
-          return;
-        }
-        const doUpload = (file) => {
-          setLoading(true);
-          return ossUpload({ file })
-            .then(({ data }) => {
-              if (data.code !== 0) {
-                message.error(
-                  intl.formatMessage(
-                    { id: "UploadFailed" },
-                    { msg: data.msg ? ":" + data.msg : "" }
-                  )
-                );
-                return;
-              }
-              onChange(data.data);
-            })
-            .finally(() => {
-              setLoading(false);
+const AvatarField = createWithIntl({ importMessages, moduleName: "FormInfo" })(
+  ({
+    value,
+    gender,
+    fileSize,
+    accept,
+    openEditor,
+    apis: currentApis,
+    renderTips,
+    onChange,
+    shape,
+    width,
+    height,
+    title,
+    border,
+    icon,
+    dropModalSize,
+    defaultAvatar,
+  }) => {
+    const [loading, setLoading] = useState(false);
+    const { apis: baseApis } = usePreset();
+    const apis = merge({}, baseApis, currentApis);
+    const { ossUpload } = apis;
+    const dropRef = useRef(null);
+    const dropModal = useDropModal();
+    const intl = useIntl({ moduleName: localeModuleName });
+    return (
+      <UploadButton
+        value={value}
+        gender={gender}
+        accept={accept}
+        width={width}
+        height={height}
+        shape={shape}
+        icon={icon}
+        loading={loading}
+        defaultAvatar={defaultAvatar}
+        apis={apis}
+        onChange={(fileList) => {
+          if (fileList[0].size > fileSize * 1024 * 1024) {
+            message.error(
+              intl.formatMessage(
+                { id: "FileNotExceeding" },
+                { name: fileList[0].name, size: fileSize }
+              )
+            );
+            return;
+          }
+          const doUpload = (file) => {
+            setLoading(true);
+            return ossUpload({ file })
+              .then(({ data }) => {
+                if (data.code !== 0) {
+                  message.error(
+                    intl.formatMessage(
+                      { id: "UploadFailed" },
+                      { msg: data.msg ? ":" + data.msg : "" }
+                    )
+                  );
+                  return;
+                }
+                onChange(data.data);
+              })
+              .finally(() => {
+                setLoading(false);
+              });
+          };
+          if (openEditor) {
+            dropModal({
+              image: fileList[0],
+              width,
+              height,
+              title,
+              shape,
+              border,
+              dropModalSize,
+              getApi: (api) => (dropRef.current = api),
+              fileSize,
+              accept,
+              renderTips,
+              onConfirm: () => {
+                doUpload(dropRef.current.getImage());
+              },
             });
-        };
-        if (openEditor) {
-          dropModal({
-            image: fileList[0],
-            width,
-            height,
-            title,
-            shape,
-            border,
-            dropModalSize,
-            getApi: (api) => (dropRef.current = api),
-            fileSize,
-            accept,
-            renderTips,
-            onConfirm: () => {
-              doUpload(dropRef.current.getImage());
-            },
-          });
-          return;
-        }
-        doUpload(fileList[0]);
-      }}
-    />
-  );
-};
+            return;
+          }
+          doUpload(fileList[0]);
+        }}
+      />
+    );
+  }
+);
 
 AvatarField.defaultProps = {
   defaultAvatar,
