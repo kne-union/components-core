@@ -1,7 +1,8 @@
 import React, { cloneElement } from "react";
-import { hooks, Select } from "@kne/react-form-antd";
+import { withFetch } from "@kne/react-fetch";
+import { hooks } from "@kne/react-form-antd";
 import useSimulationBlur from "@kne/use-simulation-blur";
-import { Col, Input, InputNumber, Row } from "antd";
+import { Col, Input, InputNumber, Row, Select } from "antd";
 import style from "./style.module.scss";
 import { IntlProvider, useIntl } from "@components/Intl";
 import importMessages from "../../locale";
@@ -9,7 +10,9 @@ import Enum from "@components/Enum";
 import useControlValue from "@kne/use-control-value";
 import { get } from "lodash";
 
-const { field: SelectField } = Select.Fetch;
+const SelectField = withFetch(({ data, ...props }) => {
+  return <Select {...props} options={data} />;
+});
 
 const { useDecorator, useUIDecorator } = hooks;
 
@@ -97,11 +100,7 @@ const SalaryInputField = ({
             placeholder={placeholder || _placeholder}
             getPopupContainer={getPopupContainer}
             disabled={disabled}
-          >
-            {({ data }) => {
-              return { options: data || [] };
-            }}
-          </SelectField>
+          />
         </Col>
         {isFace ? null : (
           <Col flex={1}>

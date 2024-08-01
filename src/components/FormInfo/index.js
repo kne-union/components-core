@@ -14,7 +14,15 @@ import Form from "./Form";
 import FormItem from "./FormItem";
 import ErrorTip from "./ErrorTip";
 import MultiField from "./MultiField";
-import { SubmitButton, CancelButton } from "@kne/react-form-antd";
+import {
+  SubmitButton,
+  CancelButton,
+  useFormContext,
+  hooks,
+  widget,
+  utils,
+  formUtils,
+} from "@kne/react-form-antd";
 
 preset();
 
@@ -38,6 +46,11 @@ FormInfo.SubmitButton = SubmitButton;
 FormInfo.CancelButton = CancelButton;
 FormInfo.fieldDecorator = fieldDecorator;
 FormInfo.MultiField = MultiField;
+FormInfo.useFormContext = useFormContext;
+FormInfo.hooks = hooks;
+FormInfo.widget = widget;
+FormInfo.utils = utils;
+FormInfo.formUtils = formUtils;
 
 export * from "@kne/react-form-antd";
 
