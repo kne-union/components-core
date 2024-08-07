@@ -63,6 +63,7 @@ const Table = ({
     name,
     computedColumnProps,
     tableWidth,
+    rowKey,
   });
 
   const sortRender = useSort(props);
