@@ -112,6 +112,17 @@
   margin: 0 auto;
 }
 
+.audio-inner,
+.video-inner {
+  text-align: center;
+}
+
+.video-inner {
+  video {
+    width: 100%;
+  }
+}
+
 .html-preview-iframe {
   min-height: 800px;
 }
