@@ -4,6 +4,8 @@ import PdfPreview from "./PdfPreview";
 import TextPreview from "./TextPreview";
 import UnknownPreview from "./UnknownPreview";
 import ImagePreview from "./ImagePreview";
+import AudioPreview from "./AudioPreview";
+import VideoPreview from "./VideoPreview";
 
 const typeFormat = (url) => {
   const path = (url || "").split("?")[0];
@@ -23,6 +25,12 @@ const typeFormat = (url) => {
   if (/.(doc|docx|xls|xlsx|ppt|pptx)$/.test(_path)) {
     return "office";
   }
+  if (/.(mp3|wav|ogg|aac)$/.test(_path)) {
+    return "audio";
+  }
+  if (/.(mp4|avi|mov|mkv|flv)$/.test(_path)) {
+    return "video";
+  }
   return "unknown";
 };
 
@@ -34,6 +42,8 @@ export const typeComponentMapping = {
   image: ImagePreview,
   html: HtmlPreview,
   office: OfficePreview,
+  audio: AudioPreview,
+  video: VideoPreview,
   unknown: UnknownPreview,
 };
 

@@ -142,6 +142,42 @@ render(<BaseExample />);
 
 ```
 
+- audio
+- 这里填写示例说明
+- _FilePreview(@components/FilePreview),remoteLoader(@kne/remote-loader),_Global(@components/Global)
+
+```jsx
+const {AudioPreview} = _FilePreview;
+const {getPublicPath} = remoteLoader;
+const BaseExample = () => {
+    return (<AudioPreview
+        maxWidth={900}
+        url={getPublicPath("components-core") + "/mock/audio.wav"}
+    />);
+};
+
+render(<BaseExample/>);
+
+```
+
+- video
+- 这里填写示例说明
+- _FilePreview(@components/FilePreview),remoteLoader(@kne/remote-loader),_Global(@components/Global)
+
+```jsx
+const {VideoPreview} = _FilePreview;
+const {getPublicPath} = remoteLoader;
+const BaseExample = () => {
+    return (<VideoPreview
+        maxWidth={900}
+        url={getPublicPath("components-core") + "/mock/video.mp4"}
+    />);
+};
+
+render(<BaseExample/>);
+
+```
+
 
 ### API
 

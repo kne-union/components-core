@@ -6,3 +6,5 @@ export { default as ImagePreview } from "./ImagePreview";
 export { default as UnknownPreview } from "./UnknownPreview";
 export { default as OfficePreview } from "./OfficePreview";
 export { default as OSSFilePreview } from "./OSSFilePreview";
+export { default as AudioPreview } from "./AudioPreview";
+export { default as VideoPreview } from "./VideoPreview";
