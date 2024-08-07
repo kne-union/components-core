@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import columnTypes from "@components/Table/columnTypes";
 import isNil from "lodash/isNil";
 import pick from "lodash/pick";
-import memoize from "lodash/memoize";
 import get from "lodash/get";
 import useRefCallback from "@kne/use-ref-callback";
 import isColValueEmpty from "./isColValueEmpty";
@@ -35,7 +34,7 @@ const useColumnTypeProps = ({ rowKey, renderProps }) => {
           !isNil(expandInfo) &&
           pick(columnTypes[expandType || "other"], ["width", "min", "max"])
       );
-      const targetRender = memoize(render);
+      const targetRender = render;
 
       return {
         name,
@@ -61,7 +60,6 @@ const useColumnTypeProps = ({ rowKey, renderProps }) => {
                 })
               : {}
           );
-
           const targetRenderWithProps = (colValue) => {
             const isEmpty = isColValueEmpty(colValue, emptyOf);
             return targetRender(colValue, {
@@ -73,7 +71,7 @@ const useColumnTypeProps = ({ rowKey, renderProps }) => {
               isEmpty,
               emptyRender,
               hover: colProps.hover,
-              colValue: item,
+              colValue: Object.assign({}, item),
               renderProps: columnRenderPropsRef.current,
               primary: colProps.primary,
               ellipsis: colProps.ellipsis,
