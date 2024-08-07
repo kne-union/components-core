@@ -63,7 +63,13 @@ const TableConfig = ({ title, columns, config, setConfig }) => {
   );
 };
 
-const useTableConfig = ({ columns, name, controllerOpen, tableWidth }) => {
+const useTableConfig = ({
+  columns,
+  name,
+  controllerOpen,
+  tableWidth,
+  rowKey,
+}) => {
   const [currentMoveColumnIndex, setCurrentMoveColumnIndex] = useState(null);
   const currentMoveColumnIndexRef = useRef(currentMoveColumnIndex);
   currentMoveColumnIndexRef.current = currentMoveColumnIndex;
@@ -224,11 +230,20 @@ const useTableConfig = ({ columns, name, controllerOpen, tableWidth }) => {
       onCell: movingClass,
       width: realWidth,
       shouldCellUpdate: (record, prevRecord) => {
+        const itemKey =
+          typeof rowKey === "function" ? rowKey(record) : record[rowKey];
+        const prevItemKey =
+          typeof rowKey === "function"
+            ? rowKey(prevRecord)
+            : prevRecord[rowKey];
         return (
           currentMoveColumnIndexRef.current === null ||
           currentMoveColumnIndexRef.current === index ||
           column.type === "hideInfo" ||
-          !isEqual(record[column.name], prevRecord[column.name])
+          !(
+            itemKey === prevItemKey &&
+            isEqual(record[column.name], prevRecord[column.name])
+          )
         );
       },
       title: (
