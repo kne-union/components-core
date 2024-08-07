@@ -94,6 +94,44 @@
           "packageName": "@components/Global"
         }
       ]
+    },
+    {
+      "title": "audio",
+      "description": "这里填写示例说明",
+      "code": "./audio.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "video",
+      "description": "这里填写示例说明",
+      "code": "./video.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        }
+      ]
     }
   ]
 }
