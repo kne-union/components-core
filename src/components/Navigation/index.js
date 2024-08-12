@@ -7,6 +7,7 @@ import logo from "./favicon.svg";
 import Image from "@components/Image";
 import importMessages from "./locale";
 import { FormattedMessage, IntlProvider } from "@components/Intl";
+import useRefCallback from "@kne/use-ref-callback";
 import Icon from "@components/Icon";
 import style from "./style.module.scss";
 
@@ -23,6 +24,14 @@ const SetTitle = ({ name, mapping, defaultTitle }) => {
     const title = get(propsRef.current.mapping.get(name), "title");
     document.title = (title ? title + "-" : "") + propsRef.current.defaultTitle;
   }, [name]);
+  return null;
+};
+
+const MenuReady = ({ onReady }) => {
+  const ready = useRefCallback(onReady);
+  useEffect(() => {
+    ready();
+  }, [ready]);
   return null;
 };
 
@@ -48,6 +57,7 @@ const Navigation = ({
   const navigationRef = useRef();
   const resizeObserverRef = useRef(null);
   const [nameLabel, setNameLabel] = useState("更多");
+  const [ready, setReady] = useState(false);
   const pathModuleName = location.pathname
     .replace(new RegExp(`^${base}`), "")
     .split("/")[1];
@@ -85,7 +95,7 @@ const Navigation = ({
       childList: true,
       subtree: true,
     };
-    if (navigationRef && navigationRef.current) {
+    if (ready && navigationRef && navigationRef.current) {
       callback();
       if (resizeObserverRef.current) {
         resizeObserverRef.current.disconnect();
@@ -100,7 +110,7 @@ const Navigation = ({
     return () => {
       resizeObserverRef.current && resizeObserverRef.current.disconnect();
     };
-  }, [name, mapping]);
+  }, [name, mapping, ready]);
   const indexNav = showIndex
     ? {
         label: indexLabel || (
@@ -154,6 +164,11 @@ const Navigation = ({
                 style["navigation-list"]
               )}
             >
+              <MenuReady
+                onReady={() => {
+                  setReady(true);
+                }}
+              />
               <Menu
                 selectedKeys={[name]}
                 mode="horizontal"
