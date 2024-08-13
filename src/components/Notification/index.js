@@ -134,7 +134,7 @@ NotificationItem.defaultProps = {
   level: "low",
 };
 
-const Notification = () => {
+const Notification = ({ itemClassName }) => {
   const { global: notification, setGlobal } = useGlobalContext("notification");
   const headOptionRef = useRef();
   const { apis, ajax } = usePreset();
@@ -165,7 +165,7 @@ const Notification = () => {
 
   return (
     <div
-      className={style["notification"]}
+      className={classnames({}, style["notification"], "notification")}
       style={{
         "--head-option-height": `${headOptionHeight}px`,
       }}
@@ -243,16 +243,19 @@ const Notification = () => {
                   <NotificationItem
                     {...Object.assign({}, firstItem)}
                     groupLength={item.length}
-                    className={classnames({
-                      [style["is-last-item"]]:
-                        groupList?.length &&
-                        +groupKey + 1 ===
-                          Math.min(
-                            groupList.filter((item) => item && item.length)
-                              ?.length,
-                            3
-                          ),
-                    })}
+                    className={classnames(
+                      {
+                        [style["is-last-item"]]:
+                          groupList?.length &&
+                          +groupKey + 1 ===
+                            Math.min(
+                              groupList.filter((item) => item && item.length)
+                                ?.length,
+                              3
+                            ),
+                      },
+                      itemClassName
+                    )}
                   />
                 </div>
               );
