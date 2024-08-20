@@ -233,8 +233,13 @@ const DatePickerToday = createWithFieldDecorator([withLang])(
 
 const fields = {
   Input,
+  Password: Input.Password,
   InputNumber,
   DatePicker,
+  MonthPicker: DatePicker.MonthPicker,
+  WeekPicker: DatePicker.WeekPicker,
+  DateRangePicker: DatePicker.RangePicker,
+  TimeRangePicker: TimePicker.RangePicker,
   TimePicker,
   DatePickerToday,
   RadioGroup: createWithFieldDecorator([withLang])(RadioGroup),

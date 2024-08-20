@@ -143,7 +143,7 @@ const MenuItem = (props) => {
   );
 };
 
-const Menu = ({ className, allowCollapsed, ...props }) => {
+const Menu = ({ className, allowCollapsed, pathMatch, ...props }) => {
   const { pathname, search } = useLocation();
   const [selectedKey, setSelectKeyChange] = useControlValue(props, {
     value: "currentKey",
@@ -195,6 +195,9 @@ const Menu = ({ className, allowCollapsed, ...props }) => {
   }, [items]);
   useEffect(() => {
     const matchedPath = links.find(({ path }) => {
+      if (typeof pathMatch === "function") {
+        return pathMatch(path, { pathname, search });
+      }
       return (
         ensureSlash(pathname.replace(/[#,?].*/, "")) === ensureSlash(path) ||
         ensureSlash(pathname + search) === ensureSlash(path)
@@ -203,7 +206,7 @@ const Menu = ({ className, allowCollapsed, ...props }) => {
     if (matchedPath) {
       setSelectKeyChange(matchedPath.key);
     }
-  }, [links, pathname, search, setSelectKeyChange]);
+  }, [links, pathname, search, setSelectKeyChange, pathMatch]);
 
   const [openKeys, setOpenKeys] = useControlValue(
     Object.assign({}, props, {
