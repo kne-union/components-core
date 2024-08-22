@@ -66,6 +66,15 @@
   --primary-color-green: 184;
   --primary-color-blue: 178;*/
 
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
   :global {
     .ant-input[disabled],
     .ant-input-number-disabled .ant-input-number-input {
