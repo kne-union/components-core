@@ -6,6 +6,7 @@ import FetchButton from "@common/components/FetchButton";
 import { IntlProvider, FormattedMessage } from "@components/Intl";
 import style from "./style.module.scss";
 import importMessages from "./locale";
+import { Button } from "antd";
 
 const localeModuleName = "FormInfo";
 
@@ -77,5 +78,15 @@ export const useFormModal = () => {
 
 export const FormModalButton = (props) => {
   const formModal = useFormModal();
+  if (!props.api) {
+    return (
+      <Button
+        {...props}
+        onClick={() => {
+          formModal(props.modalProps);
+        }}
+      />
+    );
+  }
   return <FetchButton {...props} modalFunc={formModal} />;
 };
