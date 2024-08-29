@@ -91,6 +91,7 @@ const BaseExample = createWithRemoteLoader({
                       >
                         {font_class}
                       </Typography.Text>
+                      <div>{name}</div>
                     </Space>
                   );
                 })}

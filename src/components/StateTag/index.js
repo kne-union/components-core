@@ -64,7 +64,8 @@ const StateTag = ({
           type === "skill" ? style["state-skill-tag"] : "",
           style[`state-tag-${type}`],
           showBackground ? style["show-bg"] : "",
-          showBorder ? style["show-border"] : ""
+          showBorder ? style["show-border"] : "",
+          props?.onClick ? style["event-tag"] : ""
         )}
       >
         <span className={style["tag-text"]}>{text}</span>
