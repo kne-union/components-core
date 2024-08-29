@@ -90,7 +90,9 @@ const BaseExample = () => {
           <Input name="email" label="邮箱" rule="EMAIL" />,
           <Upload name="file" label="文件" tips="文件" block />,
           <Rate name="rate" label="评分" tips="评分" />,
-          <Switch name="switch" label="开关" tips="开关" />,
+          <Switch name="switch" label="开关" tips="开关">
+            {({ checked }) => (checked ? "开" : "关")}
+          </Switch>,
           <Slider name="slider" label="滑动条" tips="滑动条" />,
           <TypeDateRangePicker
             name="type_date"

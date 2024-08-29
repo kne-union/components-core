@@ -9,7 +9,6 @@ import {
   TreeSelect as ReactTreeSelect,
   RadioGroup,
   CheckboxGroup,
-  Switch,
   Rate,
   Slider,
 } from "@kne/react-form-antd";
@@ -20,6 +19,7 @@ import FunctionSelect from "./FunctionSelect";
 import IndustrySelect from "./IndustrySelect";
 import MoneyInput from "./MoneyInput";
 import PhoneNumber from "./PhoneNumber";
+import Switch from "./Switch";
 import Upload from "./Upload";
 import Avatar from "./Avatar";
 import SalaryInput from "./SalaryInput";
