@@ -1,6 +1,7 @@
 const { default: StateTag } = _StateTag;
 const { default: Descriptions } = _Descriptions;
 const { range } = lodash;
+const { Space, Typography } = antd;
 
 const BaseExample = () => {
   return (
@@ -11,93 +12,98 @@ const BaseExample = () => {
         dataSource={[
           [
             { label: "使用规则", content: "待XX，暂停" },
-            { label: "代码示例", content: `{type: "info", text: "标签内容"}` },
-          ],
-          [
-            {
-              label: "标签样式",
-              content: <StateTag {...{ type: "info", text: "标签内容" }} />,
-            },
             {
               label: "示例",
-              content: <StateTag {...{ type: "info", text: "待提交开票" }} />,
+              content: (
+                <Space>
+                  <StateTag {...{ type: "info", text: "待提交开票" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="info" text="标签内容" />',
+                    }}
+                  />
+                </Space>
+              ),
             },
           ],
           [
             { label: "使用规则", content: "XX中，正在XX中" },
             {
-              label: "代码示例",
-              content: `{type: "progress", text: "退票审核中"}`,
-            },
-          ],
-          [
-            {
-              label: "标签样式",
-              content: <StateTag {...{ type: "progress", text: "标签内容" }} />,
-            },
-            {
               label: "示例",
               content: (
-                <StateTag {...{ type: "progress", text: "退票审核中" }} />
+                <Space>
+                  <StateTag {...{ type: "progress", text: "退票审核中" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="progress" text="标签内容" />',
+                    }}
+                  />
+                </Space>
               ),
             },
           ],
           [
             { label: "使用规则", content: "通过，成功，完成" },
             {
-              label: "代码示例",
-              content: `{type: "success", text: "标签内容"}`,
-            },
-          ],
-          [
-            {
-              label: "标签样式",
-              content: <StateTag {...{ type: "success", text: "标签内容" }} />,
-            },
-            {
               label: "示例",
-              content: <StateTag {...{ type: "success", text: "标签内容" }} />,
+              content: (
+                <Space>
+                  <StateTag {...{ type: "success", text: "标签内容" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="success" text="标签内容" />',
+                    }}
+                  />
+                </Space>
+              ),
             },
           ],
           [
             { label: "使用规则", content: "不通过，失败，淘汰，缺席，拒绝" },
             {
-              label: "代码示例",
-              content: `{type: "danger", text: "退票拒绝"}`,
-            },
-          ],
-          [
-            {
-              label: "标签样式",
-              content: <StateTag {...{ type: "danger", text: "标签内容" }} />,
-            },
-            {
               label: "示例",
-              content: <StateTag {...{ type: "danger", text: "退票拒绝" }} />,
+              content: (
+                <Space>
+                  <StateTag {...{ type: "danger", text: "退票拒绝" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="danger" text="标签内容" />',
+                    }}
+                  />
+                </Space>
+              ),
             },
           ],
           [
             { label: "使用规则", content: "取消，撤销，停止" },
-            { label: "代码示例", content: `{text: "撤销开票审核"}` },
-          ],
-          [
-            {
-              label: "标签样式",
-              content: <StateTag {...{ text: "标签内容" }} />,
-            },
             {
               label: "示例",
-              content: <StateTag {...{ text: "撤销开票审核" }} />,
+              content: (
+                <Space>
+                  <StateTag {...{ type: "default", text: "撤销开票审核" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="default" text="标签内容" />',
+                    }}
+                  />
+                </Space>
+              ),
             },
           ],
           [
             { label: "使用规则", content: "（暂时还未用到）" },
-            { label: "代码示例", content: `{type: "other", text: "标签内容"}` },
-          ],
-          [
             {
-              label: "标签样式",
-              content: <StateTag {...{ type: "other", text: "标签内容" }} />,
+              label: "示例",
+              content: (
+                <Space>
+                  <StateTag {...{ type: "other", text: "标签内容" }} />
+                  <Typography.Text
+                    copyable={{
+                      text: '<StateTag type="other" text="标签内容" />',
+                    }}
+                  />
+                </Space>
+              ),
             },
           ],
         ]}

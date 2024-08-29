@@ -5,7 +5,7 @@
   line-height: 24px;
   border-radius: 12px;
   font-size: var(--font-size-small);
-  cursor: pointer;
+  //cursor: pointer;
   display: inline-block;
   box-sizing: border-box;
 
@@ -26,6 +26,10 @@
     .anticon-close:hover {
       color: inherit;
     }
+  }
+
+  &.event-tag {
+    cursor: pointer;
   }
 }
 
