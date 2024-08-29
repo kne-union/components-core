@@ -17,6 +17,10 @@
         {
           "name": "lodash",
           "packageName": "lodash"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
