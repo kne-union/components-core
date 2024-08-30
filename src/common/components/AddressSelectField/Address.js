@@ -10,7 +10,7 @@ import cloneDeep from "lodash/cloneDeep";
 import memoize from "lodash/memoize";
 import get from "lodash/get";
 import style from "./style.module.scss";
-import { withFetch } from "@kne/react-fetch";
+import Fetch, { withFetch } from "@kne/react-fetch";
 import importMessages from "./locale";
 import { IntlProvider, FormattedMessage, useIntl } from "@components/Intl";
 
@@ -363,12 +363,25 @@ const AddressEnum = withFetch(
   ({ name, data, getAddressApi, children, ...props }) => {
     const { locale } = usePreset();
     const addressApi = useMemo(() => createAddressApi(data), [data]);
-    return getAddressApi
-      ? children(addressApi)
-      : children(
-          addressApi.getCity(name),
-          Object.assign({}, props, { locale })
-        );
+    return getAddressApi ? (
+      children(addressApi)
+    ) : (
+      <Fetch
+        cache="city-enum"
+        params={{ name }}
+        loader={({ params }) => {
+          const { name } = params;
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(addressApi.getCity(name));
+            }, 0);
+          });
+        }}
+        render={({ data }) =>
+          children(data, Object.assign({}, props, { locale }))
+        }
+      />
+    );
   }
 );
 
