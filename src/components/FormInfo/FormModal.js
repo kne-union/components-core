@@ -79,11 +79,12 @@ export const useFormModal = () => {
 export const FormModalButton = (props) => {
   const formModal = useFormModal();
   if (!props.api) {
+    const { modalProps, ...others } = props;
     return (
       <Button
-        {...props}
+        {...others}
         onClick={() => {
-          formModal(props.modalProps);
+          formModal(modalProps);
         }}
       />
     );
