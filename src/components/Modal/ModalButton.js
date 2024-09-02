@@ -6,11 +6,12 @@ import { Button } from "antd";
 const ModalButton = (props) => {
   const modal = useModal();
   if (!props.api) {
+    const { modalProps, ...others } = props;
     return (
       <Button
-        {...props}
+        {...others}
         onClick={() => {
-          modal(props.modalProps);
+          modal(modalProps);
         }}
       />
     );
