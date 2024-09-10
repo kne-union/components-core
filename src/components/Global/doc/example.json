@@ -53,6 +53,21 @@
           "packageName": "@components/Icon"
         }
       ]
+    },
+    {
+      "title": "无边框标签",
+      "description": "展示了无边框标签",
+      "code": "./no-border-tag.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

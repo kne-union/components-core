@@ -317,6 +317,29 @@ render(<BaseExample />);
 
 ```
 
+- 无边框标签
+- 展示了无边框标签
+- _Global(@components/Global),antd(antd)
+
+```jsx
+const {PureGlobal} = _Global;
+const {Tag, Space} = antd;
+
+const BasicExample = () => {
+    return <PureGlobal>
+        <Space>
+            <Tag className="no-border" closable>标签1</Tag>
+            <Tag className="no-border" closable>标签2</Tag>
+            <Tag className="no-border" closable>标签3</Tag>
+        </Space>
+
+    </PureGlobal>
+};
+
+render(<BasicExample/>);
+
+```
+
 
 ### API
 
