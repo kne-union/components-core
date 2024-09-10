@@ -15,6 +15,8 @@ const computedCommonProps = ({
   withDecorator,
   footerButtons,
   formProps,
+  cancelText,
+  saveText,
   ...props
 }) => {
   return {
@@ -26,7 +28,9 @@ const computedCommonProps = ({
             importMessages={importMessages}
             moduleName={localeModuleName}
           >
-            <FormattedMessage id={"Cancel"} moduleName={localeModuleName} />
+            {cancelText || (
+              <FormattedMessage id={"Cancel"} moduleName={localeModuleName} />
+            )}
           </IntlProvider>
         ),
         ButtonComponent: CancelButton,
@@ -38,7 +42,9 @@ const computedCommonProps = ({
             importMessages={importMessages}
             moduleName={localeModuleName}
           >
-            <FormattedMessage id={"Save"} moduleName={localeModuleName} />
+            {saveText || (
+              <FormattedMessage id={"Save"} moduleName={localeModuleName} />
+            )}
           </IntlProvider>
         ),
         ButtonComponent: SubmitButton,
@@ -79,11 +85,12 @@ export const useFormModal = () => {
 export const FormModalButton = (props) => {
   const formModal = useFormModal();
   if (!props.api) {
+    const { modalProps, ...others } = props;
     return (
       <Button
-        {...props}
+        {...others}
         onClick={() => {
-          formModal(props.modalProps);
+          formModal(modalProps);
         }}
       />
     );

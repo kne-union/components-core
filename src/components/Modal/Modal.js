@@ -11,16 +11,16 @@ import SimpleBar from "@common/components/SimpleBar";
 
 const localeModuleName = "Modal";
 
-export const RightOptions = ({ options, children }) => {
+export const RightOptions = ({ options, rightSpan = 6, children }) => {
   if (!options) {
     return children;
   }
   return (
     <Row wrap={false} className={style["right-options-row"]}>
-      <Col span={18} className={style["right-options-col"]}>
+      <Col span={24 - rightSpan} className={style["right-options-col"]}>
         {children}
       </Col>
-      <Col span={6} className={style["right-options-col"]}>
+      <Col span={rightSpan} className={style["right-options-col"]}>
         {options}
       </Col>
     </Row>
@@ -207,6 +207,7 @@ const runWithDecorator = ({
   onCancel,
   footer,
   rightOptions,
+  rightSpan,
   disabledScroller,
   childrenRef,
   children,
@@ -237,6 +238,7 @@ const runWithDecorator = ({
         targetProps={Object.assign({}, props, { childrenRef, close: onClose })}
       >
         <RightOptions
+          rightSpan={rightSpan}
           options={renderWithOptions(rightOptions, {
             ...props,
             childrenRef,
