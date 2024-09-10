@@ -262,6 +262,7 @@ const runWithDecorator = ({
 const computedCommonProps = ({
   children,
   rightOptions,
+  rightSpan,
   footer,
   footerButtons,
   className,
@@ -304,6 +305,7 @@ const computedCommonProps = ({
           footer,
           footerButtons,
           rightOptions,
+          rightSpan,
           disabledScroller,
           children,
           childrenRef,
