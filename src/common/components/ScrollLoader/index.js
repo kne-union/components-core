@@ -7,7 +7,7 @@ import {
 } from "react";
 import { Space, Spin } from "antd";
 import useRefCallback from "@kne/use-ref-callback";
-import SimpleBar from "../SimpleBarBox";
+import SimpleBar from "../SimpleBar";
 import classnames from "classnames";
 import { useThrottledCallback } from "use-debounce";
 import style from "./style.module.scss";
@@ -47,7 +47,6 @@ const ScrollLoader = forwardRef(
     },
     ref
   ) => {
-    const [scrollReady, setScrollReady] = useState(false);
     const scrollerRef = useRef();
     const onLoaderHandler = useRefCallback(onLoader);
     const canLoadRef = useRef(!noMore && !isLoading);
@@ -71,14 +70,13 @@ const ScrollLoader = forwardRef(
     }, 100);
     return (
       <SimpleBar
-        ref={scrollerRef}
-        onScroll={scrollHandler}
         className={classnames("load-container", className)}
-        onReady={() => {
-          setScrollReady(true);
+        scrollableNodeProps={{
+          ref: scrollerRef,
+          onScroll: scrollHandler,
         }}
       >
-        {scrollReady && !isLoading && !noMore && (
+        {!isLoading && !noMore && (
           <FullDataInList
             maxFullCount={maxFullCount}
             getScrollerRef={() => scrollerRef.current}
