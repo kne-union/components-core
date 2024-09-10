@@ -144,6 +144,7 @@ const BaseExample = () => {
               size,
               children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
               rightOptions: <div>右侧内容右侧内容右侧内容右侧内容</div>,
+              rightSpan: 12,
             });
           }}
         >
