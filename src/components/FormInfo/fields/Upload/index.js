@@ -110,6 +110,7 @@ UploadField.defaultProps = {
     ".xlsx",
     ".html",
     ".msg",
+    ".eml",
     ".zip",
   ],
   renderTips: (defaultTips) => {
