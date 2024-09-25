@@ -11,8 +11,3 @@ jobs:
     secrets: inherit
     with:
       package_name: '@kne-components/components-core'
-  clean-branch:
-    needs: remote-npm
-    uses: imajeetyadav/delete-merged-branches@main
-    with:
-      branch: master
