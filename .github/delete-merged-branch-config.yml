@@ -1,0 +1,3 @@
+exclude:
+  - release
+delete_closed_pr: true
