@@ -12014,22 +12014,3 @@ render(<BaseExample/>);
 | fetchContent | 当api接口返回值的时候调用，可以获取到接口参数，返回值会更新到Tootip的参数中 | function | -   |
 
 <!--END_SECTION:DOC_MD-->
-
-# ⚡ 最新活动
-
-<!--START_SECTION:activity-->
-
-1. 🎉 Merged PR [#21](https://github.com/kne-union/test-flow/pull/21)
-   in [kne-union/test-flow](https://github.com/kne-union/test-flow)
-2. 💪 Opened PR [#21](https://github.com/kne-union/test-flow/pull/21)
-   in [kne-union/test-flow](https://github.com/kne-union/test-flow)
-3. 🗣 Commented on [#20](https://github.com/kne-union/test-flow/issues/20#issuecomment-2375663828)
-   in [kne-union/test-flow](https://github.com/kne-union/test-flow)
-4. ❗ Opened issue [#20](https://github.com/kne-union/test-flow/issues/20)
-   in [kne-union/test-flow](https://github.com/kne-union/test-flow)
-5. 🔒 Closed issue [#17](https://github.com/kne-union/test-flow/issues/17)
-   in [kne-union/test-flow](https://github.com/kne-union/test-flow)
-
-<!--END_SECTION:activity-->
-
----
