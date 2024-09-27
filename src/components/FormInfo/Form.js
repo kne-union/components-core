@@ -32,17 +32,17 @@ const Form = forwardRef(
     return (
       <IntlProvider importMessages={importMessages} moduleName="FormInfo">
         <FormLangProvider value={lang}>
-          <InfoPage>
-            <HelperGuideProvider value={helperGuideName}>
-              <ReactForm
-                {...props}
-                ref={ref}
-                className={classnames(className, style["form-outer"])}
-              >
-                <SetPreset>{children}</SetPreset>
-              </ReactForm>
-            </HelperGuideProvider>
-          </InfoPage>
+          <HelperGuideProvider value={helperGuideName}>
+            <ReactForm
+              {...props}
+              ref={ref}
+              className={classnames(className, style["form-outer"])}
+            >
+              <SetPreset>
+                <InfoPage>{children}</InfoPage>
+              </SetPreset>
+            </ReactForm>
+          </HelperGuideProvider>
         </FormLangProvider>
       </IntlProvider>
     );
