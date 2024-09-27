@@ -14,6 +14,8 @@ const message = {
   salaryType: "Salary type",
   Cancel: "Cancel",
   Save: "Save",
+  Next: "Next",
+  Complete: "Complete",
   Crop: "Crop",
   Preview: "Preview",
   PictureFormat: "Picture Format: ",

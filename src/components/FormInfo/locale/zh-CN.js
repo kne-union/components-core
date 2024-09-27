@@ -14,6 +14,8 @@ const message = {
   salaryType: "薪资类型",
   Cancel: "取消",
   Save: "保存",
+  Next: "下一步",
+  Complete: "完成",
   Crop: "裁剪",
   Preview: "预览",
   PictureFormat: "图片格式：",

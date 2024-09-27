@@ -17,10 +17,10 @@ const computedCommonProps = ({
   formProps,
   cancelText,
   saveText,
-  ...props
+  ...modalProps
 }) => {
   return {
-    ...props,
+    ...modalProps,
     footerButtons: footerButtons || [
       {
         children: (
@@ -54,10 +54,18 @@ const computedCommonProps = ({
     className: classnames(className, style["form-outer"], style["form-modal"]),
     withDecorator: (render) => {
       const innerRender = (props) => {
-        const _formProps =
+        const { onSubmit, ..._formProps } =
           typeof formProps === "function" ? formProps(props) : formProps;
         return (
-          <Form {..._formProps}>
+          <Form
+            {..._formProps}
+            onSubmit={async (...args) => {
+              const res = onSubmit && (await onSubmit(...args));
+              if (res !== false) {
+                modalProps?.onClose();
+              }
+            }}
+          >
             <IntlProvider importMessages={importMessages} moduleName="FormInfo">
               {render(props)}
             </IntlProvider>

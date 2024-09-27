@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Space, Spin } from "antd";
 import useRefCallback from "@kne/use-ref-callback";
 import SimpleBar from "../SimpleBar";
