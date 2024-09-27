@@ -86,8 +86,8 @@
       ]
     },
     {
-      "title": "Modal Step Form弹窗",
-      "description": "展示一个step form弹窗",
+      "title": "FormStepModal表单弹窗示例",
+      "description": "展示了一个FormStepModal表单弹窗示例",
       "code": "./form-step-modal.js",
       "scope": [
         {
@@ -101,10 +101,6 @@
         {
           "name": "antd",
           "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
         }
       ]
     },
