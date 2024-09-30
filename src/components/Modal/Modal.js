@@ -255,7 +255,10 @@ const runWithDecorator = ({
     );
   };
   return typeof withDecorator === "function"
-    ? withDecorator(getInner)
+    ? withDecorator(getInner, {
+        childrenRef,
+        close: onClose,
+      })
     : getInner({});
 };
 

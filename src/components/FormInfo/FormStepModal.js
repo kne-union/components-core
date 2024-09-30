@@ -1,13 +1,12 @@
 import Modal, { useModal } from "@components/Modal";
 import { useState, useRef } from "react";
-import classnames from "classnames";
 import { CancelButton, SubmitButton } from "@kne/react-form-antd";
-import { Form } from "./formModule";
 import FetchButton from "@common/components/FetchButton";
 import { IntlProvider, FormattedMessage } from "@components/Intl";
 import style from "./style.module.scss";
 import importMessages from "./locale";
 import { Button, Steps, Flex } from "antd";
+import computedModalCommonProps from "./computedModalCommonProps";
 
 const localeModuleName = "FormInfo";
 
@@ -24,159 +23,166 @@ const FormStepState = ({ items, children }) => {
 };
 
 const computedCommonProps = ({
-  className,
-  withDecorator,
+  footerButtons,
   cancelText,
-  nextText,
   completeText,
+  nextText,
   items,
-  ...modalProps
+  withDecorator,
+  ...others
 }) => {
-  return {
-    ...modalProps,
-    footerButtons: ({ currentIndex, isLastStep }) => {
-      const { footerButtons } = Object.assign({}, items[currentIndex]);
-      return (
-        footerButtons || [
-          {
-            children: (
-              <IntlProvider
-                importMessages={importMessages}
-                moduleName={localeModuleName}
-              >
-                {cancelText || (
-                  <FormattedMessage
-                    id={"Cancel"}
-                    moduleName={localeModuleName}
-                  />
-                )}
-              </IntlProvider>
-            ),
-            ButtonComponent: CancelButton,
-          },
-          {
-            type: "primary",
-            children: (
-              <IntlProvider
-                importMessages={importMessages}
-                moduleName={localeModuleName}
-              >
-                {isLastStep
-                  ? completeText || (
-                      <FormattedMessage
-                        id={"Complete"}
-                        moduleName={localeModuleName}
-                      />
-                    )
-                  : nextText || (
-                      <FormattedMessage
-                        id={"Next"}
-                        moduleName={localeModuleName}
-                      />
-                    )}
-              </IntlProvider>
-            ),
-            ButtonComponent: SubmitButton,
-            autoClose: false,
-          },
-        ]
-      );
-    },
-    className: classnames(className, style["form-outer"], style["form-modal"]),
-    withDecorator: (render) => {
-      const innerRender = (props) => {
+  return computedModalCommonProps(
+    Object.assign({}, others, {
+      footerButtons: ({ currentIndex, isLastStep }) => {
+        const { footerButtons } = Object.assign({}, items[currentIndex]);
         return (
-          <FormStepState items={items}>
-            {({
-              currentIndex,
-              isLastStep,
-              setCurrentIndex,
-              currentProps,
-              stepCacheRef,
-            }) => {
-              const { formProps, title, ...otherProps } = currentProps;
-              const { onSubmit, ..._formProps } =
-                typeof formProps === "function" ? formProps(props) : formProps;
-              return (
-                <Form
-                  {..._formProps}
-                  onSubmit={async (data, ...args) => {
-                    stepCacheRef.current[currentIndex] = { data };
-                    const res =
-                      onSubmit &&
-                      (await onSubmit(
-                        data,
-                        Object.assign(
-                          {},
-                          {
-                            currentIndex,
-                            isLastStep,
-                            setCurrentIndex,
-                            currentProps,
-                            stepCacheRef,
-                          }
-                        ),
-                        ...args
-                      ));
-                    if (!isLastStep && res !== false) {
-                      setCurrentIndex((currentIndex) => currentIndex + 1);
-                      return;
-                    }
-                    if (isLastStep && res !== false) {
-                      modalProps?.onClose();
-                    }
-                  }}
-                  key={currentIndex}
+          footerButtons || [
+            {
+              children: (
+                <IntlProvider
+                  importMessages={importMessages}
+                  moduleName={localeModuleName}
                 >
-                  <IntlProvider
-                    importMessages={importMessages}
-                    moduleName="FormInfo"
-                  >
-                    {render(
-                      Object.assign({}, props, otherProps, {
-                        currentIndex,
-                        isLastStep,
-                        setCurrentIndex,
-                        stepSection: (
-                          <Steps
-                            className={style["form-step-section"]}
-                            current={currentIndex}
-                            items={items.map(({ title }) => ({ title }))}
-                          />
-                        ),
-                      })
-                    )}
-                  </IntlProvider>
-                </Form>
-              );
-            }}
-          </FormStepState>
+                  {cancelText || (
+                    <FormattedMessage
+                      id={"Cancel"}
+                      moduleName={localeModuleName}
+                    />
+                  )}
+                </IntlProvider>
+              ),
+              ButtonComponent: CancelButton,
+            },
+            {
+              type: "primary",
+              children: (
+                <IntlProvider
+                  importMessages={importMessages}
+                  moduleName={localeModuleName}
+                >
+                  {isLastStep
+                    ? completeText || (
+                        <FormattedMessage
+                          id={"Complete"}
+                          moduleName={localeModuleName}
+                        />
+                      )
+                    : nextText || (
+                        <FormattedMessage
+                          id={"Next"}
+                          moduleName={localeModuleName}
+                        />
+                      )}
+                </IntlProvider>
+              ),
+              ButtonComponent: SubmitButton,
+              autoClose: false,
+            },
+          ]
         );
-      };
-      return typeof withDecorator === "function"
-        ? withDecorator(innerRender)
-        : innerRender();
-    },
-    children: ({ children, stepSection, ...props }) => {
-      return (
-        <Flex vertical gap={24}>
-          <Flex justify="center">{stepSection}</Flex>
-          {typeof children === "function" ? children(props) : children}
-        </Flex>
-      );
-    },
-  };
+      },
+      withDecorator: (render, args) => {
+        const innerRender = (props) => {
+          return (
+            <FormStepState items={items}>
+              {({
+                currentIndex,
+                isLastStep,
+                setCurrentIndex,
+                currentProps,
+                stepCacheRef,
+              }) => {
+                const { formProps, title, ...otherProps } = currentProps;
+                const { onSubmit, ..._formProps } =
+                  typeof formProps === "function"
+                    ? formProps(props)
+                    : formProps;
+
+                return render(
+                  Object.assign({}, props, otherProps, {
+                    currentIndex,
+                    isLastStep,
+                    setCurrentIndex,
+                    stepSection: (
+                      <Steps
+                        className={style["form-step-section"]}
+                        current={currentIndex}
+                        items={items.map(({ title }) => ({ title }))}
+                      />
+                    ),
+                    formProps: Object.assign({}, _formProps, {
+                      onSubmit: async (data, ...args) => {
+                        stepCacheRef.current[currentIndex] = { data };
+                        const res =
+                          onSubmit &&
+                          (await onSubmit(
+                            data,
+                            Object.assign(
+                              {},
+                              {
+                                currentIndex,
+                                isLastStep,
+                                setCurrentIndex,
+                                currentProps,
+                                stepCacheRef,
+                              }
+                            ),
+                            ...args
+                          ));
+                        if (!isLastStep && res !== false) {
+                          setCurrentIndex((currentIndex) => currentIndex + 1);
+                        }
+                        if (!isLastStep) {
+                          return false;
+                        }
+
+                        return res;
+                      },
+                    }),
+                  })
+                );
+              }}
+            </FormStepState>
+          );
+        };
+        return typeof withDecorator === "function"
+          ? withDecorator(innerRender, args)
+          : innerRender(args);
+      },
+      formProps: ({ formProps, ...others }) =>
+        Object.assign({}, others, formProps),
+      children: ({ children, stepSection, ...props }) => {
+        return (
+          <Flex vertical gap={24}>
+            <Flex justify="center">{stepSection}</Flex>
+            {typeof children === "function" ? children(props) : children}
+          </Flex>
+        );
+      },
+    })
+  );
 };
 
 const FormStepModal = (props) => {
-  return <Modal {...computedCommonProps(props)} />;
+  return (
+    <Modal
+      {...computedCommonProps(
+        Object.assign({}, props, { className: style["form-modal"] })
+      )}
+    />
+  );
 };
 
 export default FormStepModal;
 
 export const useFormStepModal = () => {
   const modal = useModal();
-  return (props) => modal(computedCommonProps(props));
+  return (props) =>
+    modal(
+      computedCommonProps(
+        Object.assign({}, props, { className: style["form-modal"] })
+      )
+    );
 };
 
 export const FormStepModalButton = (props) => {

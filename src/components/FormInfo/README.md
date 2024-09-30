@@ -919,6 +919,7 @@ const BaseExample = () => {
         onClose={() => {
           setOpen(false);
         }}
+        autoClose
         items={[
           {
             title: "基本信息",
