@@ -1,96 +1,32 @@
 import Modal, { useModal } from "@components/Modal";
-import classnames from "classnames";
-import { CancelButton, SubmitButton } from "@kne/react-form-antd";
-import { Form } from "./formModule";
 import FetchButton from "@common/components/FetchButton";
-import { IntlProvider, FormattedMessage } from "@components/Intl";
-import style from "./style.module.scss";
-import importMessages from "./locale";
 import { Button } from "antd";
-
-const localeModuleName = "FormInfo";
-
-const computedCommonProps = ({
-  className,
-  withDecorator,
-  footerButtons,
-  formProps,
-  cancelText,
-  saveText,
-  ...modalProps
-}) => {
-  return {
-    ...modalProps,
-    footerButtons: footerButtons || [
-      {
-        children: (
-          <IntlProvider
-            importMessages={importMessages}
-            moduleName={localeModuleName}
-          >
-            {cancelText || (
-              <FormattedMessage id={"Cancel"} moduleName={localeModuleName} />
-            )}
-          </IntlProvider>
-        ),
-        ButtonComponent: CancelButton,
-      },
-      {
-        type: "primary",
-        children: (
-          <IntlProvider
-            importMessages={importMessages}
-            moduleName={localeModuleName}
-          >
-            {saveText || (
-              <FormattedMessage id={"Save"} moduleName={localeModuleName} />
-            )}
-          </IntlProvider>
-        ),
-        ButtonComponent: SubmitButton,
-        autoClose: false,
-      },
-    ],
-    className: classnames(className, style["form-outer"], style["form-modal"]),
-    withDecorator: (render) => {
-      const innerRender = (props) => {
-        const { onSubmit, ..._formProps } =
-          typeof formProps === "function" ? formProps(props) : formProps;
-        return (
-          <Form
-            {..._formProps}
-            onSubmit={async (...args) => {
-              const res = onSubmit && (await onSubmit(...args));
-              if (res !== false) {
-                modalProps?.onClose();
-              }
-            }}
-          >
-            <IntlProvider importMessages={importMessages} moduleName="FormInfo">
-              {render(props)}
-            </IntlProvider>
-          </Form>
-        );
-      };
-      return typeof withDecorator === "function"
-        ? withDecorator(innerRender)
-        : innerRender();
-    },
-  };
-};
+import computedCommonProps from "./computedModalCommonProps";
+import style from "./style.module.scss";
 
 const FormModal = (props) => {
-  return <Modal {...computedCommonProps(props)} />;
+  return (
+    <Modal
+      {...computedCommonProps(
+        Object.assign({}, props, { className: style["form-modal"] })
+      )}
+    />
+  );
 };
 
 export default FormModal;
 
 export const useFormModal = () => {
   const modal = useModal();
-  return (props) => modal(computedCommonProps(props));
+  return (props) =>
+    modal(
+      computedCommonProps(
+        Object.assign({}, props, { className: style["form-modal"] })
+      )
+    );
 };
 
-export const FormModalButton = (props) => {
+export const FormModalButton = ({ classNames, ...props }) => {
   const formModal = useFormModal();
   if (!props.api) {
     const { modalProps, ...others } = props;
