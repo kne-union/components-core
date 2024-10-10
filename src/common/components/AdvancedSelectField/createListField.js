@@ -39,6 +39,42 @@ const createListField = ({ renderList, defaultProps }) => {
     const formatData = props.dataFormat(fetchApi.data);
     const { right, leftBottom, leftSpan = 24 } = props;
     const isSelectedAll = value.length === 1 && value[0] === "all";
+
+    const renderInner = () => {
+      const renderProps = {
+        props,
+        value,
+        setValue,
+        list: formatData.list,
+        itemIsSelected: (item) => value.indexOf(item.value) > -1,
+        isSelectedAll,
+        onSelect: (item) => {
+          if (props.single) {
+            setValue([item.value]);
+            return;
+          }
+          const newValue = value.slice(0);
+          const index = newValue.indexOf(item.value);
+          if (index > -1) {
+            newValue.splice(index, 1);
+          } else {
+            newValue.push(item.value);
+          }
+          setValue(newValue);
+        },
+      };
+
+      const inner = renderList(renderProps);
+
+      if (typeof props.dropdownRender === "function") {
+        return props.dropdownRender(
+          Object.assign({}, renderProps, { children: inner })
+        );
+      }
+
+      return inner;
+    };
+
     return (
       <Row
         wrap={false}
@@ -141,29 +177,7 @@ const createListField = ({ renderList, defaultProps }) => {
               );
             }}
           >
-            {renderList({
-              props,
-              value,
-              setValue,
-              list: formatData.list,
-              itemIsSelected: (item) => value.indexOf(item.value) > -1,
-              isSelectedAll,
-              onSelect: (item) => {
-                if (props.single) {
-                  setValue([item.value]);
-                  return;
-                }
-
-                const newValue = value.slice(0);
-                const index = newValue.indexOf(item.value);
-                if (index > -1) {
-                  newValue.splice(index, 1);
-                } else {
-                  newValue.push(item.value);
-                }
-                setValue(newValue);
-              },
-            })}
+            {renderInner()}
           </ScrollLoader>
           {leftBottom &&
             leftBottom({
