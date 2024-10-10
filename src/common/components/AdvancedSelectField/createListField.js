@@ -46,6 +46,8 @@ const createListField = ({ renderList, defaultProps }) => {
         value,
         setValue,
         list: formatData.list,
+        data: fetchApi.data,
+        fetchApi,
         itemIsSelected: (item) => value.indexOf(item.value) > -1,
         isSelectedAll,
         onSelect: (item) => {
