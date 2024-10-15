@@ -3,6 +3,7 @@ import withFieldItem from "../withFieldItem";
 import AdvancedSelectField, {
   UserField,
 } from "@common/components/AdvancedSelectField";
+import SuperSelectField from "@common/components/SuperSelectField";
 import FunctionSelectField from "@common/components/FunctionSelectField";
 import AddressSelectField from "@common/components/AddressSelectField";
 import IndustrySelectField from "@common/components/IndustrySelectField";
@@ -33,6 +34,7 @@ const withInputDefaultPlaceholder =
     );
 
 export const AdvancedSelectFilterItem = withFieldItem(AdvancedSelectField);
+export const SuperSelectFilterItem = withFieldItem(SuperSelectField);
 export const UserFilterItem = withFieldItem(UserField);
 export const FunctionSelectFilterItem = withFieldItem(FunctionSelectField);
 export const IndustrySelectFilterItem = withFieldItem(IndustrySelectField);

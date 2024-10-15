@@ -13,6 +13,7 @@ import {
   Slider,
 } from "@kne/react-form-antd";
 import AdvancedSelectField from "./AdvancedSelect";
+import SuperSelectField from "./SuperSelect";
 import AddressSelect, { AddressInput } from "./AddressSelect";
 import Cascader from "./Cascader";
 import FunctionSelect from "./FunctionSelect";
@@ -297,6 +298,10 @@ const fields = {
     withLang,
     withSelectDefaultPlaceholder,
   ])(AdvancedSelectField),
+  SuperSelect: createWithFieldDecorator([
+    withLang,
+    withSelectDefaultPlaceholder,
+  ])(SuperSelectField),
 };
 
 export default fields;

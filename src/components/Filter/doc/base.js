@@ -6,6 +6,7 @@ const {
   TypeDateRangePickerFilterItem,
   CityFilterItem,
   AdvancedSelectFilterItem,
+  SuperSelectFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
@@ -61,6 +62,22 @@ const BaseExample = () => {
             allowEmpty={[true, true]}
           />,
           <DateRangePickerFilterItem label="日期范围" name="date-range" />,
+          <SuperSelectFilterItem
+            label="选择信息"
+            name="select-value"
+            options={[
+              {
+                label: "用户一",
+                value: 1,
+                description: "我是用户描述",
+              },
+              {
+                label: "用户二",
+                value: 2,
+                description: "我是用户描述",
+              },
+            ]}
+          />,
           <UserFilterItem
             label="用户选择"
             name="user"
