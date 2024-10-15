@@ -333,39 +333,40 @@ const BaseExample = () => {
           console.log(value);
         }}
       />
-      <SuperSelectField isPopup={false}
-          getSearchProps={(text) => {
+      <SuperSelectField
+        isPopup={false}
+        getSearchProps={(text) => {
+          return {
+            data: { keyword: text },
+          };
+        }}
+        allowSelectedAll
+        api={{
+          loader: () => {
             return {
-              data: { keyword: text },
+              pageData: [
+                {
+                  label: "用户一",
+                  value: 1,
+                  description: "我是用户描述",
+                },
+                {
+                  label: "用户二",
+                  value: 2,
+                  description: "我是用户描述",
+                },
+                {
+                  label: "用户三",
+                  value: 3,
+                  description: "我是用户描述",
+                },
+              ],
             };
-          }}
-          allowSelectedAll
-          api={{
-            loader: () => {
-              return {
-                pageData: [
-                  {
-                    label: "用户一",
-                    value: 1,
-                    description: "我是用户描述",
-                  },
-                  {
-                    label: "用户二",
-                    value: 2,
-                    description: "我是用户描述",
-                  },
-                  {
-                    label: "用户三",
-                    value: 3,
-                    description: "我是用户描述",
-                  },
-                ],
-              };
-            },
-          }}
-          onChange={(value) => {
-            console.log(value);
-          }}
+          },
+        }}
+        onChange={(value) => {
+          console.log(value);
+        }}
       />
     </Space>
   );
