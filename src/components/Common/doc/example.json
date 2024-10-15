@@ -71,6 +71,21 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "SuperSelect",
+      "description": "新版高级选择",
+      "code": "./super-select.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
