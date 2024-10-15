@@ -30,6 +30,8 @@ export {
   createListField,
 } from "@common/components/AdvancedSelectField";
 
+export { default as SuperSelectField } from "@common/components/SuperSelectField";
+
 export {
   default as CascaderField,
   createTreeUtils,
