@@ -1,5 +1,8 @@
 import { hooks } from "@kne/react-form-antd";
-import { SuperSelectField } from "@components/Common";
+import {
+  SuperSelectField,
+  SuperSelectTableListField,
+} from "@components/Common";
 
 const { useOnChange } = hooks;
 
@@ -16,4 +19,5 @@ const createdField = (WrappedComponent) => {
   return List;
 };
 const SuperSelect = createdField(SuperSelectField);
+export const SuperSelectTableList = createdField(SuperSelectTableListField);
 export default SuperSelect;
