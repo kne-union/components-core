@@ -18,6 +18,9 @@ import { forwardRef } from "react";
 import FormItem from "./FormItem";
 import style from "./style.module.scss";
 import AdvancedSelectField from "./fields/AdvancedSelect";
+import SuperSelectField, {
+  SuperSelectTableList as SuperSelectTableListField,
+} from "./fields/SuperSelect";
 import AddressSelect, {
   AddressInput as AddressInputField,
 } from "./fields/AddressSelect";
@@ -123,7 +126,10 @@ export { default as FormItem } from "./FormItem";
 
 // export { default as AdvancedSelect } from "./fields/AdvancedSelect";
 export const AdvancedSelect = withSelectDefaultPlaceholder(AdvancedSelectField);
-
+export const SuperSelect = withSelectDefaultPlaceholder(SuperSelectField);
+export const SuperSelectTableList = withSelectDefaultPlaceholder(
+  SuperSelectTableListField
+);
 export { default as AddressSelect } from "./fields/AddressSelect";
 export const AddressInput = withSelectDefaultPlaceholder(AddressInputField);
 
@@ -210,6 +216,8 @@ export const formModule = Object.assign({}, reactFormAntd, {
   Form,
   FormItem,
   AdvancedSelect,
+  SuperSelect,
+  SuperSelectTableList,
   AddressSelect,
   AddressInput,
   MoneyInput,
