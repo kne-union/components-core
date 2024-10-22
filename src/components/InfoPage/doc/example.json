@@ -2,7 +2,7 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
+      "title": "InfoPage",
       "description": "这里填写示例说明",
       "code": "./base.js",
       "scope": [
@@ -11,12 +11,49 @@
           "packageName": "@components/InfoPage"
         },
         {
-          "name": "_Content",
-          "packageName": "@components/Content"
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Content",
+      "description": "展示了一个基本内容",
+      "code": "./content.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@components/InfoPage"
         },
         {
-          "name": "_Descriptions",
-          "packageName": "@components/Descriptions"
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Descriptions",
+      "description": "展示一个信息详情",
+      "code": "./descriptions.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@components/InfoPage"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "CentralContent",
+      "description": "请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。",
+      "code": "./central-content.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@components/InfoPage"
         },
         {
           "name": "antd",
@@ -26,12 +63,16 @@
     },
     {
       "title": "TableView",
-      "description": "请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。",
+      "description": "",
       "code": "./table-view.js",
       "scope": [
         {
           "name": "_InfoPage",
           "packageName": "@components/InfoPage"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }
