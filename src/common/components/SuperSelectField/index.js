@@ -22,8 +22,8 @@ const SuperSelectField = forwardRef((p, ref) => {
         );
       },
       renderModal: (contextProps) => {
-        const { props, open, onOpenChange, onComplete } = contextProps;
-        const { placeholder, children, showSelectedTag } = props;
+        const { props, open, onOpenChange, value, onComplete } = contextProps;
+        const { placeholder, children, showSelectedTag, onConfirm } = props;
         return (
           <Modal
             title={placeholder}
@@ -32,7 +32,12 @@ const SuperSelectField = forwardRef((p, ref) => {
               onOpenChange(false);
             }}
             footer={showSelectedTag && <SelectedTagList />}
-            onConfirm={onComplete}
+            onConfirm={() => {
+              onComplete();
+              if (typeof onConfirm === "function") {
+                return onConfirm(value);
+              }
+            }}
           >
             {children(contextProps)}
           </Modal>
@@ -52,8 +57,8 @@ export const SuperSelectTableListField = forwardRef((p, ref) => {
     {},
     {
       renderModal: (contextProps) => {
-        const { props, open, onOpenChange, onComplete } = contextProps;
-        const { placeholder, children } = props;
+        const { props, open, value, onOpenChange, onComplete } = contextProps;
+        const { placeholder, children, onConfirm } = props;
         return (
           <Modal
             title={placeholder}
@@ -61,7 +66,12 @@ export const SuperSelectTableListField = forwardRef((p, ref) => {
             onClose={() => {
               onOpenChange(false);
             }}
-            onConfirm={onComplete}
+            onConfirm={() => {
+              onComplete();
+              if (typeof onConfirm === "function") {
+                return onConfirm(value);
+              }
+            }}
           >
             {children(contextProps)}
           </Modal>
