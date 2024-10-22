@@ -32,8 +32,8 @@ labelAlign 不为 auto 时会自动计算 label 的最小宽度使所有 label �
 - _InfoPage(@components/InfoPage),antd(antd)
 
 ```jsx
-const {default: InfoPage} = _InfoPage;
-const {Button} = antd;
+const { default: InfoPage } = _InfoPage;
+const { Button } = antd;
 
 const BaseExample = () => {
   return (
@@ -55,8 +55,16 @@ const BaseExample = () => {
       </InfoPage.Part>
       <InfoPage.Collapse
         items={[
-          {key: '1', label: 'This is default size panel header', children: <p>InfoPage.Collapse</p>},
-          {key: '2', label: 'This is default size panel header2', children: <p>InfoPage.Collapse2</p>},
+          {
+            key: "1",
+            label: "This is default size panel header",
+            children: <p>InfoPage.Collapse</p>,
+          },
+          {
+            key: "2",
+            label: "This is default size panel header2",
+            children: <p>InfoPage.Collapse2</p>,
+          },
         ]}
       />
     </InfoPage>
@@ -73,57 +81,64 @@ render(<BaseExample />);
 
 ```jsx
 const { Content } = _InfoPage;
-const {Space, Radio} = antd;
-const {useState} = React;
+const { Space, Radio } = antd;
+const { useState } = React;
 
 const BaseExample = () => {
   const [listProps, setListProps] = useState({
     col: 1,
-    size: 'default',
-    labelAlign: 'left'
+    size: "default",
+    labelAlign: "left",
   });
   const onChange = (e, name) => {
     const val = e?.target.value;
-    setListProps(prevState => Object.assign({}, prevState, {[name]: val}));
+    setListProps((prevState) => Object.assign({}, prevState, { [name]: val }));
   };
 
   return (
-    <Space direction='vertical' size={12}>
-      <Radio.Group onChange={(e) => onChange(e, 'col')} value={listProps.col}>
+    <Space direction="vertical" size={12}>
+      <Radio.Group onChange={(e) => onChange(e, "col")} value={listProps.col}>
         <Radio.Button value={1}>1列</Radio.Button>
         <Radio.Button value={2}>2列</Radio.Button>
         <Radio.Button value={3}>3列</Radio.Button>
       </Radio.Group>
-      <Radio.Group onChange={(e) => onChange(e, 'labelAlign')} value={listProps.labelAlign}>
-        <Radio.Button value='left'>左对齐</Radio.Button>
-        <Radio.Button value='center'>中心对齐</Radio.Button>
-        <Radio.Button value='right'>右对齐</Radio.Button>
-        <Radio.Button value='auto'>自适应</Radio.Button>
+      <Radio.Group
+        onChange={(e) => onChange(e, "labelAlign")}
+        value={listProps.labelAlign}
+      >
+        <Radio.Button value="left">左对齐</Radio.Button>
+        <Radio.Button value="center">中心对齐</Radio.Button>
+        <Radio.Button value="right">右对齐</Radio.Button>
+        <Radio.Button value="auto">自适应</Radio.Button>
       </Radio.Group>
-      <Radio.Group onChange={(e) => onChange(e, 'size')} value={listProps.size}>
-        <Radio.Button value='default'>默认</Radio.Button>
-        <Radio.Button value='small'>small</Radio.Button>
+      <Radio.Group onChange={(e) => onChange(e, "size")} value={listProps.size}>
+        <Radio.Button value="default">默认</Radio.Button>
+        <Radio.Button value="small">small</Radio.Button>
       </Radio.Group>
       <Content
         {...listProps}
         list={[
-          {label: '标题', content: '内容'},
-          {label: '标题标题', content: '内容内容'},
-          {label: '标题标', content: '内容内容内容内容内容内容内容内容内容内容'},
+          { label: "标题", content: "内容" },
+          { label: "标题标题", content: "内容内容" },
           {
-            label: '标题标题标题',
-            content: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容'
-          }
+            label: "标题标",
+            content: "内容内容内容内容内容内容内容内容内容内容",
+          },
+          {
+            label: "标题标题标题",
+            content:
+              "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+          },
         ]}
         itemRender={(inner, other) => {
-          return other?.index === 2 ? '此处内容额外自定义' : inner;
+          return other?.index === 2 ? "此处内容额外自定义" : inner;
         }}
       />
     </Space>
   );
 };
 
-render(<BaseExample/>);
+render(<BaseExample />);
 
 ```
 
@@ -132,7 +147,7 @@ render(<BaseExample/>);
 - _InfoPage(@components/InfoPage),antd(antd)
 
 ```jsx
-const {Descriptions} = _InfoPage;
+const { Descriptions } = _InfoPage;
 
 const BaseExample = () => {
   return (
@@ -185,8 +200,8 @@ const BaseExample = () => {
         ],
         [{ label: "附件", content: "附件名称" }],
         [
-          {label: "操作时间", content: "2022-08-01 16:32"},
-          {label: "操作人", content: "西西歪", display: false},
+          { label: "操作时间", content: "2022-08-01 16:32" },
+          { label: "操作人", content: "西西歪", display: false },
         ],
         [
           {
@@ -217,41 +232,82 @@ render(<BaseExample />);
 const { CentralContent } = _InfoPage;
 
 const BaseExample = () => {
-  return (<CentralContent dataSource={{
-    id: 'RC00101',
-    name: '张三',
-    birthday: '2020-03-03',
-    addTime: new Date(),
-    count: 2000.1322,
-    count2: 0.01234565,
-    count3: 1234523,
-    description: `描述描述描述描述描述描述描述描述\n描述描述描述描述描述描述描述描述\n描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述`,
-    description2: `描述描述描述描述描述描述描述描述`
-  }} col={3} columns={[{
-    name: 'id', title: 'ID', block: true
-  }, {
-    name: 'name', title: '姓名', span: 10
-  }, {
-    name: 'birthday', title: '出生日期', format: 'date'
-  }, {
-    name: 'addTime', title: '添加时间', format: 'datetime'
-  }, {
-    name: 'count', title: '数量', format: 'number'
-  }, {
-    name: 'count2', title: '百分比', format: 'number-percent money-百分比'
-  }, {
-    name: 'count3', title: '万元', format: 'number--10000', render: (value) => `${value}万元`
-  }, {
-    name: 'empty', title: '空值显示'
-  }, {
-    name: 'empty2', title: '空值显示2', placeholder: '空'
-  }, {
-    name: 'empty3', title: '空值显示3', emptyIsPlaceholder: false
-  }, {
-    name: 'description', title: '描述'
-  }, {
-    name: 'description2', title: '描述'
-  }]} />);
+  return (
+    <CentralContent
+      dataSource={{
+        id: "RC00101",
+        name: "张三",
+        birthday: "2020-03-03",
+        addTime: new Date(),
+        count: 2000.1322,
+        count2: 0.01234565,
+        count3: 1234523,
+        description: `描述描述描述描述描述描述描述描述\n描述描述描述描述描述描述描述描述\n描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述`,
+        description2: `描述描述描述描述描述描述描述描述`,
+      }}
+      col={3}
+      columns={[
+        {
+          name: "id",
+          title: "ID",
+          block: true,
+        },
+        {
+          name: "name",
+          title: "姓名",
+          span: 10,
+        },
+        {
+          name: "birthday",
+          title: "出生日期",
+          format: "date",
+        },
+        {
+          name: "addTime",
+          title: "添加时间",
+          format: "datetime",
+        },
+        {
+          name: "count",
+          title: "数量",
+          format: "number",
+        },
+        {
+          name: "count2",
+          title: "百分比",
+          format: "number-percent money-百分比",
+        },
+        {
+          name: "count3",
+          title: "万元",
+          format: "number--10000",
+          render: (value) => `${value}万元`,
+        },
+        {
+          name: "empty",
+          title: "空值显示",
+        },
+        {
+          name: "empty2",
+          title: "空值显示2",
+          placeholder: "空",
+        },
+        {
+          name: "empty3",
+          title: "空值显示3",
+          emptyIsPlaceholder: false,
+        },
+        {
+          name: "description",
+          title: "描述",
+        },
+        {
+          name: "description2",
+          title: "描述",
+        },
+      ]}
+    />
+  );
 };
 
 render(<BaseExample />);
@@ -267,84 +323,127 @@ const { TableView } = _InfoPage;
 const { Flex } = antd;
 const { useState } = React;
 
-const dataSource = [{
-  id: 'RC00101',
-  name: '张三',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00102',
-  name: '李四',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00103',
-  name: '王五',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00104',
-  name: '马七',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}];
+const dataSource = [
+  {
+    id: "RC00101",
+    name: "张三",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00102",
+    name: "李四",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00103",
+    name: "王五",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00104",
+    name: "马七",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+];
 
-const columns = [{
-  name: 'id', title: 'ID'
-}, {
-  name: 'name', title: '姓名'
-}, {
-  name: 'birthday', title: '出生日期', format: 'date'
-}, {
-  name: 'addTime', title: '添加时间', format: 'datetime'
-}, {
-  name: 'count', title: '数量', format: 'number'
-}, {
-  name: 'description', title: '描述', span: 10
-}];
+const columns = [
+  {
+    name: "id",
+    title: "ID",
+  },
+  {
+    name: "name",
+    title: "姓名",
+  },
+  {
+    name: "birthday",
+    title: "出生日期",
+    format: "date",
+  },
+  {
+    name: "addTime",
+    title: "添加时间",
+    format: "datetime",
+  },
+  {
+    name: "count",
+    title: "数量",
+    format: "number",
+  },
+  {
+    name: "description",
+    title: "描述",
+    span: 10,
+  },
+];
 
 const WithCheckbox = () => {
   const [selectKeys, setSelectKeys] = useState([]);
-  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
-    type: 'checkbox', allowSelectedAll: true, selectedRowKeys: selectKeys, onChange: setSelectKeys
-  }} />;
+  return (
+    <TableView
+      dataSource={dataSource}
+      columns={columns}
+      rowSelection={{
+        type: "checkbox",
+        allowSelectedAll: true,
+        selectedRowKeys: selectKeys,
+        onChange: setSelectKeys,
+      }}
+    />
+  );
 };
 
 const WithSelected = () => {
   const [selectKeys, setSelectKeys] = useState([]);
-  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
-    selectedRowKeys: selectKeys, onChange: setSelectKeys
-  }} />;
+  return (
+    <TableView
+      dataSource={dataSource}
+      columns={columns}
+      rowSelection={{
+        selectedRowKeys: selectKeys,
+        onChange: setSelectKeys,
+      }}
+    />
+  );
 };
 
 const BaseExample = () => {
-  return <Flex vertical gap={10}>
-    <TableView dataSource={dataSource} columns={columns} />
-    <WithCheckbox />
-    <WithSelected />
-    <TableView dataSource={[]} columns={columns} />
-    <div style={{
-      height: '200px', overflowY: 'scroll'
-    }}>
-      <TableView dataSource={dataSource} columns={columns} sticky/>
-    </div>
-  </Flex>;
+  return (
+    <Flex vertical gap={10}>
+      <TableView dataSource={dataSource} columns={columns} />
+      <WithCheckbox />
+      <WithSelected />
+      <TableView dataSource={[]} columns={columns} />
+      <div
+        style={{
+          height: "200px",
+          overflowY: "scroll",
+        }}
+      >
+        <TableView dataSource={dataSource} columns={columns} sticky />
+      </div>
+    </Flex>
+  );
 };
 
 render(<BaseExample />);
