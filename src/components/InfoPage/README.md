@@ -4,238 +4,69 @@
 
 ### 概述
 
-### 何时使用
+### *`InfoPage`* 何时使用
 
-一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式
+一般用在复杂的详情展示页面，`InfoPage` 提供了一个标准的展示信息的格式
 
 ### 特点
 
-* 支持Content组件Descriptions组件的组合
-* 支持Collapse组件组合
-* InfoPage.Part 需要放在InfoPage之下，InfoPage.Collapse,Content,Descriptions 需要放在 InfoPage.Part之下
+* 支持 `Content` 组件 `Descriptions` 组件的组合
+* 支持 `Collapse` 组件组合
+* `InfoPage.Part`、`InfoPage.Collapse` 需要放在 `InfoPage` 之下，`Content`、`Descriptions` 可以任意组合
+
+### *`Content`* 何时使用
+
+成组展示多个字段，常见于详情页的信息展示
+
+### 特点
+
+labelAlign 不为 auto 时会自动计算 label 的最小宽度使所有 label 的宽度等于最长的 label 宽度，使视觉上更加整齐有秩序感
+
 
 ### 示例
 
 #### 示例代码
 
-- 这里填写示例标题
+- InfoPage
 - 这里填写示例说明
-- _InfoPage(@components/InfoPage),_Content(@components/Content),_Descriptions(@components/Descriptions),antd(antd)
+- _InfoPage(@components/InfoPage),antd(antd)
 
 ```jsx
 const { default: InfoPage } = _InfoPage;
-const { default: Content } = _Content;
-const { default: Descriptions } = _Descriptions;
-const { Space, Button } = antd;
+const { Button } = antd;
+
 const BaseExample = () => {
   return (
     <InfoPage>
+      InfoPage
       <InfoPage.Part
-        title="退票信息"
-        subTitle="我是一个退票信息"
+        title="Part Title"
+        subtitle="我是一个subtitle"
         extra={<Button>操作</Button>}
       >
-        <Descriptions
-          dataSource={[
-            [
-              { label: "客户名称", content: "腾讯" },
-              {
-                label: "发票抬头",
-                content: "腾讯科技公司",
-              },
-            ],
-            [
-              { label: "发票类型", content: "增值税专用发票" },
-              {
-                label: "发票开具日期",
-                content: "2022-08-15",
-              },
-            ],
-            [{ label: "退票金额", content: "22000.00元" }],
-            [
-              {
-                label: "发票号",
-                content: (
-                  <div>
-                    <div>00384895992774</div>
-                    <div>00384895992774</div>
-                    <div>00384895992774</div>
-                    <div>00384895992774</div>
-                  </div>
-                ),
-              },
-            ],
-            [
-              { label: "是否需要重开发票", content: "否" },
-              {
-                label: "是否涉及金融变动",
-                content: "否",
-              },
-            ],
-            [
-              { label: "是否造成实质损失", content: "否" },
-              { label: "责任归属", content: "客户原因" },
-            ],
-            [
-              {
-                label: "退票原因",
-                content: "退票原因的描述退票原因的描述退票原因的描",
-              },
-            ],
-            [{ label: "附件", content: "附件名称" }],
-            [
-              {
-                label: "操作时间",
-                content: "2022-08-01 16:32",
-              },
-              { label: "操作人", content: "西西歪" },
-            ],
-          ]}
-        />
+        InfoPage.Part
+        <InfoPage.Part
+          title="Part Title"
+          subtitle="我是一个subtitle"
+          extra={<Button>操作</Button>}
+        >
+          InfoPage.InfoPage.Part
+        </InfoPage.Part>
       </InfoPage.Part>
-      <InfoPage.Part title="开票信息">
-        <Space direction="vertical" size={24}>
-          <Descriptions
-            dataSource={[
-              [{ label: "客户名称", content: "腾讯" }],
-              [{ label: "合同", content: "合同3" }],
-            ]}
-          />
-          <InfoPage.Part title="发票费用信息">
-            <Space direction="vertical">
-              <InfoPage.Collapse defaultActiveKey={["0", "1"]}>
-                <InfoPage.Collapse.Panel key="0" header="项目类型1">
-                  <Content
-                    labelAlign="auto"
-                    col={3}
-                    gutter={[0, 12]}
-                    list={[
-                      { label: "项目类型", content: "面试到岗" },
-                      {
-                        label: "费用类型",
-                        content: "服务费",
-                      },
-                      { label: "费用总金额", content: "10,000元" },
-                      {
-                        label: "本次支付费用比例",
-                        content: "30%",
-                      },
-                      { label: "本次支付费用金额", content: "3,000元" },
-                      {
-                        label: "开票候选人",
-                        content: "李小萌",
-                      },
-                    ]}
-                  />
-                </InfoPage.Collapse.Panel>
-                <InfoPage.Collapse.Panel key="1" header="项目类型2">
-                  <Content
-                    labelAlign="auto"
-                    col={3}
-                    gutter={[0, 12]}
-                    list={[
-                      { label: "项目类型", content: "面试到岗" },
-                      {
-                        label: "费用类型",
-                        content: "服务费",
-                      },
-                      { label: "费用总金额", content: "10,000元" },
-                      {
-                        label: "本次支付费用比例",
-                        content: "30%",
-                      },
-                      { label: "本次支付费用金额", content: "3,000元" },
-                      {
-                        label: "开票候选人",
-                        content: "李小萌",
-                      },
-                    ]}
-                  />
-                </InfoPage.Collapse.Panel>
-              </InfoPage.Collapse>
-              <Descriptions
-                dataSource={[
-                  [
-                    { label: "客户付税比例", content: "1%" },
-                    {
-                      label: "客户所付税金",
-                      content: "30元",
-                    },
-                  ],
-                  [
-                    { label: "服务费", content: "2886.29元" },
-                    {
-                      label: "发票增值税",
-                      content: "172.38元",
-                    },
-                  ],
-                  [{ label: "发票金额", content: "22000.00元" }],
-                  [
-                    {
-                      label: "发票备注",
-                      content: "备注的内容备注的内容备注的内容备注的内容",
-                    },
-                  ],
-                ]}
-              />
-            </Space>
-          </InfoPage.Part>
-          <InfoPage.Part title="发票信息">
-            <Descriptions
-              dataSource={[
-                [{ label: "付款信息", content: "ASB54492789374983798" }],
-                [
-                  {
-                    label: "发票收件人",
-                    content: "西西歪",
-                  },
-                ],
-                [{ label: "附件", content: "附件名称" }],
-                [
-                  {
-                    label: "预计入职日期",
-                    content: "2022-08-15",
-                  },
-                ],
-              ]}
-            />
-          </InfoPage.Part>
-          <InfoPage.Part title="业绩分配">
-            <InfoPage.Collapse defaultActiveKey={["0", "1"]}>
-              <InfoPage.Collapse.Panel key="0" header="项目类型1">
-                <Content
-                  labelAlign="auto"
-                  col={3}
-                  gutter={[0, 12]}
-                  list={[
-                    { label: "分配用户", content: "王亚男" },
-                    {
-                      label: "分配比例",
-                      content: "40%",
-                    },
-                    { label: "分配金额", content: "1,200元" },
-                  ]}
-                />
-              </InfoPage.Collapse.Panel>
-              <InfoPage.Collapse.Panel key="1" header="项目类型2">
-                <Content
-                  labelAlign="auto"
-                  col={3}
-                  gutter={[0, 12]}
-                  list={[
-                    { label: "分配用户", content: "王亚男" },
-                    {
-                      label: "分配比例",
-                      content: "40%",
-                    },
-                    { label: "分配金额", content: "1,200元" },
-                  ]}
-                />
-              </InfoPage.Collapse.Panel>
-            </InfoPage.Collapse>
-          </InfoPage.Part>
-        </Space>
-      </InfoPage.Part>
+      <InfoPage.Collapse
+        items={[
+          {
+            key: "1",
+            label: "This is default size panel header",
+            children: <p>InfoPage.Collapse</p>,
+          },
+          {
+            key: "2",
+            label: "This is default size panel header2",
+            children: <p>InfoPage.Collapse2</p>,
+          },
+        ]}
+      />
     </InfoPage>
   );
 };
@@ -244,16 +75,165 @@ render(<BaseExample />);
 
 ```
 
-- TableView
-- 请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。
-- _InfoPage(@components/InfoPage)
+- Content
+- 展示了一个基本内容
+- _InfoPage(@components/InfoPage),antd(antd)
 
 ```jsx
-const { TableView } = _InfoPage;
+const { Content } = _InfoPage;
+const { Space, Radio } = antd;
+const { useState } = React;
+
+const BaseExample = () => {
+  const [listProps, setListProps] = useState({
+    col: 1,
+    size: "default",
+    labelAlign: "left",
+  });
+  const onChange = (e, name) => {
+    const val = e?.target.value;
+    setListProps((prevState) => Object.assign({}, prevState, { [name]: val }));
+  };
+
+  return (
+    <Space direction="vertical" size={12}>
+      <Radio.Group onChange={(e) => onChange(e, "col")} value={listProps.col}>
+        <Radio.Button value={1}>1列</Radio.Button>
+        <Radio.Button value={2}>2列</Radio.Button>
+        <Radio.Button value={3}>3列</Radio.Button>
+      </Radio.Group>
+      <Radio.Group
+        onChange={(e) => onChange(e, "labelAlign")}
+        value={listProps.labelAlign}
+      >
+        <Radio.Button value="left">左对齐</Radio.Button>
+        <Radio.Button value="center">中心对齐</Radio.Button>
+        <Radio.Button value="right">右对齐</Radio.Button>
+        <Radio.Button value="auto">自适应</Radio.Button>
+      </Radio.Group>
+      <Radio.Group onChange={(e) => onChange(e, "size")} value={listProps.size}>
+        <Radio.Button value="default">默认</Radio.Button>
+        <Radio.Button value="small">small</Radio.Button>
+      </Radio.Group>
+      <Content
+        {...listProps}
+        list={[
+          { label: "标题", content: "内容" },
+          { label: "标题标题", content: "内容内容" },
+          {
+            label: "标题标",
+            content: "内容内容内容内容内容内容内容内容内容内容",
+          },
+          {
+            label: "标题标题标题",
+            content:
+              "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+          },
+        ]}
+        itemRender={(inner, other) => {
+          return other?.index === 2 ? "此处内容额外自定义" : inner;
+        }}
+      />
+    </Space>
+  );
+};
+
+render(<BaseExample />);
+
+```
+
+- Descriptions
+- 展示一个信息详情
+- _InfoPage(@components/InfoPage),antd(antd)
+
+```jsx
+const { Descriptions } = _InfoPage;
 
 const BaseExample = () => {
   return (
-    <TableView
+    <Descriptions
+      dataSource={[
+        [
+          { label: "客户名称", content: "腾讯" },
+          {
+            label: "发票抬头",
+            content: "腾讯科技公司",
+          },
+        ],
+        [
+          { label: "发票类型", content: "增值税专用发票" },
+          {
+            label: "发票开具日期",
+            content: "2022-08-15",
+          },
+        ],
+        [{ label: "退票金额", content: "22000.00元" }],
+        [
+          {
+            label: "发票号",
+            content: (
+              <div>
+                <div>00384895992774</div>
+                <div>00384895992774</div>
+                <div>00384895992774</div>
+                <div>00384895992774</div>
+              </div>
+            ),
+          },
+        ],
+        [
+          { label: "是否需要重开发票", content: "否" },
+          {
+            label: "是否涉及金融变动",
+            content: "否",
+          },
+        ],
+        [
+          { label: "是否造成实质损失", content: "否" },
+          { label: "责任归属", content: "客户原因" },
+        ],
+        [
+          {
+            label: "退票原因",
+            content: "退票原因的描述退票原因的描述退票原因的描",
+          },
+        ],
+        [{ label: "附件", content: "附件名称" }],
+        [
+          { label: "操作时间", content: "2022-08-01 16:32" },
+          { label: "操作人", content: "西西歪", display: false },
+        ],
+        [
+          {
+            label: "超长内容",
+            content:
+              "超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容",
+          },
+          {
+            label: "超长英文",
+            content:
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          },
+        ],
+      ]}
+    />
+  );
+};
+
+render(<BaseExample />);
+
+```
+
+- CentralContent
+- 请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。
+- _InfoPage(@components/InfoPage),antd(antd)
+
+```jsx
+const { CentralContent } = _InfoPage;
+
+const BaseExample = () => {
+  return (
+    <CentralContent
       dataSource={{
         id: "RC00101",
         name: "张三",
@@ -325,12 +305,144 @@ const BaseExample = () => {
           name: "description2",
           title: "描述",
         },
-        {
-          name: "end",
-          title: "尾行优化",
-        },
       ]}
     />
+  );
+};
+
+render(<BaseExample />);
+
+```
+
+- TableView
+- 
+- _InfoPage(@components/InfoPage),antd(antd)
+
+```jsx
+const { TableView } = _InfoPage;
+const { Flex } = antd;
+const { useState } = React;
+
+const dataSource = [
+  {
+    id: "RC00101",
+    name: "张三",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00102",
+    name: "李四",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00103",
+    name: "王五",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+  {
+    id: "RC00104",
+    name: "马七",
+    birthday: "2020-03-03",
+    addTime: new Date(),
+    count: 2000.1322,
+    count2: 0.01234565,
+    count3: 1234523,
+    description: `描述描述描述描述描述描述描述描述`,
+  },
+];
+
+const columns = [
+  {
+    name: "id",
+    title: "ID",
+  },
+  {
+    name: "name",
+    title: "姓名",
+  },
+  {
+    name: "birthday",
+    title: "出生日期",
+    format: "date",
+  },
+  {
+    name: "addTime",
+    title: "添加时间",
+    format: "datetime",
+  },
+  {
+    name: "count",
+    title: "数量",
+    format: "number",
+  },
+  {
+    name: "description",
+    title: "描述",
+    span: 10,
+  },
+];
+
+const WithCheckbox = () => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  return (
+    <TableView
+      dataSource={dataSource}
+      columns={columns}
+      rowSelection={{
+        type: "checkbox",
+        allowSelectedAll: true,
+        selectedRowKeys: selectKeys,
+        onChange: setSelectKeys,
+      }}
+    />
+  );
+};
+
+const WithSelected = () => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  return (
+    <TableView
+      dataSource={dataSource}
+      columns={columns}
+      rowSelection={{
+        selectedRowKeys: selectKeys,
+        onChange: setSelectKeys,
+      }}
+    />
+  );
+};
+
+const BaseExample = () => {
+  return (
+    <Flex vertical gap={10}>
+      <TableView dataSource={dataSource} columns={columns} />
+      <WithCheckbox />
+      <WithSelected />
+      <TableView dataSource={[]} columns={columns} />
+      <div
+        style={{
+          height: "200px",
+          overflowY: "scroll",
+        }}
+      >
+        <TableView dataSource={dataSource} columns={columns} sticky />
+      </div>
+    </Flex>
   );
 };
 
@@ -341,20 +453,71 @@ render(<BaseExample />);
 
 ### API
 
-| 属性名      | 说明 | 类型  | 默认值 |
-|----------|----|-----|-----|
-| children | 内容 | jsx | -   |
+### InfoPage
 
-### InfoPage.Part
+同 [`Ant Design Card`](https://ant.design/components/Card#api)
 
-| 属性名      | 说明   | 类型  | 默认值 |
-|----------|------|-----|-----|
-| title    | 标题   | jsx | -   |
-| extra    | 额外内容 | jsx | -   |
-| children | 内容   | jsx | -   |
+新增参数：
 
-### InfoPage.Collapse
+| 属性名       | 说明                       | 类型        | 默认值 |
+|-----------|--------------------------|-----------|-----|
+| subtitle  | 副标题                      | ReactNode | -   |
+| className | `InfoPage` 的 `className` | string    | -   |
 
-| 属性名      | 说明 | 类型  | 默认值 |
-|----------|----|-----|-----|
-| children | 内容 | jsx | -   |
+#### InfoPage.Part
+
+同 [`Ant Design Card`](https://ant.design/components/Card#api)
+
+新增参数：
+
+| 属性名       | 说明                   | 类型        | 默认值 |
+|-----------|----------------------|-----------|-----|
+| subtitle  | 副标题                  | ReactNode | -   |
+| className | `Part` 的 `className` | string    | -   |
+
+#### InfoPage.Collapse
+
+同 [`Ant Design Collapse`](https://ant.design/components/Collapse#collapse)
+
+新增参数：
+
+| 属性名       | 说明                   | 类型     | 默认值 |
+|-----------|----------------------|--------|-----|
+| className | `Part` 的 `className` | string | -   |
+
+### Content
+
+| 属性名        | 说明                                                                                  | 类型                | 默认值  |
+|------------|-------------------------------------------------------------------------------------|-------------------|------|
+| list       | `Content` 的内容列表                                                                     | `listItemProps[]` | []   |
+| labelAlign | `label` 的对齐方式可以传入的值 `left,right,center,auto`,为 `auto` 时 `label` 不计算最小宽度             | string            | left |
+| col        | 列数                                                                                  | number            | 1    |
+| size       | 默认为 `14px`，可以传值为 `small`，`size` 为 `small` 时字号为 `12px`                               | string            | -    |
+| gutter     | 栅格间隔，可以写成像素值或支持响应式的对象写法来设置水平间隔 `{ xs: 8, sm: 16, md: 24}`。或者使用数组形式同时设置 [水平间距, 垂直间距] | number            | 0    |
+| className  | `Content` 的 `className`                                                             | string            | -    |
+| itemRender | 接收 `Content Inner` 和 `Inner` 的 `label, content, index`，可以根据数据信息返回想要渲染的内容            | function          | -    |
+
+#### listItemProps
+
+| 属性名     | 说明                                                                                            | 类型                  | 默认值  |
+|---------|-----------------------------------------------------------------------------------------------|---------------------|------|
+| display | 数据是否展示，当为 `function` 时可以接收到 `item, list` 参数，`item` 为当前项配置，`dataSource` 为整个组件的 `dataSource` 配置 | boolean \| function | true |
+| block   | 是否单行显示该条信息                                                                                    | ReactNode \| string | -    |
+| label   | 标题                                                                                            | ReactNode \| string | -    |
+| content | 内容                                                                                            | ReactNode \| string | -    |
+
+### Descriptions
+
+| 属性名        | 说明                                                                                      | 类型                      | 默认值 |
+|------------|-----------------------------------------------------------------------------------------|-------------------------|-----|
+| dataSource | 详情数据源，内部每个数组为一行数据，每行数据中每个对象为一列数据，每行最多包含 `2` 列内容，多余的会被丢弃                                 | `dataSourceItemProps[]` | -   |
+| itemRender | 接收 `Descriptions Inner` 和 `Inner` 的 `label, content, displaty, index`，可以根据数据信息返回想要渲染的内容 | function                | -   |
+
+#### dataSourceItemProps
+
+| 属性名     | 说明                                                                                                  | 类型                  | 默认值  |
+|---------|-----------------------------------------------------------------------------------------------------|---------------------|------|
+| display | 数据是否展示，当为 `function` 时可以接收到 `item, dataSource` 参数，`item` 为当前项配置，`dataSource` 为整个组件的 `dataSource` 配置 | boolean \| function | true |
+| label   | 数据展示的标题                                                                                             | ReactNode \| string | -    |
+| content | 数据展示的内容                                                                                             | ReactNode \| string | -    |
+

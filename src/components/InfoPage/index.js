@@ -1,3 +1,4 @@
 import "@kne/info-page/dist/index.css";
 
-export { default, TableView, Content } from "@kne/info-page";
+export { default } from "@kne/info-page";
+export * from "@kne/info-page";
