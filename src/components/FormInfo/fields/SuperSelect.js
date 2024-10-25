@@ -3,6 +3,7 @@ import {
   SuperSelectField,
   SuperSelectTableListField,
 } from "@components/Common";
+import { SuperSelectUserField } from "../../../common/components/SuperSelectField";
 
 const { useOnChange } = hooks;
 
@@ -19,5 +20,6 @@ const createdField = (WrappedComponent) => {
   return List;
 };
 const SuperSelect = createdField(SuperSelectField);
+export const SuperSelectUser = createdField(SuperSelectUserField);
 export const SuperSelectTableList = createdField(SuperSelectTableListField);
 export default SuperSelect;

@@ -33,6 +33,7 @@ export {
 export {
   default as SuperSelectField,
   SuperSelectTableListField,
+  SuperSelectUserField,
 } from "@common/components/SuperSelectField";
 
 export {

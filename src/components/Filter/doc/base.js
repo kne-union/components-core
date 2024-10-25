@@ -7,6 +7,7 @@ const {
   CityFilterItem,
   AdvancedSelectFilterItem,
   SuperSelectFilterItem,
+  SuperSelectUserFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
@@ -78,7 +79,7 @@ const BaseExample = () => {
               },
             ]}
           />,
-          <UserFilterItem
+          <SuperSelectUserFilterItem
             label="用户选择"
             name="user"
             api={{
