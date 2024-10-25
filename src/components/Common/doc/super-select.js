@@ -1,10 +1,11 @@
-const { SuperSelectField, SuperSelectTableListField } = _Common;
+const { SuperSelectField, SuperSelectTableListField, SuperSelectUserField } =
+  _Common;
 const { Space } = antd;
 
 const BaseExample = () => {
   return (
     <Space>
-      <SuperSelectField
+      <SuperSelectUserField
         getSearchProps={(text) => {
           return {
             data: { keyword: text },

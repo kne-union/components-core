@@ -38,7 +38,9 @@ const FetchButton = ({ api, modalProps, modalFunc, onError, ...props }) => {
       {...props}
       loading={isLoading}
       onClick={() => {
-        refresh();
+        refresh({
+          onSuccess: () => {},
+        });
       }}
     />
   );

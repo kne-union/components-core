@@ -25,6 +25,8 @@ export {
   CityFilterItem,
   AdvancedSelectFilterItem,
   SuperSelectFilterItem,
+  SuperSelectTableListFilterItem,
+  SuperSelectUserFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,

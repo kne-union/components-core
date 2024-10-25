@@ -4,6 +4,7 @@ import SuperSelect, {
   SelectTableList,
 } from "@kne/super-select";
 import Modal from "@components/Modal";
+import Image from "@components/Image";
 import { Flex } from "antd";
 import "@kne/super-select/dist/index.css";
 
@@ -81,4 +82,33 @@ export const SuperSelectTableListField = forwardRef((p, ref) => {
     p
   );
   return <SelectTableList {...props} ref={ref} />;
+});
+
+export const SuperSelectUserField = forwardRef((p, ref) => {
+  return (
+    <SuperSelectField
+      {...p}
+      ref={ref}
+      renderItemContent={({ item, props }) => {
+        const { labelKey } = props;
+        return (
+          <Flex gap={8}>
+            <Image.Avatar
+              {...Object.assign({}, item.avatar)}
+              size={40}
+              gender="M"
+            />
+            <div>
+              <div className={"select-list-item-label"}>{item[labelKey]}</div>
+              {item.description && (
+                <div className={"select-list-item-description"}>
+                  {item.description}
+                </div>
+              )}
+            </div>
+          </Flex>
+        );
+      }}
+    />
+  );
 });

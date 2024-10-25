@@ -15,6 +15,7 @@ import {
 import AdvancedSelectField from "./AdvancedSelect";
 import SuperSelectField, {
   SuperSelectTableList as SuperSelectTableListField,
+  SuperSelectUser as SuperSelectUserField,
 } from "./SuperSelect";
 import AddressSelect, { AddressInput } from "./AddressSelect";
 import Cascader from "./Cascader";
@@ -308,6 +309,10 @@ const fields = {
     withLang,
     withSelectDefaultPlaceholder,
   ])(SuperSelectTableListField),
+  SuperSelectUser: createWithFieldDecorator([
+    withLang,
+    withSelectDefaultPlaceholder,
+  ])(SuperSelectUserField),
 };
 
 export default fields;
