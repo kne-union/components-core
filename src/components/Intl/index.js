@@ -102,3 +102,5 @@ export const createWithIntl =
     ));
 
 export default FormattedMessage;
+
+export { default as createWithLocale } from "./createWithLocale";
