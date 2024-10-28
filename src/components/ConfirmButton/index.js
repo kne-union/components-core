@@ -1,127 +1,31 @@
-import React from "react";
-import { Button, Popconfirm, Space, Typography } from "antd";
 import importMessages from "./locale";
-import Icon from "@components/Icon";
-import { createWithIntl, useIntl } from "@components/Intl";
-import { useConfirmModal } from "@components/Modal";
-import classnames from "classnames";
-import style from "./style.module.scss";
+import { createWithLocale } from "../Intl";
+import "@kne/button-group/dist/index.css";
+import {
+  ConfirmButton as ConfirmButtonComponent,
+  ConfirmLink as ConfirmLinkComponent,
+  ConfirmText as ConfirmTextComponent,
+  withConfirm as withConfirmComponent,
+} from "@kne/button-group";
+import compose from "@kne/compose";
 
-export const withConfirm = (WrappedComponent) => {
-  const ConfirmComponent = createWithIntl({
+export const ConfirmButton = createWithLocale({
+  moduleName: "ConfirmButton",
+  importMessages,
+})(ConfirmButtonComponent);
+export const ConfirmLink = createWithLocale({
+  moduleName: "ConfirmButton",
+  importMessages,
+})(ConfirmLinkComponent);
+export const ConfirmText = createWithLocale({
+  moduleName: "ConfirmButton",
+  importMessages,
+})(ConfirmTextComponent);
+export const withConfirm = compose(
+  createWithLocale({
     moduleName: "ConfirmButton",
     importMessages,
-  })(
-    ({
-      title,
-      message,
-      isDelete = true,
-      onClick,
-      onCancel,
-      disabled,
-      showCancel,
-      cancelText,
-      isModal,
-      okText,
-      placement,
-      getContainer,
-      ...props
-    }) => {
-      const { formatMessage } = useIntl({ moduleName: "ConfirmButton" });
-      const modal = useConfirmModal();
-      if (isModal) {
-        return (
-          <WrappedComponent
-            {...props}
-            disabled={disabled}
-            onClick={(e) => {
-              modal({
-                type: "confirm",
-                title: title,
-                getContainer,
-                danger: isDelete,
-                confirmType: isDelete ? "warning" : "info",
-                message: message || formatMessage({ id: "message" }),
-                okText: okText
-                  ? okText
-                  : isDelete
-                  ? formatMessage({ id: "delete" })
-                  : formatMessage({ id: "confirm" }),
-                cancelText: cancelText || formatMessage({ id: "cancel" }),
-                onCancel,
-                onOk: onClick,
-              });
-            }}
-          />
-        );
-      }
-      return (
-        <Popconfirm
-          title={
-            <Space
-              direction="vertical"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              {title && (
-                <Space size={0} align="start" className={style["title"]}>
-                  {isDelete && (
-                    <Icon className="title-icon" type="icon-tishi-tianchong" />
-                  )}
-                  {title}
-                </Space>
-              )}
-              <Space
-                size={0}
-                align="start"
-                className={classnames(style["content"], {
-                  [style["has-title"]]: title,
-                })}
-              >
-                {!title && isDelete ? (
-                  <Icon className="title-icon" type="icon-tishi-tianchong" />
-                ) : null}
-                {message || formatMessage({ id: "message" })}
-              </Space>
-            </Space>
-          }
-          placement={placement}
-          onConfirm={onClick}
-          okButtonProps={{
-            danger: isDelete,
-          }}
-          onCancel={onCancel}
-          overlayClassName={classnames(style["overlay"], {
-            [style["is-danger"]]: isDelete,
-          })}
-          getPopupContainer={getContainer}
-          disabled={disabled}
-          showCancel={showCancel}
-          cancelText={cancelText}
-          okText={
-            okText
-              ? okText
-              : isDelete
-              ? formatMessage({ id: "delete" })
-              : formatMessage({ id: "confirm" })
-          }
-        >
-          <WrappedComponent {...props} disabled={disabled} />
-        </Popconfirm>
-      );
-    }
-  );
-
-  ConfirmComponent.defaultProps = {
-    isModal: false,
-    showCancel: true,
-  };
-
-  return ConfirmComponent;
-};
-
-export const ConfirmLink = withConfirm(Typography.Link);
-export const ConfirmText = withConfirm(Typography.Text);
-
-export default withConfirm(Button);
+  }),
+  withConfirmComponent
+);
+export default ConfirmButton;
