@@ -49,6 +49,11 @@
   --color-warning: #d14343; // 警告色
   --color-success: #00b42a; //成功色
 
+  --state-success-color: var($success-color);
+  --state-info-color: var($info-color);
+  --state-error-color: var($error-color);
+  --state-warning-color: var($warning-color);
+
   //--primary-color: #5cb8b2;
 
   --tag-default: "#666666";
