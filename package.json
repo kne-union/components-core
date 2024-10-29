@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.2.60",
+  "version": "0.2.61",
   "files": [
     "build"
   ],
@@ -30,13 +30,13 @@
     "@kne/flex-box": "^0.1.1",
     "@kne/global-context": "^1.1.1",
     "@kne/global-preset": "^0.1.3",
-    "@kne/info-page": "^0.1.10",
+    "@kne/info-page": "^0.1.11",
     "@kne/react-fetch": "^1.4.2",
     "@kne/react-file-type": "^1.0.5",
     "@kne/react-form-antd": "^3.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
-    "@kne/super-select": "^0.1.12",
+    "@kne/super-select": "^0.1.13",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
