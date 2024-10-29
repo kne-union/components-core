@@ -75,6 +75,21 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "Flow",
+      "description": "",
+      "code": "./flow.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@components/InfoPage"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
