@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.2.61",
+  "version": "0.2.62",
   "files": [
     "build"
   ],
@@ -36,7 +36,7 @@
     "@kne/react-form-antd": "^3.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
-    "@kne/super-select": "^0.1.13",
+    "@kne/super-select": "^0.1.14",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
