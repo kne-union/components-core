@@ -112,7 +112,7 @@
     box-shadow: none;
     min-width: 68px;
     outline: none;
-
+    gap: 4px;
     &:global(.ant-btn-link) {
       min-width: unset;
     }
@@ -169,10 +169,6 @@
           background: var(--bg-color-grey-2);
         }
       }
-    }
-
-    :global(.iconfont) {
-      margin-right: 4px;
     }
 
     &:global(.ant-btn-lg) {
@@ -232,10 +228,6 @@
 
   :global(.ant-typography) {
     line-height: unset;
-
-    :global(.iconfont):first-child {
-      margin-right: 4px;
-    }
 
     &:global(.ant-btn) {
       padding: 0;
