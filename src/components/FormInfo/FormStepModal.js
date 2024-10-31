@@ -97,7 +97,6 @@ const computedCommonProps = ({
                   typeof formProps === "function"
                     ? formProps(props)
                     : formProps;
-
                 return render(
                   Object.assign({}, props, otherProps, {
                     currentIndex,
@@ -118,19 +117,16 @@ const computedCommonProps = ({
                           onSubmit &&
                           (await onSubmit(
                             data,
-                            Object.assign(
-                              {},
-                              {
-                                currentIndex,
-                                isLastStep,
-                                setCurrentIndex,
-                                currentProps,
-                                stepCacheRef,
-                              }
-                            ),
+                            Object.assign({}, props, {
+                              currentIndex,
+                              isLastStep,
+                              setCurrentIndex,
+                              currentProps,
+                              stepCacheRef,
+                            }),
                             ...args
                           ));
-                        if (!isLastStep && res !== false) {
+                        if (others.autoClose && !isLastStep && res !== false) {
                           setCurrentIndex((currentIndex) => currentIndex + 1);
                         }
                         if (!isLastStep) {
