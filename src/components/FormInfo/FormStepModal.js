@@ -103,6 +103,7 @@ const computedCommonProps = ({
                     currentIndex,
                     isLastStep,
                     setCurrentIndex,
+                    stepCacheRef,
                     stepSection: (
                       <Steps
                         className={style["form-step-section"]}
