@@ -56,8 +56,10 @@ const computedCommonProps = ({
         return (
           <Form
             {..._formProps}
-            onSubmit={async (...args) => {
-              const res = onSubmit && (await onSubmit(...args));
+            onSubmit={async (data, ...args) => {
+              const res =
+                onSubmit &&
+                (await onSubmit(data, Object.assign({}, props), ...args));
               if (res !== false) {
                 autoClose && props.close();
               }
