@@ -97,6 +97,13 @@ const computedCommonProps = ({
                   typeof formProps === "function"
                     ? formProps(props)
                     : formProps;
+
+                const formData = Object.assign(
+                  {},
+                  _formProps.data,
+                  stepCacheRef.current[currentIndex]?.data
+                );
+
                 return render(
                   Object.assign({}, props, otherProps, {
                     currentIndex,
@@ -111,6 +118,8 @@ const computedCommonProps = ({
                       />
                     ),
                     formProps: Object.assign({}, _formProps, {
+                      key: currentIndex,
+                      data: formData,
                       onSubmit: async (data, ...args) => {
                         stepCacheRef.current[currentIndex] = { data };
                         const res =
