@@ -180,9 +180,21 @@ const BaseExample = () => {
                 },
                 children: "编辑",
                 disabled: true,
+                tooltipProps: {
+                  title: "不能编辑这条信息",
+                },
               },
               {
                 children: "审核",
+                tooltipProps: {
+                  title: (
+                    <div
+                      style={{ padding: "10px", backgroundColor: "skyblue" }}
+                    >
+                      审核操作的tooltip
+                    </div>
+                  ),
+                },
               },
               {
                 onClick: () => {
