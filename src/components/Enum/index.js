@@ -1,8 +1,5 @@
-import { useRef } from "react";
-import { withFetch } from "@kne/react-fetch";
-import { useGlobalContext, usePreset } from "@components/Global";
-import memoize from "lodash/memoize";
-import isNil from "lodash/isNil";
+import { preset } from "@kne/react-enum";
+import transform from "lodash/transform";
 
 const baseLoaders = [
   [
@@ -122,113 +119,14 @@ const baseLoaders = [
   ],
 ];
 
-const EnumLoaderFetch = withFetch(({ data, children }) => {
-  return typeof children === "function"
-    ? children(data)
-    : children || data?.description;
+preset({
+  base: transform(
+    baseLoaders,
+    (result, value) => {
+      result[value[0]] = value[1];
+    },
+    {}
+  ),
 });
 
-const getEnumsMap = memoize((enums) => {
-  return new Map(
-    baseLoaders.concat(
-      Object.keys(Object.assign({}, enums)).map((key) => [key, enums[key]])
-    )
-  );
-});
-
-const EnumLoader = ({ loader: enumsLoader, ...props }) => {
-  const {
-    global: { enumsRef },
-  } = useGlobalContext();
-  const prevLocaleRef = useRef(null);
-  return (
-    <EnumLoaderFetch
-      {...props}
-      loader={async (...args) => {
-        const enums = getEnumsMap(await enumsLoader(...args));
-        const { params } = args[0];
-        const { moduleName, name, force, locale } = params;
-
-        const getEnumMap = async (moduleName) => {
-          return (
-            (() => {
-              return (
-                force !== true &&
-                prevLocaleRef.current === locale &&
-                enumsRef.current.get(moduleName)
-              );
-            })() ||
-            (await (async () => {
-              const loader = enums.get(moduleName);
-              const output = await (async () => {
-                if (typeof loader === "function") {
-                  return new Map(
-                    (await loader({ locale })).map((item) => {
-                      return [item.value.toString(), item];
-                    })
-                  );
-                }
-                if (Array.isArray(loader)) {
-                  return new Map(
-                    loader.map((item) => [item.value.toString(), item])
-                  );
-                }
-                if (typeof loader === "object") {
-                  return new Map(
-                    Object.keys(loader).map((key) => [
-                      key.toString(),
-                      loader[key],
-                    ])
-                  );
-                }
-                console.warn("枚举值loader的设置可能不正确");
-                return new Map();
-              })();
-              enumsRef.current.set(moduleName, output);
-              prevLocaleRef.current = locale;
-              return output;
-            })())
-          );
-        };
-        if (Array.isArray(moduleName)) {
-          return await Promise.all(
-            moduleName.map((target) =>
-              getEnumMap(target).then((enumMap) => Array.from(enumMap.values()))
-            )
-          );
-        }
-
-        const enumMap = await getEnumMap(moduleName);
-        if (!isNil(name)) {
-          return enumMap.get(name.toString());
-        }
-        return Array.from(enumMap.values());
-      }}
-    />
-  );
-};
-
-const Enum = ({ moduleName, name, force, children, ...props }) => {
-  const preset = usePreset();
-  return (
-    <EnumLoader
-      {...props}
-      params={{
-        moduleName,
-        locale: preset?.locale,
-        enums: preset?.enums,
-        name,
-        force,
-      }}
-      loader={({ params }) => params.enums}
-    >
-      {children}
-    </EnumLoader>
-  );
-};
-
-Enum.defaultProps = {
-  force: false,
-};
-
-export default Enum;
+export { default } from "@kne/react-enum";

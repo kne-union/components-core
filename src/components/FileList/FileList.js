@@ -6,14 +6,14 @@ import DragArea, { DragAreaOuter, DragButton, UploadButton } from "./DragArea";
 import { List } from "@components/File";
 import FilePreview from "@components/FilePreview";
 import { useIntl, FormattedMessage, IntlProvider } from "@components/Intl";
-import { useFileUpload } from "@common/hocs/withInputFile";
+import { useFileUpload } from "@kne/react-file";
 import { usePreset } from "@components/Global";
 import importMessages from "./locale";
 import style from "./style.module.scss";
 
 const FileListInner = ({
   maxLength,
-  list: previewList,
+  list: _previewList,
   setList,
   defaultTab,
   defaultPreviewFileId,
@@ -26,6 +26,11 @@ const FileListInner = ({
 }) => {
   const { apis: baseApis } = usePreset();
   const apis = Object.assign({}, baseApis, currentApis);
+
+  const previewList = (_previewList || []).map((item) => {
+    return Object.assign({}, { id: item.ossId }, item);
+  });
+
   const { fileList: uploadingList, onFileSelected } = useFileUpload({
     maxLength,
     multiple: true,
@@ -35,8 +40,12 @@ const FileListInner = ({
     onAdd: () => {
       setCurrentTab("list");
     },
-    onSave: apis.onSave,
-    ossUpload: apis.ossUpload,
+    onSave: (...args) => {
+      return apis.onSave(...args).then((res) => {
+        return Object.assign({}, { id: res.ossId }, res);
+      });
+    },
+    onUpload: apis.ossUpload,
   });
   const [currentTab, setCurrentTab] = useState(defaultTab);
   const { formatMessage } = useIntl({ moduleName: "FileList" });
@@ -44,29 +53,29 @@ const FileListInner = ({
   const previewMap = useMemo(() => {
     return new Map(
       previewList.map((item) => {
-        return [item.ossId, item];
+        return [item.id, item];
       })
     );
   }, [previewList]);
   const [currentPreviewFileId, setCurrentPreviewFileId] = useState(
-    defaultPreviewFileId || get(previewList, "[0].ossId", null)
+    defaultPreviewFileId || get(previewList, "[0].id", null)
   );
   useEffect(() => {
     if (currentPreviewFileId && previewMap.get(currentPreviewFileId)) {
       return;
     }
-    setCurrentPreviewFileId(get(previewList, "[0].ossId", null));
+    setCurrentPreviewFileId(get(previewList, "[0].id", null));
   }, [previewList, previewMap, currentPreviewFileId]);
   const itemApis = {
     onPreview: (item) => {
-      setCurrentPreviewFileId(item.ossId);
+      setCurrentPreviewFileId(item.id);
       setCurrentTab("preview");
     },
     onDelete: async (item) => {
       apis.onDelete && (await apis.onDelete(item));
       setList((list) => {
         const newList = list.slice(0);
-        const index = list.findIndex(({ ossId }) => ossId === item.ossId);
+        const index = list.findIndex(({ id }) => id === item.id);
         index > -1 && newList.splice(index, 1);
         return newList;
       });
@@ -78,7 +87,7 @@ const FileListInner = ({
       apis.onEdit && (await apis.onEdit({ formData, item }));
       setList((list) => {
         const newList = list.slice(0);
-        const index = list.findIndex(({ ossId }) => ossId === item.ossId);
+        const index = list.findIndex(({ id }) => id === item.id);
         index > -1 &&
           newList.splice(
             index,
@@ -137,7 +146,7 @@ const FileListInner = ({
     >
       {currentTab === "list" ? (
         <List
-          dataSource={[...uploadingList, ...previewList]}
+          dataSource={[...previewList, ...uploadingList]}
           getPermission={getPermission}
           apis={itemApis}
         />

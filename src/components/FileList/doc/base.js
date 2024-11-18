@@ -24,29 +24,31 @@ const ajax = {
 const apis = {
   onSave: async ({ data }) => {
     return {
-      ossId: uniqueId(),
+      ossId: uniqueId("oss_"),
       filename: data.originalName,
       date: new Date(),
       userName: "哈哈哈",
     };
   },
-  onDelete: () => {},
+  onDelete: (item) => {},
 };
 
 const preset = {
   apis: {
-    oss: {
-      loader: async ({ params }) => {
-        const mapping = {
-          "01": "/avatar.png",
-          "02": "/mock/demo.html",
-          "03": "/mock/1_王晶简历-2023_06_2.pdf",
-        };
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(getPublicPath("components-core") + mapping["03"]);
-          }, 1000);
-        });
+    file: {
+      getUrl: {
+        loader: async ({ params }) => {
+          const mapping = {
+            "01": "/avatar.png",
+            "02": "/mock/demo.html",
+            "03": "/mock/1_王晶简历-2023_06_2.pdf",
+          };
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(getPublicPath("components-core") + mapping["03"]);
+            }, 100);
+          });
+        },
       },
     },
     previewOffice: {
@@ -65,7 +67,7 @@ const preset = {
                 },
               ],
             });
-          }, 1000);
+          }, 0);
         });
       },
     },
@@ -81,19 +83,18 @@ const BaseExample = createWithRemoteLoader({
   const [PureGlobal] = remoteModules;
   const [list, setList] = useState([
     {
-      ossId: "uBFNeYQBnHRXlZaTGZpA",
+      id: "1",
       filename: "avatar.pdf",
     },
     {
-      ossId: "gWw26Y0BeK_D6zxND5vh",
+      id: "2",
       filename: "测试开发_夏永昱_本科_5年.docx",
     },
   ]);
-  console.log(list);
   return (
     <PureGlobal preset={preset}>
       <FileList
-        defaultPreviewFileId="gWw26Y0BeK_D6zxND5vh"
+        defaultPreviewFileId="1"
         list={list}
         setList={setList}
         apis={apis}

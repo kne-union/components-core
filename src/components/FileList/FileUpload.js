@@ -1,7 +1,7 @@
 import { Space, Divider, Row, Col } from "antd";
 import DragArea, { DragAreaOuter, DragButton, UploadButton } from "./DragArea";
 import { List } from "@components/File";
-import { useFileUpload } from "@common/hocs/withInputFile";
+import { useFileUpload } from "@kne/react-file";
 import { usePreset } from "@components/Global";
 import useControlValue from "@kne/use-control-value";
 
@@ -26,8 +26,12 @@ const FileUpload = ({
     value: previewList,
     onChange: setList,
     concurrentCount: 1,
-    onSave: apis.onSave,
-    ossUpload: apis.ossUpload,
+    onSave: (...args) => {
+      return apis.onSave(...args).then((res) => {
+        return Object.assign({}, { id: res.ossId }, res);
+      });
+    },
+    onUpload: apis.ossUpload,
   });
   return (
     <DragAreaOuter

@@ -31,16 +31,18 @@ render(
   <PureGlobal
     preset={{
       apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(getPublicPath("components-core") + "/avatar.png");
-              }, 1000);
-            });
-          },
-        },
+        file:{
+          getUrl:{
+            loader: async ({ params }) => {
+              console.log(params);
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(getPublicPath("components-core") + "/avatar.png");
+                }, 1000);
+              });
+            }
+          }
+        }
       },
     }}
   >
@@ -55,43 +57,41 @@ render(
 - _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { Download } = _File;
-const { PureGlobal } = global;
-const { getPublicPath } = remoteLoader;
+const {Download} = _File;
+const {PureGlobal} = global;
+const {getPublicPath} = remoteLoader;
 const BaseExample = () => {
-  return (
-    <Download
-      id="123"
-      filename="下载的文件"
-      onSuccess={() => {
-        console.log("下载成功");
-      }}
+    return (<Download
+        id="123"
+        filename="下载的文件"
+        onSuccess={() => {
+            console.log("下载成功");
+        }}
     >
-      文件下载
-    </Download>
-  );
+        文件下载
+    </Download>);
 };
 
-render(
-  <PureGlobal
+render(<PureGlobal
     preset={{
-      apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(getPublicPath("components-core") + "/avatar.png");
-              }, 1000);
-            });
-          },
+        apis: {
+            file: {
+                getUrl: {
+                    loader: async ({params}) => {
+                        console.log(params);
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                resolve(getPublicPath("components-core") + "/avatar.png");
+                            }, 1000);
+                        });
+                    }
+                }
+            }
         },
-      },
     }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
+>
+    <BaseExample/>
+</PureGlobal>);
 
 ```
 
@@ -100,97 +100,105 @@ render(
 - _FileList(@components/File),lodash(lodash),global(@components/Global),antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { List } = _FileList;
-const { Space } = antd;
-const { PureGlobal } = global;
-const { getPublicPath } = remoteLoader;
+const {List} = _FileList;
+const {Space} = antd;
+const {PureGlobal} = global;
+const {getPublicPath} = remoteLoader;
 
 const BaseExample = () => {
-  return (
-    <Space direction="vertical">
-      <List
-        dataSource={[
-          {
-            uuid: "121233",
-            type: "uploading",
-            filename: "张三的简历.doc",
-          },
-          {
-            id: "xxxxx",
-            filename: "我是一份简历.pdf",
-            date: "2022-07-15T11:09:15.000+08:00",
-            userName: "用户名",
-          },
-        ]}
-      />
-      <List dataSource={[]} />
-    </Space>
-  );
+    return (
+        <Space direction="vertical">
+            <List
+                dataSource={[
+                    {
+                        uuid: "121233",
+                        type: "uploading",
+                        filename: "张三的简历.doc",
+                    },
+                    {
+                        id: "xxxxx",
+                        filename: "我是一份简历.pdf",
+                        date: "2022-07-15T11:09:15.000+08:00",
+                        userName: "用户名",
+                    },
+                ]}
+            />
+            <List dataSource={[]}/>
+        </Space>
+    );
 };
 
 render(
-  <PureGlobal
-    preset={{
-      apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(getPublicPath("components-core") + "/mock/demo.pdf");
-              }, 1000);
-            });
-          },
-        },
-      },
-    }}
-  >
-    <BaseExample />
-  </PureGlobal>
+    <PureGlobal
+        preset={{
+            apis: {
+                file: {
+                    getUrl: {
+                        loader: async ({params}) => {
+                            console.log(params);
+                            return new Promise((resolve) => {
+                                setTimeout(() => {
+                                    resolve(getPublicPath("components-core") + "/mock/1_王晶简历-2023_06_2.pdf");
+                                }, 1000);
+                            });
+                        }
+                    }
+                }
+            },
+        }}
+    >
+        <BaseExample/>
+    </PureGlobal>
 );
 
 ```
 
 - 文件链接
 - 展示文件链接
-- _File(@components/File),remoteLoader(@kne/remote-loader),global(@components/Global)
+- _File(@components/File),remoteLoader(@kne/remote-loader),global(@components/Global),antd(antd)
 
 ```jsx
-const { FileLink } = _File;
-const { getPublicPath } = remoteLoader;
-const { PureGlobal } = global;
-const BaseExample = () => {
-  return (
-    <PureGlobal
-      preset={{
-        apis: {
-          oss: {
-            loader: async ({ params }) => {
-              const mapping = {
-                "01": "/avatar.png",
-                "02": "/mock/demo.html",
-                "03": "/mock/1_王晶简历-2023_06_2.pdf",
-              };
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(
-                    getPublicPath("components-core") + mapping[params.id]
-                  );
-                }, 1000);
-              });
-            },
-          },
-        },
-      }}
-    >
-      <FileLink id="01" originName="我是一个图片.jpg" />
-      <FileLink id="02" originName="我是一个网页.html" />
-      <FileLink id="03" originName="我是一个pdf.pdf" />
-    </PureGlobal>
-  );
+const {FileLink, useFileModal} = _File;
+const {getPublicPath} = remoteLoader;
+const {PureGlobal} = global;
+const {Button} = antd;
+
+const CustomButton = ({children, ...p}) => {
+    const modal = useFileModal(p);
+    return <Button onClick={() => {
+        modal();
+    }}>{p.originName}</Button>
 };
 
-render(<BaseExample />);
+const BaseExample = () => {
+    return (<PureGlobal
+        preset={{
+            apis: {
+                file: {
+                    getUrl: {
+                        loader: async ({params}) => {
+                            const mapping = {
+                                "01": "/avatar.png", "02": "/mock/demo.html", "03": "/mock/1_王晶简历-2023_06_2.pdf",
+                            };
+                            return new Promise((resolve) => {
+                                setTimeout(() => {
+                                    resolve(getPublicPath("components-core") + mapping[params.id]);
+                                }, 1000);
+                            });
+                        }
+                    }
+                },
+            },
+        }}
+    >
+        <FileLink id="01" originName="我是一个图片.jpg"/>
+        <FileLink id="02" originName="我是一个网页.html"/>
+        <FileLink id="03" originName="我是一个pdf.pdf"/>
+        <CustomButton id="03" originName="我是一个pdf.pdf"/>
+    </PureGlobal>);
+};
+
+render(<BaseExample/>);
 
 ```
 
