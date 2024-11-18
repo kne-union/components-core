@@ -7,7 +7,7 @@ import classnames from "classnames";
 import { Provider, useContext } from "./context";
 import Icon from "@components/Icon";
 import { FormattedMessage, useIntl, IntlProvider } from "@components/Intl";
-import { InputFileText } from "@common/hocs/withInputFile";
+import { FileInput } from "@kne/react-file";
 import acceptFunc from "@common/utils/accept";
 
 export const DragButton = ({ children }) => {
@@ -31,15 +31,22 @@ export const DragButton = ({ children }) => {
 export const UploadButton = ({ children }) => {
   const { accept, onFileSelected } = useContext();
   return (
-    <InputFileText
-      className={style["upload-btn"]}
+    <FileInput
+      className={classnames(style["upload-btn"], "btn-no-padding")}
       accept={accept}
       multiple
       onChange={onFileSelected}
     >
-      <Icon type="icon-tianjia" />
-      {children}
-    </InputFileText>
+      {({ children: input, ...props }) => {
+        return (
+          <Button {...props} type="text">
+            <Icon type="icon-tianjia" />
+            {children}
+            {input}
+          </Button>
+        );
+      }}
+    </FileInput>
   );
 };
 export const DragAreaOuter = ({

@@ -11,8 +11,10 @@ const BaseExample = () => {
           };
         },
         apis: {
-          oss: {
-            url: "http://oss.com",
+          file: {
+            getUrl: {
+              url: "http://oss.com",
+            },
           },
         },
       }}

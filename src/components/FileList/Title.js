@@ -64,12 +64,12 @@ const Title = ({
                     onChange={setCurrentPreviewFileId}
                     getPopupContainer={getPopupContainer}
                   >
-                    {previewList.map(({ filename, userName, date, ossId }) => {
+                    {previewList.map(({ filename, userName, date, id }) => {
                       return (
                         <Select.Option
                           className={style["file-select-option"]}
-                          key={ossId}
-                          value={ossId}
+                          key={id}
+                          value={id}
                         >
                           <Space direction="vertical">
                             <Space size={4} align="start">

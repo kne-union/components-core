@@ -9,14 +9,16 @@ render(
   <PureGlobal
     preset={{
       apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(getPublicPath("components-core") + "/avatar.png");
-              }, 1000);
-            });
+        file: {
+          getUrl: {
+            loader: async ({ params }) => {
+              console.log(params);
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(getPublicPath("components-core") + "/avatar.png");
+                }, 1000);
+              });
+            },
           },
         },
       },
