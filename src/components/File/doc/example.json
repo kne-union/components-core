@@ -82,6 +82,10 @@
         {
           "name": "global",
           "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }

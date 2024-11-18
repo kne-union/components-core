@@ -30,14 +30,19 @@ render(
   <PureGlobal
     preset={{
       apis: {
-        oss: {
-          loader: async ({ params }) => {
-            console.log(params);
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(getPublicPath("components-core") + "/mock/demo.pdf");
-              }, 1000);
-            });
+        file: {
+          getUrl: {
+            loader: async ({ params }) => {
+              console.log(params);
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(
+                    getPublicPath("components-core") +
+                      "/mock/1_王晶简历-2023_06_2.pdf"
+                  );
+                }, 1000);
+              });
+            },
           },
         },
       },

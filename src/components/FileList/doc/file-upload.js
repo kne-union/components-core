@@ -25,30 +25,31 @@ const apis = {
   onSave: async ({ data }) => {
     const id = uniqueId();
     return {
-      id: id,
       ossId: id,
       filename: data.originalName,
       date: new Date(),
       userName: "哈哈哈",
     };
   },
-  onDelete: () => {},
+  onDelete: (item) => {},
 };
 
 const preset = {
   apis: {
-    oss: {
-      loader: async ({ params }) => {
-        const mapping = {
-          "01": "/avatar.png",
-          "02": "/mock/demo.html",
-          "03": "/mock/1_王晶简历-2023_06_2.pdf",
-        };
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(getPublicPath("components-core") + mapping["03"]);
-          }, 1000);
-        });
+    file: {
+      getUrl: {
+        loader: async ({ params }) => {
+          const mapping = {
+            "01": "/avatar.png",
+            "02": "/mock/demo.html",
+            "03": "/mock/1_王晶简历-2023_06_2.pdf",
+          };
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(getPublicPath("components-core") + mapping["03"]);
+            }, 1000);
+          });
+        },
       },
     },
     ossUpload: ({ file }) => {
@@ -62,7 +63,6 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   const [list, setList] = useState([]);
-  console.log(list);
   return (
     <PureGlobal preset={preset}>
       <FileUpload list={list} setList={setList} apis={apis} />
