@@ -93,12 +93,8 @@ const UploadField = ({
 
 UploadField.defaultProps = {
   defaultValue: [],
-  children: (
-    <>
-      <Icon type="icon-shangchuanfujian" />
-      上传附件
-    </>
-  ),
+  // icon:  <Icon type="icon-shangchuanfujian" />,
+  children: "上传附件",
   accept: [
     ".pdf",
     ".jpg",
