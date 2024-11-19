@@ -16,113 +16,112 @@
 - _FileList(@components/FileList),remoteLoader(@kne/remote-loader),lodash(lodash)
 
 ```jsx
-const {default: FileList} = _FileList;
-const {createWithRemoteLoader, getPublicPath} = remoteLoader;
-const {useState} = React;
-const {uniqueId} = lodash;
+const { default: FileList } = _FileList;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { useState } = React;
+const { uniqueId } = lodash;
 
 const ajax = {
-    postForm: (config) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    data: {
-                        code: 0,
-                        data: {
-                            id: "uBFNeYQBnHRXlZaTGZpA",
-                            originalName: config.file.name,
-                        },
-                    },
-                });
-            }, 1000);
+  postForm: (config) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            code: 0,
+            data: {
+              id: "uBFNeYQBnHRXlZaTGZpA",
+              originalName: config.file.name,
+            },
+          },
         });
-    },
+      }, 1000);
+    });
+  },
 };
 
 const apis = {
-    onSave: async ({data}) => {
-        return {
-            ossId: uniqueId('oss_'),
-            filename: data.originalName,
-            date: new Date(),
-            userName: "哈哈哈",
-        };
-    },
-    onDelete: (item) => {
-    },
+  onSave: async ({ data }) => {
+    return {
+      ossId: uniqueId("oss_"),
+      filename: data.originalName,
+      date: new Date(),
+      userName: "哈哈哈",
+    };
+  },
+  onDelete: (item) => {},
 };
 
 const preset = {
-    apis: {
-        file: {
-            getUrl: {
-                loader: async ({params}) => {
-                    const mapping = {
-                        "01": "/avatar.png",
-                        "02": "/mock/demo.html",
-                        "03": "/mock/1_王晶简历-2023_06_2.pdf",
-                    };
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            resolve(getPublicPath("components-core") + mapping["03"]);
-                        }, 100);
-                    });
-                },
-            }
+  apis: {
+    file: {
+      getUrl: {
+        loader: async ({ params }) => {
+          const mapping = {
+            "01": "/avatar.png",
+            "02": "/mock/demo.html",
+            "03": "/mock/1_王晶简历-2023_06_2.pdf",
+          };
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(getPublicPath("components-core") + mapping["03"]);
+            }, 100);
+          });
         },
-        previewOffice: {
-            loader: async () => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        resolve({
-                            name: "测试开发_夏永昱_本科_5年.docx",
-                            data: [
-                                {
-                                    id: "gWw26Y0BeK_D6zxND5vh",
-                                    originalName: "attachment/gWw26Y0BeK_D6zxND5vh.pdf",
-                                    url:
-                                        getPublicPath("components-core") +
-                                        "/mock/1_王晶简历-2023_06_2.pdf",
-                                },
-                            ],
-                        });
-                    }, 0);
-                });
-            },
-        },
-        ossUpload: ({file}) => {
-            return ajax.postForm({file});
-        },
+      },
     },
+    previewOffice: {
+      loader: async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              name: "测试开发_夏永昱_本科_5年.docx",
+              data: [
+                {
+                  id: "gWw26Y0BeK_D6zxND5vh",
+                  originalName: "attachment/gWw26Y0BeK_D6zxND5vh.pdf",
+                  url:
+                    getPublicPath("components-core") +
+                    "/mock/1_王晶简历-2023_06_2.pdf",
+                },
+              ],
+            });
+          }, 0);
+        });
+      },
+    },
+    ossUpload: ({ file }) => {
+      return ajax.postForm({ file });
+    },
+  },
 };
 
 const BaseExample = createWithRemoteLoader({
-    modules: ["components-core:Global@PureGlobal"],
-})(({remoteModules}) => {
-    const [PureGlobal] = remoteModules;
-    const [list, setList] = useState([
-        {
-            id: "1",
-            filename: "avatar.pdf",
-        },
-        {
-            id: "2",
-            filename: "测试开发_夏永昱_本科_5年.docx",
-        },
-    ]);
-    return (
-        <PureGlobal preset={preset}>
-            <FileList
-                defaultPreviewFileId="1"
-                list={list}
-                setList={setList}
-                apis={apis}
-            />
-        </PureGlobal>
-    );
+  modules: ["components-core:Global@PureGlobal"],
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  const [list, setList] = useState([
+    {
+      id: "1",
+      filename: "avatar.pdf",
+    },
+    {
+      id: "2",
+      filename: "测试开发_夏永昱_本科_5年.docx",
+    },
+  ]);
+  return (
+    <PureGlobal preset={preset}>
+      <FileList
+        defaultPreviewFileId="1"
+        list={list}
+        setList={setList}
+        apis={apis}
+      />
+    </PureGlobal>
+  );
 });
 
-render(<BaseExample/>);
+render(<BaseExample />);
 
 ```
 
@@ -131,88 +130,86 @@ render(<BaseExample/>);
 - _FileList(@components/FileList),remoteLoader(@kne/remote-loader),lodash(lodash)
 
 ```jsx
-const {FileUpload} = _FileList;
-const {createWithRemoteLoader, getPublicPath} = remoteLoader;
-const {useState} = React;
-const {uniqueId} = lodash;
+const { FileUpload } = _FileList;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { useState } = React;
+const { uniqueId } = lodash;
 
 const ajax = {
-    postForm: (config) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    data: {
-                        code: 0,
-                        data: {
-                            id: "uBFNeYQBnHRXlZaTGZpA",
-                            originalName: config.file.name,
-                        },
-                    },
-                });
-            }, 1000);
+  postForm: (config) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            code: 0,
+            data: {
+              id: "uBFNeYQBnHRXlZaTGZpA",
+              originalName: config.file.name,
+            },
+          },
         });
-    },
+      }, 1000);
+    });
+  },
 };
 
 const apis = {
-    onSave: async ({data}) => {
-        const id = uniqueId();
-        return {
-            ossId: id,
-            filename: data.originalName,
-            date: new Date(),
-            userName: "哈哈哈",
-        };
-    },
-    onDelete: (item) => {
-
-    },
+  onSave: async ({ data }) => {
+    const id = uniqueId();
+    return {
+      ossId: id,
+      filename: data.originalName,
+      date: new Date(),
+      userName: "哈哈哈",
+    };
+  },
+  onDelete: (item) => {},
 };
 
 const preset = {
-    apis: {
-        file: {
-            getUrl: {
-                loader: async ({params}) => {
-                    const mapping = {
-                        "01": "/avatar.png",
-                        "02": "/mock/demo.html",
-                        "03": "/mock/1_王晶简历-2023_06_2.pdf",
-                    };
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            resolve(getPublicPath("components-core") + mapping["03"]);
-                        }, 1000);
-                    });
-                },
-            },
+  apis: {
+    file: {
+      getUrl: {
+        loader: async ({ params }) => {
+          const mapping = {
+            "01": "/avatar.png",
+            "02": "/mock/demo.html",
+            "03": "/mock/1_王晶简历-2023_06_2.pdf",
+          };
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(getPublicPath("components-core") + mapping["03"]);
+            }, 1000);
+          });
         },
-        ossUpload: ({file}) => {
-            return ajax.postForm({file});
-        },
+      },
     },
+    ossUpload: ({ file }) => {
+      return ajax.postForm({ file });
+    },
+  },
 };
 
 const BaseExample = createWithRemoteLoader({
-    modules: ["components-core:Global@PureGlobal"],
-})(({remoteModules}) => {
-    const [PureGlobal] = remoteModules;
-    const [list, setList] = useState([]);
-    return (
-        <PureGlobal preset={preset}>
-            <FileUpload list={list} setList={setList} apis={apis}/>
-            <div>非受控情况</div>
-            <FileUpload
-                setList={(fileList) => {
-                    console.log(">>>>>>>>>>", fileList);
-                }}
-                apis={apis}
-            />
-        </PureGlobal>
-    );
+  modules: ["components-core:Global@PureGlobal"],
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  const [list, setList] = useState([]);
+  return (
+    <PureGlobal preset={preset}>
+      <FileUpload list={list} setList={setList} apis={apis} />
+      <div>非受控情况</div>
+      <FileUpload
+        setList={(fileList) => {
+          console.log(">>>>>>>>>>", fileList);
+        }}
+        apis={apis}
+      />
+    </PureGlobal>
+  );
 });
 
-render(<BaseExample/>);
+render(<BaseExample />);
 
 ```
 
