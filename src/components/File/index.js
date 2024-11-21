@@ -37,7 +37,7 @@ export const FileLink = (p) => {
 };
 
 export const useFileModal = (p) => {
-  const { title, children, footer } = useFileModalProps(p);
+  const { title, children, footer } = useFileModalProps(Object.assign({}, p));
   const modal = useModal();
   return useRefCallback(() => {
     return modal({
