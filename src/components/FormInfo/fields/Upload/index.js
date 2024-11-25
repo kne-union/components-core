@@ -2,7 +2,6 @@ import { Space } from "antd";
 import classnames from "classnames";
 import useControlValue from "@kne/use-control-value";
 import style from "./style.module.scss";
-import Icon from "@components/Icon";
 import { List as FileList } from "@components/File";
 import { hooks } from "@kne/react-form-antd";
 import omit from "lodash/omit";
