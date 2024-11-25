@@ -21,6 +21,7 @@ const UploadField = ({
   showUploadList,
   onSave,
   ossUpload,
+  onUpload,
   getPermission,
   ...props
 }) => {
@@ -29,7 +30,7 @@ const UploadField = ({
   const { fileList: uploadingList, onFileSelected } = useFileUpload({
     multiple,
     onSave,
-    ossUpload,
+    onUpload: ossUpload || onUpload,
     fileSize,
     maxLength,
     value,
