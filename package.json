@@ -34,7 +34,7 @@
     "@kne/is-empty": "^1.0.1",
     "@kne/react-enum": "^0.1.7",
     "@kne/react-fetch": "^1.5.5",
-    "@kne/react-file": "^0.1.8",
+    "@kne/react-file": "^0.1.9",
     "@kne/react-file-type": "^1.0.5",
     "@kne/react-form-antd": "^3.1.6",
     "@kne/react-text-escape": "^0.1.4",
