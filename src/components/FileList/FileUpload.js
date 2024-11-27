@@ -27,7 +27,7 @@ const FileUpload = ({
     onChange: setList,
     concurrentCount: 1,
     onSave: (...args) => {
-      return apis.onSave(...args).then((res) => {
+      return Promise.resolve(apis.onSave(...args)).then((res) => {
         return Object.assign({}, { id: res.ossId }, res);
       });
     },
