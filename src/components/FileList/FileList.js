@@ -40,10 +40,12 @@ const FileListInner = ({
     onAdd: () => {
       setCurrentTab("list");
     },
-    onSave: (...args) => {
-      return Promise.resolve(apis.onSave(...args)).then((res) => {
-        return Object.assign({}, { id: res.ossId }, res);
-      });
+    onSave: async (...args) => {
+      if (typeof apis.onSave === "function") {
+        const res = await apis.onSave(...args);
+        return Object.assign({}, { id: res?.ossId }, res);
+      }
+      return {};
     },
     onUpload: apis.ossUpload,
   });
