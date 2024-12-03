@@ -20,10 +20,10 @@ export const DragButton = ({ children }) => {
         onOpenChange((open) => !open);
       }}
     >
-      <Typography.Text className="ant-btn">
+      <Button type="text" className="btn-no-padding">
         <Icon type="icon-tuozhuaishangchuan" />
         {children || <FormattedMessage id="dragText" moduleName="FileList" />}
-      </Typography.Text>
+      </Button>
     </div>
   );
 };
