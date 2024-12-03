@@ -8,6 +8,7 @@ import {
   TimePicker as ReactTimePicker,
   TreeSelect as ReactTreeSelect,
   RadioGroup,
+  Checkbox,
   CheckboxGroup,
   Rate,
   Slider,
@@ -237,6 +238,7 @@ const DatePickerToday = createWithFieldDecorator([withLang])(
 
 const fields = {
   Input,
+  Checkbox,
   Password: Input.Password,
   InputNumber,
   DatePicker,
