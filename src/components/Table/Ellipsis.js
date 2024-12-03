@@ -13,7 +13,8 @@ const Ellipsis = ({ children, ellipsis }) => {
               overlayClassName: style["tooltip"],
               children: children,
             },
-          }
+          },
+          typeof ellipsis === "object" ? ellipsis : {}
         )
       }
     >
