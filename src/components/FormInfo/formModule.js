@@ -14,7 +14,6 @@ import {
 } from "@kne/react-form-antd";
 import Form from "./Form";
 import { FormattedMessage, useIntl } from "@components/Intl";
-import { forwardRef } from "react";
 import FormItem from "./FormItem";
 import style from "./style.module.scss";
 import AdvancedSelectField from "./fields/AdvancedSelect";
@@ -36,23 +35,21 @@ import Text from "./fields/Text";
 import ErrorTip from "./ErrorTip";
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-  const TargetComponent = forwardRef(
-    ({ placeholder, label, ...props }, ref) => (
-      <FormattedMessage
-        id="defaultInputPlaceholder"
-        moduleName="FormInfo"
-        values={{ label }}
-      >
-        {(text) => (
-          <WrappedComponent
-            {...props}
-            ref={ref}
-            label={label}
-            placeholder={placeholder || text}
-          />
-        )}
-      </FormattedMessage>
-    )
+  const TargetComponent = ({ placeholder, label, ...props }, ref) => (
+    <FormattedMessage
+      id="defaultInputPlaceholder"
+      moduleName="FormInfo"
+      values={{ label }}
+    >
+      {(text) => (
+        <WrappedComponent
+          {...props}
+          ref={ref}
+          label={label}
+          placeholder={placeholder || text}
+        />
+      )}
+    </FormattedMessage>
   );
   Object.keys(WrappedComponent)
     .filter((key) => {
@@ -87,23 +84,21 @@ const withTextAreaDefaultPlaceholder =
     );
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-  const TargetComponent = forwardRef(
-    ({ placeholder, label, ...props }, ref) => (
-      <FormattedMessage
-        id="defaultSelectPlaceholder"
-        moduleName="FormInfo"
-        values={{ label }}
-      >
-        {(text) => (
-          <WrappedComponent
-            {...props}
-            ref={ref}
-            label={label}
-            placeholder={placeholder || text}
-          />
-        )}
-      </FormattedMessage>
-    )
+  const TargetComponent = ({ placeholder, label, ...props }, ref) => (
+    <FormattedMessage
+      id="defaultSelectPlaceholder"
+      moduleName="FormInfo"
+      values={{ label }}
+    >
+      {(text) => (
+        <WrappedComponent
+          {...props}
+          ref={ref}
+          label={label}
+          placeholder={placeholder || text}
+        />
+      )}
+    </FormattedMessage>
   );
 
   Object.keys(WrappedComponent)

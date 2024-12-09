@@ -26,7 +26,6 @@ import SalaryInput from "./SalaryInput";
 import InputUpperCaseField from "./InputUpperCase";
 import TableInput from "./TableInput";
 import compose from "@kne/compose";
-import { forwardRef } from "react";
 import { FormattedMessage, useIntl } from "@components/Intl";
 import { useGroup } from "@kne/react-form-antd";
 import get from "lodash/get";
@@ -67,9 +66,9 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
       />
     )
   );
-  const ForwardComponent = forwardRef((props, ref) => {
+  const ForwardComponent = (props, ref) => {
     return <TargetComponent {...props} forwardedRef={ref} />;
-  });
+  };
   Object.keys(WrappedComponent)
     .filter((key) => {
       return ["$$typeof", "render", "field"].indexOf(key) === -1;

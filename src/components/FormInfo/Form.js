@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePreset } from "@components/Global";
 import get from "lodash/get";
 import formPreset from "@components/FormInfo/preset";
@@ -27,27 +27,28 @@ const SetPreset = ({ children }) => {
   return children;
 };
 
-const Form = forwardRef(
-  ({ className, helperGuideName, children, lang, ...props }, ref) => {
-    return (
-      <IntlProvider importMessages={importMessages} moduleName="FormInfo">
-        <FormLangProvider value={lang}>
-          <InfoPage>
-            <HelperGuideProvider value={helperGuideName}>
-              <ReactForm
-                {...props}
-                ref={ref}
-                className={classnames(className, style["form-outer"])}
-              >
-                <SetPreset>{children}</SetPreset>
-              </ReactForm>
-            </HelperGuideProvider>
-          </InfoPage>
-        </FormLangProvider>
-      </IntlProvider>
-    );
-  }
-);
+const Form = (
+  { className, helperGuideName, children, lang, ...props },
+  ref
+) => {
+  return (
+    <IntlProvider importMessages={importMessages} moduleName="FormInfo">
+      <FormLangProvider value={lang}>
+        <InfoPage>
+          <HelperGuideProvider value={helperGuideName}>
+            <ReactForm
+              {...props}
+              ref={ref}
+              className={classnames(className, style["form-outer"])}
+            >
+              <SetPreset>{children}</SetPreset>
+            </ReactForm>
+          </HelperGuideProvider>
+        </InfoPage>
+      </FormLangProvider>
+    </IntlProvider>
+  );
+};
 Form.defaultProps = {
   type: "inner",
 };

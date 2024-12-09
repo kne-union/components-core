@@ -1,6 +1,5 @@
 import {
   createRef,
-  forwardRef,
   memo,
   useCallback,
   useEffect,
@@ -22,19 +21,17 @@ function withConfirm(props) {
 
 const destroyFns = [];
 
-const ElementsHolder = memo(
-  forwardRef((props, ref) => {
-    const [elements, patchElement] = usePatchElement();
-    useImperativeHandle(
-      ref,
-      () => ({
-        patchElement,
-      }),
-      [patchElement]
-    );
-    return <>{elements}</>;
-  })
-);
+const ElementsHolder = memo((props, ref) => {
+  const [elements, patchElement] = usePatchElement();
+  useImperativeHandle(
+    ref,
+    () => ({
+      patchElement,
+    }),
+    [patchElement]
+  );
+  return <>{elements}</>;
+});
 
 function useDrawer() {
   const holderRef = useRef(null);

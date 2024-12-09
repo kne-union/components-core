@@ -5,7 +5,7 @@ import {
   useIntl as useReactIntl,
 } from "react-intl";
 import { useGlobalContext } from "@components/Global";
-import { forwardRef, useCallback } from "react";
+import { useCallback } from "react";
 import merge from "lodash/merge";
 import transform from "lodash/transform";
 import get from "lodash/get";
@@ -95,10 +95,11 @@ export const useIntl = (props) => {
 export const createWithIntl =
   ({ importMessages, moduleName }) =>
   (WrappedComponent) =>
-    forwardRef((props, ref) => (
+  (props, ref) =>
+    (
       <IntlProvider importMessages={importMessages} moduleName={moduleName}>
         <WrappedComponent {...props} ref={ref} />
       </IntlProvider>
-    ));
+    );
 
 export default FormattedMessage;

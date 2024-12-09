@@ -1,6 +1,6 @@
 import useResize from "@common/hooks/useResize";
 import last from "lodash/last";
-import { forwardRef, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { List } from "antd";
 import Fetch from "@kne/react-fetch";
 import isEqual from "lodash/isEqual";
@@ -82,48 +82,46 @@ FlexBox.defaultProps = {
 
 FlexBox.Item = List.Item;
 
-const FlexBoxFetch = forwardRef(
-  (
-    {
-      columns,
-      api,
-      getFetchApi,
-      outerClassName,
-      className,
-      gutter,
-      dataFormat,
-      ...props
-    },
-    forwardRef
-  ) => {
-    const { ref, column } = useFlexBox({ columns });
-    return (
-      <div ref={ref} className={outerClassName}>
-        {column && (
-          <Fetch
-            {...(api || getFetchApi(column))}
-            ref={forwardRef}
-            render={({ data, isComplete }) => {
-              return (
-                <List
-                  {...props}
-                  className={classnames(className, "loading-container", {
-                    "is-loading": !isComplete,
-                  })}
-                  dataSource={dataFormat(data)}
-                  grid={{
-                    gutter,
-                    column: column.col,
-                  }}
-                />
-              );
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-);
+const FlexBoxFetch = (
+  {
+    columns,
+    api,
+    getFetchApi,
+    outerClassName,
+    className,
+    gutter,
+    dataFormat,
+    ...props
+  },
+  forwardRef
+) => {
+  const { ref, column } = useFlexBox({ columns });
+  return (
+    <div ref={ref} className={outerClassName}>
+      {column && (
+        <Fetch
+          {...(api || getFetchApi(column))}
+          ref={forwardRef}
+          render={({ data, isComplete }) => {
+            return (
+              <List
+                {...props}
+                className={classnames(className, "loading-container", {
+                  "is-loading": !isComplete,
+                })}
+                dataSource={dataFormat(data)}
+                grid={{
+                  gutter,
+                  column: column.col,
+                }}
+              />
+            );
+          }}
+        />
+      )}
+    </div>
+  );
+};
 
 FlexBoxFetch.defaultProps = {
   gutter: 16,

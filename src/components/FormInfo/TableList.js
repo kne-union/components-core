@@ -2,11 +2,11 @@ import List from "./List";
 import FieldList from "./FieldList";
 import { Col, Row } from "antd";
 import clone from "lodash/clone";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { useImperativeHandle, useRef, useState } from "react";
 import classnames from "classnames";
 import style from "./style.module.scss";
 
-const TableHeader = forwardRef((props, ref) => {
+const TableHeader = (props, ref) => {
   const [headers, setHeaders] = useState(new Map());
   useImperativeHandle(
     ref,
@@ -48,7 +48,7 @@ const TableHeader = forwardRef((props, ref) => {
       <Col className={style["table-list-extra"]}></Col>
     </Row>
   );
-});
+};
 
 const TableList = ({ list, className, ...props }) => {
   const headerRef = useRef(null);

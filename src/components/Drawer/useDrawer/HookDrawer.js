@@ -26,4 +26,4 @@ const HookDrawer = ({ config }, ref) => {
   return <Drawer {...innerConfig} ref={ref} open={open} onClose={close} />;
 };
 
-export default React.forwardRef(HookDrawer);
+export default HookDrawer;

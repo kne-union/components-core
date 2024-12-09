@@ -1,5 +1,5 @@
 import { Table as AntTable } from "antd";
-import { forwardRef, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import useRefCallback from "@kne/use-ref-callback";
 import Fetch, { withFetch } from "@kne/react-fetch";
 import classnames from "classnames";
@@ -231,7 +231,7 @@ const TableList = withFetch(
   }
 );
 
-const TablePage = forwardRef(({ pagination, ...props }, ref) => {
+const TablePage = ({ pagination, ...props }, ref) => {
   const [pageSize, setPageSize] = useState(20);
   pagination = Object.assign(
     {},
@@ -279,7 +279,7 @@ const TablePage = forwardRef(({ pagination, ...props }, ref) => {
       ref={ref}
     />
   );
-});
+};
 
 TablePage.defaultProps = {
   controllerOpen: true,

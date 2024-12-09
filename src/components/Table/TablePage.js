@@ -4,7 +4,7 @@ import classnames from "classnames";
 import Features from "@components/Features";
 import get from "lodash/get";
 import useRefCallback from "@kne/use-ref-callback";
-import { forwardRef, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import style from "./style.module.scss";
 import importMessages from "./locale";
 import { FormattedMessage, IntlProvider } from "@components/Intl";
@@ -176,7 +176,7 @@ TablePageInner.defaultProps = {
   },
 };
 
-const TablePage = forwardRef(({ pagination, ...props }, ref) => {
+const TablePage = ({ pagination, ...props }, ref) => {
   pagination = Object.assign(
     {},
     {
@@ -219,6 +219,6 @@ const TablePage = forwardRef(({ pagination, ...props }, ref) => {
       ref={ref}
     />
   );
-});
+};
 
 export default TablePage;

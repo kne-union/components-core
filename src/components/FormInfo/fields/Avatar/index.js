@@ -1,4 +1,4 @@
-import { forwardRef, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import withInputFile, { InputFileLink } from "@common/hocs/withInputFile";
 import Image from "@components/Image";
 import { usePreset } from "@components/Global";
@@ -93,204 +93,202 @@ const dataURLtoBlob = (dataURL) => {
   });
 };
 
-const ControlAvatarEditor = forwardRef(
-  (
-    {
-      image: propsImage,
-      width,
-      height,
-      borderRadius,
-      preview,
-      fileSize,
-      accept,
-      renderTips,
-      getApi,
-      shape,
-      border,
-      ...props
+const ControlAvatarEditor = (
+  {
+    image: propsImage,
+    width,
+    height,
+    borderRadius,
+    preview,
+    fileSize,
+    accept,
+    renderTips,
+    getApi,
+    shape,
+    border,
+    ...props
+  },
+  ref
+) => {
+  const intl = useIntl({ moduleName: localeModuleName });
+  const [baseWidth, setBaseWidth] = useState(0);
+  const outerRef = useRef(null);
+  const [image, setImage] = useState(propsImage);
+  const [scale, setScale] = useState(1);
+  const [rotate, setRotate] = useState(0);
+  const [previewImg, setPreviewImg] = useState("");
+  const editorRef = useRef(null);
+  useLayoutEffect(() => {
+    setBaseWidth((outerRef.current.clientWidth * 2) / 3);
+  }, []);
+  getApi({
+    getImage: () => {
+      const canvas = editorRef.current.getImage();
+
+      const targetCanvas = document.createElement("canvas");
+      const targetCtx = targetCanvas.getContext("2d");
+      targetCanvas.width = width;
+      targetCanvas.height = height;
+
+      targetCtx.drawImage(
+        canvas,
+        0,
+        0,
+        targetCanvas.width,
+        targetCanvas.height
+      );
+
+      return new window.File(
+        [dataURLtoBlob(targetCanvas.toDataURL())],
+        image.name,
+        { type: image.type }
+      );
     },
-    ref
-  ) => {
-    const intl = useIntl({ moduleName: localeModuleName });
-    const [baseWidth, setBaseWidth] = useState(0);
-    const outerRef = useRef(null);
-    const [image, setImage] = useState(propsImage);
-    const [scale, setScale] = useState(1);
-    const [rotate, setRotate] = useState(0);
-    const [previewImg, setPreviewImg] = useState("");
-    const editorRef = useRef(null);
-    useLayoutEffect(() => {
-      setBaseWidth((outerRef.current.clientWidth * 2) / 3);
-    }, []);
-    getApi({
-      getImage: () => {
-        const canvas = editorRef.current.getImage();
+  });
+  const makePreviewInner = () => {
+    setPreviewImg(editorRef.current.getImage().toDataURL());
+  };
+  const makePreview = useDebouncedCallback(makePreviewInner, 500);
 
-        const targetCanvas = document.createElement("canvas");
-        const targetCtx = targetCanvas.getContext("2d");
-        targetCanvas.width = width;
-        targetCanvas.height = height;
-
-        targetCtx.drawImage(
-          canvas,
-          0,
-          0,
-          targetCanvas.width,
-          targetCanvas.height
-        );
-
-        return new window.File(
-          [dataURLtoBlob(targetCanvas.toDataURL())],
-          image.name,
-          { type: image.type }
-        );
-      },
-    });
-    const makePreviewInner = () => {
-      setPreviewImg(editorRef.current.getImage().toDataURL());
-    };
-    const makePreview = useDebouncedCallback(makePreviewInner, 500);
-
-    return (
-      <div ref={outerRef}>
-        <Row wrap={false} align="middle">
-          <Col span={preview ? 16 : 24}>
-            {baseWidth && (
-              <Space direction="vertical">
-                <AvatarEditor
-                  {...props}
-                  ref={editorRef}
-                  image={image}
-                  scale={scale}
-                  rotate={rotate}
-                  width={baseWidth - border * 2}
-                  height={
-                    (height * baseWidth) / width - (border * 2 * height) / width
+  return (
+    <div ref={outerRef}>
+      <Row wrap={false} align="middle">
+        <Col span={preview ? 16 : 24}>
+          {baseWidth && (
+            <Space direction="vertical">
+              <AvatarEditor
+                {...props}
+                ref={editorRef}
+                image={image}
+                scale={scale}
+                rotate={rotate}
+                width={baseWidth - border * 2}
+                height={
+                  (height * baseWidth) / width - (border * 2 * height) / width
+                }
+                border={border}
+                color={[0, 0, 0, 0.6]}
+                borderRadius={(borderRadius * baseWidth) / width}
+                onImageReady={makePreviewInner}
+                onImageChange={makePreview}
+              />
+              <div className={style["drop-tips"]}>
+                {renderTips(
+                  `${intl.formatMessage({ id: "PictureFormat" })}${accept
+                    .map((str) => str.replace(/^\./, ""))
+                    .join(" ")} ${intl.formatMessage({
+                    id: "ImageSize",
+                  })}${intl.formatMessage(
+                    { id: "NotExceeding" },
+                    { size: fileSize }
+                  )}`,
+                  {
+                    accept,
+                    fileSize,
                   }
-                  border={border}
-                  color={[0, 0, 0, 0.6]}
-                  borderRadius={(borderRadius * baseWidth) / width}
-                  onImageReady={makePreviewInner}
-                  onImageChange={makePreview}
-                />
-                <div className={style["drop-tips"]}>
-                  {renderTips(
-                    `${intl.formatMessage({ id: "PictureFormat" })}${accept
-                      .map((str) => str.replace(/^\./, ""))
-                      .join(" ")} ${intl.formatMessage({
-                      id: "ImageSize",
-                    })}${intl.formatMessage(
-                      { id: "NotExceeding" },
-                      { size: fileSize }
-                    )}`,
-                    {
-                      accept,
-                      fileSize,
-                    }
-                  )}
-                </div>
-                <Row gutter={14} align="middle">
-                  <Col>
-                    <Tooltip
-                      title={intl.formatMessage({ id: "Rotate" })}
-                      placement="bottom"
-                    >
-                      <Icon
-                        type="icon-xuanzhuan"
-                        onClick={() => {
-                          setRotate((rotate) => {
-                            return (rotate - 90) % 360;
-                          });
-                        }}
-                      />
-                    </Tooltip>
-                  </Col>
-                  <Col>
-                    <Tooltip
-                      title={intl.formatMessage({ id: "ImageFull" })}
-                      placement="bottom"
-                    >
-                      <Icon
-                        type="icon-chongman"
-                        onClick={() => {
-                          setScale(1);
-                        }}
-                      />
-                    </Tooltip>
-                  </Col>
-                  <Col flex={1}>
-                    <Slider
-                      tooltip={{
-                        placement: "bottom",
-                        formatter: () => intl.formatMessage({ id: "Size" }),
+                )}
+              </div>
+              <Row gutter={14} align="middle">
+                <Col>
+                  <Tooltip
+                    title={intl.formatMessage({ id: "Rotate" })}
+                    placement="bottom"
+                  >
+                    <Icon
+                      type="icon-xuanzhuan"
+                      onClick={() => {
+                        setRotate((rotate) => {
+                          return (rotate - 90) % 360;
+                        });
                       }}
-                      value={scale}
-                      step={0.05}
-                      min={0.2}
-                      max={3}
-                      onChange={setScale}
                     />
-                  </Col>
-                  <Col>
-                    <InputFileLink
-                      accept={accept}
-                      onChange={(fileList) => {
-                        if (fileList[0].size > fileSize * 1024 * 1024) {
-                          message.error(
-                            intl.formatMessage(
-                              { id: "FileNotExceeding" },
-                              { name: fileList[0].name, size: fileSize }
-                            )
-                          );
-                          return;
-                        }
-                        setRotate(0);
+                  </Tooltip>
+                </Col>
+                <Col>
+                  <Tooltip
+                    title={intl.formatMessage({ id: "ImageFull" })}
+                    placement="bottom"
+                  >
+                    <Icon
+                      type="icon-chongman"
+                      onClick={() => {
                         setScale(1);
-                        setImage(fileList[0]);
                       }}
-                    >
-                      <FormattedMessage
-                        id={"ReUpload"}
-                        moduleName={localeModuleName}
-                      />
-                    </InputFileLink>
-                  </Col>
-                </Row>
-              </Space>
-            )}
-          </Col>
-          {preview && (
-            <Col span={8}>
-              <div className={style["preview-area"]}>
-                <Space direction="vertical">
-                  <AntdAvatar
-                    src={previewImg}
-                    // alt="预览"
-                    shape={shape}
-                    style={{
-                      width: baseWidth / 2 - 36,
-                      height: ((baseWidth / 2 - 36) * height) / width,
+                    />
+                  </Tooltip>
+                </Col>
+                <Col flex={1}>
+                  <Slider
+                    tooltip={{
+                      placement: "bottom",
+                      formatter: () => intl.formatMessage({ id: "Size" }),
                     }}
+                    value={scale}
+                    step={0.05}
+                    min={0.2}
+                    max={3}
+                    onChange={setScale}
                   />
-                  <div
-                    style={{
-                      textAlign: "center",
+                </Col>
+                <Col>
+                  <InputFileLink
+                    accept={accept}
+                    onChange={(fileList) => {
+                      if (fileList[0].size > fileSize * 1024 * 1024) {
+                        message.error(
+                          intl.formatMessage(
+                            { id: "FileNotExceeding" },
+                            { name: fileList[0].name, size: fileSize }
+                          )
+                        );
+                        return;
+                      }
+                      setRotate(0);
+                      setScale(1);
+                      setImage(fileList[0]);
                     }}
                   >
                     <FormattedMessage
-                      id={"Preview"}
+                      id={"ReUpload"}
                       moduleName={localeModuleName}
                     />
-                  </div>
-                </Space>
-              </div>
-            </Col>
+                  </InputFileLink>
+                </Col>
+              </Row>
+            </Space>
           )}
-        </Row>
-      </div>
-    );
-  }
-);
+        </Col>
+        {preview && (
+          <Col span={8}>
+            <div className={style["preview-area"]}>
+              <Space direction="vertical">
+                <AntdAvatar
+                  src={previewImg}
+                  // alt="预览"
+                  shape={shape}
+                  style={{
+                    width: baseWidth / 2 - 36,
+                    height: ((baseWidth / 2 - 36) * height) / width,
+                  }}
+                />
+                <div
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <FormattedMessage
+                    id={"Preview"}
+                    moduleName={localeModuleName}
+                  />
+                </div>
+              </Space>
+            </div>
+          </Col>
+        )}
+      </Row>
+    </div>
+  );
+};
 
 ControlAvatarEditor.defaultProps = {
   border: 1,

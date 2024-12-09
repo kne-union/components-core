@@ -1,12 +1,6 @@
 import style from "./style.module.scss";
 import { Provider, useContext } from "./context";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import useControlValue from "@kne/use-control-value";
 import { withFetch } from "@kne/react-fetch";
 import get from "lodash/get";
@@ -70,154 +64,149 @@ const renderDisplayLabel = ({ single, value, mapping, onClose }) => {
   });
 };
 
-const ModalContent = forwardRef(
-  (
-    {
-      value: propsValue,
-      onChange,
-      extra,
-      showSelectedTag,
-      renderSelectedContent,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const [value, setValue] = useState(propsValue);
-    const propsValueRef = useRef(propsValue);
-    propsValueRef.current = propsValue;
-    const [modalOpen, setModalOpen] = useState(false);
-    const { message } = App.useApp();
-    const setValueWithMaxLength = createValueWithMaxLength({
-      maxLength: props.maxLength,
-      single: props.single,
-      setValue,
-      value,
-      message: message.error,
-    });
-    useEffect(() => {
-      if (modalOpen) {
-        setValue(propsValueRef.current);
+const ModalContent = (
+  {
+    value: propsValue,
+    onChange,
+    extra,
+    showSelectedTag,
+    renderSelectedContent,
+    children,
+    ...props
+  },
+  ref
+) => {
+  const [value, setValue] = useState(propsValue);
+  const propsValueRef = useRef(propsValue);
+  propsValueRef.current = propsValue;
+  const [modalOpen, setModalOpen] = useState(false);
+  const { message } = App.useApp();
+  const setValueWithMaxLength = createValueWithMaxLength({
+    maxLength: props.maxLength,
+    single: props.single,
+    setValue,
+    value,
+    message: message.error,
+  });
+  useEffect(() => {
+    if (modalOpen) {
+      setValue(propsValueRef.current);
+    }
+  }, [modalOpen]);
+  useImperativeHandle(ref, () => {
+    return {
+      modalOpen: () => {
+        setModalOpen(true);
+      },
+      close: () => {
+        setModalOpen(false);
+      },
+    };
+  });
+  return (
+    <Modal
+      {...props}
+      open={modalOpen}
+      onConfirm={() => {
+        onChange(value);
+      }}
+      onClose={() => {
+        setModalOpen(false);
+      }}
+      footer={
+        (showSelectedTag || extra) && (
+          <Space direction="vertical" className={style["overlay-footer"]}>
+            {extra && (
+              <div className={style["overlay-footer-extra"]}>{extra}</div>
+            )}
+            {showSelectedTag &&
+              renderSelectedContent({
+                value,
+                setValue: setValueWithMaxLength,
+              })}
+          </Space>
+        )
       }
-    }, [modalOpen]);
-    useImperativeHandle(ref, () => {
+    >
+      {typeof children === "function"
+        ? children({ value, setValue: setValueWithMaxLength })
+        : children}
+    </Modal>
+  );
+};
+
+const PopupContent = (
+  {
+    value,
+    setValue,
+    children,
+    renderSelectedContent,
+    showSelectedTag,
+    placement,
+    inputContent,
+    single,
+    extra,
+    overlayWidth,
+    wrapClassName,
+    ...props
+  },
+  ref
+) => {
+  const [open, setOpen] = useState(false);
+  useImperativeHandle(
+    ref,
+    () => {
       return {
-        modalOpen: () => {
-          setModalOpen(true);
-        },
         close: () => {
-          setModalOpen(false);
+          setOpen(false);
         },
       };
-    });
-    return (
-      <Modal
-        {...props}
-        open={modalOpen}
-        onConfirm={() => {
-          onChange(value);
-        }}
-        onClose={() => {
-          setModalOpen(false);
-        }}
-        footer={
-          (showSelectedTag || extra) && (
-            <Space direction="vertical" className={style["overlay-footer"]}>
+    },
+    []
+  );
+  return (
+    <Popover
+      {...props}
+      open={open}
+      onOpenChange={setOpen}
+      overlayClassName={style["overlay"]}
+      arrow={false}
+      content={
+        <div
+          style={overlayWidth ? { "--overlay-width": overlayWidth } : {}}
+          className={style["overlay-content"]}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <div className={style["overlay-inner"]}>
+            {typeof children === "function"
+              ? children({
+                  value,
+                  setValue: (newValue) => {
+                    !(single && value[0] === newValue[0]) && setValue(newValue);
+                    single && setOpen(false);
+                  },
+                })
+              : children}
+          </div>
+          {(showSelectedTag || extra) && (
+            <div className={style["overlay-footer"]}>
               {extra && (
                 <div className={style["overlay-footer-extra"]}>{extra}</div>
               )}
-              {showSelectedTag &&
-                renderSelectedContent({
-                  value,
-                  setValue: setValueWithMaxLength,
-                })}
-            </Space>
-          )
-        }
-      >
-        {typeof children === "function"
-          ? children({ value, setValue: setValueWithMaxLength })
-          : children}
-      </Modal>
-    );
-  }
-);
-
-const PopupContent = forwardRef(
-  (
-    {
-      value,
-      setValue,
-      children,
-      renderSelectedContent,
-      showSelectedTag,
-      placement,
-      inputContent,
-      single,
-      extra,
-      overlayWidth,
-      wrapClassName,
-      ...props
-    },
-    ref
-  ) => {
-    const [open, setOpen] = useState(false);
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          close: () => {
-            setOpen(false);
-          },
-        };
-      },
-      []
-    );
-    return (
-      <Popover
-        {...props}
-        open={open}
-        onOpenChange={setOpen}
-        overlayClassName={style["overlay"]}
-        arrow={false}
-        content={
-          <div
-            style={overlayWidth ? { "--overlay-width": overlayWidth } : {}}
-            className={style["overlay-content"]}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <div className={style["overlay-inner"]}>
-              {typeof children === "function"
-                ? children({
-                    value,
-                    setValue: (newValue) => {
-                      !(single && value[0] === newValue[0]) &&
-                        setValue(newValue);
-                      single && setOpen(false);
-                    },
-                  })
-                : children}
+              {showSelectedTag && renderSelectedContent({ value, setValue })}
             </div>
-            {(showSelectedTag || extra) && (
-              <div className={style["overlay-footer"]}>
-                {extra && (
-                  <div className={style["overlay-footer-extra"]}>{extra}</div>
-                )}
-                {showSelectedTag && renderSelectedContent({ value, setValue })}
-              </div>
-            )}
-          </div>
-        }
-        trigger="click"
-        placement={placement}
-      >
-        <div className={style["input-inner"]}>{inputContent}</div>
-      </Popover>
-    );
-  }
-);
+          )}
+        </div>
+      }
+      trigger="click"
+      placement={placement}
+    >
+      <div className={style["input-inner"]}>{inputContent}</div>
+    </Popover>
+  );
+};
 
 const DisplayLabel = withFetch(
   ({ setFetchApi, wrapClassName, ...fetchApi }) => {
