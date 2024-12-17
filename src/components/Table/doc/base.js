@@ -33,49 +33,48 @@ const BaseExample = () => {
   return (
     <PureGlobal
       preset={{
-        ajax,
-        /*tableServerApis: {
-          getDataApi: (name) => {
-            return {
-              url: "/api/v1/user/user/user_key_get",
-              method: "GET",
-              params: {
-                key: `table_config_v2_${name}`,
-              },
-              transformResponse: (response) => {
-                const { data } = response;
-                response.data = Object.assign({}, data, {
-                  data: (() => {
-                    try {
-                      return JSON.parse(data.data);
-                    } catch (e) {
-                      return [];
-                    }
-                  })(),
-                });
+        ajax /*tableServerApis: {
+                  getDataApi: (name) => {
+                    return {
+                      url: "/api/v1/user/user/user_key_get",
+                      method: "GET",
+                      params: {
+                        key: `table_config_v2_${name}`,
+                      },
+                      transformResponse: (response) => {
+                        const { data } = response;
+                        response.data = Object.assign({}, data, {
+                          data: (() => {
+                            try {
+                              return JSON.parse(data.data);
+                            } catch (e) {
+                              return [];
+                            }
+                          })(),
+                        });
 
-                response.data = {
-                  code: response.data.code === 0 ? 200 : data.code,
-                  msg: response.data.msg,
-                  results: response.data.data,
-                };
+                        response.data = {
+                          code: response.data.code === 0 ? 200 : data.code,
+                          msg: response.data.msg,
+                          results: response.data.data,
+                        };
 
-                return response;
-              },
-              cache: "TABLE_PAGE_CONFIG",
-            };
-          },
-          setDataFunc: (name, data) => {
-            return ajax({
-              url: "/api/v1/user/user/user_key_set",
-              data: {
-                map: {
-                  [`table_config_v2_${name}`]: JSON.stringify(data),
-                },
-              },
-            });
-          },
-        },*/
+                        return response;
+                      },
+                      cache: "TABLE_PAGE_CONFIG",
+                    };
+                  },
+                  setDataFunc: (name, data) => {
+                    return ajax({
+                      url: "/api/v1/user/user/user_key_set",
+                      data: {
+                        map: {
+                          [`table_config_v2_${name}`]: JSON.stringify(data),
+                        },
+                      },
+                    });
+                  },
+                },*/,
       }}
     >
       <Table
