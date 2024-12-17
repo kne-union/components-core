@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.2.82",
+  "version": "0.2.83",
   "files": [
     "build"
   ],
@@ -23,7 +23,7 @@
     "@fullcalendar/react": "^6.1.8",
     "@fullcalendar/scrollgrid": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
-    "@kne/button-group": "^0.1.4",
+    "@kne/button-group": "^0.1.5",
     "@kne/compose": "^0.1.0",
     "@kne/create-deferred": "^0.1.0",
     "@kne/ensure-slash": "^0.1.0",

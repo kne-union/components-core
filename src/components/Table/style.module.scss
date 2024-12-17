@@ -155,13 +155,14 @@
   width: 100% !important;
 }
 
-.options-btn:global(.ant-btn) {
+.options-column .options-btn:global(.ant-btn) {
   :global(.ant-btn-loading-icon) {
     display: none;
   }
 
-  padding: 0 8px !important;
-  height: 32px !important;
+  &:global(.btn-no-padding) {
+    padding: 0 8px;
+  }
 
   &:hover:not(:disabled) {
     color: var(--primary-color);
