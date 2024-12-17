@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import Fetch from "@kne/react-fetch";
 import classnames from "classnames";
 import Icon from "@components/Icon";
 import ButtonGroup from "@components/ButtonGroup";
@@ -37,4 +38,18 @@ const OptionsList = ({ className, list = [], width }) => {
   );
 };
 
-export default OptionsList;
+const Options = ({ list, ...props }) => {
+  if (typeof list === "function") {
+    return (
+      <Fetch
+        loader={list}
+        render={({ data }) => {
+          return <OptionsList {...props} list={data} />;
+        }}
+      />
+    );
+  }
+  return <OptionsList {...props} list={list} />;
+};
+
+export default Options;
