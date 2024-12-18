@@ -196,7 +196,7 @@
 .page-header {
   background: var(--bg-color-white);
   transition: box-shadow 500ms;
-
+  overflow: hidden;
   :global(.ant-affix) {
     top: var(--nav-height-base) !important;
     background: var(--bg-color-white);
