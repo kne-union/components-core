@@ -1,0 +1,75 @@
+.page-header {
+  background: #ffffff;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.main {
+  padding-right: 120px;
+  box-sizing: border-box;
+}
+
+.icon-outer {
+  transform: translateY(6px);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--font-color);
+}
+
+.info {
+  font-size: 14px;
+  color: var(--font-color-grey-1);
+  white-space: nowrap;
+  line-height: 36px;
+  margin-left: 16px;
+}
+
+.overlay {
+  min-width: 97px !important;
+
+  :global {
+    .ant-btn {
+      border: none;
+      background: transparent !important;
+      width: 100%;
+      height: 100%;
+      padding: 5px 12px;
+      box-sizing: border-box;
+
+      &:after {
+        content: normal;
+      }
+    }
+
+    .ant-dropdown-menu-item {
+      padding: 0;
+    }
+  }
+}
+
+.tags {
+  line-height: 20px;
+  font-size: 14px;
+  color: var(--font-color);
+
+  :global {
+    .ant-tag {
+      margin-right: 0;
+    }
+  }
+}
+
+.tag-split {
+  color: var(--font-color-grey-2);
+}
+
+.button-options {
+  padding: 0 !important;
+  text-align: right;
+  min-width: 80px !important;
+  max-width: var(--max-width, 20%);
+}

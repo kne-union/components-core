@@ -110,6 +110,21 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "PageHeader",
+      "description": "页面头",
+      "code": "./page-header.js",
+      "scope": [
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
