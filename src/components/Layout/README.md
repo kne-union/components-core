@@ -636,7 +636,7 @@ render(<Example />);
 ```jsx
 const { default: Layout, Page, Menu, PageHeader } = layout;
 
-const Example = (() => {
+const Example = () => {
   return (
     <Layout navigation={{ isFixed: false }}>
       <Page
@@ -652,22 +652,22 @@ const Example = (() => {
             info="编号:85767"
             options={[
               {
-                children: '新建'
+                children: "新建",
               },
               {
-                children: '操作1'
+                children: "操作1",
               },
               {
-                children: '操作2'
+                children: "操作2",
               },
               {
-                children: '操作3'
+                children: "操作3",
               },
               {
-                children: '操作4'
-              }
+                children: "操作4",
+              },
             ]}
-            tags={['辅助信息', '辅助信息', '辅助信息', '辅助信息']}
+            tags={["辅助信息", "辅助信息", "辅助信息", "辅助信息"]}
           />
         }
         headerFixed={false}
@@ -676,7 +676,7 @@ const Example = (() => {
       </Page>
     </Layout>
   );
-});
+};
 
 render(<Example />);
 
