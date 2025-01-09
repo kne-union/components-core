@@ -33,7 +33,7 @@ const Menu = () => {
 
     return menu ? (
         <Col
-            className={classnames(style["page-menu"], {
+            className={classnames(style["page-menu"],'core-page-menu', {
                 [style["closed"]]: !menuOpen,
             })}
             style={{"--menu-width": menuWidth, "--menu-close-width": menuCloseWidth}}
