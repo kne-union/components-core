@@ -1,6 +1,7 @@
 .layout {
   --margin-width: 10px;
   --padding-width: 16px;
+  --menu-padding-width: 16px;
   background: var(--bg-color-grey-1);
   min-height: 100vh;
 
@@ -52,26 +53,27 @@
 }
 
 .page-menu {
-  left: var(--scroll-left, 0px);
-  width: var(--width);
+  left: calc(var(--scroll-left, 0px));
+  width: var(--menu-width);
+  --current-menu-width: var(--menu-width);
   transition: width 300ms;
   margin: var(--margin-width) 0 var(--margin-width) var(--margin-width);
   flex-shrink: 0;
 
   &.closed {
-    width: 0;
-    $width: var(--margin-width);
+    width: var(--menu-close-width);
+    --current-menu-width: var(--menu-close-width);
     margin-right: calc(0px - var(--margin-width));
 
     .page-menu-inner {
-      transform: translateX(calc(-100% - 40px));
+      transform: translateX(calc(-100% + var(--margin-width) * 2 + var(--menu-close-width)));
     }
   }
 }
 
 .page-menu-main,
 .page-option-main {
-  padding: var(--padding-width);
+  padding: var(--menu-padding-width);
   overflow-y: auto;
 }
 
@@ -86,7 +88,7 @@
 
 .page-option {
   left: var(--scroll-left, 0px);
-  width: var(--width);
+  width: var(--menu-width);
   margin: var(--margin-width) var(--margin-width) var(--margin-width) 0;
   flex-shrink: 0;
 }
@@ -99,7 +101,7 @@
   border-radius: 2px;
   transition: transform 300ms;
   height: calc(100vh - 2 * var(--margin-width) - var(--nav-height));
-  width: var(--width);
+  width: var(--current-menu-width);
 }
 
 .page-option-footer {
@@ -128,7 +130,7 @@
 
 .page-menu-btn-outer {
   top: calc(22px + var(--nav-height));
-  left: var(--scroll-left);
+  left: calc(var(--scroll-left));
   z-index: 1000;
 
   &:not(.is-fixed) {
@@ -152,7 +154,7 @@
     width: 14px;
     height: 40px;
     border-radius: 0 4px 4px 0;
-    transform: translateX(calc(var(--width) + var(--margin-width)));
+    transform: translateX(calc(var(--menu-width) + var(--margin-width)));
     transition: transform 300ms;
     background-color: var(--primary-color) !important;
     color: #fff;
@@ -165,7 +167,7 @@
 
   &.closed {
     &:global(.ant-btn.ant-btn-icon-only) {
-      transform: translateX(0);
+      transform: translateX(calc(var(--menu-close-width) + 0px));
     }
   }
 }
@@ -197,6 +199,7 @@
   background: var(--bg-color-white);
   transition: box-shadow 500ms;
   overflow: hidden;
+
   :global(.ant-affix) {
     top: var(--nav-height-base) !important;
     background: var(--bg-color-white);
