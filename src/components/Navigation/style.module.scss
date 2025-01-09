@@ -1,5 +1,12 @@
 .navigation-wrap {
   height: var(--nav-height);
+  position: relative;
+
+  .logo {
+    position: absolute;
+    overflow: visible;
+    width: auto;
+  }
 }
 
 .navigation {
@@ -53,6 +60,7 @@
     :global(.ant-menu-title-content) {
       font-weight: 500;
       color: var(--bg-color-white);
+
       &:hover {
         color: var(--bg-color-white);
       }
@@ -94,6 +102,10 @@
   :global(.ant-btn-link) {
     color: #fff;
   }
+}
+
+.main-menu {
+  padding: 0 160px;
 }
 
 .navigation-logo {
