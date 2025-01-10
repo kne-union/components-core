@@ -1,5 +1,6 @@
 const message = {
   addText: "添加",
+  addSomeThing: "添加{label}",
   delText: "删除",
   selectedTextAdvanced: "已选",
   delConfirm: "确定要删除这条{name}吗?",
