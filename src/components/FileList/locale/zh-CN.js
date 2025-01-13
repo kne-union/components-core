@@ -14,7 +14,7 @@ const message = {
   editDocumentName: "修改文件名称",
   documentTips: "请勿修改文件扩展名，这有可能导致文件不能正确预览",
   successDelete: "删除{name}成功",
-  successEditFileName: "修改文件名{name}成功",
+  successEditFileName: "修改成功",
 };
 
 export default message;

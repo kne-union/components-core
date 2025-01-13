@@ -12,9 +12,11 @@ import importMessages from "./locale";
 import style from "./style.module.scss";
 
 const FileListInner = ({
+                           className,
                            maxLength,
                            list: _previewList,
                            setList,
+                           infoItemRenders,
                            defaultTab,
                            defaultPreviewFileId,
                            apis: currentApis,
@@ -89,21 +91,25 @@ const FileListInner = ({
             );
         },
         onEdit: async ({formData, item}) => {
-            apis.onEdit && (await apis.onEdit({formData, item}));
-            setList((list) => {
-                const newList = list.slice(0);
-                const index = list.findIndex(({id}) => id === item.id);
-                index > -1 &&
-                newList.splice(
-                    index,
-                    1,
-                    Object.assign({}, item, {filename: formData.name})
+            const res = apis.onEdit && (await apis.onEdit({formData, item}));
+            if (res !== false) {
+                setList((list) => {
+                    const newList = list.slice(0);
+                    const index = list.findIndex(({id}) => id === item.id);
+                    index > -1 &&
+                    newList.splice(
+                        index,
+                        1,
+                        Object.assign({}, item, {filename: formData.name})
+                    );
+                    return newList;
+                });
+                message.success(
+                    formatMessage({id: "successEditFileName"}, {name: item.filename})
                 );
-                return newList;
-            });
-            message.success(
-                formatMessage({id: "successEditFileName"}, {name: item.filename})
-            );
+            }
+
+            return res;
         },
     };
 
@@ -116,66 +122,69 @@ const FileListInner = ({
             : titleExtra;
 
     return (
-        <DragAreaOuter
-            title={
-                <Title
-                    currentTab={currentTab}
-                    setCurrentTab={setCurrentTab}
-                    previewMap={previewMap}
-                    previewList={previewList}
-                    getPermission={getPermission}
-                    currentPreviewFileId={currentPreviewFileId}
-                    setCurrentPreviewFileId={setCurrentPreviewFileId}
-                    itemApis={itemApis}
-                    getPopupContainer={getPopupContainer}
-                >
-                    <Space split={<Divider type="vertical"/>}>
-                        {titleExtraInner}
-                        {getPermission("add", {}) ? (
-                            <>
-                                <DragButton>
-                                    <FormattedMessage id="dragText" moduleName="FileList"/>
-                                </DragButton>
-                                <UploadButton>
-                                    <FormattedMessage id="uploadFile" moduleName="FileList"/>
-                                </UploadButton>
-                            </>
-                        ) : null}
-                    </Space>
-                </Title>
-            }
-            fileSize={fileSize}
-            maxLength={maxLength}
-            onFileSelected={onFileSelected}
-            accept={accept}
-        >
-            {currentTab === "list" ? (
-                <List
-                    dataSource={[...previewList, ...uploadingList]}
-                    getPermission={getPermission}
-                    apis={itemApis}
-                />
-            ) : null}
-            {currentTab === "preview" ? (
-                currentPreviewFileId ? (
-                    <div className={style["file-preview-inner"]}>
-                        <FilePreview
-                            className={style["file-preview"]}
-                            src={previewMap.get(currentPreviewFileId)?.src}
-                            id={currentPreviewFileId}
-                            apis={apis}
-                            filename={previewMap.get(currentPreviewFileId)?.filename}
-                        />
-                    </div>
-                ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        className="ant-empty-normal"
+        <div className={className}>
+            <DragAreaOuter
+                title={
+                    <Title
+                        currentTab={currentTab}
+                        setCurrentTab={setCurrentTab}
+                        previewMap={previewMap}
+                        previewList={previewList}
+                        getPermission={getPermission}
+                        currentPreviewFileId={currentPreviewFileId}
+                        setCurrentPreviewFileId={setCurrentPreviewFileId}
+                        itemApis={itemApis}
+                        getPopupContainer={getPopupContainer}
+                    >
+                        <Space split={<Divider type="vertical"/>}>
+                            {titleExtraInner}
+                            {getPermission("add", {}) ? (
+                                <>
+                                    <DragButton>
+                                        <FormattedMessage id="dragText" moduleName="FileList"/>
+                                    </DragButton>
+                                    <UploadButton>
+                                        <FormattedMessage id="uploadFile" moduleName="FileList"/>
+                                    </UploadButton>
+                                </>
+                            ) : null}
+                        </Space>
+                    </Title>
+                }
+                fileSize={fileSize}
+                maxLength={maxLength}
+                onFileSelected={onFileSelected}
+                accept={accept}
+            >
+                {currentTab === "list" ? (
+                    <List
+                        dataSource={[...previewList, ...uploadingList]}
+                        getPermission={getPermission}
+                        apis={itemApis}
+                        infoItemRenders={infoItemRenders}
                     />
-                )
-            ) : null}
-            <DragArea/>
-        </DragAreaOuter>
+                ) : null}
+                {currentTab === "preview" ? (
+                    currentPreviewFileId ? (
+                        <div className={style["file-preview-inner"]}>
+                            <FilePreview
+                                className={style["file-preview"]}
+                                src={previewMap.get(currentPreviewFileId)?.src}
+                                id={currentPreviewFileId}
+                                apis={apis}
+                                filename={previewMap.get(currentPreviewFileId)?.filename}
+                            />
+                        </div>
+                    ) : (
+                        <Empty
+                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                            className="ant-empty-normal"
+                        />
+                    )
+                ) : null}
+                <DragArea/>
+            </DragAreaOuter>
+        </div>
     );
 };
 
