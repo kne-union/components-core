@@ -16,7 +16,7 @@ const message = {
   documentTips:
     "Do not modify the file extension, which may cause the file to not preview correctly",
   successDelete: "Success delete {name}",
-  successEditFileName: "Success edit filename {name}",
+  successEditFileName: "Save Success",
 };
 
 export default message;
