@@ -10,6 +10,7 @@ const message = {
   endDate: "End Date",
   soFarText: "Hitherto",
   uploadButtonText: "Click Upload",
+  uploadTips: "Support extension {extensionNames}, single file size does not exceed {fileSize} M, upload up to {maxLength} attachments",
   yuan: "yuan",
   thousand: "ten thousand yuan",
   salaryType: "Salary type",
