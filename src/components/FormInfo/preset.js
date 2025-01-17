@@ -199,6 +199,7 @@ const formPreset = async (options, otherOptions) => {
     merge(
       {},
       {
+        type: "inner",
         rules: {
           REQ: (...args) => {
             return Object.assign({}, _olderREQ(...args), {
