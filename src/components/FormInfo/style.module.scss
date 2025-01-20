@@ -423,7 +423,7 @@
   flex-wrap: nowrap;
   gap: 8px;
 
-  &:not(.first-item) {
+  &:not(:first-child) {
     :global {
       .react-form__field-label {
         display: none;

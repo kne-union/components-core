@@ -147,7 +147,7 @@ const formPreset = async (options, otherOptions) => {
   );
 
   interceptors.output.use("phone-number-string", (value) => {
-    if (!(value.code && value.value)) {
+    if (!(value?.code && value?.value)) {
       return "";
     }
 

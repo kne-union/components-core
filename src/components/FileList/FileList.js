@@ -155,6 +155,7 @@ const FileListInner = ({
                 maxLength={maxLength}
                 onFileSelected={onFileSelected}
                 accept={accept}
+                defaultOpen={previewList.length === 0}
             >
                 {currentTab === "list" ? (
                     <List
