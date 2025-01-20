@@ -15,6 +15,7 @@ const message = {
   year: "year",
   over: "over {count} {unit}s",
   lessThan: "less than {count} {unit}s",
+  inputPlaceholder: "Please enter {label}"
 };
 
 export default Object.assign({}, commonMessage, formInfoMessage, message);

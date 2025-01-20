@@ -15,6 +15,7 @@ const message = {
   year: "年",
   over: "{count}{unit}以上",
   lessThan: "{count}{unit}以下",
+  inputPlaceholder: "请输入{label}"
 };
 
 export default Object.assign({}, commonMessage, formInfoMessage, message);
