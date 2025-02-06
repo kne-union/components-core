@@ -35,7 +35,6 @@ import Avatar from "./fields/Avatar";
 import SalaryInput from "./fields/SalaryInput";
 import InputUpperCaseField from "./fields/InputUpperCase";
 import TypeDateRangePicker from "./fields/TypeDateRangePicker";
-import TableInput from "./fields/TableInput";
 import Text from "./fields/Text";
 import ErrorTip from "./ErrorTip";
 
@@ -145,7 +144,6 @@ export {
   Upload,
   Avatar,
   SalaryInput,
-  TableInput,
   Text,
   Rate,
   Switch,
@@ -233,7 +231,6 @@ export const formModule = Object.assign({}, reactFormAntd, {
   Upload,
   Avatar,
   SalaryInput,
-  TableInput,
   Text,
   Rate,
   Switch,

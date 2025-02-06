@@ -29,7 +29,6 @@ import Upload from "./Upload";
 import Avatar from "./Avatar";
 import SalaryInput from "./SalaryInput";
 import InputUpperCaseField from "./InputUpperCase";
-import TableInput from "./TableInput";
 import compose from "@kne/compose";
 import {forwardRef} from "react";
 import {FormattedMessage, useIntl} from "@components/Intl";
@@ -256,7 +255,6 @@ const fields = {
     Rate: createWithFieldDecorator([withLang])(Rate),
     Switch: createWithFieldDecorator([withLang])(Switch),
     Slider: createWithFieldDecorator([withLang])(Slider),
-    TableInput: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(TableInput),
     SalaryInput: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(SalaryInput),
     TypeDateRangePicker: createWithFieldDecorator([withLang])(
         TypeDateRangePicker
