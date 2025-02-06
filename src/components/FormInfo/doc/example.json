@@ -385,29 +385,6 @@
       ]
     },
     {
-      "title": "可编辑的表格表单",
-      "description": "可编辑的表格表单",
-      "code": "./table-input.js",
-      "scope": [
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
       "title": "可扩展的AdvanceSelect",
       "description": "AdvanceSelect支持左右布局",
       "code": "./advanced-select-layout.js",
