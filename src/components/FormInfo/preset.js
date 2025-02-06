@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import merge from "lodash/merge";
 import get from "lodash/get";
 import "@kne/react-form-antd/dist/index.css";
-import { PHONE_NUMBER } from "./fields/PhoneNumber";
+import { PHONE_NUMBER_INPUT } from "./fields/PhoneNumber";
 import HelperGuideLabel from "@components/FormInfo/HelperGuideLabel";
 import { loadModule } from "@kne/remote-loader";
 
@@ -222,7 +222,7 @@ const formPreset = async (options, otherOptions) => {
               errMsg: getLocaleMsg(ruleName, { start, end }),
             });
           },
-          PHONE_NUMBER,
+          PHONE_NUMBER_INPUT,
           ARRAY_LENGTH: (value, start, end) => {
             if (end === start && value.length !== Number(end)) {
               return {

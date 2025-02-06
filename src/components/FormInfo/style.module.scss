@@ -63,21 +63,6 @@
       background: #ffffff;
       color: var(--font-color);
     }
-
-    .ant-picker-suffix,
-    .ant-select-arrow {
-      color: var(--font-color);
-
-      .anticon-down svg {
-        display: none;
-      }
-
-      .anticon-down:before {
-        display: block;
-        font-family: "iconfont" !important;
-        content: "\e693";
-      }
-    }
   }
 }
 
