@@ -29,6 +29,7 @@ const UploadField = createWithIntl({
         ossUpload,
         onUpload,
         getPermission,
+        concurrentCount,
         ...props
     } = Object.assign({}, {
         defaultValue: [],
@@ -54,6 +55,7 @@ const UploadField = createWithIntl({
         showUploadList: true,
         maxLength: 10,
         fileSize: 30,
+        concurrentCount: 10
     }, p);
     const [propsValue, onChange] = useControlValue(props);
     const value = propsValue || [];
@@ -65,7 +67,7 @@ const UploadField = createWithIntl({
         maxLength,
         value,
         onChange,
-        concurrentCount: 10,
+        concurrentCount,
     });
     const previewFileList = [...uploadingList, ...value];
     const tipsText = renderTips(formatMessage({id: 'uploadTips'}, {
