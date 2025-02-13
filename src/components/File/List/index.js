@@ -6,7 +6,7 @@ import Modal from "@components/Modal";
 
 const useEdit = ({apis}) => {
     const formModal = useFormModal();
-    return typeof apis.onEditModalShow === 'function' ? apis.onEditModalShow : (item, apis) => {
+    return typeof apis?.onEditModalShow === 'function' ? apis.onEditModalShow : (item, apis) => {
         const modalApi = formModal({
             size: "small",
             title: "修改文件名称",

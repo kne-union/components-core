@@ -175,6 +175,10 @@ const formPreset = async (options, otherOptions) => {
         "zh-CN": "%s不能为空",
         "en-US": "%s cannot be empty ",
       },
+      EMAIL:{
+        "zh-CN":"请输入有效的%s",
+        "en-US": "Please enter a valid %s",
+      },
       LENGTH_EQUAL: {
         "zh-CN": `%s必须等于${values.end}`,
         "en-US": `%s must be equal to ${values.end}`,
@@ -221,6 +225,12 @@ const formPreset = async (options, otherOptions) => {
             return Object.assign({}, _olderLEN(...args), {
               errMsg: getLocaleMsg(ruleName, { start, end }),
             });
+          },
+          EMAIL: function (value) {
+            return {
+              result: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value),
+              errMsg: getLocaleMsg('EMAIL')
+            };
           },
           PHONE_NUMBER_INPUT,
           ARRAY_LENGTH: (value, start, end) => {

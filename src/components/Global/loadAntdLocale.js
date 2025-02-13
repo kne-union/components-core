@@ -7,11 +7,14 @@ const loadAntdLocale = ({params}) => {
         "en-US": async () => {
             await import("dayjs/locale/en");
             dayjs.locale("en");
-            await import("@kne/button-group/dist/locale/en").then((module) => {
+            await import("@kne/button-group/dist/locale/en-US").then((module) => {
                 localeLoader('en-US', module['default'], 'button-group');
             });
             await import("@kne/phone-number-input/dist/locale/en-US").then((module) => {
                 localeLoader('en-US', module['default'], 'phone-number-input');
+            });
+            await import("@kne/scroll-loader/dist/locale/en-US").then((module) => {
+                localeLoader('en-US', module['default'], 'scroll-loader');
             });
             return await import("antd/es/locale/en_US").then(module => module["default"]);
         }, "zh-CN": async () => {
