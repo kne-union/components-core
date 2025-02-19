@@ -16,6 +16,10 @@ const loadAntdLocale = ({params}) => {
             await import("@kne/scroll-loader/dist/locale/en-US").then((module) => {
                 localeLoader('en-US', module['default'], 'scroll-loader');
             });
+            await import("@kne/react-file/dist/locale/en-US").then((module) => {
+                localeLoader('en-US', module['default'], 'react-file');
+            });
+
             return await import("antd/es/locale/en_US").then(module => module["default"]);
         }, "zh-CN": async () => {
             await import("dayjs/locale/zh-cn");
