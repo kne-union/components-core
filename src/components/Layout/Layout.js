@@ -31,7 +31,7 @@ const ErrorBoundary = (props) => {
     return <ReactErrorBoundary {...props} errorComponent={ErrorComponent}/>;
 };
 
-const Layout = ({children, theme, navigation}) => {
+const Layout = ({className, children, theme, navigation}) => {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [pageProps, _setPageProps] = useState(Object.assign({}, defaultProps));
     const {permissions} = usePermissions();
@@ -53,7 +53,7 @@ const Layout = ({children, theme, navigation}) => {
 
     return (
         <AntdLayout
-            className={classnames(style["layout"], 'core-layout')}
+            className={classnames(style["layout"], className, 'core-layout')}
             style={Object.assign(
                 {},
                 {
