@@ -84,7 +84,7 @@ const UploadField = createWithIntl({
 
     return (
         <Space direction="vertical">
-            <Space align="start">
+            <div align="start">
                 <InputFileButton
                     {...omit(props, ["value", "onChange"])}
                     size={size}
@@ -96,7 +96,7 @@ const UploadField = createWithIntl({
                     {children}
                 </InputFileButton>
                 {tipsText && <div className={style["tips"]}>{tipsText}</div>}
-            </Space>
+            </div>
             {showUploadList && previewFileList.length > 0 && (
                 <FileList
                     className={style["upload-list"]}
