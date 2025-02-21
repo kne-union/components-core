@@ -32,6 +32,7 @@
   &:global(.tabs-modal) {
     $body-min-height: 80px;
     color: red;
+
     .modal-title {
       display: none;
     }
@@ -109,7 +110,7 @@
   box-sizing: border-box;
 
   &:first-child {
-    border-right: solid 1px var(--bg-color-grey-3);
+    //border-right: solid 1px var(--bg-color-grey-3);
   }
 
   &:last-child {
@@ -120,12 +121,17 @@
 }
 
 .modal-title {
-  border-bottom: 1px solid var(--bg-color-grey-3);
+  /*border-bottom: 1px solid var(--bg-color-grey-3);
   color: var(--font-color);
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 0;
-  padding: 11px 24px;
+  padding: 11px 24px;*/
+  color: var(--font-color);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 24px 24px 0;
+  margin-bottom: 0;
 }
 
 .modal-body {
@@ -137,6 +143,7 @@
     .simplebar-content-wrapper:nth-child(1) {
       //height: 100% !important;
       min-height: 100% !important;
+
       .simplebar-content:nth-child(1) {
         height: 100%;
         box-sizing: border-box;
@@ -166,8 +173,7 @@
 }
 
 .modal-footer {
-  border-top: 1px solid var(--bg-color-grey-3);
-  padding: 12px 24px;
+  padding: 12px 24px 24px;
 }
 
 .modal-close {
@@ -179,7 +185,7 @@
   }
 
   position: absolute;
-  top: 13px;
+  top: 18px;
   inset-inline-end: 17px;
   z-index: 1010;
   padding: 0;
@@ -222,9 +228,9 @@
     }
 
     .ant-modal-confirm
-      .ant-modal-confirm-body
-      .ant-modal-confirm-title
-      + .ant-modal-confirm-content {
+    .ant-modal-confirm-body
+    .ant-modal-confirm-title
+    + .ant-modal-confirm-content {
       max-width: 100% !important;
     }
 
