@@ -29,8 +29,9 @@ if (!isMobile()) {
     document.body.classList.add("simplebar-content-wrapper");
 }
 
-const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
+const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#4096ff"}, children}) => {
     const [isInit, setIsInit] = useState(false);
+    const {colorPrimary, components, ...otherToken} = Object.assign({}, themeToken);
     useEffect(() => {
         let styleEl = document.head.querySelector("#component-core-theme");
         if (!styleEl) {
@@ -38,91 +39,59 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
             styleEl.id = "component-core-theme";
             document.head.appendChild(styleEl);
         }
-        const colorPrimary = Color(themeToken.colorPrimary);
+        const colorPrimaryObject = Color(colorPrimary);
         const themeProps = {
-            "--primary-color": themeToken.colorPrimary,
-            "--primary-color-red": colorPrimary.red(),
-            "--primary-color-green": colorPrimary.green(),
-            "--primary-color-blue": colorPrimary.blue(),
-            "--primary-color-06": colorPrimary.alpha(0.06).string(),
+            "--primary-color": colorPrimary,
+            "--primary-color-red": colorPrimaryObject.red(),
+            "--primary-color-green": colorPrimaryObject.green(),
+            "--primary-color-blue": colorPrimaryObject.blue(),
+            "--primary-color-06": colorPrimaryObject.alpha(0.06).string(),
         };
         range(0, 10).forEach((i) => {
-            themeProps[`--primary-color-${i + 1}`] = colorPrimary
+            themeProps[`--primary-color-${i + 1}`] = colorPrimaryObject
                 .alpha((i + 1) / 10)
                 .string();
         });
         styleEl.textContent = `.${style["container"]
             .replace(/\+/g, "\\+")
-            .replace(/\//g, "\\/")}{${transform(
-            themeProps,
-            (result, value, key) => {
-                result.push(`${key}:${value};`);
-            },
-            []
-        ).join("")}}`;
+            .replace(/\//g, "\\/")}{${transform(themeProps, (result, value, key) => {
+            result.push(`${key}:${value};`);
+        }, []).join("")}}`;
         setIsInit(true);
         return () => {
             // uninstall();
         };
-    }, [themeToken.colorPrimary]);
+    }, [colorPrimary]);
     //设置主题色成功再展示页面
     if (!isInit) {
         return null;
     }
-    return (
-        <AntdConfigProvider
-            getTargetContainer={getScrollEl}
-            getPopupContainer={getScrollEl}
-            locale={message}
-            wave={{disabled: true}}
-            autoInsertSpace={false}
-            theme={{
-                token: Object.assign(
-                    {},
-                    {
-                        borderRadius: 2,
-                        colorError: "#f53f3f",
-                        colorInfo: "#165dff",
-                        colorSuccess: "#00b42a",
-                        colorWarning: "#ff7d00",
-                        algorithm: themeToken.isDark
-                            ? theme.darkAlgorithm
-                            : theme.defaultAlgorithm,
-                        colorPrimary: themeToken.colorPrimary,
-                        colorPrimaryHover: Color(themeToken.colorPrimary)
-                            .lighten(0.1)
-                            .hex(),
-                        colorPrimaryActive: Color(themeToken.colorPrimary)
-                            .darken(0.1)
-                            .hex(),
-                        controlItemBgActive: "var(--primary-color-1)",
-                        controlItemBgHover: "var(--primary-color-1)",
-                        colorTextBase: "#222222",
-                        colorText: "#222222",
-                        colorLink: themeToken.colorPrimary,
-                        colorLinkActive: themeToken.colorPrimary,
-                        colorLinkHover: themeToken.colorPrimary,
-                    },
-                    themeToken
-                ),
-            }}
-        >
-            {children}
-        </AntdConfigProvider>
-    );
+    return (<AntdConfigProvider
+        getTargetContainer={getScrollEl}
+        getPopupContainer={getScrollEl}
+        locale={message}
+        wave={{disabled: true}}
+        autoInsertSpace={false}
+        theme={{
+            components, token: Object.assign({}, {
+                colorError: "#f53f3f",
+                colorInfo: "#165dff",
+                colorSuccess: "#00b42a",
+                colorWarning: "#ff7d00",
+                algorithm: otherToken.isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+                colorPrimary: colorPrimary,
+                colorLink: colorPrimary,
+                colorTextBase: "#222222",
+                colorText: "#222222"
+            }, otherToken),
+        }}
+    >
+        {children}
+    </AntdConfigProvider>);
 });
 
-ConfigProvider.defaultProps = {
-    themeToken: {
-        colorPrimary: "#5cb8b2",
-    },
-};
-
 const GlobalFontLoader = createWithRemoteLoader({
-    modules: [
-        "components-iconfont:Font@load",
-        "components-iconfont:ColorfulFont@load",
-    ],
+    modules: ["components-iconfont:Font@load", "components-iconfont:ColorfulFont@load",],
 })(({remoteModules}) => {
     const [loadFont, loadColorfulFont] = remoteModules;
     const loadCallback = useRefCallback(() => {
@@ -136,119 +105,78 @@ const GlobalFontLoader = createWithRemoteLoader({
 });
 
 export const GlobalProvider = ({
-                                   preset,
-                                   children,
-                                   themeToken,
-                                   init,
-                                   ...props
+                                   preset, children, themeToken, init, ...props
                                }) => {
     const locale = get(preset, "locale", "zh-CN");
     const localMessageRef = useRef({});
     const enumsRef = useRef(new Map());
-    const [global, setGlobal] = useState(
-        Object.assign(
-            {
-                themeToken,
-                localMessageRef,
-                enumsRef,
-                locale,
-            },
-            get(preset, "global")
-        )
-    );
-    return (
-        <Provider
-            value={{
-                ...props,
-                preset,
-                locale,
-                global,
-                setGlobal,
-            }}
-        >
-            <PresetProvider value={preset}>
-                <ConfigProvider
-                    loader={loadAntdLocale}
-                    params={{locale: global.locale}}
-                    themeToken={global.themeToken}
-                >
-                    <App message={{top: 100}}>
-                        <AppDrawer>
-                            {typeof init === "function" ? (
-                                <Fetch
-                                    loader={() =>
-                                        init({
-                                            preset,
-                                            global,
-                                            setGlobal,
-                                        })
-                                    }
-                                    render={() => children}
-                                />
-                            ) : (
-                                children
-                            )}
-                        </AppDrawer>
-                    </App>
-                    <GlobalFontLoader/>
-                </ConfigProvider>
-            </PresetProvider>
-        </Provider>
-    );
+    const [global, setGlobal] = useState(Object.assign({
+        themeToken, localMessageRef, enumsRef, locale,
+    }, get(preset, "global")));
+    return (<Provider
+        value={{
+            ...props, preset, locale, global, setGlobal,
+        }}
+    >
+        <PresetProvider value={preset}>
+            <ConfigProvider
+                loader={loadAntdLocale}
+                params={{locale: global.locale}}
+                themeToken={global.themeToken}
+            >
+                <App message={{top: 100}}>
+                    <AppDrawer>
+                        {typeof init === "function" ? (<Fetch
+                            loader={() => init({
+                                preset, global, setGlobal,
+                            })}
+                            render={() => children}
+                        />) : (children)}
+                    </AppDrawer>
+                </App>
+                <GlobalFontLoader/>
+            </ConfigProvider>
+        </PresetProvider>
+    </Provider>);
 };
 
 GlobalProvider.defaultProps = {
     preset: {
-        locale: "zh-CN",
-        apis: {},
+        locale: "zh-CN", apis: {},
     },
 };
 
 export const PureGlobal = ({children, ...props}) => {
     const {global: themeToken} = useGlobalContext("themeToken");
-    return (
-        <GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
-            <div
-                data-testid="components-core-pure-global"
-                className={classnames(style["container"], "core-container-body")}
-            >
-                {children}
-            </div>
-        </GlobalProvider>
-    );
+    return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
+        <div
+            data-testid="components-core-pure-global"
+            className={classnames(style["container"], "core-container-body")}
+        >
+            {children}
+        </div>
+    </GlobalProvider>);
 };
 
 export {usePreset};
 
 export const useGlobalContext = (globalKey) => {
     const contextValue = useContext();
-    return Object.assign(
-        {
-            global: {},
-            setGlobal: () => {
-                console.warn("调用setGlobal的组件应该被放置在Global上下文中");
-            },
+    return Object.assign({
+        global: {}, setGlobal: () => {
+            console.warn("调用setGlobal的组件应该被放置在Global上下文中");
         },
-        contextValue,
-        globalKey
-            ? {
-                global: get(contextValue.global, globalKey),
-                setGlobal: (value) => {
-                    contextValue.setGlobal(
-                        typeof value === "function"
-                            ? (global) => {
-                                return Object.assign({}, global, {
-                                    [globalKey]: value(get(global, globalKey)),
-                                });
-                            }
-                            : Object.assign({}, contextValue.global, {
-                                [globalKey]: value,
-                            })
-                    );
-                },
-            }
-            : {}
-    );
+    }, contextValue, globalKey ? {
+        global: get(contextValue.global, globalKey), setGlobal: (value) => {
+            contextValue.setGlobal(typeof value === "function" ? (global) => {
+                return Object.assign({}, global, {
+                    [globalKey]: value(get(global, globalKey)),
+                });
+            } : Object.assign({}, contextValue.global, {
+                [globalKey]: value,
+            }));
+        },
+    } : {});
 };
 
 export const SetGlobal = ({globalKey, value, needReady, children}) => {
@@ -286,32 +214,24 @@ export const GlobalInfo = ({globalKey, value, needReady, children}) => {
 };
 
 const Global = ({children, className, ...props}) => {
-    return (
-        <ErrorBoundary
-            errorRender={() => {
-                return (
-                    <Result
-                        status="500"
-                        title="500"
-                        subTitle="程序出现异常，请刷新后重试"
-                    />
-                );
-            }}
-        >
-            <GlobalProvider {...props}>
-                <div
-                    data-testid="components-core-global"
-                    className={classnames(
-                        style["container"],
-                        "container-body",
-                        className
-                    )}
-                >
-                    {children}
-                </div>
-            </GlobalProvider>
-        </ErrorBoundary>
-    );
+    return (<ErrorBoundary
+        errorRender={() => {
+            return (<Result
+                status="500"
+                title="500"
+                subTitle="程序出现异常，请刷新后重试"
+            />);
+        }}
+    >
+        <GlobalProvider {...props}>
+            <div
+                data-testid="components-core-global"
+                className={classnames(style["container"], "container-body", className)}
+            >
+                {children}
+            </div>
+        </GlobalProvider>
+    </ErrorBoundary>);
 };
 
 export default Global;
