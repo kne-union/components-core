@@ -1,1 +1,1 @@
-export {default} from '@kne/react-icon';
+export {default, FontLoader} from '@kne/react-icon';

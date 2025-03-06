@@ -15,6 +15,7 @@ import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
 import get from "lodash/get";
 import {AppDrawer} from "@components/Drawer";
+import {FontLoader} from '@components/Icon';
 import useRefCallback from "@kne/use-ref-callback";
 import transform from "lodash/transform";
 import range from "lodash/range";
@@ -91,17 +92,13 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
 });
 
 const GlobalFontLoader = createWithRemoteLoader({
-    modules: ["components-iconfont:Font@load", "components-iconfont:ColorfulFont@load",],
+    modules: ["components-iconfont:Font@path", "components-iconfont:ColorfulFont@path",],
 })(({remoteModules}) => {
-    const [loadFont, loadColorfulFont] = remoteModules;
-    const loadCallback = useRefCallback(() => {
-        loadFont();
-        loadColorfulFont();
-    });
-    useEffect(() => {
-        loadCallback();
-    }, [loadCallback]);
-    return null;
+    const [fontPath, colorfulPath] = remoteModules;
+    return <>
+        <FontLoader path={`${fontPath}/iconfont.css`}/>
+        <FontLoader path={`${colorfulPath}/iconfont.js`}/>
+    </>;
 });
 
 export const GlobalProvider = ({
