@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "files": [
     "build"
   ],
@@ -32,7 +32,7 @@
     "@kne/react-file": "^0.1.17",
     "@kne/react-file-type": "^1.0.5",
     "@kne/react-form-antd": "^4.0.1",
-    "@kne/react-icon": "^0.1.1",
+    "@kne/react-icon": "^0.1.2",
     "@kne/react-intl": "^0.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
