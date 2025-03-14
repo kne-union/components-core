@@ -1,3 +1,4 @@
 import "@kne/button-group/dist/index.css";
 
-export { default } from "@kne/button-group";
+export * from "@kne/button-group";
+export {default} from "@kne/button-group";

@@ -120,6 +120,7 @@ const ControlAvatarEditor = forwardRef(
         const [rotate, setRotate] = useState(0);
         const [previewImg, setPreviewImg] = useState("");
         const editorRef = useRef(null);
+
         useLayoutEffect(() => {
             setBaseWidth((outerRef.current.clientWidth * 2) / 3);
         }, []);
@@ -250,10 +251,7 @@ const ControlAvatarEditor = forwardRef(
                                                 setImage(fileList[0]);
                                             }}
                                         >
-                                            <FormattedMessage
-                                                id={"ReUpload"}
-                                                moduleName={localeModuleName}
-                                            />
+                                            {intl.formatMessage({id:'ReUpload'})}
                                         </InputFileLink>
                                     </Col>
                                 </Row>
@@ -278,10 +276,7 @@ const ControlAvatarEditor = forwardRef(
                                             textAlign: "center",
                                         }}
                                     >
-                                        <FormattedMessage
-                                            id={"Preview"}
-                                            moduleName={localeModuleName}
-                                        />
+                                        {intl.formatMessage({id:'Preview'})}
                                     </div>
                                 </Space>
                             </div>
