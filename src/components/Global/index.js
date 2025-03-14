@@ -95,6 +95,7 @@ const GlobalFontLoader = createWithRemoteLoader({
     modules: ["components-iconfont:Font@path", "components-iconfont:ColorfulFont@path",],
 })(({remoteModules}) => {
     const [fontPath, colorfulPath] = remoteModules;
+
     return <>
         <FontLoader path={`${fontPath}/iconfont.css`}/>
         <FontLoader path={`${colorfulPath}/iconfont.js`}/>
