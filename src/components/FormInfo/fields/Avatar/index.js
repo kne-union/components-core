@@ -251,7 +251,7 @@ const ControlAvatarEditor = forwardRef(
                                                 setImage(fileList[0]);
                                             }}
                                         >
-                                            {intl.formatMessage({id:'ReUpload'})}
+                                            {intl.formatMessage({id: 'ReUpload'})}
                                         </InputFileLink>
                                     </Col>
                                 </Row>
@@ -276,7 +276,7 @@ const ControlAvatarEditor = forwardRef(
                                             textAlign: "center",
                                         }}
                                     >
-                                        {intl.formatMessage({id:'Preview'})}
+                                        {intl.formatMessage({id: 'Preview'})}
                                     </div>
                                 </Space>
                             </div>
@@ -377,7 +377,7 @@ const AvatarField = createWithIntl({importMessages, moduleName: "FormInfo"})(
         const [loading, setLoading] = useState(false);
         const {apis: baseApis} = usePreset();
         const apis = merge({}, baseApis, currentApis);
-        const ossUpload = apis.file?.upload || apis.ossUpload;
+        const ossUpload = apis.ossUpload || apis.upload || apis.file?.upload;
         const dropRef = useRef(null);
         const dropModal = useDropModal();
         const intl = useIntl({moduleName: localeModuleName});
