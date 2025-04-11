@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useFetch } from "@kne/react-fetch";
 import { Spin } from "antd";
 import style from "./style.module.scss";
-import Tooltip from "./index";
+import Tooltip from "./tooltip";
 import classnames from "classnames";
 
 const TooltipFetch = ({
