@@ -1,5 +1,5 @@
 import style from "./style.module.scss";
-import Tooltip from "./index";
+import Tooltip from "./tooltip";
 import Icon from "@components/Icon";
 
 const TooltipInfoLabel = ({ title, tooltipTitle }) => {
