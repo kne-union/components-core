@@ -31,7 +31,7 @@
     "@kne/react-fetch": "^1.5.5",
     "@kne/react-file": "^0.1.17",
     "@kne/react-file-type": "^1.0.5",
-    "@kne/react-form-antd": "^4.0.1",
+    "@kne/react-form-antd": "^4.0.2",
     "@kne/react-icon": "^0.1.3",
     "@kne/react-intl": "^0.1.6",
     "@kne/react-text-escape": "^0.1.4",
