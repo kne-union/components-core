@@ -1,1 +1,1 @@
-export { default } from "@kne/react-file";
+export {default, PrintButton} from "@kne/react-file";
