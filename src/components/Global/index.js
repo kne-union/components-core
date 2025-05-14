@@ -1,5 +1,5 @@
 import "./polyfill";
-import "simplebar/dist/simplebar.css";
+import "simplebar/dist/simplebar.min.css";
 import "./override.scss";
 import classnames from "classnames";
 import {Provider, useGlobalContext as useContext} from "@kne/global-context";
