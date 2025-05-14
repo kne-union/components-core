@@ -64,8 +64,8 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-sortablejs": "^6.1.4",
-    "simplebar": "^6.2.5",
-    "simplebar-react": "^3.2.4",
+    "simplebar": "^6.3.0",
+    "simplebar-react": "^3.3.0",
     "sortablejs": "^1.15.0",
     "use-debounce": "^9.0.4",
     "web-vitals": "^2.1.4"
