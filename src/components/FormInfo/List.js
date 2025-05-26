@@ -81,7 +81,6 @@ const List = createWithIntl({moduleName: "FormInfo", importMessages})(
                                 })(groupArgs);
 
                                 const formInfoProps = {
-                                    key,
                                     column,
                                     list:
                                         typeof list === "function"

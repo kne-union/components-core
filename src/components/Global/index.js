@@ -2,8 +2,7 @@ import "./polyfill";
 import "simplebar/dist/simplebar.min.css";
 import "./override.scss";
 import classnames from "classnames";
-import {Provider, useGlobalContext as useContext} from "@kne/global-context";
-import {Provider as PresetProvider, usePreset} from "@kne/global-preset";
+import {Provider, useGlobalContext as useContext, usePreset} from "@kne/global-context";
 import {App, ConfigProvider as AntdConfigProvider, Result, theme} from "antd";
 import {useEffect, useState, useRef} from "react";
 import SimpleBar from "simplebar";
@@ -23,7 +22,7 @@ import Color from "color";
 import {createWithRemoteLoader} from "@kne/remote-loader";
 
 document.body.classList.add(style["container"]);
-if (!isMobile()) {
+if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
     new SimpleBar(document.body);
     getScrollEl().classList.add(style["container"]);
 } else {
@@ -103,7 +102,7 @@ const GlobalFontLoader = createWithRemoteLoader({
 });
 
 export const GlobalProvider = ({
-                                   preset, children, themeToken, init, ...props
+                                   preset = {locale: "zh-CN", apis: {}}, children, themeToken, init, ...props
                                }) => {
     const locale = get(preset, "locale", "zh-CN");
     const localMessageRef = useRef({});
@@ -116,32 +115,24 @@ export const GlobalProvider = ({
             ...props, preset, locale, global, setGlobal,
         }}
     >
-        <PresetProvider value={preset}>
-            <ConfigProvider
-                loader={loadAntdLocale}
-                params={{locale: global.locale}}
-                themeToken={global.themeToken}
-            >
-                <App message={{top: 100}}>
-                    <AppDrawer>
-                        {typeof init === "function" ? (<Fetch
-                            loader={() => init({
-                                preset, global, setGlobal,
-                            })}
-                            render={() => children}
-                        />) : (children)}
-                    </AppDrawer>
-                </App>
-                <GlobalFontLoader/>
-            </ConfigProvider>
-        </PresetProvider>
+        <ConfigProvider
+            loader={loadAntdLocale}
+            params={{locale: global.locale}}
+            themeToken={global.themeToken}
+        >
+            <App message={{top: 100}}>
+                <AppDrawer>
+                    {typeof init === "function" ? (<Fetch
+                        loader={() => init({
+                            preset, global, setGlobal,
+                        })}
+                        render={() => children}
+                    />) : (children)}
+                </AppDrawer>
+            </App>
+            <GlobalFontLoader/>
+        </ConfigProvider>
     </Provider>);
-};
-
-GlobalProvider.defaultProps = {
-    preset: {
-        locale: "zh-CN", apis: {},
-    },
 };
 
 export const PureGlobal = ({children, ...props}) => {

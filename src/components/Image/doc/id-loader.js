@@ -4,17 +4,19 @@ const {Space} = antd;
 const BaseExample = () => {
     return <PureGlobal preset={{
         apis: {
-            oss: {
-                loader: ({params}) => {
-                    if(params.id ==='logo513.png'){
-                        return new Promise(()=>{
+            file: {
+                getUrl: {
+                    loader: ({params}) => {
+                        if (params.id === 'logo513.png') {
+                            return new Promise(() => {
 
+                            });
+                        }
+                        return new Promise((resolve) => {
+                            resolve(window.PUBLIC_URL + '/' + params.id);
                         });
-                    }
-                    return new Promise((resolve) => {
-                        resolve(window.PUBLIC_URL + '/' + params.id);
-                    });
 
+                    }
                 }
             }
         }
