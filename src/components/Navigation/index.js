@@ -36,16 +36,16 @@ const MenuReady = ({onReady}) => {
 };
 
 const Navigation = ({
-                        permissions,
-                        list,
+                        permissions=[],
+                        list=[],
                         headerLogo,
                         rightOptions,
-                        isFixed,
-                        showIndex,
+                        isFixed=true,
+                        showIndex=true,
                         indexLabel,
                         defaultTitle,
                         overflowedIndicator,
-                        base,
+                        base='',
                         onChange,
                         className,
                         navigateTo,
@@ -238,14 +238,6 @@ const Navigation = ({
             </div>
         </IntlProvider>
     );
-};
-
-Navigation.defaultProps = {
-    isFixed: true,
-    permissions: [],
-    list: [],
-    showIndex: true,
-    base: "",
 };
 
 export default Navigation;
