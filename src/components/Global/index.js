@@ -2,7 +2,8 @@ import "./polyfill";
 import "simplebar/dist/simplebar.min.css";
 import "./override.scss";
 import classnames from "classnames";
-import {Provider, useGlobalContext as useContext, usePreset} from "@kne/global-context";
+import {Provider, useGlobalContext as useContext} from "@kne/global-context";
+import {Provider as PresetProvider, usePreset} from "@kne/global-preset";
 import {App, ConfigProvider as AntdConfigProvider, Result, theme} from "antd";
 import {useEffect, useState, useRef} from "react";
 import SimpleBar from "simplebar";
@@ -115,23 +116,25 @@ export const GlobalProvider = ({
             ...props, preset, locale, global, setGlobal,
         }}
     >
-        <ConfigProvider
-            loader={loadAntdLocale}
-            params={{locale: global.locale}}
-            themeToken={global.themeToken}
-        >
-            <App message={{top: 100}}>
-                <AppDrawer>
-                    {typeof init === "function" ? (<Fetch
-                        loader={() => init({
-                            preset, global, setGlobal,
-                        })}
-                        render={() => children}
-                    />) : (children)}
-                </AppDrawer>
-            </App>
-            <GlobalFontLoader/>
-        </ConfigProvider>
+        <PresetProvider value={preset}>
+            <ConfigProvider
+                loader={loadAntdLocale}
+                params={{locale: global.locale}}
+                themeToken={global.themeToken}
+            >
+                <App message={{top: 100}}>
+                    <AppDrawer>
+                        {typeof init === "function" ? (<Fetch
+                            loader={() => init({
+                                preset, global, setGlobal,
+                            })}
+                            render={() => children}
+                        />) : (children)}
+                    </AppDrawer>
+                </App>
+                <GlobalFontLoader/>
+            </ConfigProvider>
+        </PresetProvider>
     </Provider>);
 };
 
