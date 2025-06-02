@@ -46,6 +46,7 @@ const MenuItem = (props) => {
         className,
         label,
         iconType,
+        icon,
         path,
         request,
         onClick,
@@ -87,7 +88,7 @@ const MenuItem = (props) => {
                     [style["active"]]: isSelected,
                     [style["has-children"]]: hasChildren,
                     [style["no-collapse"]]: hasChildren && !allowCollapsed,
-                    [style["no-start-icon"]]: !iconType,
+                    [style["no-start-icon"]]: !iconType && !icon,
                     [style["is-root"]]: depth === 0,
                 })}
                 onClick={(e) => {
@@ -107,7 +108,8 @@ const MenuItem = (props) => {
                     onOpenChange(!isOpen);
                 }}
             >
-                {iconType && <Icon type={iconType}/>}
+                {iconType && !icon && <Icon type={iconType}/>}
+                {icon || null}
                 <span className={style["title-content"]}>{label}</span>
                 {hasChildren && allowCollapsed && (<Icon
                     type={isOpen ? "icon-arrow-bold-down" : "icon-arrow-bold-right"}
@@ -138,7 +140,7 @@ const Menu = ({className, allowCollapsed = true, pathMatch, defaultItems = [], .
         const links = [], defaultOpenKeys = [];
         childrenKeys?.["root"]?.forEach((key) => {
             const node = nodeMapping[key];
-            if (node.iconType) {
+            if (node.iconType || node.icon) {
                 hasStartIcon = true;
             }
             node.path && links.push({path: node.path, key});
