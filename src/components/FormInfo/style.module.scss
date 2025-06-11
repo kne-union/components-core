@@ -164,8 +164,8 @@
 
   > :global(.ant-card-head) .list-btn {
     border-radius: 2px;
-    border: 1px solid var(--font-color-grey-2);
     padding: 6px 12px;
+    color: var(--primary-color);
   }
 
   .list-part .list-btn {

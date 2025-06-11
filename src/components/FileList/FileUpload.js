@@ -7,16 +7,17 @@ import useControlValue from "@kne/use-control-value";
 import get from "lodash/get";
 
 const FileUpload = ({
-                        maxLength,
+                        maxLength = Number.MAX_VALUE,
                         apis: currentApis,
-                        getPermission,
-                        fileSize,
-                        accept,
+                        getPermission = () => true,
+                        fileSize = 20,
+                        accept = [".png", ".jpg", ".pdf", ".docx", ".doc"],
+                        defaultList = [],
                         ...props
                     }) => {
     const {apis: baseApis} = usePreset();
     const apis = Object.assign({}, baseApis, currentApis);
-    const [previewList, setList] = useControlValue(props, {
+    const [previewList, setList] = useControlValue({defaultList, ...props}, {
         defaultValue: "defaultList",
         value: "list",
         onChange: "setList",
@@ -62,14 +63,6 @@ const FileUpload = ({
             <DragArea/>
         </DragAreaOuter>
     );
-};
-
-FileUpload.defaultProps = {
-    accept: [".png", ".jpg", ".pdf", ".docx", ".doc"],
-    defaultList: [],
-    fileSize: 20,
-    maxLength: Number.MAX_VALUE,
-    getPermission: () => true,
 };
 
 export default FileUpload;

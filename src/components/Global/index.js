@@ -3,7 +3,7 @@ import "simplebar/dist/simplebar.min.css";
 import "./override.scss";
 import classnames from "classnames";
 import {Provider, useGlobalContext as useContext} from "@kne/global-context";
-import {Provider as PresetProvider, usePreset} from "@kne/global-preset";
+import {Provider as PresetProvider, usePreset} from "./presetContext";
 import {App, ConfigProvider as AntdConfigProvider, Result, theme} from "antd";
 import {useEffect, useState, useRef} from "react";
 import SimpleBar from "simplebar";

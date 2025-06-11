@@ -1,29 +1,28 @@
-import * as React from "react";
-import { Drawer } from "antd";
+import {useState, useImperativeHandle, forwardRef} from "react";
+import {Drawer} from "antd";
 
-const HookDrawer = ({ config }, ref) => {
-  const [open, setOpen] = React.useState(true);
-  const [innerConfig, setInnerConfig] = React.useState(config);
+const HookDrawer = ({config}, ref) => {
+    const [open, setOpen] = useState(true);
+    const [innerConfig, setInnerConfig] = useState(config);
 
-  const close = (...args) => {
-    setOpen(false);
-    const triggerCancel = args.some((param) => param && param.triggerCancel);
-    if (innerConfig.onClose && triggerCancel) {
-      innerConfig.onClose(() => {}, ...args.slice(1));
-    }
-  };
+    const close = (...args) => {
+        setOpen(false);
+        const triggerCancel = args.some((param) => param && param.triggerCancel);
+        if (innerConfig.onClose && triggerCancel) {
+            innerConfig.onClose(() => {
+            }, ...args.slice(1));
+        }
+    };
 
-  React.useImperativeHandle(ref, () => ({
-    destroy: close,
-    update: (newConfig) => {
-      setInnerConfig((originConfig) => ({
-        ...originConfig,
-        ...newConfig,
-      }));
-    },
-  }));
+    useImperativeHandle(ref, () => ({
+        destroy: close, update: (newConfig) => {
+            setInnerConfig((originConfig) => ({
+                ...originConfig, ...newConfig,
+            }));
+        },
+    }));
 
-  return <Drawer {...innerConfig} ref={ref} open={open} onClose={close} />;
+    return <Drawer {...innerConfig} ref={ref} open={open} onClose={close}/>;
 };
 
-export default React.forwardRef(HookDrawer);
+export default forwardRef(HookDrawer);
