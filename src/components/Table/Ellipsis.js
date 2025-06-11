@@ -10,7 +10,7 @@ const Ellipsis = ({ children, ellipsis }) => {
           {},
           {
             tooltip: {
-              overlayClassName: style["tooltip"],
+              rootClassName: style["tooltip"],
               children: children,
             },
           },

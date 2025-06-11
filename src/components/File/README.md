@@ -144,7 +144,7 @@ render(
                 setTimeout(() => {
                   resolve(
                     getPublicPath("components-core") +
-                      "/mock/1_王晶简历-2023_06_2.pdf"
+                      "/mock/resume.pdf"
                   );
                 }, 1000);
               });
@@ -193,8 +193,8 @@ const BaseExample = () => {
               loader: async ({ params }) => {
                 const mapping = {
                   "01": "/avatar.png",
-                  "02": "/mock/demo.html",
-                  "03": "/mock/1_王晶简历-2023_06_2.pdf",
+                  "02": "/mock/demo2.html",
+                  "03": "/mock/resume.pdf",
                 };
                 return new Promise((resolve) => {
                   setTimeout(() => {

@@ -13,8 +13,8 @@ const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})(({
                                                                                  label,
                                                                                  rule,
                                                                                  field,
-                                                                                 defaultLength,
-                                                                                 minLength,
+                                                                                 defaultLength = 1,
+                                                                                 minLength = 1,
                                                                                  maxLength,
                                                                                  ...props
                                                                              }) => {
@@ -22,12 +22,9 @@ const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})(({
     const CurrentFiled = field;
     const context = useFormContext();
     const {formData} = context;
-    const allowAdd = !(
-        maxLength && maxLength <= get(formData, `${name}.length`, 0)
-    );
+    const allowAdd = !(maxLength && maxLength <= get(formData, `${name}.length`, 0));
     const {formatMessage} = useIntl({moduleName: "FormInfo"});
-    return (
-        <div className={classnames(style["mult-field"], "mult-field")}>
+    return (<div className={classnames(style["mult-field"], "mult-field")}>
             <GroupList
                 ref={ref}
                 name={name}
@@ -36,10 +33,7 @@ const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})(({
                 {(...groupArgs) => {
                     //这里兼容一下新老版本
                     const {
-                        id: key,
-                        index,
-                        onRemove,
-                        length,
+                        id: key, index, onRemove, length,
                     } = ((groupArgs) => {
                         if (typeof groupArgs[0] === "object") {
                             return groupArgs[0];
@@ -48,25 +42,16 @@ const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})(({
                         return {id: key, index, onRemove, length};
                     })(groupArgs);
 
-                    return (
-                        <div
+                    return (<div
                             key={key}
-                            className={classnames(
-                                style["mult-field-item"],
-                                "mult-field-item",
-                                {
-                                    [style["first-item"]]: index === 0,
-                                }
-                            )}
+                            className={classnames(style["mult-field-item"], "mult-field-item", {
+                                [style["first-item"]]: index === 0,
+                            })}
                         >
                             <CurrentFiled {...props} name={name} label={label} rule={rule}/>
                             <div className={classnames('form-info-mult-option')}>
                                 <div
-                                    className={classnames(
-                                        style["react-form__field-label"],
-                                        "react-form__field-label",
-                                        "mult-field-delete--label"
-                                    )}
+                                    className={classnames(style["react-form__field-label"], "react-form__field-label", "mult-field-delete--label")}
                                 />
                                 <Button
                                     icon={<Icon type="shanchu"/>}
@@ -74,30 +59,19 @@ const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})(({
                                     disabled={length <= Math.max(minLength, 1)}
                                 />
                             </div>
-                        </div>
-                    );
+                        </div>);
                 }}
             </GroupList>
 
-            {allowAdd && (
-                <div className={classnames('form-info-mult-add-btn')}><Button
+            {allowAdd && (<div className={classnames('form-info-mult-add-btn')}><Button
                     className={style["mult-field-add-btn"]}
                     type="dashed"
                     onClick={() => ref.current.onAdd()}
                 >
                     <Icon type="tianjia"/>
-                    {formatMessage(
-                        {id: "addSomeThing"}, {label}
-                    )}
-                </Button></div>
-            )}
-        </div>
-    );
+                    {formatMessage({id: "addSomeThing"}, {label})}
+                </Button></div>)}
+        </div>);
 });
-
-MultiField.defaultProps = {
-    minLength: 1,
-    defaultLength: 1,
-};
 
 export default MultiField;
