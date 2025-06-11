@@ -16,7 +16,7 @@ const Tooltip = ({
   return (
     <AntdTooltip
       {...props}
-      overlayClassName={classnames(overlayClassName, style["tooltip"], {
+      rootClassName={classnames(overlayClassName, style["tooltip"], {
         [style["small"]]: size === "small",
         [style["large"]]: size === "large",
       })}

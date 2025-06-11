@@ -2,9 +2,9 @@ import FilterLines from "./FilterLines";
 import FilterValueDisplay from "./FilterValueDisplay";
 import FilterOuter from "./FilterOuter";
 
-const Filter = (props) => {
+const Filter = ({defaultValue=[],...props}) => {
   return (
-    <FilterOuter {...props}>
+    <FilterOuter {...props} defaultValue={defaultValue}>
       {({ props, value, onChange }) => {
         const { extraExpand, ...others } = props;
         return (
@@ -22,10 +22,6 @@ const Filter = (props) => {
       }}
     </FilterOuter>
   );
-};
-
-Filter.defaultProps = {
-  defaultValue: [],
 };
 
 export default Filter;

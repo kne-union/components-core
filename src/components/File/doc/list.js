@@ -38,7 +38,7 @@ render(
                 setTimeout(() => {
                   resolve(
                     getPublicPath("components-core") +
-                      "/mock/1_王晶简历-2023_06_2.pdf"
+                      "/mock/resume.pdf"
                   );
                 }, 1000);
               });
