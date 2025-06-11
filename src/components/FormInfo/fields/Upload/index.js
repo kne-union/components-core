@@ -1,4 +1,4 @@
-import {Space} from "antd";
+import {Space, Flex} from "antd";
 import classnames from "classnames";
 import useControlValue from "@kne/use-control-value";
 import style from "./style.module.scss";
@@ -84,7 +84,7 @@ const UploadField = createWithIntl({
 
     return (
         <Space direction="vertical">
-            <div align="start">
+            <Flex align="start">
                 <InputFileButton
                     {...omit(props, ["value", "onChange"])}
                     size={size}
@@ -96,7 +96,7 @@ const UploadField = createWithIntl({
                     {children}
                 </InputFileButton>
                 {tipsText && <div className={style["tips"]}>{tipsText}</div>}
-            </div>
+            </Flex>
             {showUploadList && previewFileList.length > 0 && (
                 <FileList
                     className={style["upload-list"]}
@@ -123,13 +123,9 @@ const UploadField = createWithIntl({
     );
 });
 
-const Upload = (props) => {
-    const render = useOnChange(props);
+const Upload = ({interceptor = "file-format", ...props}) => {
+    const render = useOnChange({interceptor, ...props});
     return render(UploadField);
-};
-
-Upload.defaultProps = {
-    interceptor: "file-format",
 };
 
 Upload.Field = UploadField;
