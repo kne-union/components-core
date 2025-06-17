@@ -84,7 +84,7 @@ const UploadField = createWithIntl({
 
     return (
         <Space direction="vertical">
-            <Flex align="start" gap={8}>
+            <Flex align="start" gap={8} vertical>
                 <InputFileButton
                     {...omit(props, ["value", "onChange"])}
                     size={size}

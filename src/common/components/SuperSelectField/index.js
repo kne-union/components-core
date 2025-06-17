@@ -98,14 +98,14 @@ export const SuperSelectUserField = forwardRef((p, ref) => {
               size={40}
               gender="M"
             />
-            <div>
+            <Flex vertical gap={8} align="center">
               <div className={"select-list-item-label"}>{item[labelKey]}</div>
               {item.description && (
                 <div className={"select-list-item-description"}>
                   {item.description}
                 </div>
               )}
-            </div>
+            </Flex>
           </Flex>
         );
       }}
