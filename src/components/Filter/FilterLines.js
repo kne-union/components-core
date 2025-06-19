@@ -39,24 +39,23 @@ const Line = ({list, children}) => {
 };
 
 const FilterLines = ({
-                         className, list, displayLine = 1, label, extra, children,
+                         className, list = [], displayLine = 1, label, extra, children,
                      }) => {
     const hasMore = list.length > displayLine;
     const [isExpand, setIsExpand] = useState(false);
-
     return (<IntlProvider importMessages={importMessages} moduleName="Filter">
         <Space
             className={classnames(style["filter-title"], className)}
             align="top"
             size={16}
         >
-        <span className={style["filter-label"]}>
-          {label || (<FormattedMessage
-              id="filterText"
-              moduleName="Filter"
-              defaultMessage="筛选"
-          />)}
-        </span>
+            <span className={style["filter-label"]}>
+              {list && list.length > 0 && (label || <FormattedMessage
+                  id="filterText"
+                  moduleName="Filter"
+                  defaultMessage="筛选"
+              />)}
+            </span>
             <Row justify="space-between" wrap={false} align="top">
                 <Col className={style["filter-list"]} flex={1}>
                     {list.slice(0, displayLine).map((item, index) => (<Line key={index} list={item}>
