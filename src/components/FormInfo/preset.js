@@ -7,6 +7,9 @@ import { PHONE_NUMBER_INPUT } from "./fields/PhoneNumber";
 import HelperGuideLabel from "@components/FormInfo/HelperGuideLabel";
 import { loadModule } from "@kne/remote-loader";
 
+const _olderREQ = RULES.REQ;
+const _olderLEN = RULES.LEN;
+
 const formPreset = async (options, otherOptions) => {
   const { locale } = Object.assign({}, otherOptions);
 
@@ -164,9 +167,6 @@ const formPreset = async (options, otherOptions) => {
     }
     return { code: countyCodeMap.get(Number(matcher[1])), value: matcher[2] };
   });
-
-  const _olderREQ = RULES.REQ;
-  const _olderLEN = RULES.LEN;
 
   const getLocaleMsg = (type, values) => {
     values = Object.assign({}, values);
