@@ -1,7 +1,7 @@
 import "@kne/react-file/dist/index.css";
 import useRefCallback from "@kne/use-ref-callback";
 import {
-    FileButton as FileButtonBase, useFileModalProps,
+    FileButton as FileButtonBase, useFileModalProps, download
 } from "@kne/react-file";
 import Modal, {useModal} from "@components/Modal";
 import classnames from "classnames";
@@ -39,6 +39,7 @@ export const useFileModal = (p) => {
     });
 };
 
+export {download};
 export {default as Download, downloadBlobFile, useDownload} from "./Download";
 export {default as List, OptionButtons} from "./List";
 export {default, PrintButton} from "./File";

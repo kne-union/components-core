@@ -115,7 +115,7 @@ const ModalOuter = ({
     return (<div className={style["modal-outer"]} data-testid="components-core-modal">
         {closable === false ? null : (<Button
             data-testid="components-core-modal-close-btn"
-            className={style["modal-close"]}
+            className={classnames(style["modal-close"], "modal-close")}
             type="text"
             icon={<Icon type="icon-close-thin"/>}
             onClick={(e) => {
@@ -136,17 +136,16 @@ const ModalOuter = ({
                 {children}
             </div>
         </SimpleBar>
-        {footer === null && !footerButtons ? null : (
-            <div className={classnames(style["modal-footer"], "modal-footer")}>
-                <Footer
-                    footer={footer}
-                    footerButtons={footerButtons}
-                    onConfirm={onConfirm}
-                    onCancel={onCancel}
-                    onClose={onClose}
-                    targetProps={targetProps}
-                />
-            </div>)}
+        {footer === null && !footerButtons ? null : (<div className={classnames(style["modal-footer"], "modal-footer")}>
+            <Footer
+                footer={footer}
+                footerButtons={footerButtons}
+                onConfirm={onConfirm}
+                onCancel={onCancel}
+                onClose={onClose}
+                targetProps={targetProps}
+            />
+        </div>)}
     </div>);
 };
 
