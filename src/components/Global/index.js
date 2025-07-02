@@ -21,6 +21,7 @@ import transform from "lodash/transform";
 import range from "lodash/range";
 import Color from "color";
 import {createWithRemoteLoader} from "@kne/remote-loader";
+import isEqual from "lodash/isEqual";
 
 document.body.classList.add(style["container"]);
 if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
@@ -174,8 +175,13 @@ export const useGlobalContext = (globalKey) => {
 export const SetGlobal = ({globalKey, value, needReady, children}) => {
     const {global, setGlobal} = useGlobalContext(globalKey);
     const setGlobalHandler = useRefCallback(setGlobal);
-
+    const prevValueRef = useRef(null);
+    prevValueRef.current = global;
     useEffect(() => {
+        if (isEqual(prevValueRef.current, value)) {
+            return;
+        }
+        prevValueRef.current = value;
         setGlobalHandler(value);
     }, [value, setGlobalHandler]);
 
@@ -194,8 +200,13 @@ export const GetGlobal = ({globalKey, children}) => {
 export const GlobalInfo = ({globalKey, value, needReady, children}) => {
     const {global, setGlobal} = useGlobalContext(globalKey);
     const setGlobalHandler = useRefCallback(setGlobal);
-
+    const prevValueRef = useRef(null);
+    prevValueRef.current = global;
     useEffect(() => {
+        if (isEqual(prevValueRef.current, value)) {
+            return;
+        }
+        prevValueRef.current = value;
         setGlobalHandler(value);
     }, [value, setGlobalHandler]);
 
