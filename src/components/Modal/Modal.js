@@ -112,7 +112,7 @@ const ModalOuter = ({
                         targetProps,
                     }) => {
     const modalBodyRef = useRef(null);
-    return (<div className={style["modal-outer"]} data-testid="components-core-modal">
+    return (<div className={classnames(style["modal-outer"], 'modal-container')} data-testid="components-core-modal">
         {closable === false ? null : (<Button
             data-testid="components-core-modal-close-btn"
             className={classnames(style["modal-close"], "modal-close")}
