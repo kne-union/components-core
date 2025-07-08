@@ -103,7 +103,17 @@
 }
 
 .table-list-inner {
-  border: solid 1px var(--bg-color-grey-3);
+  border: none;
+
+  :global(.ant-card-head) {
+    padding-bottom: 10px;
+  }
+
+  :global(.ant-card-body) {
+    border: solid 1px var(--bg-color-grey-3);
+    border-radius: 8px;
+    overflow: hidden;
+  }
 }
 
 .table-list-field {
@@ -152,19 +162,23 @@
 }
 
 .form-info {
+  border: none;
+
   > :global(.ant-card-head .part-title) {
     font-size: var(--font-size-large);
   }
 }
 
 .list-part {
+  border: none;
+
   > :global(.ant-card-head .part-title) {
     font-size: var(--font-size-large);
   }
 
   > :global(.ant-card-head) .list-btn {
     border-radius: 2px;
-    padding: 6px 12px;
+    padding: 6px 0;
     color: var(--primary-color);
   }
 
@@ -198,7 +212,7 @@
     }
 
     > .list-item-part:global(.ant-card)
-      .list-part:global(.ant-card > .ant-card-head) {
+    .list-part:global(.ant-card > .ant-card-head) {
       background: transparent;
       padding: 0;
       border: none;
@@ -206,7 +220,7 @@
     }
 
     > .list-item-part:global(.ant-card)
-      .list-part:global(.ant-card > .ant-card-body) {
+    .list-part:global(.ant-card > .ant-card-body) {
       padding: 16px 0;
     }
 

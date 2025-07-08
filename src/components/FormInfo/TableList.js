@@ -1,96 +1,59 @@
-import List from "./List";
-import FieldList from "./FieldList";
-import { Col, Row } from "antd";
-import clone from "lodash/clone";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {Col, Row, Button, Typography} from "antd";
+import Icon from '@components/Icon';
 import classnames from "classnames";
 import style from "./style.module.scss";
+import {TableList as TableListBase} from '@kne/react-form-plus';
+import InfoPage from "@components/InfoPage";
+import {createWithIntl, useIntl} from "@components/Intl";
+import importMessages from "./locale";
 
-const TableHeader = forwardRef((props, ref) => {
-  const [headers, setHeaders] = useState(new Map());
-  useImperativeHandle(
-    ref,
-    () => {
-      return (targetProps) => {
-        setTimeout(() => {
-          setHeaders((headers) => {
-            if (headers.has(targetProps.key)) {
-              return headers;
-            }
-            const newHeaders = clone(headers);
-            newHeaders.set(targetProps.key, targetProps.props);
-            return newHeaders;
-          });
-        });
-      };
-    },
-    []
-  );
-
-  return (
-    <Row
-      wrap={false}
-      className={style["table-list-header"]}
-      style={{
-        "--col-width": `${100 / headers.size}%`,
-      }}
-    >
-      {Array.from(headers).map(([key, { label, rule }]) => (
-        <Col
-          key={key}
-          className={classnames({
-            [style["is-req"]]: (rule || "").split(" ").indexOf("REQ") === 0,
-          })}
-        >
-          {label}
-        </Col>
-      ))}
-      <Col className={style["table-list-extra"]}></Col>
-    </Row>
-  );
+const TableList = createWithIntl({moduleName: "FormInfo", importMessages})(({className, ...props}) => {
+    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+    return <div className={classnames(className, style['table-list'])}>
+        <TableListBase {...props}
+                       className={classnames(className, style["table-list"])}
+                       headerRender={(children, {width}) => {
+                           return <Row
+                               wrap={false}
+                               className={style["table-list-header"]}
+                               style={{
+                                   "--col-width": width,
+                               }}
+                           >
+                               {children}
+                               <Col
+                                   className={style["table-list-extra"]}></Col>
+                           </Row>
+                       }} headerItemRender={(children, {
+            id, isReq
+        }) => {
+            return <Col key={id} className={classnames({
+                [style["is-req"]]: isReq,
+            })}>
+                {children}
+            </Col>
+        }} listRender={(children, {id, width, onRemove, allowRemove}) => {
+            return <Row key={id} wrap={false} style={{
+                "--col-width": width,
+            }}>
+                {children}
+                <Col className={style["table-list-extra"]}><Button type="link" onClick={onRemove} danger
+                                                                   disabled={!allowRemove}><span><Icon
+                    type="shanchu"/>{formatMessage({id: 'delText'})}</span></Button></Col>
+            </Row>
+        }} itemRender={(children) => {
+            return <Col className={style["table-list-field"]} flex={1}>
+                {children}
+            </Col>
+        }}>{(children, {title, allowAdd, onAdd}) => {
+            return <InfoPage.Part title={title} className={classnames(style["table-list-inner"])}
+                                  extra={allowAdd && <Typography.Link className={style["list-btn"]}
+                                                                      onClick={() => onAdd({isUnshift: false})}>
+                                      <Icon type="tianjia"/>{formatMessage({id: 'addText'})}
+                                  </Typography.Link>}>
+                {children}
+            </InfoPage.Part>
+        }}</TableListBase></div>;
 });
-
-const TableList = ({ list, className, ...props }) => {
-  const headerRef = useRef(null);
-  return (
-    <List
-      {...props}
-      className={classnames(className, style["table-list"])}
-      list={list}
-      renderChildren={(children) => (
-        <div className={style["table-list-inner"]}>
-          <TableHeader ref={headerRef} />
-          {children}
-        </div>
-      )}
-      listRender={({ list, groupArgs, extra, key }) => {
-        return (
-          <Row
-            key={key}
-            wrap={false}
-            align="top"
-            style={{
-              "--col-width": `${100 / list.length}%`,
-            }}
-          >
-            <FieldList
-              list={list}
-              groupArgs={groupArgs}
-              itemRender={(children, targetProps) => {
-                headerRef.current(targetProps);
-                return (
-                  <Col className={style["table-list-field"]} flex={1}>
-                    {children}
-                  </Col>
-                );
-              }}
-            />
-            <Col className={style["table-list-extra"]}>{extra}</Col>
-          </Row>
-        );
-      }}
-    />
-  );
-};
 
 export default TableList;
