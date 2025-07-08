@@ -15,11 +15,11 @@ import {
 } from "@kne/react-form-antd";
 import AdvancedSelectField from "./AdvancedSelect";
 import SuperSelectField, {
-    SuperSelectTableList as SuperSelectTableListField,
-    SuperSelectUser as SuperSelectUserField,
+    SuperSelectTableList as SuperSelectTableListField, SuperSelectUser as SuperSelectUserField,
 } from "./SuperSelect";
 import AddressSelect, {AddressInput} from "./AddressSelect";
 import Cascader from "./Cascader";
+import ColorPicker from './ColorPicker';
 import FunctionSelect from "./FunctionSelect";
 import IndustrySelect from "./IndustrySelect";
 import MoneyInput from "./MoneyInput";
@@ -44,18 +44,14 @@ import classnames from "classnames";
 import style from "../style.module.scss";
 
 const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
-    const TargetComponent = compose(...decoratorList)(
-        ({forwardedRef, label, placeholder, ...props}) => {
-            return (
-                <WrappedComponent
-                    {...props}
-                    label={label}
-                    placeholder={placeholder}
-                    labelRender={() =>
-                        props.tips ? (
-                            <Space>
-                                {label}
-                                <Tooltip content={props.tips}>
+    const TargetComponent = compose(...decoratorList)(({forwardedRef, label, placeholder, ...props}) => {
+        return (<WrappedComponent
+            {...props}
+            label={label}
+            placeholder={placeholder}
+            labelRender={() => props.tips ? (<Space>
+                {label}
+                <Tooltip content={props.tips}>
                 <span
                     className={classnames(style["field-tips"], {
                         [style["label-hidden"]]: props.labelHidden,
@@ -63,17 +59,11 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
                 >
                   <Icon type="icon-xinxi-miaobian"/>
                 </span>
-                                </Tooltip>
-                            </Space>
-                        ) : (
-                            label
-                        )
-                    }
-                    ref={forwardedRef}
-                />
-            )
-        }
-    );
+                </Tooltip>
+            </Space>) : (label)}
+            ref={forwardedRef}
+        />)
+    });
     const ForwardComponent = forwardRef((props, ref) => {
         return <TargetComponent {...props} forwardedRef={ref}/>;
     });
@@ -89,39 +79,31 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
 };
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => (
-        <FormattedMessage
-            id="defaultInputPlaceholder"
-            moduleName="FormInfo"
-            values={{label}}
-        >
-            {(text) => (
-                <WrappedComponent
-                    {...props}
-                    label={label}
-                    placeholder={placeholder || text}
-                />
-            )}
-        </FormattedMessage>
-    );
+    return ({placeholder, label, ...props}) => (<FormattedMessage
+        id="defaultInputPlaceholder"
+        moduleName="FormInfo"
+        values={{label}}
+    >
+        {(text) => (<WrappedComponent
+            {...props}
+            label={label}
+            placeholder={placeholder || text}
+        />)}
+    </FormattedMessage>);
 };
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => (
-        <FormattedMessage
-            id="defaultSelectPlaceholder"
-            moduleName="FormInfo"
-            values={{label}}
-        >
-            {(text) => (
-                <WrappedComponent
-                    {...props}
-                    label={label}
-                    placeholder={placeholder || text}
-                />
-            )}
-        </FormattedMessage>
-    );
+    return ({placeholder, label, ...props}) => (<FormattedMessage
+        id="defaultSelectPlaceholder"
+        moduleName="FormInfo"
+        values={{label}}
+    >
+        {(text) => (<WrappedComponent
+            {...props}
+            label={label}
+            placeholder={placeholder || text}
+        />)}
+    </FormattedMessage>);
 };
 
 const withLang = (WrappedComponent) => {
@@ -136,15 +118,9 @@ const withLang = (WrappedComponent) => {
                     return <WrappedComponent {...props} key={item}/>;
                 }
                 const {name, label, options} = item;
-                const ignoreList = get(options, "ignore", []),
-                    disabledList = get(options, "disabled", []),
+                const ignoreList = get(options, "ignore", []), disabledList = get(options, "disabled", []),
                     fields = get(options, "fields", []);
-                const getCurrentField = (item) =>
-                    props.name === item.name &&
-                    !(item.hasOwnProperty("groupName") && item.groupName !== groupName) &&
-                    !(
-                        item.hasOwnProperty("groupIndex") && item.groupIndex !== groupIndex
-                    );
+                const getCurrentField = (item) => props.name === item.name && !(item.hasOwnProperty("groupName") && item.groupName !== groupName) && !(item.hasOwnProperty("groupIndex") && item.groupIndex !== groupIndex);
 
                 if (ignoreList.length > 0 && ignoreList.find(getCurrentField)) {
                     return null;
@@ -155,16 +131,8 @@ const withLang = (WrappedComponent) => {
                 }
 
                 let newProps = Object.assign({}, props, {
-                    name: get(
-                        options,
-                        "nameTransform",
-                        (name, langName) => `${name}${langName}`
-                    )(props.name, name),
-                    label: get(
-                        options,
-                        "labelTransform",
-                        (label, langLabel) => label && `${label}${langLabel}`
-                    )(props.label, label),
+                    name: get(options, "nameTransform", (name, langName) => `${name}${langName}`)(props.name, name),
+                    label: get(options, "labelTransform", (label, langLabel) => label && `${label}${langLabel}`)(props.label, label),
                 });
 
                 if (disabledList.length > 0 && disabledList.find(getCurrentField)) {
@@ -179,64 +147,31 @@ const withLang = (WrappedComponent) => {
     };
 };
 
-const Input = createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(
-    ReactInput
-);
+const Input = createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(ReactInput);
 
-const InputNumber = createWithFieldDecorator([
-    withLang,
-    withInputDefaultPlaceholder,
-])(ReactInputNumber);
-Input.Password = createWithFieldDecorator([
-    withLang,
-    withInputDefaultPlaceholder,
-])(ReactInput.Password);
+const InputNumber = createWithFieldDecorator([withLang, withInputDefaultPlaceholder,])(ReactInputNumber);
+Input.Password = createWithFieldDecorator([withLang, withInputDefaultPlaceholder,])(ReactInput.Password);
 
-const DatePicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactDatePicker);
-DatePicker.MonthPicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactDatePicker.MonthPicker);
+const DatePicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactDatePicker);
+DatePicker.MonthPicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactDatePicker.MonthPicker);
 
-DatePicker.RangePicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactDatePicker.RangePicker);
+DatePicker.RangePicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactDatePicker.RangePicker);
 
-DatePicker.WeekPicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactDatePicker.WeekPicker);
+DatePicker.WeekPicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactDatePicker.WeekPicker);
 
-const TimePicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactTimePicker);
+const TimePicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactTimePicker);
 
-TimePicker.RangePicker = createWithFieldDecorator([
-    withLang,
-    withSelectDefaultPlaceholder,
-])(ReactTimePicker.RangePicker);
+TimePicker.RangePicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactTimePicker.RangePicker);
 
-const DatePickerToday = createWithFieldDecorator([withLang])(
-    ({placeholder, label, soFarText, ...props}) => {
-        const {formatMessage} = useIntl({moduleName: "FormInfo"});
-        return (
-            <ReactDatePickerToday
-                {...props}
-                label={label}
-                placeholder={[
-                    formatMessage({id: "startDate"}),
-                    formatMessage({id: "endDate"}),
-                ]}
-                soFarText={soFarText || formatMessage({id: "soFarText"})}
-            />
-        );
-    }
-);
+const DatePickerToday = createWithFieldDecorator([withLang])(({placeholder, label, soFarText, ...props}) => {
+    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+    return (<ReactDatePickerToday
+        {...props}
+        label={label}
+        placeholder={[formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
+        soFarText={soFarText || formatMessage({id: "soFarText"})}
+    />);
+});
 
 const fields = {
     Input,
@@ -256,73 +191,30 @@ const fields = {
     Switch: createWithFieldDecorator([withLang])(Switch),
     Slider: createWithFieldDecorator([withLang])(Slider),
     SalaryInput: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(SalaryInput),
-    TypeDateRangePicker: createWithFieldDecorator([withLang])(
-        TypeDateRangePicker
-    ),
+    TypeDateRangePicker: createWithFieldDecorator([withLang])(TypeDateRangePicker),
     MoneyInput: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(MoneyInput),
     PhoneNumber: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(PhoneNumber),
     Upload: createWithFieldDecorator([withLang])(Upload),
     Avatar: createWithFieldDecorator([withLang])(Avatar),
-    FunctionSelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(FunctionSelect),
-    IndustrySelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(IndustrySelect),
-    Cascader: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(
-        Cascader
-    ),
-    AddressSelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(AddressSelect),
-    AddressInput: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(AddressInput),
-    TreeSelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(ReactTreeSelect),
-    ReactInputNumber: createWithFieldDecorator([
-        withLang,
-        withInputDefaultPlaceholder,
-    ])(ReactInputNumber),
-    InputUpperCase: createWithFieldDecorator([
-        withLang,
-        withInputDefaultPlaceholder,
-    ])(InputUpperCaseField),
-    Select: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(
-        ReactSelect
-    ),
-    TextArea: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(
-        ReactTextArea
-    ),
-    AdvancedSelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(AdvancedSelectField),
-    SuperSelect: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(SuperSelectField),
-    SuperSelectTableList: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(SuperSelectTableListField),
-    SuperSelectUser: createWithFieldDecorator([
-        withLang,
-        withSelectDefaultPlaceholder,
-    ])(SuperSelectUserField),
+    FunctionSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(FunctionSelect),
+    IndustrySelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(IndustrySelect),
+    Cascader: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(Cascader),
+    ColorPicker: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(ColorPicker),
+    AddressSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(AddressSelect),
+    AddressInput: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(AddressInput),
+    TreeSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactTreeSelect),
+    ReactInputNumber: createWithFieldDecorator([withLang, withInputDefaultPlaceholder,])(ReactInputNumber),
+    InputUpperCase: createWithFieldDecorator([withLang, withInputDefaultPlaceholder,])(InputUpperCaseField),
+    Select: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(ReactSelect),
+    TextArea: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(ReactTextArea),
+    AdvancedSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(AdvancedSelectField),
+    SuperSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectField),
+    SuperSelectTableList: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectTableListField),
+    SuperSelectUser: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectUserField),
 };
 
 export default fields;
 
 export const fieldDecorator = {
-    createWithFieldDecorator,
-    withInputDefaultPlaceholder,
-    withSelectDefaultPlaceholder,
-    withLang,
+    createWithFieldDecorator, withInputDefaultPlaceholder, withSelectDefaultPlaceholder, withLang,
 };
