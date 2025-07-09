@@ -4,6 +4,12 @@
     &.react-form--inner--large .react-form__field,
     &.react-form--inner--small .react-form__field {
       margin-bottom: 16px;
+
+      .react-form__field-label {
+        line-height: 20px;
+        height: 20px;
+        margin-bottom: 8px;
+      }
     }
   }
 
@@ -37,9 +43,8 @@
 
       color: var(--font-color-grey);
       font-size: 14px;
-      line-height: 20px;
-      height: 20px;
-      margin-bottom: 8px;
+      line-height: 32px;
+      height: 32px;
       font-weight: normal !important;
     }
 
@@ -48,7 +53,7 @@
     }
 
     .ant-input-number,
-    .ant-input-number-group-wrapper {
+    .ant-input-number-group-wrapper, .ant-input-number-affix-wrapper {
       width: 100%;
     }
 
