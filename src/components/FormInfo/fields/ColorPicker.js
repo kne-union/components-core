@@ -1,10 +1,16 @@
 import {hooks} from "@kne/react-form-antd";
-import {ColorPicker as ColorPickerField} from 'antd';
+import {ColorPicker as ColorPickerFieldAntd} from 'antd';
 
 const {useOnChange} = hooks;
 
+const ColorPickerField = (props) => {
+    return <ColorPickerFieldAntd {...props} onChange={(value) => {
+        return props.onChange(value.toHexString());
+    }}/>;
+};
+
 const ColorPicker = (props) => {
-    const render = useOnChange(Object.assign({}, {placeholder: "请选择" + props.label}, props));
+    const render = useOnChange(Object.assign({}, props));
     return render(ColorPickerField);
 };
 
