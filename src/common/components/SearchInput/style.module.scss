@@ -4,6 +4,10 @@
     background: transparent;
   }
 
+  :global(.ant-input-affix-wrapper){
+    border-radius: var(--radius-default)!important;
+  }
+
   //&:not(.is-popup) {
   //  padding: 16px 32px 0;
   //}
