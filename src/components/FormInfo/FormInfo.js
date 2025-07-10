@@ -21,7 +21,7 @@ const FormInfo = ({
     const {ref: flexBoxRef, column: flexBoxColumn} = useFlexBox(isFlexBox ? column : {});
 
     const renderInner = (column, notLayout) => {
-        return <FormInfoBase list={list} groupArgs={groupArgs} itemRender={(children, props) => {
+        return <FormInfoBase list={list} column={column} groupArgs={groupArgs} itemRender={(children, props) => {
             return typeof itemRender === 'function' ? itemRender(children, props) :
                 <Col span={props.span}>{children}</Col>;
         }}>{(children, props) => {

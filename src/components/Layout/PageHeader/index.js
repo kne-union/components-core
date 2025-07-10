@@ -9,6 +9,7 @@ import style from "./style.module.scss";
 export const PageHeaderInner = ({
                                     className,
                                     title,
+                                    icon,
                                     iconType,
                                     info,
                                     tags,
@@ -18,6 +19,7 @@ export const PageHeaderInner = ({
                                     buttonOptionsMaxWidth,
                                     addonBefore,
                                     addonAfter,
+                                    children
                                 }) => {
     return (<Row
         className={classnames(className, style["page-header"])}
@@ -30,7 +32,8 @@ export const PageHeaderInner = ({
                 <Row wrap={false}>
                     <Col flex={1} className={style["main"]}>
                         <Space align="start">
-                            {iconType && (<div className={style["icon-outer"]}>
+                            {icon && <div className={style["icon-outer"]}>{icon}</div>}
+                            {!icon && iconType && (<div className={style["icon-outer"]}>
                                 <Icon colorful type={iconType} size={24}/>
                             </div>)}
                             <div className={style["title"]}>{title}</div>
@@ -52,6 +55,7 @@ export const PageHeaderInner = ({
                         </div>);
                     })}
                 </Space>)}
+                {children}
             </Space>
         </Col>
         {addonAfter && <Col>{addonAfter}</Col>}
