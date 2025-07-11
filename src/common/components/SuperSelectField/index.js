@@ -75,18 +75,20 @@ export const SuperSelectUserField = forwardRef((p, ref) => {
         {...p}
         ref={ref}
         renderItemContent={({item, props}) => {
-            const {labelKey} = props;
+            const {labelKey, avatarKey, descriptionKey} = props;
+            const avatar = item[avatarKey || 'avatar'];
             return (<Flex gap={8}>
                 <Image.Avatar
-                    {...Object.assign({}, item.avatar)}
+                    {...Object.assign({}, typeof avatar === "string" ? {id: avatar} : avatar)}
                     size={32}
                     gender="M"
                 />
                 <Flex vertical gap={8} align="center">
-                    <div className={classnames(style["select-list-item-label"], "select-list-item-label")}>{item[labelKey]}</div>
-                    {item.description && (<div
+                    <div
+                        className={classnames(style["select-list-item-label"], "select-list-item-label")}>{item[labelKey]}</div>
+                    {item[descriptionKey || 'description'] && (<div
                         className={classnames(style["select-list-item-description"], "select-list-item-description")}>
-                        {item.description}
+                        {item[descriptionKey || 'description']}
                     </div>)}
                 </Flex>
             </Flex>);
