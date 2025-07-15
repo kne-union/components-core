@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "files": [
     "build"
   ],
@@ -17,7 +17,7 @@
     ]
   },
   "dependencies": {
-    "@kne/button-group": "^0.1.13",
+    "@kne/button-group": "^0.1.14",
     "@kne/compose": "^0.1.0",
     "@kne/create-deferred": "^0.1.0",
     "@kne/ensure-slash": "^0.1.0",
