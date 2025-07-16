@@ -2,6 +2,7 @@ import {Space, Row, Col} from "antd";
 import classnames from "classnames";
 import importMessages from "../locale";
 import Icon from "@components/Icon";
+import {isValidElement} from 'react';
 import ButtonGroup from "@components/ButtonGroup";
 import {IntlProvider} from "@components/Intl";
 import style from "./style.module.scss";
@@ -45,7 +46,9 @@ export const PageHeaderInner = ({
                         className={style["button-options"]}
                         style={{"--max-width": buttonOptionsMaxWidth}}
                     >
-                        <ButtonGroup {...buttonOptions} />
+                        {isValidElement(buttonOptions) && buttonOptions}
+                        {typeof buttonOptions === "object" && Array.isArray(buttonOptions?.list) &&
+                            <ButtonGroup {...buttonOptions} />}
                     </Col>)}
                 </Row>
                 {tags && (<Space className={tagClassName} split={tagSplit} size={[16, 8]}>
