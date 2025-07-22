@@ -25,7 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  min-width: 1100px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .ant-message {
