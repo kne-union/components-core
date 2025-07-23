@@ -106,7 +106,7 @@
 }
 
 .main-menu {
-  padding: 0 160px;
+
 }
 
 .navigation-logo {
@@ -119,6 +119,7 @@
 }
 
 .navigation-list {
+  padding: 0 160px;
   margin-left: calc(var(--nav-height) - 16px);
 
   :global(.ant-menu) {
