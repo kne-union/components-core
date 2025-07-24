@@ -56,6 +56,25 @@
           "packageName": "@components/StateTag"
         }
       ]
+    },
+    {
+      "title": "基本示例",
+      "description": "枚举状态标签",
+      "code": "./stateTagEnum.js",
+      "scope": [
+        {
+          "name": "_StateTag",
+          "packageName": "@components/StateTag"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
     }
   ]
 }
