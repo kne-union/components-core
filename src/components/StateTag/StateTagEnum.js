@@ -1,7 +1,7 @@
 import Enum from "@components/Enum";
-import StateTag from "@components/StateTag";
+import StateTag from "./StateTag";
 
-const EnumStateTag = ({moduleName, name, ...props}) => {
+const StateTagEnum = ({moduleName, name, ...props}) => {
   return (
     <Enum moduleName={moduleName} name={name}>
       {data => <StateTag {...props} text={data.description} {...data} />}
@@ -9,4 +9,4 @@ const EnumStateTag = ({moduleName, name, ...props}) => {
   );
 };
 
-export default EnumStateTag;
+export default StateTagEnum;
