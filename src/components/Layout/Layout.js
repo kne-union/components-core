@@ -50,7 +50,6 @@ const Layout = ({className, children, theme, navigation = {}}) => {
             scrollEl.removeEventListener("scroll", handlerScroll);
         };
     }, []);
-console.log("navigation------", navigation)
     return (
         <AntdLayout
             className={classnames(style["layout"], className, 'core-layout')}
