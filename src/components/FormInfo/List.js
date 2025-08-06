@@ -21,11 +21,11 @@ const List = createWithIntl({moduleName: "FormInfo", importMessages})(({
                                                                            ...props
                                                                        }) => {
     const {formatMessage} = useIntl({moduleName: "FormInfo"});
-    return <SubList {...props} listRender={({list, title, id, allowRemove, onRemove}) => {
+    return <SubList {...props} listRender={({list, title, id, allowRemove, onRemove, ...others}) => {
         return <div key={id} className={classnames(style["list-item"], {
             [style["is-important"]]: important,
         })}>
-            <FormInfo title={title} list={list} className={style["list-item-part"]} gap={16}
+            <FormInfo {...others} title={title} list={list} className={style["list-item-part"]} gap={16}
                       extra={<FormattedMessage id="delText" moduleName="FormInfo">
                           {(text) => allowRemove ? (<ConfirmButton
                               danger
@@ -47,7 +47,11 @@ const List = createWithIntl({moduleName: "FormInfo", importMessages})(({
         </div>
     }}>{(children, {allowAdd, onAdd}) => {
         return cloneElement(outer, {
-            title, addText, className: classnames(className, style["list-part"]), allowAdd, add: ()=>onAdd({isUnshift:false}),
+            title,
+            addText,
+            className: classnames(className, style["list-part"]),
+            allowAdd,
+            add: () => onAdd({isUnshift: false}),
         }, renderChildren(children));
     }}</SubList>
 });

@@ -14,7 +14,7 @@ const computedCommonProps = ({
                                  formProps,
                                  cancelText,
                                  saveText,
-                                 autoClose,
+                                 autoClose = true,
                                  ...modalProps
                              }) => {
     return {
