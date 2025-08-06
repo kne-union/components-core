@@ -135,7 +135,7 @@
 }
 
 .modal-body {
-  --modal-height: calc(100vh - 60px);
+  --modal-height: calc(100vh - 120px);
   max-height: var(--modal-height);
   min-height: var(--min-modal-height);
 

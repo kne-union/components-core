@@ -224,7 +224,7 @@ const computedCommonProps = ({
         centered: true,
         title: null,
         maskClosable: props.hasOwnProperty("maskClosable") ? props.maskClosable : false,
-        destroyOnClose: true,
+        destroyOnHidden: true,
         footer: null,
         closable: false,
         onCancel: onClose,
