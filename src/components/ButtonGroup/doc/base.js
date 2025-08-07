@@ -17,9 +17,10 @@ const BaseExample = () => {
             },
             {
               children: "操作3",
+              hidden: true,
             },
             {
-              children: "操作3",
+              children: "操作4",
               message: "确定要执行操作吗？",
               disabled: true,
             },
