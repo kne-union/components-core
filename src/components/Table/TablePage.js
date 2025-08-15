@@ -77,17 +77,23 @@ const TablePageInner = withFetch(({
                 />
             </>),
             current: get(requestParams, [pagination.paramsType, pagination.currentName], 1),
-            pageSize: pagination.pageSize,
-            onChange: pagination.onChange ? pagination.onChange : (page, size) => {
-                if (page !== get(requestParams, [pagination.paramsType, pagination.currentName], 1)) {
-                    (pagination.requestType === "refresh" ? refresh : reload)({
-                        [pagination.paramsType]: {
-                            [pagination.currentName]: page, [pagination.pageSizeName]: size,
-                        },
-                    });
-                } else {
-                    pagination.onShowSizeChange && pagination.onShowSizeChange(page, size);
-                }
+            pageSize: get(requestParams, [pagination.paramsType, pagination.pageSizeName], 20),
+            onChange: (page, size) => {
+                (() => {
+                    if (typeof pagination.onChange === 'function') {
+                        pagination.onChange(page, size);
+                        return;
+                    }
+                    if (page !== get(requestParams, [pagination.paramsType, pagination.currentName], 1)) {
+                        (pagination.requestType === "refresh" ? refresh : reload)({
+                            [pagination.paramsType]: {
+                                [pagination.currentName]: page, [pagination.pageSizeName]: size,
+                            },
+                        });
+                    } else {
+                        pagination.onShowSizeChange && pagination.onShowSizeChange(page, size);
+                    }
+                })();
                 getScrollEl().scrollTop = 0;
             },
             size: pagination.size,
@@ -98,7 +104,7 @@ const TablePageInner = withFetch(({
     };
 
     return (<IntlProvider importMessages={importMessages} moduleName="Table">
-        <FeaturesColumnsConfig id={featureId} columns={columns}>
+        <FeaturesColumnsConfig id={featureId} columns={typeof columns === 'function' ? columns(data) : columns}>
             {({columns}) => (<Table
                 {...Object.assign({}, props, tableProps)}
                 sticky={sticky}
@@ -111,15 +117,7 @@ const TablePageInner = withFetch(({
                 }}
                 summary={typeof summary === "function" ? (...args) => {
                     return summary(Object.assign({}, {
-                        data,
-                        fetchProps,
-                        requestParams,
-                        refresh,
-                        reload,
-                        loadMore,
-                        send,
-                        dataFormat,
-                        pagination,
+                        data, fetchProps, requestParams, refresh, reload, loadMore, send, dataFormat, pagination,
                     }, ...args));
                 } : null}
             />)}
@@ -136,7 +134,6 @@ const TablePage = forwardRef(({pagination, ...props}, ref) => {
         requestType: "reload",
         currentName: "currentPage",
         pageSizeName: "perPage",
-        pageSize: 20, //size: "small",
     }, pagination);
     const pageSizeKey = `${(props.name || "common").toUpperCase()}_TABLE_PAGE_SIZE`;
     const [pageSize, setPageSize] = useState(localStorage.getItem(pageSizeKey) || pagination.pageSize);
