@@ -10,6 +10,8 @@ import useColumnTypeProps from "@components/Table/useColumnTypeProps";
 import useGroupHeader from "./useGroupHeader";
 import useSort from "./useSort";
 import useRefCallback from "@kne/use-ref-callback";
+import useSelectedRow from "./useSelectedRow";
+import TablePage from './TablePage';
 
 const Table = ({
                    columns,
@@ -131,5 +133,8 @@ const Table = ({
         </Scroller>)}
     </div>);
 };
+
+Table.useSelectedRow = useSelectedRow;
+Table.TablePage = TablePage;
 
 export default Table;
