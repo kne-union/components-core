@@ -17,7 +17,7 @@
     ]
   },
   "dependencies": {
-    "@kne/button-group": "^0.1.16",
+    "@kne/button-group": "^0.1.18",
     "@kne/compose": "^0.1.0",
     "@kne/create-deferred": "^0.1.0",
     "@kne/ensure-slash": "^0.1.0",

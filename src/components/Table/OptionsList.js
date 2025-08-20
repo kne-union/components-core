@@ -1,22 +1,16 @@
-import {Button} from "antd";
 import Fetch from "@kne/react-fetch";
 import classnames from "classnames";
-import Icon from "@components/Icon";
+import {cloneElement, isValidElement} from 'react';
 import ButtonGroup from "@components/ButtonGroup";
 import style from "./style.module.scss";
 
 const OptionsList = ({className, list = [], children, width}) => {
     const buttonProps = {
-        className: classnames(className, "btn-no-padding", style["options-btn"]), type: "link",
+        className: classnames(className, style["options-btn"]), type: "link",
     };
     const buttonList = list
         .filter((item) => !item?.hidden)
         .map(({className, ...props}) => Object.assign({}, props, buttonProps));
-    const more = <Button
-        icon={<Icon type="icon-gengduo2"/>}
-        className="btn-no-padding"
-        type="link"
-    />;
     return (<div
         className={classnames(className, style["options-column"])}
         style={{
@@ -24,11 +18,13 @@ const OptionsList = ({className, list = [], children, width}) => {
         }}
     >
         {typeof children === "function" ? children({
-            list: buttonList, more, buttonProps
+            list: buttonList, itemClassName: "btn-no-padding", moreType: 'link', buttonProps
+        }) : isValidElement(children) ? cloneElement(children, {
+            ...buttonProps, itemClassName: "btn-no-padding", moreType: 'link'
         }) : children}
-        {list && list.length > 0 && <ButtonGroup
-            list={buttonList}
-            more={more}
+        {list && list.length > 0 && <ButtonGroup itemClassName="btn-no-padding"
+                                                 moreType="link"
+                                                 list={buttonList}
         />}
     </div>);
 };
