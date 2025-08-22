@@ -1,6 +1,6 @@
 import {forwardRef} from "react";
 import SuperSelect, {
-    SelectedTagList, SelectTableList,
+    SelectedTagList, SelectTableList, SelectTree
 } from "@kne/super-select";
 import Modal from "@components/Modal";
 import Image from "@components/Image";
@@ -8,6 +8,27 @@ import {Flex} from "antd";
 import style from './style.module.scss';
 import classnames from 'classnames';
 import "@kne/super-select/dist/index.css";
+
+const renderModal = (contextProps) => {
+    const {props, open, onOpenChange, value, onComplete} = contextProps;
+    const {placeholder, children, showSelectedTag, onConfirm} = props;
+    return (<Modal
+        title={placeholder}
+        open={open}
+        onClose={() => {
+            onOpenChange(false);
+        }}
+        footer={showSelectedTag && <SelectedTagList/>}
+        onConfirm={() => {
+            onComplete();
+            if (typeof onConfirm === "function") {
+                return onConfirm(value);
+            }
+        }}
+    >
+        {children(contextProps)}
+    </Modal>);
+};
 
 const SuperSelectField = forwardRef((p, ref) => {
     const props = Object.assign({}, {
@@ -18,26 +39,7 @@ const SuperSelectField = forwardRef((p, ref) => {
                 {components.fetchList}
                 {props.isPopup !== false && components.selectedTag}
             </Flex>);
-        }, renderModal: (contextProps) => {
-            const {props, open, onOpenChange, value, onComplete} = contextProps;
-            const {placeholder, children, showSelectedTag, onConfirm} = props;
-            return (<Modal
-                title={placeholder}
-                open={open}
-                onClose={() => {
-                    onOpenChange(false);
-                }}
-                footer={showSelectedTag && <SelectedTagList/>}
-                onConfirm={() => {
-                    onComplete();
-                    if (typeof onConfirm === "function") {
-                        return onConfirm(value);
-                    }
-                }}
-            >
-                {children(contextProps)}
-            </Modal>);
-        },
+        }, renderModal
     }, p);
 
     return <SuperSelect {...props} ref={ref}/>;
@@ -47,27 +49,16 @@ export default SuperSelectField;
 
 export const SuperSelectTableListField = forwardRef((p, ref) => {
     const props = Object.assign({}, {
-        renderModal: (contextProps) => {
-            const {props, open, value, onOpenChange, onComplete} = contextProps;
-            const {placeholder, children, onConfirm} = props;
-            return (<Modal
-                title={placeholder}
-                open={open}
-                onClose={() => {
-                    onOpenChange(false);
-                }}
-                onConfirm={() => {
-                    onComplete();
-                    if (typeof onConfirm === "function") {
-                        return onConfirm(value);
-                    }
-                }}
-            >
-                {children(contextProps)}
-            </Modal>);
-        },
+        renderModal,
     }, p);
     return <SelectTableList {...props} ref={ref}/>;
+});
+
+export const SuperSelectTreeField = forwardRef((p, ref) => {
+    const props = Object.assign({}, {
+        renderModal,
+    }, p);
+    return <SelectTree {...props} ref={ref}/>;
 });
 
 export const SuperSelectUserField = forwardRef((p, ref) => {
