@@ -15,7 +15,7 @@ import {
 } from "@kne/react-form-antd";
 import AdvancedSelectField from "./AdvancedSelect";
 import SuperSelectField, {
-    SuperSelectTableList as SuperSelectTableListField, SuperSelectUser as SuperSelectUserField,
+    SuperSelectTableList as SuperSelectTableListField, SuperSelectTree, SuperSelectUser as SuperSelectUserField,
 } from "./SuperSelect";
 import AddressSelect, {AddressInput} from "./AddressSelect";
 import Cascader from "./Cascader";
@@ -211,6 +211,7 @@ const fields = {
     SuperSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectField),
     SuperSelectTableList: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectTableListField),
     SuperSelectUser: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectUserField),
+    SuperSelectTree: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectTree),
 };
 
 export default fields;

@@ -4,7 +4,18 @@ const {useModal} = _Modal;
 const {uniqueId} = lodash;
 
 const {
-    Input, TextArea, Upload, Avatar, PhoneNumber, TypeDateRangePicker, Rate, Switch, Slider, MoneyInput, ColorPicker
+    Input,
+    TextArea,
+    Upload,
+    Avatar,
+    PhoneNumber,
+    TypeDateRangePicker,
+    Rate,
+    Switch,
+    Slider,
+    MoneyInput,
+    ColorPicker,
+    SuperSelectTree
 } = fields;
 
 const BaseExample = () => {
@@ -65,16 +76,17 @@ const BaseExample = () => {
             </ErrorTip>, <ColorPicker name="color" label="主题色"/>,
                 <MoneyInput name="money" label="金额" rule="REQ" tips={"money"}/>,
                 <PhoneNumber name="phone" label="手机" rule="REQ" disabled/>,
-                <Input name="email" label="邮箱" rule="EMAIL"/>,
-                <Upload name="file" label="文件" tips="文件" block/>, <Rate name="rate" label="评分" tips="评分"/>,
-                <Switch name="switch" label="开关" tips="开关">
+                <Input name="email" label="邮箱" rule="EMAIL"/>, <Upload name="file" label="文件" tips="文件" block/>,
+                <Rate name="rate" label="评分" tips="评分"/>, <Switch name="switch" label="开关" tips="开关">
                     {({checked}) => (checked ? "开" : "关")}
                 </Switch>, <Slider name="slider" label="滑动条" tips="滑动条"/>, <TypeDateRangePicker
                     name="type_date"
                     label="日期时间段"
                     tips="日期时间段"
                     rule="REQ"
-                />, <TextArea name="des" label="备注" tips="备注" block/>, <SubmitButton>提交</SubmitButton>,]}
+                />, <SuperSelectTree name="tree" label="树选择" options={[{
+                    value: '1', label: '父节点',
+                }]}/>, <TextArea name="des" label="备注" tips="备注" block/>, <SubmitButton>提交</SubmitButton>,]}
         />
     </Form>);
 };
