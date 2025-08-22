@@ -1,29 +1,30 @@
 import * as reactFormAntd from "@kne/react-form-antd";
 import {
-  DatePicker as ReactDatePicker,
-  DatePickerToday as ReactDatePickerToday,
-  Input as ReactInput,
-  InputNumber as ReactInputNumber,
-  Select as ReactSelect,
-  TextArea as ReactTextArea,
-  TimePicker as ReactTimePicker,
-  TreeSelect as ReactTreeSelect,
-  Rate,
-  Switch,
-  Slider,
+    DatePicker as ReactDatePicker,
+    DatePickerToday as ReactDatePickerToday,
+    Input as ReactInput,
+    InputNumber as ReactInputNumber,
+    Select as ReactSelect,
+    TextArea as ReactTextArea,
+    TimePicker as ReactTimePicker,
+    TreeSelect as ReactTreeSelect,
+    Rate,
+    Switch,
+    Slider,
 } from "@kne/react-form-antd";
 import Form from "./Form";
-import { FormattedMessage, useIntl } from "@components/Intl";
-import { forwardRef } from "react";
+import {FormattedMessage, useIntl} from "@components/Intl";
+import {forwardRef} from "react";
 import FormItem from "./FormItem";
 import style from "./style.module.scss";
 import AdvancedSelectField from "./fields/AdvancedSelect";
 import SuperSelectField, {
-  SuperSelectTableList as SuperSelectTableListField,
-  SuperSelectUser as SuperSelectUserField,
+    SuperSelectTableList as SuperSelectTableListField,
+    SuperSelectUser as SuperSelectUserField,
+    SuperSelectTree as SuperSelectTreeField
 } from "./fields/SuperSelect";
 import AddressSelect, {
-  AddressInput as AddressInputField,
+    AddressInput as AddressInputField,
 } from "./fields/AddressSelect";
 import Cascader from "./fields/Cascader";
 import FunctionSelect from "./fields/FunctionSelect";
@@ -39,116 +40,98 @@ import Text from "./fields/Text";
 import ErrorTip from "./ErrorTip";
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-  const TargetComponent = forwardRef(
-    ({ placeholder, label, ...props }, ref) => (
-      <FormattedMessage
+    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => (<FormattedMessage
         id="defaultInputPlaceholder"
         moduleName="FormInfo"
-        values={{ label }}
-      >
-        {(text) => (
-          <WrappedComponent
+        values={{label}}
+    >
+        {(text) => (<WrappedComponent
             {...props}
             ref={ref}
             label={label}
             placeholder={placeholder || text}
-          />
-        )}
-      </FormattedMessage>
-    )
-  );
-  Object.keys(WrappedComponent)
-    .filter((key) => {
-      return ["$$typeof", "render", "field"].indexOf(key) === -1;
-    })
-    .forEach((key) => {
-      TargetComponent[key] = WrappedComponent[key];
-    });
+        />)}
+    </FormattedMessage>));
+    Object.keys(WrappedComponent)
+        .filter((key) => {
+            return ["$$typeof", "render", "field"].indexOf(key) === -1;
+        })
+        .forEach((key) => {
+            TargetComponent[key] = WrappedComponent[key];
+        });
 
-  return TargetComponent;
+    return TargetComponent;
 };
 
-const withTextAreaDefaultPlaceholder =
-  (WrappedComponent) =>
-  ({ placeholder, label, className, ...props }) =>
-    (
-      <FormattedMessage
+const withTextAreaDefaultPlaceholder = (WrappedComponent) => ({placeholder, label, className, ...props}) => (
+    <FormattedMessage
         id="defaultInputPlaceholder"
         moduleName="FormInfo"
-        values={{ label }}
-      >
-        {(text) => (
-          <div className={style["textarea-wrapped-component"]}>
+        values={{label}}
+    >
+        {(text) => (<div className={style["textarea-wrapped-component"]}>
             <WrappedComponent
-              {...props}
-              label={label}
-              placeholder={placeholder || text}
+                {...props}
+                label={label}
+                placeholder={placeholder || text}
             />
-          </div>
-        )}
-      </FormattedMessage>
-    );
+        </div>)}
+    </FormattedMessage>);
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-  const TargetComponent = forwardRef(
-    ({ placeholder, label, ...props }, ref) => (
-      <FormattedMessage
+    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => (<FormattedMessage
         id="defaultSelectPlaceholder"
         moduleName="FormInfo"
-        values={{ label }}
-      >
-        {(text) => (
-          <WrappedComponent
+        values={{label}}
+    >
+        {(text) => (<WrappedComponent
             {...props}
             ref={ref}
             label={label}
             placeholder={placeholder || text}
-          />
-        )}
-      </FormattedMessage>
-    )
-  );
+        />)}
+    </FormattedMessage>));
 
-  Object.keys(WrappedComponent)
-    .filter((key) => {
-      return ["$$typeof", "render", "field"].indexOf(key) === -1;
-    })
-    .forEach((key) => {
-      TargetComponent[key] = WrappedComponent[key];
-    });
+    Object.keys(WrappedComponent)
+        .filter((key) => {
+            return ["$$typeof", "render", "field"].indexOf(key) === -1;
+        })
+        .forEach((key) => {
+            TargetComponent[key] = WrappedComponent[key];
+        });
 
-  return TargetComponent;
+    return TargetComponent;
 };
 
-export { default as ErrorTip } from "./ErrorTip";
+export {default as ErrorTip} from "./ErrorTip";
 
-export { default as FormItem } from "./FormItem";
+export {default as FormItem} from "./FormItem";
 
 // export { default as AdvancedSelect } from "./fields/AdvancedSelect";
 export const AdvancedSelect = withSelectDefaultPlaceholder(AdvancedSelectField);
 export const SuperSelect = withSelectDefaultPlaceholder(SuperSelectField);
-export const SuperSelectTableList = withSelectDefaultPlaceholder(
-  SuperSelectTableListField
-);
-export const SuperSelectUser =
-  withSelectDefaultPlaceholder(SuperSelectUserField);
-export { default as AddressSelect } from "./fields/AddressSelect";
+export const SuperSelectTableList = withSelectDefaultPlaceholder(SuperSelectTableListField);
+export const SuperSelectUser = withSelectDefaultPlaceholder(SuperSelectUserField);
+
+export const SuperSelectTree = withSelectDefaultPlaceholder(SuperSelectTreeField);
+
+export {default as AddressSelect} from "./fields/AddressSelect";
 export const AddressInput = withSelectDefaultPlaceholder(AddressInputField);
 
 export {
-  Cascader,
-  FunctionSelect,
-  IndustrySelect,
-  MoneyInput,
-  PhoneNumber,
-  Upload,
-  Avatar,
-  SalaryInput,
-  Text,
-  Rate,
-  Switch,
-  Slider,
-  TypeDateRangePicker,
+    Cascader,
+    FunctionSelect,
+    IndustrySelect,
+    MoneyInput,
+    PhoneNumber,
+    Upload,
+    Avatar,
+    SalaryInput,
+    Text,
+    Rate,
+    Switch,
+    Slider,
+    TypeDateRangePicker,
 };
 export const InputUpperCase = withInputDefaultPlaceholder(InputUpperCaseField);
 export const Input = withInputDefaultPlaceholder(ReactInput);
@@ -164,76 +147,61 @@ export const TreeSelect = withSelectDefaultPlaceholder(ReactTreeSelect);
 
 export const TimePicker = withSelectDefaultPlaceholder(ReactTimePicker);
 
-TimePicker.RangePicker = withSelectDefaultPlaceholder(
-  ReactTimePicker.RangePicker
-);
+TimePicker.RangePicker = withSelectDefaultPlaceholder(ReactTimePicker.RangePicker);
 
 export const DatePicker = withSelectDefaultPlaceholder(ReactDatePicker);
 
-DatePicker.MonthPicker = withSelectDefaultPlaceholder(
-  ReactDatePicker.MonthPicker
-);
+DatePicker.MonthPicker = withSelectDefaultPlaceholder(ReactDatePicker.MonthPicker);
 
-DatePicker.RangePicker = withSelectDefaultPlaceholder(
-  ReactDatePicker.RangePicker
-);
+DatePicker.RangePicker = withSelectDefaultPlaceholder(ReactDatePicker.RangePicker);
 
-DatePicker.WeekPicker = withSelectDefaultPlaceholder(
-  ReactDatePicker.WeekPicker
-);
+DatePicker.WeekPicker = withSelectDefaultPlaceholder(ReactDatePicker.WeekPicker);
 
 export const DatePickerToday = ({
-  placeholder,
-  label,
-  soFarText,
-  ...props
-}) => {
-  const { formatMessage } = useIntl({ moduleName: "FormInfo" });
-  return (
-    <ReactDatePickerToday
-      {...props}
-      label={label}
-      placeholder={[
-        formatMessage({ id: "startDate" }),
-        formatMessage({ id: "endDate" }),
-      ]}
-      soFarText={soFarText || formatMessage({ id: "soFarText" })}
-    />
-  );
+                                    placeholder, label, soFarText, ...props
+                                }) => {
+    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+    return (<ReactDatePickerToday
+        {...props}
+        label={label}
+        placeholder={[formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
+        soFarText={soFarText || formatMessage({id: "soFarText"})}
+    />);
 };
 
-export { Form };
+export {Form};
 
 export const formModule = Object.assign({}, reactFormAntd, {
-  Input,
-  InputUpperCase,
-  TextArea,
-  Select,
-  InputNumber,
-  TreeSelect,
-  TimePicker,
-  DatePicker,
-  DatePickerToday,
-  Form,
-  FormItem,
-  AdvancedSelect,
-  SuperSelect,
-  SuperSelectTableList,
-  SuperSelectUser,
-  AddressSelect,
-  AddressInput,
-  MoneyInput,
-  PhoneNumber,
-  Cascader,
-  FunctionSelect,
-  IndustrySelect,
-  TypeDateRangePicker,
-  Upload,
-  Avatar,
-  SalaryInput,
-  Text,
-  Rate,
-  Switch,
-  Slider,
-  ErrorTip,
+    Input,
+    InputUpperCase,
+    TextArea,
+    Select,
+    InputNumber,
+    TreeSelect,
+    TimePicker,
+    DatePicker,
+    DatePickerToday,
+    Form,
+    FormItem,
+    AdvancedSelect,
+    SuperSelect,
+    SuperSelectTableList,
+    SuperSelectUser,
+    SuperSelectTree,
+    AddressSelect,
+    AddressInput,
+    MoneyInput,
+    PhoneNumber,
+    Cascader,
+    FunctionSelect,
+    IndustrySelect,
+    TypeDateRangePicker,
+    Upload,
+    Avatar,
+    SalaryInput,
+    Text,
+    Rate,
+    Switch,
+    Slider,
+    ErrorTip,
 });
