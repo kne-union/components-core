@@ -63,3 +63,4 @@ preset({
 | --- | --- | --- | --- |
 | value | 枚举值 | string \| number | 是 |
 | description | 枚举描述文本 | string | 是 |
+| translation | 多语言翻译对象 | object | 否 |
