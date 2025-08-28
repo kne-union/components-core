@@ -36,10 +36,6 @@
         {
           "name": "global",
           "packageName": "@components/Global"
-        },
-        {
-          "name": "React",
-          "packageName": "react"
         }
       ]
     },
