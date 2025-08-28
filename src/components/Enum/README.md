@@ -145,7 +145,7 @@ render(<BaseExample />);
 
 - 异步加载与缓存
 - 展示异步加载枚举数据、Loading状态和强制刷新缓存
-- _Enum(@components/Enum),antd(antd),global(@components/Global),React(react)
+- _Enum(@components/Enum),antd(antd),global(@components/Global)
 
 ```jsx
 const { default: Enum } = _Enum;
