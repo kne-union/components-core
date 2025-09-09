@@ -18,7 +18,7 @@ const formPreset = async (options, otherOptions) => {
         if (value && typeof value === "string") {
             const [id, params] = value.split("?");
             const searchParams = new URLSearchParams(params);
-            return Object.assign({}, id, transform(Array.from(searchParams.entries()), (result, value) => {
+            return Object.assign({}, {id}, transform(Array.from(searchParams.entries()), (result, value) => {
                 result[value[0]] = value[1];
             }, {}));
         }
