@@ -194,7 +194,7 @@
   line-height: 1;
   text-decoration: none;
   background: transparent;
-  border-radius: 2px;
+  border-radius: var(--radius-default, 2px);
   border: 0;
   outline: 0;
   cursor: pointer;

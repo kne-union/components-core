@@ -10,7 +10,7 @@
   box-sizing: border-box;
 
   &.state-result-tag {
-    border-radius: 2px;
+    border-radius: var(--radius-default, 2px);
     height: 28px;
     line-height: var(--line-height-large);
   }
@@ -46,7 +46,7 @@
   line-height: 20px !important;
   //height: auto;
   display: flex;
-
+  border-radius: var(--radius-default, 2px);
   .state-tag-filter-name {
     color: var(--font-color-grey);
     margin-right: 4px;

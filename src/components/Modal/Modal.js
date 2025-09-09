@@ -47,14 +47,14 @@ const sizeMap = (type, footer) => {
 };
 
 const Footer = ({
-                    footer, footerButtons, onConfirm, onCancel, onClose, targetProps,
+                    footer, footerButtons, onConfirm, onCancel, cancelText, onClose, targetProps,
                 }) => {
     return (<Row gutter={10} wrap={false}>
         <Col flex={1}>{footer}</Col>
         {Array.isArray(footerButtons) && footerButtons.length === 0 ? null : (<Col>
             <Space>
                 {(footerButtons || [{
-                    children: (<IntlProvider
+                    children: cancelText || (<IntlProvider
                         importMessages={importMessages}
                         moduleName={localeModuleName}
                     >
@@ -110,6 +110,8 @@ const ModalOuter = ({
                         onCancel,
                         children,
                         targetProps,
+                        cancelText,
+                        confirmText,
                     }) => {
     const modalBodyRef = useRef(null);
     return (<div className={classnames(style["modal-outer"], 'modal-container')} data-testid="components-core-modal">
@@ -141,7 +143,9 @@ const ModalOuter = ({
                 footer={footer}
                 footerButtons={footerButtons}
                 onConfirm={onConfirm}
+                confirmText={confirmText}
                 onCancel={onCancel}
+                cancelText={cancelText}
                 onClose={onClose}
                 targetProps={targetProps}
             />
@@ -156,7 +160,9 @@ const runWithDecorator = ({
                               closable,
                               onClose,
                               onConfirm,
+                              confirmText,
                               onCancel,
+                              cancelText,
                               footer,
                               rightOptions,
                               rightSpan,
@@ -173,7 +179,9 @@ const runWithDecorator = ({
             closable={closable}
             onClose={onClose}
             onConfirm={onConfirm}
+            confirmText={confirmText}
             onCancel={onCancel}
+            cancelText={cancelText}
             footerButtons={renderWithOptions(footerButtons, {
                 ...props, close: onClose,
             })}
@@ -211,7 +219,9 @@ const computedCommonProps = ({
                                  title,
                                  onClose,
                                  onConfirm,
+                                 confirmText,
                                  onCancel,
+                                 cancelText,
                                  closable,
                                  disabledScroller,
                                  withDecorator,
@@ -238,7 +248,9 @@ const computedCommonProps = ({
                 closable,
                 onClose,
                 onConfirm,
+                confirmText,
                 onCancel,
+                cancelText,
                 footer,
                 footerButtons,
                 rightOptions,
