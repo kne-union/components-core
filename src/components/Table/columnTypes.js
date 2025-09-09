@@ -61,9 +61,9 @@ const dateRange = (
       emptyRender={emptyRender}
       isEmpty={isEmpty}
     >
-      {dayjs(item?.[0]).format("YYYY-MM-DD HH:mm") +
-        "-" +
-        dayjs(item?.[1]).format("HH:mm")}
+      {dayjs(item?.[0]).format("YYYY-MM-DD") +
+        "~" +
+        dayjs(item?.[1]).format("YYYY-MM-DD")}
     </ColItem>
   );
 };

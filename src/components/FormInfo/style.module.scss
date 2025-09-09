@@ -9,6 +9,12 @@
         line-height: 20px;
         height: 20px;
         margin-bottom: 8px;
+        margin-left: 0px;
+        &.is-req:before {
+          display: inline-block;
+          position: static;
+          transform: translateX(0px) scale(0.7);
+        }
       }
     }
   }
@@ -26,18 +32,13 @@
       }
     }
 
-    .react-form__field-label.is-req {
-      margin-left: 0;
-    }
-
     .react-form__field-label {
       &.is-req:before {
         color: var(--color-warning);
         font-family: "iconfont" !important;
         content: "\e684";
-        position: static;
-        display: inline-block;
-        transform: translateX(0px) scale(0.7);
+        position: absolute;
+        transform: translateX(-14px) scale(0.7);
         margin-right: 0;
       }
 

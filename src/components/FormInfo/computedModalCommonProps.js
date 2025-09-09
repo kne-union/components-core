@@ -35,8 +35,9 @@ const computedCommonProps = ({
         },], withDecorator: (render, args) => {
             const innerRender = (props) => {
                 const {
-                    onSubmit, ..._formProps
+                    onSubmit, key, ..._formProps
                 } = Object.assign({}, typeof formProps === "function" ? formProps(props) : formProps);
+
                 return (<Form
                     {..._formProps}
                     onSubmit={async (data, ...args) => {

@@ -17,8 +17,9 @@
     --font-size-small: 12px;
     --font-size-large: 14px;
   }*/
-
+  --radius-small: 2px;
   --radius-default: 6px;
+  --radius-large: 8px;
   font-size: var(--font-size-default);
   --line-height-default: 1.8;
   --line-height-middle: 2;
@@ -47,10 +48,10 @@
   --color-warning: #d14343; // 警告色
   --color-success: #00b42a; //成功色
 
-  --state-success-color: var($success-color);
-  --state-info-color: var($info-color);
-  --state-error-color: var($error-color);
-  --state-warning-color: var($warning-color);
+  --state-success-color: #{$success-color};
+  --state-info-color: #{$info-color};
+  --state-error-color: #{$error-color};
+  --state-warning-color: #{$warning-color};
 
   //--primary-color: #5cb8b2;
 
@@ -434,7 +435,7 @@
 
         :global(.ant-select-single) {
           :global(.ant-select-selector) {
-            border-radius: 2px;
+            border-radius: var(--radius-default, 2px);
             border: 1px solid var(--font-color-grey-3);
             color: var(--font-color);
 
@@ -455,7 +456,7 @@
             height: 24px;
             margin: 0 4px;
             line-height: var(--line-height-default);
-            border-radius: 2px;
+            border-radius: var(--radius-default, 2px);
             border: 1px solid var(--font-color-grey-3);
           }
         }
@@ -478,7 +479,7 @@
         min-width: 24px;
         height: 24px;
         line-height: var(--line-height-default);
-        border-radius: 2px;
+        border-radius: var(--radius-default, 2px);
 
         button {
           border: 1px solid var(--font-color-grey-3);
@@ -588,7 +589,7 @@
 
   :global(.ant-tag.no-border) {
     background: #f3f3f3;
-    border-radius: 2px;
+    border-radius: var(--radius-default, 2px);
     border: none;
     padding: 4px 12px;
   }
@@ -630,7 +631,7 @@
         }
 
         .ant-select-selector {
-          border-radius: 2px;
+          border-radius: var(--radius-default, 2px);
           border: 1px solid var(--font-color-grey-3);
           color: var(--font-color);
 
@@ -651,7 +652,7 @@
           height: 24px;
           margin: 0 4px;
           line-height: var(--line-height-default);
-          border-radius: 2px;
+          border-radius: var(--radius-default, 2px);
           border: 1px solid var(--font-color-grey-3);
         }
       }
@@ -674,7 +675,7 @@
       min-width: 24px;
       height: 24px;
       line-height: var(--line-height-default);
-      border-radius: 2px;
+      border-radius: var(--radius-default, 2px);
 
       button {
         border: 1px solid var(--font-color-grey-3);
@@ -729,7 +730,7 @@
           }
 
           .ant-select-selector {
-            border-radius: 2px;
+            border-radius: var(--radius-default, 2px);
             border: 1px solid var(--font-color-grey-3);
             color: var(--font-color);
 
@@ -750,7 +751,7 @@
             height: 24px;
             margin: 0 4px;
             line-height: var(--line-height-default);
-            border-radius: 2px;
+            border-radius: var(--radius-default, 2px);
             border: 1px solid var(--font-color-grey-3);
           }
         }
@@ -773,7 +774,7 @@
         min-width: 24px;
         height: 24px;
         line-height: var(--line-height-default);
-        border-radius: 6px;
+        border-radius: var(--radius-default, 2px);
 
         button {
           border: 1px solid var(--font-color-grey-3);

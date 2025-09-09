@@ -131,9 +131,8 @@ const Navigation = ({
                     >
                         <Image
                             className={classnames(style["logo"])}
-                            src={logo}
                             alt="logo"
-                            {...headerLogo}
+                            {...Object.assign({}, headerLogo || {src: logo})}
                         />
                     </Col>
                     <Col

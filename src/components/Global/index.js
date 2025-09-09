@@ -112,6 +112,7 @@ export const GlobalProvider = ({
     const [global, setGlobal] = useState(Object.assign({
         themeToken, localMessageRef, enumsRef, locale,
     }, get(preset, "global")));
+
     return (<Provider
         value={{
             ...props, preset, locale, global, setGlobal,
@@ -155,20 +156,21 @@ export {usePreset};
 
 export const useGlobalContext = (globalKey) => {
     const contextValue = useContext();
+    const setGlobalHandler = useRefCallback((value) => {
+        contextValue.setGlobal((global) => {
+            return typeof value === "function" ? Object.assign({}, global, {
+                [globalKey]: value(get(global, globalKey)),
+            }) : Object.assign({}, global, {
+                [globalKey]: value,
+            });
+        });
+    });
     return Object.assign({
         global: {}, setGlobal: () => {
             console.warn("调用setGlobal的组件应该被放置在Global上下文中");
         },
     }, contextValue, globalKey ? {
-        global: get(contextValue.global, globalKey), setGlobal: (value) => {
-            contextValue.setGlobal(typeof value === "function" ? (global) => {
-                return Object.assign({}, global, {
-                    [globalKey]: value(get(global, globalKey)),
-                });
-            } : Object.assign({}, contextValue.global, {
-                [globalKey]: value,
-            }));
-        },
+        global: get(contextValue.global, globalKey), setGlobal: setGlobalHandler,
     } : {});
 };
 
@@ -187,6 +189,10 @@ export const SetGlobal = ({globalKey, value, needReady, children}) => {
 
     if (needReady && !global) {
         return null;
+    }
+
+    if (typeof children === 'function') {
+        return children({global, setGlobal});
     }
 
     return children;

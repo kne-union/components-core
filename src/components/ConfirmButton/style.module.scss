@@ -3,7 +3,7 @@
 .overlay {
   :global {
     .ant-popover-inner {
-      border-radius: 8px;
+      border-radius: var(--radius-large, 8px);
       padding: 18px 24px;
       box-sizing: border-box;
       max-width: 400px;
