@@ -2,6 +2,7 @@ import {interceptors, preset, RULES} from "@kne/react-form-antd";
 import dayjs from "dayjs";
 import merge from "lodash/merge";
 import get from "lodash/get";
+import transform from 'lodash/transform';
 import "@kne/react-form-antd/dist/index.css";
 import {PHONE_NUMBER_INPUT} from "./fields/PhoneNumber";
 import HelperGuideLabel from "@components/FormInfo/HelperGuideLabel";
@@ -15,8 +16,11 @@ const formPreset = async (options, otherOptions) => {
 
     interceptors.input.use("photo-string", (value) => {
         if (value && typeof value === "string") {
-            const id = value.split("?")[0];
-            return {id};
+            const [id, params] = value.split("?");
+            const searchParams = new URLSearchParams(params);
+            return Object.assign({}, id, transform(Array.from(searchParams.entries()), (result, value) => {
+                result[value[0]] = value[1];
+            }, {}));
         }
         return value;
     });
@@ -25,19 +29,27 @@ const formPreset = async (options, otherOptions) => {
         if (!value || typeof value === "string") {
             return value;
         }
-        return value.id?.split("?")?.[0] || value.id;
+        return `${value?.id}${value?.filename ? `?filename=${value?.filename}` : ''}`;
     });
 
     interceptors.input.use("photo-string-list", (value) => {
         if (value && Array.isArray(value) && value.length > 0) {
-            return value.map((item) => ({id: item.split("?")[0]}));
+            return value.map((item) => {
+                const [id, params] = item.split("?");
+                const searchParams = new URLSearchParams(params);
+                return Object.assign({}, {id}, transform(Array.from(searchParams.entries()), (result, value) => {
+                    result[value[0]] = value[1];
+                }, {}));
+            });
         }
         return value;
     });
 
     interceptors.output.use("photo-string-list", (value) => {
         if (value && Array.isArray(value) && value.length > 0) {
-            return value.map((item) => item?.id);
+            return value.map((item) => {
+                return `${item?.id}${item?.filename ? `?filename=${item?.filename}` : ''}`;
+            });
         }
         return value;
     });

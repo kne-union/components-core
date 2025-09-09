@@ -113,7 +113,7 @@
   height: 20px;
   overflow: hidden;
   color: var(--font-color-grey);
-  border-radius: 2px;
+  border-radius: var(--radius-default, 2px);
   padding: 0 var(--font-size-small);
   transition: color 300ms, background 300ms;
   cursor: pointer;
@@ -401,7 +401,7 @@
       vertical-align: middle;
       background: rgba(#222222, 0.02);
       border: 1px solid #d9d9d9;
-      border-radius: 2px;
+      border-radius: var(--radius-default, 2px);
     }
   }
 }
