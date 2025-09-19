@@ -1,5 +1,5 @@
 import { HashRouter } from "react-router-dom";
-import createEntry from "@kne/modules-dev/dist/create-entry";
+import createEntry from "@kne/modules-dev/dist/create-entry.modern";
 import "@kne/modules-dev/dist/create-entry.css";
 import readme from "readme";
 
