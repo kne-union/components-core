@@ -31,10 +31,10 @@ const SearchInput = ({
             const value = e.target.value;
             valueRef.current = value;
             setState(value);
-            debouncedFunc(value);
+            debouncedFunc(value.trim());
         }}
         onSearch={(value) => {
-            debouncedFunc(value);
+            debouncedFunc(value.trim());
         }}
     />);
 };
