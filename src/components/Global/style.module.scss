@@ -579,14 +579,6 @@
     }
   }
 
-  :global(
-      .ant-notification
-        .ant-notification-notice-wrapper
-        .ant-notification-notice
-    ) {
-    padding: 0;
-  }
-
   :global(.ant-tag.no-border) {
     background: #f3f3f3;
     border-radius: var(--radius-default, 2px);
