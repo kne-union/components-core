@@ -93,6 +93,13 @@ const formPreset = async (options, otherOptions) => {
         return value.value || value.id;
     });
 
+    interceptors.output.use("array-output-value", (value) => {
+        if (!(Array.isArray(value) && value.length > 0)) {
+            return [];
+        }
+        return value.map((value) => value.value || value.id);
+    });
+
     interceptors.input.use("date-string", (value) => {
         return value ? dayjs(value) : null;
     });
