@@ -37,6 +37,7 @@ const SuperSelectField = forwardRef((p, ref) => {
                 {components.search}
                 {components.selectedAll}
                 {components.fetchList}
+                {components.footer}
                 {props.isPopup !== false && components.selectedTag}
             </Flex>);
         }, renderModal

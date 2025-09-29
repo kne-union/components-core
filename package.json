@@ -37,7 +37,7 @@
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
     "@kne/scroll-loader": "^0.1.9",
-    "@kne/super-select": "^0.1.24",
+    "@kne/super-select": "^0.1.25",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
