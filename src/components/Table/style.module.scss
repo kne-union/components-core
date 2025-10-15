@@ -28,6 +28,10 @@
     }
   }
 
+  :global(.ant-table-measure-row) {
+    visibility: hidden;
+  }
+
   :global(.ant-table-thead .ant-table-cell) {
     &:hover {
       .cell-resize-bar {
