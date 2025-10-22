@@ -115,7 +115,7 @@ export const GlobalProvider = ({
 
     return (<Provider
         value={{
-            ...props, preset, locale, global, setGlobal,
+            ...props, preset, locale: global.locale, global, setGlobal,
         }}
     >
         <PresetProvider value={preset}>
