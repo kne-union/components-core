@@ -107,7 +107,7 @@ const FileListInner = ({
                 itemApis={itemApis}
                 getPopupContainer={getPopupContainer}
             >
-                <Space split={<Divider type="vertical"/>}>
+                <Space separator={<Divider type="vertical"/>}>
                     {titleExtraInner}
                     {getPermission("add", {}) ? (<>
                         <DragButton>

@@ -70,6 +70,15 @@
   --primary-color-green: 184;
   --primary-color-blue: 178;*/
 
+  :global(.ant-tooltip .ant-tooltip-container) {
+    background: #FFFFFF;
+    color: var(--font-color);
+  }
+
+  :global(.ant-popconfirm .ant-popconfirm-message-icon) {
+    display: none;
+  }
+
   :global {
     .ant-input[disabled],
     .ant-input-number-disabled .ant-input-number-input {
@@ -107,7 +116,7 @@
 
   :global(.btn-text-link) {
     padding: 0;
-    border: none;
+    border: none !important;
     background: transparent;
     color: var(--primary-color);
     box-shadow: none !important;
@@ -129,11 +138,23 @@
     }
   }
 
+  :global(.ant-typography.ant-btn) {
+    color: var(--primary-color);
+    background: transparent;
+    border-color: transparent;
+
+    &:hover {
+      color: var(--primary-color);
+      background: transparent;
+      border-color: transparent;
+    }
+  }
+
   :global(.ant-btn-link.btn-no-padding),
   :global(.ant-btn-text.btn-no-padding) {
     padding: 0;
     height: auto;
-    border: none;
+    border: none !important;
     min-width: unset;
 
     &:hover {
@@ -208,13 +229,13 @@
     }
   }
 
+  :global(.ant-input-outlined:focus, .ant-input-outlined:focus-within) {
+    box-shadow: 0 0 0 2px var(--primary-color-2) !important;
+  }
+
   :global(.ant-alert) {
     border: none;
     align-items: baseline;
-
-    &:global(.ant-alert-with-description .ant-alert-message) {
-      font-weight: bold;
-    }
 
     :global(.ant-alert-description) {
       color: var(--font-color-grey);
