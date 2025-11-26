@@ -67,8 +67,6 @@ const AddressInputField = (props) => {
   );
 };
 
-AddressInputField.defaultProps = {};
-
 export default createWithIntl({ importMessages, moduleName: "Common" })(
   AddressInputField
 );

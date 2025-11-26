@@ -1,6 +1,6 @@
 import style from "./style.module.scss";
 import {useRef, useState} from "react";
-import {Button, Space, Typography} from "antd";
+import {Button, Space} from "antd";
 import importMessages from "./locale";
 import useOutside from "@kne/use-click-outside";
 import classnames from "classnames";
@@ -19,10 +19,10 @@ export const DragButton = ({children}) => {
             onOpenChange((open) => !open);
         }}
     >
-        <Typography.Text className="ant-btn">
+        <Button type="text" className="btn-no-padding">
             <Icon type="icon-tuozhuaishangchuan"/>
             {children || <FormattedMessage id="dragText" moduleName="FileList"/>}
-        </Typography.Text>
+        </Button>
     </div>);
 };
 

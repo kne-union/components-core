@@ -5,7 +5,7 @@ import classnames from "classnames";
 import {Provider, useGlobalContext as useContext} from "@kne/global-context";
 import {Provider as PresetProvider, usePreset} from "./presetContext";
 import {App, ConfigProvider as AntdConfigProvider, Result, theme} from "antd";
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useRef, useMemo} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import {getScrollEl} from "@common/utils/importantContainer";
@@ -34,6 +34,9 @@ if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
 const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#4096ff"}, children}) => {
     const [isInit, setIsInit] = useState(false);
     const {colorPrimary, components, ...otherToken} = Object.assign({}, themeToken);
+    const colorPrimaryObject = useMemo(() => {
+        return Color(colorPrimary)
+    }, [colorPrimary]);
     useEffect(() => {
         let styleEl = document.head.querySelector("#component-core-theme");
         if (!styleEl) {
@@ -41,7 +44,6 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
             styleEl.id = "component-core-theme";
             document.head.appendChild(styleEl);
         }
-        const colorPrimaryObject = Color(colorPrimary);
         const themeProps = {
             "--primary-color": colorPrimary,
             "--primary-color-red": colorPrimaryObject.red(),
@@ -63,7 +65,7 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
         return () => {
             // uninstall();
         };
-    }, [colorPrimary]);
+    }, [colorPrimary, colorPrimaryObject]);
     //设置主题色成功再展示页面
     if (!isInit) {
         return null;
@@ -74,14 +76,15 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
         locale={message}
         wave={{disabled: true}}
         autoInsertSpace={false}
+        warning={{strict: false}}
         theme={{
             components, token: Object.assign({}, {
                 colorError: "#f53f3f",
                 colorInfo: "#165dff",
                 colorSuccess: "#00b42a",
                 colorWarning: "#ff7d00",
-                algorithm: otherToken.isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
                 colorPrimary: colorPrimary,
+                colorPrimaryBg: colorPrimaryObject.alpha(0.1).string(),
                 colorLink: colorPrimary,
                 colorTextBase: "#222222",
                 colorText: "#222222"
