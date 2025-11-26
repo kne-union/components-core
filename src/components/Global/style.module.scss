@@ -326,7 +326,7 @@
 
   :global(.ant-checkbox-wrapper) {
     margin-inline-end: 8px;
-    margin-inline-start: 0px;
+    margin-inline-start: 0;
   }
 
   ::-webkit-scrollbar {
@@ -344,6 +344,10 @@
     min-width: 5px;
     border-radius: 16px;
     background-color: rgba(102, 102, 102, 0.45);
+  }
+
+  :global(.ant-popover-container) {
+    padding: 0;
   }
 
   :global(.table-page) {
