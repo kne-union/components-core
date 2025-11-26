@@ -308,7 +308,7 @@ export const useConfirmModal = () => {
                 ...otherProps, icon: null, wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
                     [style["is-danger"]]: danger,
                 }), title: (<Space
-                    direction="vertical"
+                    orientation="vertical"
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
