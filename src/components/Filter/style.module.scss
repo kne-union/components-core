@@ -252,11 +252,25 @@
   padding: 24px;
 }
 
+.date-range-picker-popup {
+  :global(.ant-picker-range-arrow) {
+    display: none !important;
+  }
+
+  :global(.ant-picker-panel-container) {
+    transform: translateY(-10px);
+  }
+}
+
 .pop-util-overlay {
   padding: 0;
 
   :global(.ant-popover-arrow) {
     display: none;
+  }
+
+  :global(.ant-popover-container) {
+    transform: translateY(-6px);
   }
 
   :global(.ant-popover-inner-content),

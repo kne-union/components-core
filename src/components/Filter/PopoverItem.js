@@ -25,6 +25,7 @@ const PopoverItem = ({
         open={open}
         trigger="click"
         placement={placement}
+        arrow={false}
         rootClassName={classnames(style["pop-util-overlay"], overlayClassName)}
         onOpenChange={(open) => {
             setOpen(open);
