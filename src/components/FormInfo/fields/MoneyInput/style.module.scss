@@ -3,10 +3,11 @@
   flex-direction: column;
   flex: 1;
   border-color: #d9d9d9;
+
   :global(.ant-input-number-group-wrapper),
   :global(.ant-input-number-wrapper),
   :global(.ant-input-number) {
-    border-color: inherit;
+    border-color: #d9d9d9 !important;
   }
 
   .money-description {
