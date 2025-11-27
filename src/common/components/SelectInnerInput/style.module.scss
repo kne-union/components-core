@@ -35,6 +35,7 @@
       transform: translateY(-2px);
     }
   }
+
   &:global(.select-input-disabled) {
     color: var(--font-color-disabled);
     background-color: rgba(34, 34, 34, 0.04);
@@ -183,6 +184,10 @@
   }
 
   :global {
+    .ant-popover-container {
+      padding: 0;
+    }
+
     .ant-popover-inner {
       padding: 0;
     }

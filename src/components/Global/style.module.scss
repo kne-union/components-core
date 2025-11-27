@@ -346,10 +346,6 @@
     background-color: rgba(102, 102, 102, 0.45);
   }
 
-  :global(.ant-popover-container) {
-    padding: 0;
-  }
-
   :global(.table-page) {
     --cell-height: 48px;
     --cell-padding: 8px 8px;
@@ -612,27 +608,6 @@
   }
 
   .ant-pagination {
-    color: var(--font-color);
-    font-size: var(--font-size-small);
-
-    a {
-      color: var(--font-color);
-    }
-
-    .ant-pagination-total-text {
-      height: 24px;
-      margin-right: 16px;
-      line-height: var(--line-height-middle);
-      font-size: var(--font-size-small);
-      color: #222222;
-
-      .total_text {
-        color: var(--primary-color);
-        font-weight: 500;
-        padding: 0 2px;
-      }
-    }
-
     .ant-pagination-options {
       font-size: var(--font-size-small);
 
@@ -674,42 +649,13 @@
         }
       }
     }
-
-    .ant-pagination-item {
-      border: 1px solid var(--font-color-grey-3);
-    }
-
-    :global(.ant-pagination-item-active) {
-      border: 1px solid var(--primary-color);
-    }
-
-    .ant-pagination-item,
-    .ant-pagination-prev,
-    .ant-pagination-next,
-    .ant-pagination-item-link,
-    .ant-pagination-jump-prev,
-    .ant-pagination-jump-next {
-      min-width: 24px;
-      height: 24px;
-      line-height: var(--line-height-default);
-      border-radius: var(--radius-default, 2px);
-
-      button {
-        border: 1px solid var(--font-color-grey-3);
-      }
-    }
-
-    .ant-pagination-item-active {
-      background: var(--primary-color);
-
-      a {
-        color: var(--bg-color-white);
-        font-weight: 400;
-      }
-    }
   }
 
   :global {
+    .ant-input-wrapper.ant-input-group .ant-input-group-addon {
+      overflow: hidden;
+    }
+
     .ant-pagination {
       color: var(--font-color);
       font-size: var(--font-size-small);
@@ -737,6 +683,8 @@
 
         .ant-select-single {
           width: fit-content;
+          height: 24px;
+          font-size: 12px;
 
           &:not(:global(.ant-select-customize-input)) {
             .ant-select-selector {

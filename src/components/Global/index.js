@@ -21,7 +21,7 @@ import transform from "lodash/transform";
 import range from "lodash/range";
 import Color from "color";
 import {createWithRemoteLoader} from "@kne/remote-loader";
-import isEqual from "lodash/isEqual";
+import isEqual from './isEqual';
 
 document.body.classList.add(style["container"]);
 if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
