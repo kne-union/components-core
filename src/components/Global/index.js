@@ -4,7 +4,7 @@ import "./override.scss";
 import classnames from "classnames";
 import {Provider, useGlobalContext as useContext} from "@kne/global-context";
 import {Provider as PresetProvider, usePreset} from "./presetContext";
-import {App, ConfigProvider as AntdConfigProvider, Result, theme} from "antd";
+import {App, ConfigProvider as AntdConfigProvider, Result} from "antd";
 import {useEffect, useState, useRef, useMemo} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
