@@ -1,11 +1,8 @@
-import importMessages from "./locale";
 import {CancelButton, SubmitButton} from "@kne/react-form-antd";
-import {IntlProvider, FormattedMessage} from "@components/Intl";
+import {useIntl, FormattedMessage} from '@kne/react-intl';
 import {Form} from "./formModule";
 import classnames from "classnames";
 import style from "./style.module.scss";
-
-const localeModuleName = "FormInfo";
 
 const computedCommonProps = ({
                                  className,
@@ -19,19 +16,12 @@ const computedCommonProps = ({
                              }) => {
     return {
         ...modalProps, footerButtons: footerButtons || [{
-            children: (<IntlProvider
-                importMessages={importMessages}
-                moduleName={localeModuleName}
-            >
-                {cancelText || (<FormattedMessage id={"Cancel"} moduleName={localeModuleName}/>)}
-            </IntlProvider>), ButtonComponent: CancelButton,
+            children: cancelText || <FormattedMessage id="Cancel"/>, ButtonComponent: CancelButton,
         }, {
-            type: "primary", children: (<IntlProvider
-                importMessages={importMessages}
-                moduleName={localeModuleName}
-            >
-                {saveText || (<FormattedMessage id={"Save"} moduleName={localeModuleName}/>)}
-            </IntlProvider>), ButtonComponent: SubmitButton, autoClose: false,
+            type: "primary",
+            children: saveText || <FormattedMessage id="Save"/>,
+            ButtonComponent: SubmitButton,
+            autoClose: false,
         },], withDecorator: (render, args) => {
             const innerRender = (props) => {
                 const {
@@ -47,9 +37,7 @@ const computedCommonProps = ({
                         }
                     }}
                 >
-                    <IntlProvider importMessages={importMessages} moduleName="FormInfo">
-                        {render(props)}
-                    </IntlProvider>
+                    {render(props)}
                 </Form>);
             };
             return typeof withDecorator === "function" ? withDecorator(innerRender, args) : innerRender(args);

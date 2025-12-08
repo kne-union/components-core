@@ -1,27 +1,25 @@
 import preset from "./preset";
-import FormInfo from "./FormInfo";
-import fields, { fieldDecorator } from "./fields";
-import List from "./List";
-import TableList from "./TableList";
+import fields, {fieldDecorator} from "./fields";
+import {List, TableList, default as FormInfo} from "@kne/form-info";
 import FormApiButton from "./FormApiButton";
-import FormModal, { useFormModal, FormModalButton } from "./FormModal";
+import FormModal, {useFormModal, FormModalButton} from "./FormModal";
 import FormStepModal, {
-  useFormStepModal,
-  FormStepModalButton,
+    useFormStepModal,
+    FormStepModalButton,
 } from "./FormStepModal";
-import FormDrawer, { useFormDrawer, FormDrawerButton } from "./FormDrawer";
+import FormDrawer, {useFormDrawer, FormDrawerButton} from "./FormDrawer";
 import Form from "./Form";
 import FormItem from "./FormItem";
 import ErrorTip from "./ErrorTip";
-import MultiField from "./MultiField";
+import {MultiField} from "@kne/form-info";
 import {
-  SubmitButton,
-  CancelButton,
-  useFormContext,
-  hooks,
-  widget,
-  utils,
-  formUtils,
+    SubmitButton,
+    CancelButton,
+    useFormContext,
+    hooks,
+    widget,
+    utils,
+    formUtils,
 } from "@kne/react-form-antd";
 
 preset();
@@ -57,26 +55,26 @@ export * from "@kne/react-form-antd";
 export * from "./formModule";
 
 export {
-  Form,
-  FormItem,
-  ErrorTip,
-  fields,
-  fieldDecorator,
-  List,
-  TableList,
-  FormApiButton,
-  FormModal,
-  useFormModal,
-  FormModalButton,
-  FormStepModal,
-  useFormStepModal,
-  FormStepModalButton,
-  FormDrawer,
-  useFormDrawer,
-  FormDrawerButton,
-  MultiField,
+    Form,
+    FormItem,
+    ErrorTip,
+    fields,
+    fieldDecorator,
+    List,
+    TableList,
+    FormApiButton,
+    FormModal,
+    useFormModal,
+    FormModalButton,
+    FormStepModal,
+    useFormStepModal,
+    FormStepModalButton,
+    FormDrawer,
+    useFormDrawer,
+    FormDrawerButton,
+    MultiField,
 };
 
-export { default as SelectInnerInput } from "./SelectInnerInput";
+export {default as SelectInnerInput} from "./SelectInnerInput";
 
 export default FormInfo;

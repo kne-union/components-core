@@ -2,14 +2,11 @@ import {forwardRef, useEffect, useState} from "react";
 import {usePreset, useGlobalContext} from "@components/Global";
 import get from "lodash/get";
 import formPreset from "@components/FormInfo/preset";
-import {IntlProvider} from "@components/Intl";
-import importMessages from "@components/FormInfo/locale";
 import FormLangProvider from "@components/FormInfo/FormLangProvider";
-import InfoPage from "@components/InfoPage";
+import {Form as ReactForm} from '@kne/form-info';
 import {Provider as HelperGuideProvider} from "@components/FormInfo/HelperGuideLabel";
-import {FormAntd as ReactForm} from "@kne/react-form-antd";
-import classnames from "classnames";
-import style from "@components/FormInfo/style.module.scss";
+import '@kne/form-info/dist/index.css';
+import withLocale from "./withLocale";
 
 const SetPreset = ({children}) => {
     const [isPreset, setIsPreset] = useState(false);
@@ -27,21 +24,13 @@ const SetPreset = ({children}) => {
     return children;
 };
 
-const Form = forwardRef(({className, helperGuideName, children, lang, ...props}, ref) => {
-    return (<IntlProvider importMessages={importMessages} moduleName="FormInfo">
-        <FormLangProvider value={lang}>
-            <HelperGuideProvider value={helperGuideName}>
-                <SetPreset>
-                    <ReactForm
-                        {...props}
-                        ref={ref}
-                        className={classnames(className, style["form-outer"])}
-                    >
-                        <InfoPage>{children}</InfoPage>
-                    </ReactForm>
-                </SetPreset>
-            </HelperGuideProvider>
-        </FormLangProvider>
-    </IntlProvider>);
-});
+const Form = withLocale(forwardRef(({helperGuideName, lang, ...props}, ref) => {
+    return (<FormLangProvider value={lang}>
+        <HelperGuideProvider value={helperGuideName}>
+            <SetPreset>
+                <ReactForm {...props} ref={ref}/>
+            </SetPreset>
+        </HelperGuideProvider>
+    </FormLangProvider>);
+}));
 export default Form;
