@@ -13,7 +13,7 @@ import {
     Slider,
 } from "@kne/react-form-antd";
 import Form from "./Form";
-import {FormattedMessage, useIntl} from "@components/Intl";
+import {useIntl} from '@kne/react-intl';
 import {forwardRef} from "react";
 import FormItem from "./FormItem";
 import style from "./style.module.scss";
@@ -40,18 +40,16 @@ import Text from "./fields/Text";
 import ErrorTip from "./ErrorTip";
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => (<FormattedMessage
-        id="defaultInputPlaceholder"
-        moduleName="FormInfo"
-        values={{label}}
-    >
-        {(text) => (<WrappedComponent
+    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => {
+        const {formatMessage} = useIntl();
+
+        return <WrappedComponent
             {...props}
             ref={ref}
             label={label}
-            placeholder={placeholder || text}
-        />)}
-    </FormattedMessage>));
+            placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
+        />;
+    });
     Object.keys(WrappedComponent)
         .filter((key) => {
             return ["$$typeof", "render", "field"].indexOf(key) === -1;
@@ -63,34 +61,27 @@ const withInputDefaultPlaceholder = (WrappedComponent) => {
     return TargetComponent;
 };
 
-const withTextAreaDefaultPlaceholder = (WrappedComponent) => ({placeholder, label, className, ...props}) => (
-    <FormattedMessage
-        id="defaultInputPlaceholder"
-        moduleName="FormInfo"
-        values={{label}}
-    >
-        {(text) => (<div className={style["textarea-wrapped-component"]}>
-            <WrappedComponent
-                {...props}
-                label={label}
-                placeholder={placeholder || text}
-            />
-        </div>)}
-    </FormattedMessage>);
+const withTextAreaDefaultPlaceholder = (WrappedComponent) => ({placeholder, label, className, ...props}) => {
+    const {formatMessage} = useIntl();
+    return <div className={style["textarea-wrapped-component"]}>
+        <WrappedComponent
+            {...props}
+            label={label}
+            placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
+        />
+    </div>;
+};
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => (<FormattedMessage
-        id="defaultSelectPlaceholder"
-        moduleName="FormInfo"
-        values={{label}}
-    >
-        {(text) => (<WrappedComponent
+    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => {
+        const {formatMessage} = useIntl();
+        return <WrappedComponent
             {...props}
             ref={ref}
             label={label}
-            placeholder={placeholder || text}
-        />)}
-    </FormattedMessage>));
+            placeholder={placeholder || formatMessage({id: 'defaultSelectPlaceholder'}, {label})}
+        />;
+    });
 
     Object.keys(WrappedComponent)
         .filter((key) => {
