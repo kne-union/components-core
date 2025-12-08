@@ -31,7 +31,7 @@ import SalaryInput from "./SalaryInput";
 import InputUpperCaseField from "./InputUpperCase";
 import compose from "@kne/compose";
 import {forwardRef} from "react";
-import {FormattedMessage, useIntl} from "@components/Intl";
+import {useIntl} from '@kne/react-intl';
 import {useGroup} from "@kne/react-form-antd";
 import get from "lodash/get";
 import {get as _get} from "lodash";
@@ -79,31 +79,25 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
 };
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => (<FormattedMessage
-        id="defaultInputPlaceholder"
-        moduleName="FormInfo"
-        values={{label}}
-    >
-        {(text) => (<WrappedComponent
+    return ({placeholder, label, ...props}) => {
+        const {formatMessage} = useIntl();
+        return (<WrappedComponent
             {...props}
             label={label}
-            placeholder={placeholder || text}
-        />)}
-    </FormattedMessage>);
+            placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
+        />);
+    };
 };
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => (<FormattedMessage
-        id="defaultSelectPlaceholder"
-        moduleName="FormInfo"
-        values={{label}}
-    >
-        {(text) => (<WrappedComponent
+    return ({placeholder, label, ...props}) => {
+        const {formatMessage} = useIntl();
+        return <WrappedComponent
             {...props}
             label={label}
-            placeholder={placeholder || text}
-        />)}
-    </FormattedMessage>);
+            placeholder={placeholder || formatMessage({id: 'defaultSelectPlaceholder'}, {label})}
+        />;
+    }
 };
 
 const withLang = (WrappedComponent) => {
