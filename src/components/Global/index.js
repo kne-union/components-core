@@ -2,8 +2,9 @@ import "./polyfill";
 import "simplebar/dist/simplebar.min.css";
 import "./override.scss";
 import classnames from "classnames";
-import {Provider, useGlobalContext as useContext} from "@kne/global-context";
-import {Provider as PresetProvider, usePreset} from "./presetContext";
+import {
+    Global as GlobalContext, useGlobalContext as useContext, usePreset, GlobalValue, useGlobalValue, GlobalSetting
+} from "@kne/global-context";
 import {App, ConfigProvider as AntdConfigProvider, Result} from "antd";
 import {useEffect, useState, useRef, useMemo} from "react";
 import SimpleBar from "simplebar";
@@ -31,12 +32,31 @@ if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
     document.body.classList.add("simplebar-content-wrapper");
 }
 
-const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#4096ff"}, children}) => {
+export const containerClassName = style["container"]
+    .replace(/\+/g, "\\+")
+    .replace(/\//g, "\\/");
+
+const ConfigProvider = withFetch(({data: message, children}) => {
     const [isInit, setIsInit] = useState(false);
-    const {colorPrimary, components, ...otherToken} = Object.assign({}, themeToken);
+    const themeToken = useGlobalValue('themeToken');
+    const {colorPrimary, components, ...otherToken} = Object.assign({}, {colorPrimary: "#4096ff"}, themeToken);
     const colorPrimaryObject = useMemo(() => {
         return Color(colorPrimary)
     }, [colorPrimary]);
+
+    const [statusColors, setStatusColors] = useState({});
+
+    useEffect(() => {
+        const containerEl = document.querySelector(`.${containerClassName}`);
+        const styles = getComputedStyle(containerEl);
+        setStatusColors({
+            colorSuccess: styles.getPropertyValue("--state-success-color"),
+            colorError: styles.getPropertyValue("--state-error-color"),
+            colorWarning: styles.getPropertyValue("--state-warning-color"),
+            colorInfo: styles.getPropertyValue("--state-info-color"),
+        });
+    }, []);
+
     useEffect(() => {
         let styleEl = document.head.querySelector("#component-core-theme");
         if (!styleEl) {
@@ -56,9 +76,7 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
                 .alpha((i + 1) / 10)
                 .string();
         });
-        styleEl.textContent = `.${style["container"]
-            .replace(/\+/g, "\\+")
-            .replace(/\//g, "\\/")}{${transform(themeProps, (result, value, key) => {
+        styleEl.textContent = `.${containerClassName}{${transform(themeProps, (result, value, key) => {
             result.push(`${key}:${value};`);
         }, []).join("")}}`;
         setIsInit(true);
@@ -79,10 +97,7 @@ const ConfigProvider = withFetch(({data: message, themeToken = {colorPrimary: "#
         warning={{strict: false}}
         theme={{
             components, token: Object.assign({}, {
-                colorError: "#f53f3f",
-                colorInfo: "#165dff",
-                colorSuccess: "#00b42a",
-                colorWarning: "#ff7d00",
+                ...statusColors,
                 colorPrimary: colorPrimary,
                 colorPrimaryBg: colorPrimaryObject.alpha(0.1).string(),
                 colorLink: colorPrimary,
@@ -110,41 +125,33 @@ export const GlobalProvider = ({
                                    preset = {locale: "zh-CN", apis: {}}, children, themeToken, init, ...props
                                }) => {
     const locale = get(preset, "locale", "zh-CN");
-    const localMessageRef = useRef({});
-    const enumsRef = useRef(new Map());
-    const [global, setGlobal] = useState(Object.assign({
-        themeToken, localMessageRef, enumsRef, locale,
-    }, get(preset, "global")));
 
-    return (<Provider
-        value={{
-            ...props, preset, locale: global.locale, global, setGlobal,
-        }}
-    >
-        <PresetProvider value={preset}>
-            <ConfigProvider
+    const localMessageRef = useRef(null);
+    const enumsRef = useRef(null);
+    return (<GlobalContext preset={preset} initValue={Object.assign({}, props, {
+        themeToken, localMessageRef, enumsRef, locale,
+    }, get(preset, "global"))}>
+        <GlobalValue globalKey="locale">{({value: locale}) => {
+            return <ConfigProvider
                 loader={loadAntdLocale}
-                params={{locale: global.locale}}
-                themeToken={global.themeToken}
+                params={{locale}}
             >
                 <App message={{top: 100}}>
                     <AppDrawer>
                         {typeof init === "function" ? (<Fetch
-                            loader={() => init({
-                                preset, global, setGlobal,
-                            })}
+                            loader={() => init()}
                             render={() => children}
                         />) : (children)}
                     </AppDrawer>
                 </App>
                 <GlobalFontLoader/>
-            </ConfigProvider>
-        </PresetProvider>
-    </Provider>);
+            </ConfigProvider>;
+        }}</GlobalValue>
+    </GlobalContext>);
 };
 
 export const PureGlobal = ({children, ...props}) => {
-    const {global: themeToken} = useGlobalContext("themeToken");
+    const themeToken = useGlobalValue("themeToken");
     return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
         <div
             data-testid="components-core-pure-global"
@@ -155,7 +162,7 @@ export const PureGlobal = ({children, ...props}) => {
     </GlobalProvider>);
 };
 
-export {usePreset};
+export {usePreset, useGlobalValue, GlobalSetting, GlobalValue};
 
 export const useGlobalContext = (globalKey) => {
     const contextValue = useContext();
@@ -204,25 +211,6 @@ export const SetGlobal = ({globalKey, value, needReady, children}) => {
 export const GetGlobal = ({globalKey, children}) => {
     const {global} = useGlobalContext(globalKey);
     return children({value: global});
-};
-
-export const GlobalInfo = ({globalKey, value, needReady, children}) => {
-    const {global, setGlobal} = useGlobalContext(globalKey);
-    const setGlobalHandler = useRefCallback(setGlobal);
-    const prevValueRef = useRef(null);
-    prevValueRef.current = global;
-    useEffect(() => {
-        if (isEqual(prevValueRef.current, value)) {
-            return;
-        }
-        prevValueRef.current = value;
-        setGlobalHandler(value);
-    }, [value, setGlobalHandler]);
-
-    if (needReady && !global) {
-        return null;
-    }
-    return children({global, setGlobal});
 };
 
 const Global = ({children, className, ...props}) => {
