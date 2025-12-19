@@ -1,5 +1,5 @@
 import {CancelButton, SubmitButton} from "@kne/react-form-antd";
-import {useIntl, FormattedMessage} from '@kne/react-intl';
+import {FormattedMessage} from '@kne/react-intl';
 import {Form} from "./formModule";
 import classnames from "classnames";
 import style from "./style.module.scss";
