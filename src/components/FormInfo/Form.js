@@ -1,5 +1,5 @@
-import {forwardRef, useEffect, useState} from "react";
-import {usePreset, useGlobalContext} from "@components/Global";
+import {forwardRef, useEffect, useState, Fragment} from "react";
+import {usePreset, useGlobalValue} from "@components/Global";
 import get from "lodash/get";
 import formPreset from "@components/FormInfo/preset";
 import FormLangProvider from "@components/FormInfo/FormLangProvider";
@@ -11,7 +11,7 @@ import withLocale from "./withLocale";
 const SetPreset = ({children}) => {
     const [isPreset, setIsPreset] = useState(false);
     const preset = usePreset();
-    const {locale} = useGlobalContext();
+    const locale = useGlobalValue('locale');
     const formInfo = get(preset, "formInfo", {});
     useEffect(() => {
         Promise.resolve(formPreset(formInfo, {locale})).then(() => {
@@ -21,7 +21,7 @@ const SetPreset = ({children}) => {
     if (!isPreset) {
         return null;
     }
-    return children;
+    return <Fragment key={locale}>{children}</Fragment>;
 };
 
 const Form = withLocale(forwardRef(({helperGuideName, lang, ...props}, ref) => {

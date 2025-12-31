@@ -13,7 +13,6 @@ const _olderLEN = RULES.LEN;
 
 const formPreset = async (options, otherOptions) => {
     const {locale} = Object.assign({}, otherOptions);
-
     interceptors.input.use("photo-string", (value) => {
         if (value && typeof value === "string") {
             const [id, params] = value.split("?");
