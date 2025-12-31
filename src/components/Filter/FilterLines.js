@@ -45,7 +45,7 @@ const FilterLines = ({
     const [isExpand, setIsExpand] = useState(false);
     return (<IntlProvider importMessages={importMessages} moduleName="Filter">
         <Space
-            className={classnames(style["filter-title"], className)}
+            className={classnames(style["filter-title"], "filter-title", className)}
             align="top"
             size={16}
         >

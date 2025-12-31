@@ -1,11 +1,11 @@
 .search-input {
-  :global(.ant-input-group-addon) {
-    display: none;
-    background: transparent;
-  }
+  :global(.ant-input-group-addon),:global(.ant-input-search-btn) {
+  display: none;
+  background: transparent;
+}
 
-  :global(.ant-input-affix-wrapper){
-    border-radius: var(--radius-default);
+  :global(.ant-input-affix-wrapper) {
+    border-radius: var(--radius-default)!important;
   }
 
   //&:not(.is-popup) {

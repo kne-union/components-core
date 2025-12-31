@@ -36,9 +36,8 @@ export const containerClassName = style["container"]
     .replace(/\+/g, "\\+")
     .replace(/\//g, "\\/");
 
-const ConfigProvider = withFetch(({data: message, children}) => {
+const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
     const [isInit, setIsInit] = useState(false);
-    const themeToken = useGlobalValue('themeToken');
     const {colorPrimary, components, ...otherToken} = Object.assign({}, {colorPrimary: "#4096ff"}, themeToken);
     const colorPrimaryObject = useMemo(() => {
         return Color(colorPrimary)
@@ -128,6 +127,7 @@ export const GlobalProvider = ({
 
     const localMessageRef = useRef(null);
     const enumsRef = useRef(null);
+
     return (<GlobalContext preset={preset} initValue={Object.assign({}, props, {
         themeToken, localMessageRef, enumsRef, locale,
     }, get(preset, "global"))}>
@@ -135,6 +135,7 @@ export const GlobalProvider = ({
             return <ConfigProvider
                 loader={loadAntdLocale}
                 params={{locale}}
+                themeToken={themeToken}
             >
                 <App message={{top: 100}}>
                     <AppDrawer>

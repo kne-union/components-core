@@ -41,6 +41,7 @@ import Tooltip from "@components/Tooltip";
 import Icon from "@components/Icon";
 import {Space} from "antd";
 import classnames from "classnames";
+import withLocale from '../withLocale';
 import style from "../style.module.scss";
 
 const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
@@ -79,25 +80,25 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
 };
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => {
+    return withLocale(({placeholder, label, ...props}) => {
         const {formatMessage} = useIntl();
         return (<WrappedComponent
             {...props}
             label={label}
             placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
         />);
-    };
+    });
 };
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-    return ({placeholder, label, ...props}) => {
+    return withLocale(({placeholder, label, ...props}) => {
         const {formatMessage} = useIntl();
         return <WrappedComponent
             {...props}
             label={label}
             placeholder={placeholder || formatMessage({id: 'defaultSelectPlaceholder'}, {label})}
         />;
-    }
+    })
 };
 
 const withLang = (WrappedComponent) => {

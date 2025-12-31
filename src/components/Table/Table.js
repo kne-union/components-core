@@ -27,6 +27,7 @@ const Table = ({
                    name,
                    summary,
                    scroll,
+                   scroller,
                    onTablePropsReady,
                    ...props
                }) => {
@@ -111,7 +112,7 @@ const Table = ({
     >
         {!isLayout && (<Scroller
             className="table-page-scroller"
-            scroller={{getContainer: getScrollEl}}
+            scroller={scroller !== void 0 ? scroller : {getContainer: getScrollEl}}
             getScrollTarget={(el) => {
                 return (el.querySelector(".ant-table-body") || el.querySelector(".ant-table-content"));
             }}
