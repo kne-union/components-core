@@ -38,9 +38,10 @@ import InputUpperCaseField from "./fields/InputUpperCase";
 import TypeDateRangePicker from "./fields/TypeDateRangePicker";
 import Text from "./fields/Text";
 import ErrorTip from "./ErrorTip";
+import withLocale from './withLocale';
 
 const withInputDefaultPlaceholder = (WrappedComponent) => {
-    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => {
+    const TargetComponent = withLocale(forwardRef(({placeholder, label, ...props}, ref) => {
         const {formatMessage} = useIntl();
 
         return <WrappedComponent
@@ -49,7 +50,7 @@ const withInputDefaultPlaceholder = (WrappedComponent) => {
             label={label}
             placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
         />;
-    });
+    }));
     Object.keys(WrappedComponent)
         .filter((key) => {
             return ["$$typeof", "render", "field"].indexOf(key) === -1;
@@ -61,7 +62,7 @@ const withInputDefaultPlaceholder = (WrappedComponent) => {
     return TargetComponent;
 };
 
-const withTextAreaDefaultPlaceholder = (WrappedComponent) => ({placeholder, label, className, ...props}) => {
+const withTextAreaDefaultPlaceholder = (WrappedComponent) => withLocale(({placeholder, label, className, ...props}) => {
     const {formatMessage} = useIntl();
     return <div className={style["textarea-wrapped-component"]}>
         <WrappedComponent
@@ -70,10 +71,10 @@ const withTextAreaDefaultPlaceholder = (WrappedComponent) => ({placeholder, labe
             placeholder={placeholder || formatMessage({id: 'defaultInputPlaceholder'}, {label})}
         />
     </div>;
-};
+});
 
 const withSelectDefaultPlaceholder = (WrappedComponent) => {
-    const TargetComponent = forwardRef(({placeholder, label, ...props}, ref) => {
+    const TargetComponent = withLocale(forwardRef(({placeholder, label, ...props}, ref) => {
         const {formatMessage} = useIntl();
         return <WrappedComponent
             {...props}
@@ -81,7 +82,7 @@ const withSelectDefaultPlaceholder = (WrappedComponent) => {
             label={label}
             placeholder={placeholder || formatMessage({id: 'defaultSelectPlaceholder'}, {label})}
         />;
-    });
+    }));
 
     Object.keys(WrappedComponent)
         .filter((key) => {

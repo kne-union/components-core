@@ -103,7 +103,7 @@ const Scroller = ({
             scrollEl.addEventListener("scroll", computed);
         });
 
-        refResizeObserver.observe(ref.current);
+        ref.current && refResizeObserver.observe(ref.current);
 
         window.addEventListener("scroll", computed);
         container.addEventListener("scroll", computed);
