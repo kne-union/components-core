@@ -72,7 +72,7 @@ export const DragAreaOuter = ({
                 },
             }}
         >
-            <Space className={style["file-list-outer"]} direction="vertical">
+            <Space className={style["file-list-outer"]} orientation="vertical">
                 {title}
                 <div
                     className={classnames(style["container"], className)}
