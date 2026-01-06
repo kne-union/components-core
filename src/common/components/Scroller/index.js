@@ -31,13 +31,13 @@ const ScrollBar = ({onScroll, getContainer, ...scrollerProps}) => {
         };
     }, []);
     return createPortal(scrollerProps.hasScroller ? (<div
-        className={style["scroller"]}
+        className={classnames(style["scroller"], 'scroller-bar')}
         style={{
             left: scrollerProps.left, width: scrollerProps.width, height: 15, //scrollerProps.height
         }}
     >
         <div
-            className={classnames(style["scroller-inner"], {
+            className={classnames(style["scroller-inner"], 'scroller-bar-inner', {
                 [style["is-moving"]]: moving,
             })}
             style={{

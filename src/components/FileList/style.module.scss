@@ -1,5 +1,5 @@
 .file-list-outer {
-  min-width: 600px;
+
 }
 
 .file-list-title {
@@ -20,11 +20,14 @@
     justify-content: center;
     margin: 0;
   }
+
   .file-preview-inner {
     border: 10px solid #999;
     background: #999;
     width: 100%;
+    box-sizing: border-box;
     min-height: var(--min-inner-height);
+
     .file-preview {
       :global {
         .react-pdf__message--error {
@@ -48,13 +51,13 @@
 }
 
 .upload-drag-close {
-  position: absolute;
+  position: absolute !important;
   right: 10px;
   top: 10px;
 }
 
 .upload-drag-tips {
-  padding: 80px 0;
+  padding: 80px 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,6 +89,7 @@
     .split {
       margin-right: 4px;
     }
+
     :global(.is-block) {
       line-height: 32px;
     }
@@ -116,6 +120,7 @@
 }
 
 .title-group {
+  justify-content: space-between;
   > :global(.ant-space-item) {
     display: flex;
     align-items: center;

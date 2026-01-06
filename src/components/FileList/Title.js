@@ -22,9 +22,9 @@ const Title = ({
                    getPopupContainer,
                }) => {
     return (<div className={style["file-list-title"]}>
-        <Row align="middle" justify="space-between" wrap={false}>
+        <Row align="middle" justify="space-between" wrap>
             <Col>
-                <Space className={classnames(style["title-group"], 'core-file-list-title-group')} size={4}>
+                <Space className={classnames(style["title-group"], 'core-file-list-title-group')} size={4} wrap>
                     <Segmented
                         value={currentTab}
                         onChange={setCurrentTab}

@@ -5,6 +5,8 @@ import {useFileUpload} from "@kne/react-file";
 import {usePreset} from "@components/Global";
 import useControlValue from "@kne/use-control-value";
 import get from "lodash/get";
+import {FormattedMessage, IntlProvider} from "@components/Intl";
+import importMessages from "./locale";
 
 const FileUpload = ({
                         maxLength = Number.MAX_VALUE,
@@ -18,9 +20,7 @@ const FileUpload = ({
     const {apis: baseApis} = usePreset();
     const apis = Object.assign({}, baseApis, currentApis);
     const [previewList, setList] = useControlValue({defaultList, ...props}, {
-        defaultValue: "defaultList",
-        value: "list",
-        onChange: "setList",
+        defaultValue: "defaultList", value: "list", onChange: "setList",
     });
     const {fileList: uploadingList, onFileSelected} = useFileUpload({
         maxLength,
@@ -37,32 +37,32 @@ const FileUpload = ({
         },
         onUpload: apis.ossUpload,
     });
-    return (
-        <DragAreaOuter
-            title={
-                <Row>
-                    <Col flex={1}></Col>
-                    <Col>
-                        <Space split={<Divider type="vertical"/>}>
-                            <DragButton/>
-                            <UploadButton>上传</UploadButton>
-                        </Space>
-                    </Col>
-                </Row>
-            }
-            fileSize={fileSize}
-            maxLength={maxLength}
-            onFileSelected={onFileSelected}
-            accept={accept}
-        >
-            <List
-                dataSource={[...uploadingList, ...previewList]}
-                getPermission={getPermission}
-                apis={apis}
-            />
-            <DragArea/>
-        </DragAreaOuter>
-    );
+    return (<DragAreaOuter
+        title={<Row>
+            <Col flex={1}></Col>
+            <Col>
+                <Space split={<Divider type="vertical"/>}>
+                    <DragButton/>
+                    <UploadButton>
+                        <IntlProvider importMessages={importMessages} moduleName="FileList">
+                            <FormattedMessage id="upload" moduleName="FileList"/>
+                        </IntlProvider>
+                    </UploadButton>
+                </Space>
+            </Col>
+        </Row>}
+        fileSize={fileSize}
+        maxLength={maxLength}
+        onFileSelected={onFileSelected}
+        accept={accept}
+    >
+        <List
+            dataSource={[...uploadingList, ...previewList]}
+            getPermission={getPermission}
+            apis={apis}
+        />
+        <DragArea/>
+    </DragAreaOuter>);
 };
 
 export default FileUpload;

@@ -177,18 +177,6 @@
     font-weight: normal;
   }
 
-  :global(.ant-segmented) {
-    background-color: var(--bg-color-grey-2);
-  }
-
-  :global(.ant-segmented-item) {
-    color: var(--font-color-grey);
-
-    &:global(.ant-segmented-item-selected) {
-      color: var(--font-color);
-    }
-  }
-
   :global(.loading-container.is-loading) {
     opacity: 0.5;
     pointer-events: none;
