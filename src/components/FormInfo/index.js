@@ -1,11 +1,10 @@
 import preset from "./preset";
 import fields, {fieldDecorator} from "./fields";
-import {List, TableList, default as FormInfo} from "@kne/form-info";
+import {List, TableList, default as FormInfo, FormSteps} from "@kne/form-info";
 import FormApiButton from "./FormApiButton";
 import FormModal, {useFormModal, FormModalButton} from "./FormModal";
 import FormStepModal, {
-    useFormStepModal,
-    FormStepModalButton,
+    useFormStepModal, FormStepModalButton,
 } from "./FormStepModal";
 import FormDrawer, {useFormDrawer, FormDrawerButton} from "./FormDrawer";
 import Form from "./Form";
@@ -13,13 +12,7 @@ import FormItem from "./FormItem";
 import ErrorTip from "./ErrorTip";
 import {MultiField} from "@kne/form-info";
 import {
-    SubmitButton,
-    CancelButton,
-    useFormContext,
-    hooks,
-    widget,
-    utils,
-    formUtils,
+    SubmitButton, CancelButton, useFormContext, hooks, widget, utils, formUtils,
 } from "@kne/react-form-antd";
 
 preset();
@@ -29,6 +22,7 @@ FormInfo.List = List;
 FormInfo.TableList = TableList;
 FormInfo.FormApiButton = FormApiButton;
 FormInfo.FormModal = FormModal;
+FormInfo.FormSteps = FormSteps;
 FormInfo.useFormModal = useFormModal;
 FormInfo.FormModalButton = FormModalButton;
 FormInfo.FormStepModal = FormStepModal;
@@ -67,6 +61,7 @@ export {
     useFormModal,
     FormModalButton,
     FormStepModal,
+    FormSteps,
     useFormStepModal,
     FormStepModalButton,
     FormDrawer,

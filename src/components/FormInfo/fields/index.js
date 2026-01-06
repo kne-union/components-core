@@ -45,14 +45,16 @@ import withLocale from '../withLocale';
 import style from "../style.module.scss";
 
 const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
-    const TargetComponent = compose(...decoratorList)(({forwardedRef, label, placeholder, ...props}) => {
+    const TargetComponent = compose(...decoratorList)(({forwardedRef, label, placeholder, labelRender, ...props}) => {
         return (<WrappedComponent
             {...props}
             label={label}
             placeholder={placeholder}
-            labelRender={() => props.tips ? (<Space>
-                {label}
-                <Tooltip content={props.tips}>
+            labelRender={(...args) => {
+                const targetLabel = typeof labelRender === 'function' ? labelRender(...args) : label;
+                return props.tips ? (<Space>
+                    {targetLabel}
+                    <Tooltip content={props.tips}>
                 <span
                     className={classnames(style["field-tips"], {
                         [style["label-hidden"]]: props.labelHidden,
@@ -60,8 +62,9 @@ const createWithFieldDecorator = (decoratorList) => (WrappedComponent) => {
                 >
                   <Icon type="icon-xinxi-miaobian"/>
                 </span>
-                </Tooltip>
-            </Space>) : (label)}
+                    </Tooltip>
+                </Space>) : (targetLabel);
+            }}
             ref={forwardedRef}
         />)
     });

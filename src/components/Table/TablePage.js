@@ -97,6 +97,7 @@ const TablePageInner = withFetch(({
                 getScrollEl().scrollTop = 0;
             },
             size: pagination.size,
+            hideOnSinglePage: pagination.hideOnSinglePage,
             showSizeChanger: pagination.showSizeChanger,
             showQuickJumper: pagination.showQuickJumper,
             pageSizeOptions: pagination.pageSizeOptions,
@@ -129,11 +130,12 @@ const TablePage = forwardRef(({pagination, ...props}, ref) => {
     pagination = Object.assign({}, {
         showSizeChanger: true,
         showQuickJumper: true,
+        hideOnSinglePage: false,
         open: true,
         paramsType: "data",
         requestType: "reload",
         currentName: "currentPage",
-        pageSizeName: "perPage",
+        pageSizeName: "perPage"
     }, pagination);
     const pageSizeKey = `${(props.name || "common").toUpperCase()}_TABLE_PAGE_SIZE`;
     const [pageSize, setPageSize] = useState(localStorage.getItem(pageSizeKey) || pagination.pageSize);

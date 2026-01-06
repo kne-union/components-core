@@ -27,6 +27,7 @@
 .hover,
 .primary {
   cursor: pointer;
+  border-radius: var(--radius-default);
 
   &:hover {
     color: var(--primary-color);
