@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.47",
+  "version": "0.4.48",
   "files": [
     "build"
   ],
@@ -37,7 +37,7 @@
     "@kne/react-intl": "^0.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
-    "@kne/scroll-loader": "^0.1.12",
+    "@kne/scroll-loader": "^0.1.13",
     "@kne/super-select": "^0.1.32",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
