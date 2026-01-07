@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.48",
+  "version": "0.4.49",
   "files": [
     "build"
   ],
@@ -24,7 +24,7 @@
     "@kne/flex-box": "^0.1.1",
     "@kne/form-info": "^0.1.4",
     "@kne/global-context": "^1.3.2",
-    "@kne/info-page": "^0.2.3",
+    "@kne/info-page": "^0.2.4",
     "@kne/is-empty": "^1.0.1",
     "@kne/phone-number-input": "^0.1.3",
     "@kne/react-enum": "^0.1.12",
