@@ -3,6 +3,8 @@ import Ellipsis from "./Ellipsis";
 import { Button } from "antd";
 import ColItem from "./ColItem";
 import isColValueEmpty from "./isColValueEmpty";
+import {useIntl} from '@kne/react-intl';
+import withLocale from './withLocale';
 
 const DisplayInfo = createWithFetch({
   loading: null,
@@ -10,7 +12,7 @@ const DisplayInfo = createWithFetch({
   return children(data);
 });
 
-const HideInfoComponent = ({
+const HideInfoComponent = withLocale(({
   api,
   expand,
   onExpand,
@@ -20,6 +22,7 @@ const HideInfoComponent = ({
   emptyRender,
   isEmpty,
 }) => {
+  const {formatMessage} = useIntl();
   const targetApi = Object.assign({}, api);
   if (expand) {
     return (
@@ -48,10 +51,10 @@ const HideInfoComponent = ({
   return (
     <ColItem type="hide-info" primary emptyRender={emptyRender}>
       <Button className="btn-no-padding" type="link" onClick={onExpand}>
-        查看
+        {formatMessage({id: 'View'})}
       </Button>
     </ColItem>
   );
-};
+});
 
 export default HideInfoComponent;
