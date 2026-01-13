@@ -6,10 +6,10 @@ import get from "lodash/get";
 import useRefCallback from "@kne/use-ref-callback";
 import {forwardRef, useMemo, useState} from "react";
 import style from "./style.module.scss";
-import importMessages from "./locale";
-import {FormattedMessage, IntlProvider} from "@components/Intl";
 import localStorage from "@common/utils/localStorage";
 import {getScrollEl} from "@common/utils/importantContainer";
+import {useIntl} from '@kne/react-intl';
+import withLocale from './withLocale';
 
 const FeaturesColumnsConfig = ({id, columns, children}) => {
     if (id) {
@@ -30,7 +30,7 @@ const FeaturesColumnsConfig = ({id, columns, children}) => {
     return children({columns});
 };
 
-const TablePageInner = withFetch(({
+const TablePageInnerContent = withLocale(({
                                       data,
                                       refresh,
                                       reload,
@@ -55,6 +55,7 @@ const TablePageInner = withFetch(({
                                       sticky = true,
                                       ...props
                                   }) => {
+    const {formatMessage} = useIntl();
     const handlerDataFormat = useRefCallback(dataFormat);
     const formatData = useMemo(() => {
         return handlerDataFormat(data);
@@ -64,17 +65,10 @@ const TablePageInner = withFetch(({
         dataSource: formatData.list, pagination: pagination.open ? {
             total: formatData.total,
             showTotal: (total) => (<>
-                <FormattedMessage
-                    id="Page_Total"
-                    moduleName="Table"
-                    defaultMessage="共"
-                />
+                {formatMessage({id: 'TotalText'})}&nbsp;
                 <span className={style["total_text"]}>{total}</span>
-                <FormattedMessage
-                    id="Page_TotalCount"
-                    moduleName="Table"
-                    defaultMessage="条"
-                />
+                &nbsp;
+                {formatMessage({id: 'ItemText'})}
             </>),
             current: get(requestParams, [pagination.paramsType, pagination.currentName], 1),
             pageSize: get(requestParams, [pagination.paramsType, pagination.pageSizeName], 20),
@@ -104,27 +98,27 @@ const TablePageInner = withFetch(({
         } : false,
     };
 
-    return (<IntlProvider importMessages={importMessages} moduleName="Table">
-        <FeaturesColumnsConfig id={featureId} columns={typeof columns === 'function' ? columns(data) : columns}>
-            {({columns}) => (<Table
-                {...Object.assign({}, props, tableProps)}
-                sticky={sticky}
-                className={classnames(className, "loading-container", {
-                    "is-loading": !isComplete,
-                })}
-                columns={columns}
-                columnRenderProps={{
-                    ...columnRenderProps, requestParams, fetchProps, data,
-                }}
-                summary={typeof summary === "function" ? (...args) => {
-                    return summary(Object.assign({}, {
-                        data, fetchProps, requestParams, refresh, reload, loadMore, send, dataFormat, pagination,
-                    }, ...args));
-                } : null}
-            />)}
-        </FeaturesColumnsConfig>
-    </IntlProvider>);
+    return (<FeaturesColumnsConfig id={featureId} columns={typeof columns === 'function' ? columns(data) : columns}>
+        {({columns}) => (<Table
+            {...Object.assign({}, props, tableProps)}
+            sticky={sticky}
+            className={classnames(className, "loading-container", {
+                "is-loading": !isComplete,
+            })}
+            columns={columns}
+            columnRenderProps={{
+                ...columnRenderProps, requestParams, fetchProps, data,
+            }}
+            summary={typeof summary === "function" ? (...args) => {
+                return summary(Object.assign({}, {
+                    data, fetchProps, requestParams, refresh, reload, loadMore, send, dataFormat, pagination,
+                }, ...args));
+            } : null}
+        />)}
+    </FeaturesColumnsConfig>);
 });
+
+const TablePageInner = withFetch(TablePageInnerContent);
 
 const TablePage = forwardRef(({pagination, ...props}, ref) => {
     pagination = Object.assign({}, {

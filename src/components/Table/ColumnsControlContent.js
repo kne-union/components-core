@@ -11,15 +11,18 @@ import transform from "lodash/transform";
 import get from "lodash/get";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
+import {useIntl} from '@kne/react-intl';
+import withLocale from './withLocale';
 
 const { Panel } = Collapse;
 
-const ColumnsControlContent = ({
+const ColumnsControlContent = withLocale(({
   close,
   onConfirm,
   columns,
   config: defaultValue,
 }) => {
+  const {formatMessage} = useIntl();
   const [config, onChange] = useState(defaultValue || {});
 
   const [searchText, setSearchText] = useState("");
@@ -78,7 +81,7 @@ const ColumnsControlContent = ({
   const renderColumn = (item) => {
     return (
       <>
-        {item.titleText || item.title || "未命名列"}
+        {item.titleText || item.title || formatMessage({id: 'UnnamedColumn'})}
         {item.groupHeader && item.groupHeader.length > 0
           ? `(${item.groupHeader.map(({ title }) => title).join("-")})`
           : ""}
@@ -90,9 +93,9 @@ const ColumnsControlContent = ({
     <div className={style["columns-control-content"]}>
       <div className={style["columns-control-content-title"]}>
         <Row align="middle" justify="space-between">
-          <Col>编辑表格</Col>
+          <Col>{formatMessage({id: 'EditTable'})}</Col>
           <Col>
-            <Tooltip title="恢复默认">
+            <Tooltip title={formatMessage({id: 'RestoreDefault'})}>
               <LoadingButton
                 type="text"
                 icon={<Icon type="icon-huifumorenshezhi" />}
@@ -111,7 +114,7 @@ const ColumnsControlContent = ({
           ghost={true}
           bordered
         >
-          <Panel key="active" header="显示的信息">
+          <Panel key="active" header={formatMessage({id: 'VisibleInfo'})}>
             <List className={style["columns-control-content-list"]}>
               {leftFixedColumns.map((item, index) => (
                 <List.Item
@@ -185,7 +188,7 @@ const ColumnsControlContent = ({
                   key={item.name || `right-${index}`}
                 >
                   <Checkbox checked disabled>
-                    {item.titleText || item.title || "未命名列"}
+                    {item.titleText || item.title || formatMessage({id: 'UnnamedColumn'})}
                   </Checkbox>
                 </List.Item>
               ))}
@@ -195,7 +198,7 @@ const ColumnsControlContent = ({
             key="un-active"
             header={
               <Row wrap={false} justify="space-between">
-                <Col>隐藏的信息</Col>
+                <Col>{formatMessage({id: 'HiddenInfo'})}</Col>
                 <Col
                   onClick={(e) => {
                     e.stopPropagation();
@@ -204,7 +207,7 @@ const ColumnsControlContent = ({
                 >
                   <SearchInput
                     prefix={<Icon type="icon-sousuo" size={12} />}
-                    placeholder="搜索"
+                    placeholder={formatMessage({id: 'Search'})}
                     onSearch={(value) => {
                       setSearchText(value);
                     }}
@@ -241,7 +244,7 @@ const ColumnsControlContent = ({
                         onChange(newConfig);
                       }}
                     >
-                      {item.titleText || item.title || "未命名列"}
+                      {item.titleText || item.title || formatMessage({id: 'UnnamedColumn'})}
                     </Checkbox>
                   </List.Item>
                 );
@@ -263,7 +266,7 @@ const ColumnsControlContent = ({
               close();
             }}
           >
-            取消
+            {formatMessage({id: 'Cancel'})}
           </Button>
         </Col>
         <Col>
@@ -275,12 +278,12 @@ const ColumnsControlContent = ({
               close();
             }}
           >
-            确定
+            {formatMessage({id: 'Confirm'})}
           </LoadingButton>
         </Col>
       </Row>
     </div>
   );
-};
+});
 
 export default ColumnsControlContent;
