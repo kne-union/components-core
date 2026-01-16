@@ -38,3 +38,4 @@ export {default as accept} from "@common/utils/accept";
 export {default as createDeferred} from "@common/utils/createDeferred";
 export {default as isNotEmpty} from "@common/utils/isNotEmpty";
 export {pxToNumber, numberToPx} from "@common/utils/px";
+export {default as validateIDCard} from "@common/utils/validateIDCard";
