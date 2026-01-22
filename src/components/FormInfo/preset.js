@@ -6,6 +6,7 @@ import transform from 'lodash/transform';
 import "@kne/react-form-antd/dist/index.css";
 import {PHONE_NUMBER_INPUT} from "./fields/PhoneNumber";
 import HelperGuideLabel from "@components/FormInfo/HelperGuideLabel";
+import validateIDCard from '@common/utils/validateIDCard';
 import {loadModule} from "@kne/remote-loader";
 
 const _olderREQ = RULES.REQ;
@@ -202,6 +203,8 @@ const formPreset = async (options, otherOptions) => {
                 "zh-CN": `%s必须大于${values.start}`, "en-US": `%s must be greater than ${values.start}`,
             }, LENGTH_LESS: {
                 "zh-CN": `%s必须小于${values.end}`, "en-US": `%s must be less than ${values.end}`,
+            }, ID_CARD_INVALID: {
+                "zh-CN": "请输入有效的身份证号码", "en-US": "Please enter a valid ID card number",
             },
         };
         const target = get(mapping, `${type}.${locale}`);
@@ -252,6 +255,12 @@ const formPreset = async (options, otherOptions) => {
                     return {
                         result: false, errMsg: getLocaleMsg("LENGTH_LESS", {start, end}),
                     };
+                }
+                return {result: true};
+            }, ID_CARD: (value) => {
+                const res = validateIDCard(value);
+                if (!res.isValid) {
+                    return {result: false, errMsg: getLocaleMsg('ID_CARD_INVALID')};
                 }
                 return {result: true};
             },
