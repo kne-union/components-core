@@ -21,7 +21,7 @@ const { Card } = antd;
 const BaseExample = () => {
   return (
     <FlexBox
-      dataSource={[
+        dataSource={[
         {
           title: "Title 1",
         },
