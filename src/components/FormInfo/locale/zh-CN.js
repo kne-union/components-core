@@ -29,6 +29,8 @@ const message = {
     Rotate: "旋转",
     ImageFull: "充满",
     Size: "大小",
+    Sign: "签名",
+    ClickSign: "点击签名",
 };
 
 export default message;

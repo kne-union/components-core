@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.53",
+  "version": "0.4.54",
   "files": [
     "build"
   ],
@@ -22,7 +22,7 @@
     "@kne/create-deferred": "^0.1.0",
     "@kne/ensure-slash": "^0.1.0",
     "@kne/flex-box": "^0.1.1",
-    "@kne/form-info": "^0.1.4",
+    "@kne/form-info": "^0.1.5",
     "@kne/global-context": "^1.3.2",
     "@kne/info-page": "^0.2.4",
     "@kne/is-empty": "^1.0.1",
@@ -35,6 +35,7 @@
     "@kne/react-form-plus": "^0.1.5",
     "@kne/react-icon": "^0.1.3",
     "@kne/react-intl": "^0.1.12",
+    "@kne/react-pdf-sign": "^1.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
     "@kne/scroll-loader": "^0.1.13",

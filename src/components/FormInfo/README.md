@@ -205,7 +205,8 @@ const {
     Slider,
     MoneyInput,
     ColorPicker,
-    SuperSelectTree
+    SuperSelectTree,
+    Signature
 } = fields;
 
 const BaseExample = () => {
@@ -263,7 +264,7 @@ const BaseExample = () => {
                     rule="REQ LEN-3-10 REP"
                     tips="姓名"
                 />
-            </ErrorTip>, <ColorPicker name="color" label="主题色"/>,
+            </ErrorTip>, <ColorPicker name="color" label="主题色"/>, <Signature name="sign" label="签名"/>,
                 <MoneyInput name="money" label="金额" rule="REQ" tips={"money"}/>,
                 <PhoneNumber name="phone" label="手机" rule="REQ" disabled/>,
                 <Input name="email" label="邮箱" rule="EMAIL"/>, <Upload name="file" label="文件" tips="文件" block/>,
@@ -292,21 +293,27 @@ render(<PureGlobal
                 loader: () => {
                     return window.PUBLIC_URL + "/avatar.png";
                 },
-            }, ossUpload: async ({file}) => {
-                console.log(file);
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const id = uniqueId("file-");
-                        resolve({
-                            data: {
-                                code: 0, data: {
-                                    id, originalName: id + "简历.pdf",
+            }, file: {
+                getUrl: {
+                    loader: () => {
+                        return window.PUBLIC_URL + "/avatar.png";
+                    }
+                }, upload: async ({file}) => {
+                    console.log(file);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            const id = uniqueId("file-");
+                            resolve({
+                                data: {
+                                    code: 0, data: {
+                                        id, originalName: id + "简历.pdf",
+                                    },
                                 },
-                            },
-                        });
-                    }, 1000);
-                });
-            },
+                            });
+                        }, 1000);
+                    });
+                }
+            }
         },
     }}
 >
