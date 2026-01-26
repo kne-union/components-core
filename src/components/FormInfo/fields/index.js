@@ -28,6 +28,7 @@ import Switch from "./Switch";
 import Upload from "./Upload";
 import Avatar from "./Avatar";
 import SalaryInput from "./SalaryInput";
+import Signature from './Signature';
 import InputUpperCaseField from "./InputUpperCase";
 import compose from "@kne/compose";
 import {forwardRef} from "react";
@@ -172,6 +173,7 @@ const DatePickerToday = createWithFieldDecorator([withLang])(({placeholder, labe
 });
 
 const fields = {
+    Signature,
     Input,
     Checkbox,
     Password: Input.Password,
