@@ -1,6 +1,6 @@
 import style from "./style.module.scss";
 import {useRef, useState} from "react";
-import {Button, Space} from "antd";
+import {Button, Flex} from "antd";
 import importMessages from "./locale";
 import useOutside from "@kne/use-click-outside";
 import classnames from "classnames";
@@ -72,7 +72,7 @@ export const DragAreaOuter = ({
                 },
             }}
         >
-            <Space className={style["file-list-outer"]} orientation="vertical">
+            <Flex className={style["file-list-outer"]} gap={8} vertical>
                 {title}
                 <div
                     className={classnames(style["container"], className)}
@@ -83,7 +83,7 @@ export const DragAreaOuter = ({
                 >
                     {children}
                 </div>
-            </Space>
+            </Flex>
         </Provider>
     </IntlProvider>);
 };
