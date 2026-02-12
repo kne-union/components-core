@@ -26,7 +26,7 @@
 const { default: Drawer, useDrawer, DrawerButton } = _Drawer;
 const { Button, Space, Typography, Descriptions, Avatar, Tag } = _antd;
 const { useState } = React;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const BasicExample = () => {
   const [open, setOpen] = useState(false);
@@ -74,7 +74,7 @@ const BasicExample = () => {
   );
 };
 
-render(<Global><BasicExample /></Global>);
+render(<PureGlobal><BasicExample /></PureGlobal>);
 
 ```
 
@@ -86,7 +86,7 @@ render(<Global><BasicExample /></Global>);
 const { DrawerButton } = _Drawer;
 const { Card, Avatar, Typography, Tag, Space, Divider, Descriptions, Timeline } = _antd;
 const { range } = lodash;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const UserDetailExample = () => {
   const mockUserData = {
@@ -210,7 +210,7 @@ const UserDetailExample = () => {
   );
 };
 
-render(<Global><UserDetailExample /></Global>);
+render(<PureGlobal><UserDetailExample /></PureGlobal>);
 
 ```
 
@@ -221,7 +221,7 @@ render(<Global><UserDetailExample /></Global>);
 ```jsx
 const {useFormDrawer, FormDrawerButton, default: FormInfo} = _FormInfo;
 const {Button, Space, Typography, message, Divider} = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const FormDrawerExample = () => {
     const formDrawer = useFormDrawer();
@@ -310,7 +310,7 @@ const FormDrawerExample = () => {
     </Space>);
 };
 
-render(<Global><FormDrawerExample/></Global>);
+render(<PureGlobal><FormDrawerExample/></PureGlobal>);
 
 ```
 
@@ -321,7 +321,7 @@ render(<Global><FormDrawerExample/></Global>);
 ```jsx
 const { useDrawer } = _Drawer;
 const { Button, Space, Typography, Descriptions, Timeline, Card } = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const SizesExample = () => {
   const drawer = useDrawer();
@@ -485,7 +485,7 @@ const SizesExample = () => {
   );
 };
 
-render(<Global><SizesExample /></Global>);
+render(<PureGlobal><SizesExample /></PureGlobal>);
 
 ```
 
@@ -496,7 +496,7 @@ render(<Global><SizesExample /></Global>);
 ```jsx
 const { useDrawer, DrawerButton } = _Drawer;
 const { Button, Space, Typography, message, Popconfirm, Tag, Descriptions } = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const CustomActionsExample = () => {
   const drawer = useDrawer();
@@ -656,7 +656,7 @@ const CustomActionsExample = () => {
   );
 };
 
-render(<Global><CustomActionsExample /></Global>);
+render(<PureGlobal><CustomActionsExample /></PureGlobal>);
 
 ```
 
