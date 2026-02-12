@@ -26,29 +26,29 @@ const BaseExample = () => {
                           id: "client",
                           value: "client",
                           type: "module",
-                          name: "客户",
-                          label: "客户",
+                          name: "客户管理",
+                          label: "客户管理",
                           children: [
                             {
                               id: "client-list",
                               value: "client-list",
                               type: "feature",
-                              name: "客户列表页",
-                              label: "客户列表页",
+                              name: "客户列表",
+                              label: "客户列表",
                             },
                             {
                               id: "client-detail",
                               value: "client-detail",
                               type: "module",
-                              name: "客户详情页",
-                              label: "客户详情页",
+                              name: "客户详情",
+                              label: "客户详情",
                               children: [
                                 {
                                   id: "contract",
                                   value: "contract",
                                   type: "module",
-                                  name: "合同信息",
-                                  label: "合同信息",
+                                  name: "合同管理",
+                                  label: "合同管理",
                                 },
                               ],
                             },
@@ -74,22 +74,22 @@ const BaseExample = () => {
                           id: "position",
                           value: "position",
                           type: "module",
-                          name: "职位",
-                          label: "职位",
+                          name: "招聘管理",
+                          label: "招聘管理",
                           children: [
                             {
                               id: "position-list",
                               value: "position-list",
                               type: "feature",
-                              name: "职位列表页",
-                              label: "职位列表页",
+                              name: "职位列表",
+                              label: "职位列表",
                             },
                             {
                               id: "position-detail",
                               value: "position-detail",
                               type: "module",
-                              name: "职位详情页",
-                              label: "职位详情页",
+                              name: "职位详情",
+                              label: "职位详情",
                             },
                             {
                               id: "position-form",
@@ -102,8 +102,8 @@ const BaseExample = () => {
                                   id: "industry",
                                   value: "industry",
                                   type: "feature",
-                                  name: "行业",
-                                  label: "行业",
+                                  name: "行业选择",
+                                  label: "行业选择",
                                 },
                               ],
                             },
@@ -130,7 +130,7 @@ const BaseExample = () => {
                   const parentId = "2";
                   return {
                     id: `${parentId ? `${parentId}-` : ""}${key + 1}`,
-                    label: `节点-${searchText}-${
+                    label: `部门-${searchText}-${
                       parentId ? `${parentId}-` : ""
                     }${key + 1}`,
                     parentId,
@@ -149,7 +149,7 @@ const BaseExample = () => {
                           return Object.assign(
                             {
                               id: `${parentId ? `${parentId}-` : ""}${key + 1}`,
-                              label: `节点-${parentId ? `${parentId}-` : ""}${
+                              label: `部门-${parentId ? `${parentId}-` : ""}${
                                 key + 1
                               }`,
                               parentId,
@@ -183,7 +183,7 @@ const BaseExample = () => {
                           return Object.assign(
                             {
                               id: `${parentId ? `${parentId}-` : ""}${key + 1}`,
-                              label: `节点-${parentId ? `${parentId}-` : ""}${
+                              label: `部门-${parentId ? `${parentId}-` : ""}${
                                 key + 1
                               }`,
                               parentId,

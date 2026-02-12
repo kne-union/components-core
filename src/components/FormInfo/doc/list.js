@@ -1,17 +1,8 @@
-const {
-  default: FormInfo,
-  Form,
-  List,
-  AdvancedSelect,
-  TableList,
-  Input,
-  TextArea,
-  SubmitButton,
-  FormApiButton,
-} = _FormInfo;
-const { PureGlobal } = global;
+const { default: FormInfo, Form, List, TableList, SubmitButton, fields } = _FormInfo;
 const { useModal } = _Modal;
 const { Space } = antd;
+
+const { Input, DatePicker, TextArea } = fields;
 
 const BaseExample = () => {
   const modal = useModal();
@@ -19,178 +10,47 @@ const BaseExample = () => {
     <Form
       onSubmit={(data) => {
         modal({
-          title: "表单提交数据",
+          title: "企业信息提交成功",
           children: <pre>{JSON.stringify(data, null, 2)}</pre>,
         });
       }}
     >
       <Space direction="vertical" size={16}>
         <FormInfo
-          title="基本信息"
+          title="企业基本信息"
           list={[
-            <Input name="name" label="基本名称" rule="REQ" block />,
-            <TextArea name="des" label="基本描述" block />,
-          ]}
-        />
-        <List
-          name="list"
-          title="列表"
-          itemTitle={({ index }) => `经历${index + 1}`}
-          maxLength={5}
-          list={[
-            <Input name="name" label="名称" rule="REQ" />,
-            <Input name="title" label="标题" rule="REQ" />,
-            <TextArea name="des" label="描述" block rule="REQ" />,
-          ]}
-        />
-        <TableList
-          name="tableList"
-          title="表格列表"
-          maxLength={5}
-          minLength={1}
-          list={[
-            <Input name="name" label="名称" rule="REQ" value="xxxxx" />,
-            <Input name="title" label="标题" rule="REQ" />,
-            <AdvancedSelect
-              name="select"
-              label="选项"
-              rule="REQ"
-              value={[1]}
-              api={{
-                loader: () => {
-                  return {
-                    pageData: [
-                      {
-                        label: "第一项",
-                        value: 1,
-                      },
-                      {
-                        label: "第二项",
-                        value: 2,
-                        disabled: true,
-                      },
-                      {
-                        label: "第三项",
-                        value: 3,
-                      },
-                    ],
-                  };
-                },
-              }}
-            />,
-          ]}
-        />
-        <List
-          name="mult-list"
-          important
-          title="复杂列表"
-          itemTitle={({ index }) => `经历${index + 1}`}
-          maxLength={5}
-          minLength={1}
-          list={[
-            <Input name="name" label="名称" rule="REQ" />,
-            <Input name="title" label="标题" rule="REQ" />,
-            <TextArea name="des" label="描述" block rule="REQ" />,
-            <TableList
-              block
-              isUnshift={false}
-              name="tableList"
-              title="表格列表"
-              maxLength={5}
-              minLength={1}
-              list={[
-                <Input name="name" label="名称" rule="REQ" value="xxxxx" />,
-                <Input name="title" label="标题" rule="REQ" />,
-                <AdvancedSelect
-                  name="select"
-                  label="选项"
-                  rule="REQ"
-                  value={[1]}
-                  api={{
-                    loader: () => {
-                      return {
-                        pageData: [
-                          {
-                            label: "第一项",
-                            value: 1,
-                          },
-                          {
-                            label: "第二项",
-                            value: 2,
-                            disabled: true,
-                          },
-                          {
-                            label: "第三项",
-                            value: 3,
-                          },
-                        ],
-                      };
-                    },
-                  }}
-                />,
-              ]}
-            />,
+            <Input name="companyName" label="企业名称" rule="REQ" />,
+            <TextArea name="companyDescription" label="企业简介" block />,
           ]}
         />
 
         <List
-          name="mult-list-2"
-          important
-          title="复杂列表2"
-          itemTitle={({ index }) => `经历${index + 1}`}
+          name="productLines"
+          title="产品线列表"
+          itemTitle={({ index }) => `产品线 ${index + 1}`}
+          maxLength={10}
+          list={[
+            <Input name="lineName" label="产品线名称" rule="REQ" />,
+            <Input name="annualSales" label="年销售额(万元)" rule="REQ" />,
+            <TextArea name="lineFeatures" label="产品线特点" block />,
+          ]}
+        />
+
+        <TableList
+          name="partnerContacts"
+          title="合作伙伴联系人"
           maxLength={5}
-          minLength={1}
           list={[
-            <Input name="name" label="名称" rule="REQ" />,
-            <Input name="title" label="标题" rule="REQ" />,
-            <TextArea name="des" label="描述" block rule="REQ" />,
-            <List
-              block
-              name="tableList"
-              title="列表"
-              maxLength={5}
-              minLength={1}
-              list={[
-                <Input name="name" label="名称" rule="REQ" value="xxxxx" />,
-                <Input name="title" label="标题" rule="REQ" />,
-                <TextArea name="des" label="描述" block rule="REQ" />,
-              ]}
-            />,
+            <Input name="contactName" label="联系人姓名" rule="REQ" />,
+            <DatePicker name="cooperateDate" label="合作起始日期" />,
+            <Input name="contactPhone" label="联系电话" rule="REQ" />,
           ]}
         />
-        <FormInfo
-          list={[
-            <SubmitButton>提交</SubmitButton>,
-            <FormApiButton
-              onClick={({ openApi }) => {
-                openApi.setFields(
-                  [
-                    {
-                      groupName: "tableList",
-                      name: "name",
-                      value: "",
-                    },
-                    {
-                      groupName: "tableList",
-                      name: "title",
-                      value: "ssssssss",
-                    },
-                  ],
-                  { runValidate: false }
-                );
-              }}
-            >
-              设置表单值
-            </FormApiButton>,
-          ]}
-        />
+
+        <SubmitButton type="primary">提交企业信息</SubmitButton>
       </Space>
     </Form>
   );
 };
 
-render(
-  <PureGlobal>
-    <BaseExample />
-  </PureGlobal>
-);
+render(<BaseExample />);

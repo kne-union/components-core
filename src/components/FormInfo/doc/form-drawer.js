@@ -1,286 +1,72 @@
-const { Space, Button } = antd;
+const { default: FormInfo, useFormDrawer, fields } = _FormInfo;
 const { PureGlobal } = global;
-const {
-  default: FormInfo,
-  List,
-  Input,
-  TextArea,
-  FormDrawer,
-  useFormDrawer,
-  CancelButton,
-  FormApiButton,
-  SubmitButton,
-  FormDrawerButton,
-} = _FormInfo;
-const { useState } = React;
-const { default: Fetch } = fetch;
+const { Button, Space } = antd;
 
-const BaseExample = () => {
-  const [open, setOpen] = useState(false);
-  const formDrawer = useFormDrawer();
-  return (
-    <Space wrap>
-      <FormDrawer
-        open={open}
-        title="表单弹窗"
-        onClose={() => {
-          setOpen(false);
-        }}
-        formProps={{
-          data: {
-            field1: "field1field1field1field1",
-          },
-          onSubmit: async (data) => {
-            console.log(data);
-            await new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-              }, 1000);
-            });
-            setOpen(false);
-          },
-        }}
-      >
+const { Input, DatePicker, Select, TextArea } = fields;
+
+const ProjectDrawer = () => {
+  const drawer = useFormDrawer();
+
+  const handleCreateProject = () => {
+    const drawerApi = drawer({
+      title: "发起研发项目",
+      width: 600,
+      formProps: {
+        onSubmit: (data) => {
+          console.log("提交数据:", data);
+          drawerApi.close();
+        },
+      },
+      children: (
         <FormInfo
-          title="基本信息"
           list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
+            <Input name="name" label="项目名称" rule="REQ" />,
+            <TextArea name="description" label="项目背景与目标" block />,
+            <DatePicker name="startDate" label="计划启动日期" rule="REQ" />,
+            <DatePicker name="endDate" label="计划完成日期" rule="REQ" />,
+            <Select
+              name="projectManager"
+              label="项目负责人"
+              rule="REQ"
+              options={[
+                { label: "王建国", value: 1 },
+                { label: "李晓华", value: 2 },
+                { label: "张思远", value: 3 },
+              ]}
+            />,
+            <Select
+              name="projectStatus"
+              label="项目阶段"
+              rule="REQ"
+              options={[
+                { label: "需求分析", value: "requirement" },
+                { label: "开发实施", value: "development" },
+                { label: "测试验收", value: "testing" },
+                { label: "上线部署", value: "deployment" },
+              ]}
+            />,
           ]}
         />
-        <List
-          title="列表"
-          name="list"
-          maxLength={3}
-          list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
-          ]}
-        />
-      </FormDrawer>
-      <Button
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        组件调用
+      ),
+    });
+  };
+
+  return (
+    <Space>
+      <Button type="primary" onClick={handleCreateProject}>
+        发起研发项目
       </Button>
-      <Button
-        onClick={() => {
-          const api = formDrawer({
-            title: "表单弹窗",
-            formProps: {
-              data: {
-                field1: "field1field1field1field1",
-              },
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                api.close();
-              },
-            },
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        hooks调用
-      </Button>
-      <Button
-        onClick={() => {
-          const api = formDrawer({
-            title: "表单弹窗",
-            formProps: ({ data }) => {
-              return {
-                data: data,
-                onSubmit: async (data) => {
-                  console.log(data);
-                  await new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve();
-                    }, 1000);
-                  });
-                  api.close();
-                },
-              };
-            },
-            withDecorator: (render) => (
-              <Fetch
-                loader={() => {
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve({
-                        field1: "我接口获取的数据",
-                      });
-                    }, 1000);
-                  });
-                }}
-                render={({ data }) => render({ data })}
-              />
-            ),
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        hooks加载form数据调用
-      </Button>
-      <Button
-        onClick={() => {
-          const api = formDrawer({
-            title: "表单弹窗",
-            footerButtons: [
-              { ButtonComponent: CancelButton, children: "取消" },
-              {
-                ButtonComponent: FormApiButton,
-                autoClose: false,
-                onClick: (context) => {
-                  console.log(context);
-                },
-                children: "FormApiButton",
-              },
-              {
-                ButtonComponent: SubmitButton,
-                autoClose: false,
-                children: "提交",
-              },
-            ],
-            formProps: {
-              data: {
-                field1: "field1field1field1field1",
-              },
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                api.close();
-              },
-            },
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        自定义footerButtons
-      </Button>
-      <FormDrawerButton
-        api={{
-          loader: () => {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve({
-                  name: "Lucy",
-                  desc: "个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍",
-                });
-              }, 1000);
-            });
-          },
-        }}
-        modalProps={({ data, close }) => {
-          return {
-            title: "加载数据的form弹窗",
-            formProps: {
-              data,
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                close();
-              },
-            },
-            children: (
-              <FormInfo
-                title="基本信息"
-                column={1}
-                list={[
-                  <Input name="name" label="姓名" rule="REQ" />,
-                  <TextArea name="desc" label="介绍" rule="REQ" />,
-                ]}
-              />
-            ),
-          };
-        }}
-      >
-        加载form数据按钮
-      </FormDrawerButton>
+      <Button onClick={() => drawerApi.close()}>关闭</Button>
     </Space>
   );
 };
 
-render(
-  <PureGlobal>
-    <BaseExample />
-  </PureGlobal>
-);
+const BaseExample = () => {
+  return (
+    <PureGlobal>
+      <ProjectDrawer />
+    </PureGlobal>
+  );
+};
+
+render(<BaseExample />);

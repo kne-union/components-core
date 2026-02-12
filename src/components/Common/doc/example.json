@@ -3,18 +3,26 @@
   "list": [
     {
       "title": "FetchButton",
-      "description": "这里填写示例说明",
-      "code": "./base.js",
+      "description": "Button触发加载数据，加载数据后在弹窗中展示",
+      "code": "./fetch-button.js",
       "scope": [
         {
           "name": "_Common",
           "packageName": "@components/Common"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "Enum",
-      "description": "这里填写示例说明",
+      "description": "枚举展示组件，展示地址、职能、行业等枚举信息",
       "code": "./enum.js",
       "scope": [
         {
@@ -29,7 +37,7 @@
     },
     {
       "title": "ScrollLoader",
-      "description": "这里填写示例说明",
+      "description": "下拉滚动加载组件，配合 Fetch 实现分页加载",
       "code": "./scrollLoader.js",
       "scope": [
         {
@@ -43,12 +51,16 @@
         {
           "name": "lodash",
           "packageName": "lodash"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "SearchInput",
-      "description": "搜索框",
+      "description": "提供防抖的查询输入框组件",
       "code": "./search-input.js",
       "scope": [
         {
@@ -59,7 +71,7 @@
     },
     {
       "title": "AdvancedSelect",
-      "description": "高级选择",
+      "description": "高级选择组件，支持用户选择、列表选择等功能",
       "code": "./advanced-select.js",
       "scope": [
         {
@@ -67,14 +79,14 @@
           "packageName": "@components/Common"
         },
         {
-          "name": "antd",
+          "name": "_antd",
           "packageName": "antd"
         }
       ]
     },
     {
       "title": "SuperSelect",
-      "description": "新版高级选择",
+      "description": "新版高级选择组件，提供更强的自定义能力",
       "code": "./super-select.js",
       "scope": [
         {
@@ -82,7 +94,82 @@
           "packageName": "@components/Common"
         },
         {
-          "name": "antd",
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "TreeField",
+      "description": "树形选择组件，支持单选和多选",
+      "code": "./tree-field.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "CascaderField",
+      "description": "级联选择组件，支持多级联动选择",
+      "code": "./cascader-field.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "TypeDateRangePicker",
+      "description": "类型日期范围选择器，支持按日、周、月选择",
+      "code": "./type-date-range-picker.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "InputFile",
+      "description": "文件上传组件，支持按钮、链接、文本等多种形式",
+      "code": "./input-file.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "changeMoneyToChinese",
+      "description": "金额转大写中文工具函数",
+      "code": "./change-money-to-chinese.js",
+      "scope": [
+        {
+          "name": "_Common",
+          "packageName": "@components/Common"
+        },
+        {
+          "name": "_antd",
           "packageName": "antd"
         }
       ]

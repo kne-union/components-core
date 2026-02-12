@@ -12,7 +12,7 @@ const BaseExample = () => {
       col={2}
       list={[
         {
-          label: "行业选择",
+          label: "所属行业",
           content: (
             <IndustrySelect
               defaultValue={["001"]}
@@ -23,7 +23,7 @@ const BaseExample = () => {
           ),
         },
         {
-          label: "modal行业选择",
+          label: "modal所属行业",
           content: (
             <IndustrySelect
               isPopup={false}
@@ -34,7 +34,7 @@ const BaseExample = () => {
           ),
         },
         {
-          label: "职能枚举显示",
+          label: "行业枚举显示",
           content: <IndustrySelect.Enum name="004" />,
         },
       ]}
@@ -43,9 +43,7 @@ const BaseExample = () => {
 };
 
 render(
-  <PureGlobal preset={{ locale: "en-US" }}>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
+  <div className="input">
+    <BaseExample />
+  </div>
 );

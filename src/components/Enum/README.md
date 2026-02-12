@@ -1,5 +1,17 @@
 
-# Enum
+# react-enum
+
+
+### 描述
+
+管理和获取枚举值.
+
+
+### 安装
+
+```shell
+npm i --save @kne/react-enum
+```
 
 
 ### 概述
@@ -27,15 +39,70 @@
 
 #### 示例代码
 
+- EnumLegacy
+- 兼容老版本Enum的API
+- _ReactEnum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { default: Enum, preset } = _ReactEnum;
+const { createWithRemoteLoader } = remoteLoader;
+const { Divider } = antd;
+
+preset({
+  base: {
+    confirm: () => [{ description: '是', value: 'Y' }, {
+      description: '否', value: 'N'
+    }]
+  }
+});
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    enums: {
+      gender: [{ value: 'M', description: '男' }, {
+        value: 'F', description: '女'
+      }], marital: async () => [{ description: '已婚', value: 'Y' }, {
+        description: '未婚', value: 'N'
+      }]
+    }
+  }}>
+    <Enum moduleName="gender" name="M" />
+    <Divider />
+    <Enum moduleName="gender">{(data) => {
+      return data.map((data) => `${data.value}:${data.description}`).join(',');
+    }}</Enum>
+    <Divider />
+    <Enum moduleName={['gender', 'marital']}>{([gender, marital]) => {
+      return <div>
+        <div>{gender.map((data) => `${data.value}:${data.description}`).join(',')}</div>
+        <div>{marital.map((data) => `${data.value}:${data.description}`).join(',')}</div>
+      </div>;
+    }}</Enum>
+    <Divider />
+    <Enum moduleName="confirm" name="Y" />
+    <Enum moduleName="confirm" name="N">{(data) => data.description}</Enum>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+```
+
 - 基础用法
 - 展示枚举的基本使用，包括获取单个枚举值和枚举列表
-- _Enum(@components/Enum),antd(antd),global(@components/Global)
+- _Enum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: Enum } = _Enum;
-const { PureGlobal } = global;
+const { createWithRemoteLoader } = remoteLoader;
 const { Space, Select, Divider } = antd;
-const BaseExample = () => {
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
   return (
     <PureGlobal
       preset={{
@@ -138,22 +205,25 @@ const BaseExample = () => {
       </Space>
     </PureGlobal>
   );
-};
+});
 
 render(<BaseExample />);
 ```
 
 - 异步加载与缓存
 - 展示异步加载枚举数据、Loading状态和强制刷新缓存
-- _Enum(@components/Enum),antd(antd),global(@components/Global)
+- _Enum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: Enum } = _Enum;
-const { PureGlobal } = global;
 const { Space, Button, message } = antd;
 const { useState } = React;
+const { createWithRemoteLoader } = remoteLoader;
 
-const AsyncEnumExample = () => {
+const AsyncEnumExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
   const [refreshKey, setRefreshKey] = useState(0);
   
   return (
@@ -232,7 +302,7 @@ const AsyncEnumExample = () => {
       </Space>
     </PureGlobal>
   );
-};
+});
 
 render(<AsyncEnumExample />);
 
@@ -240,14 +310,17 @@ render(<AsyncEnumExample />);
 
 - 格式化方式
 - 展示不同的格式化方式和自定义渲染
-- _Enum(@components/Enum),antd(antd),global(@components/Global)
+- _Enum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: Enum } = _Enum;
-const { PureGlobal } = global;
+const { createWithRemoteLoader } = remoteLoader;
 const { Space, Divider, Card } = antd;
 
-const FormatEnumExample = () => {
+const FormatEnumExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
   return (
     <PureGlobal
       preset={{
@@ -287,9 +360,11 @@ const FormatEnumExample = () => {
             <div>
               <strong>选项格式（format="option"）：</strong>
               <Enum moduleName="orderStatus" name="paid" format="option">
-                {(data) => (
-                  <span>label: {data.label}, value: {data.value}</span>
-                )}
+                {(data) => {
+                  return (
+                    <span>label: {data.description}, value: {data.value}</span>
+                  )
+                }}
               </Enum>
             </div>
           </Space>
@@ -322,7 +397,7 @@ const FormatEnumExample = () => {
       </Space>
     </PureGlobal>
   );
-};
+});
 
 render(<FormatEnumExample />);
 
@@ -330,14 +405,17 @@ render(<FormatEnumExample />);
 
 - 渲染枚举列表
 - 将枚举列表渲染为各种表单组件
-- _Enum(@components/Enum),antd(antd),global(@components/Global)
+- _Enum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: Enum } = _Enum;
-const { PureGlobal } = global;
+const { createWithRemoteLoader } = remoteLoader;
 const { Space, Select, Radio, Checkbox, Table } = antd;
 
-const ListEnumExample = () => {
+const ListEnumExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
   return (
     <PureGlobal
       preset={{
@@ -427,7 +505,7 @@ const ListEnumExample = () => {
       </Space>
     </PureGlobal>
   );
-};
+});
 
 render(<ListEnumExample />);
 
@@ -435,14 +513,17 @@ render(<ListEnumExample />);
 
 - 多枚举模块
 - 同时获取多个枚举模块和错误处理
-- _Enum(@components/Enum),antd(antd),global(@components/Global)
+- _Enum(@kne/react-enum)[import * as _ReactEnum from "@kne/react-enum"],antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: Enum } = _Enum;
-const { PureGlobal } = global;
+const { createWithRemoteLoader } = remoteLoader;
 const { Space, Card, Tag } = antd;
 
-const MultiEnumExample = () => {
+const MultiEnumExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
   return (
     <PureGlobal
       preset={{
@@ -543,7 +624,7 @@ const MultiEnumExample = () => {
       </Space>
     </PureGlobal>
   );
-};
+});
 
 render(<MultiEnumExample />);
 

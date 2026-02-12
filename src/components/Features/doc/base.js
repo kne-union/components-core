@@ -1,6 +1,7 @@
 const { default: Features } = _Features;
 const { default: Layout, PermissionsPage } = layout;
 const { PureGlobal } = global;
+
 const BaseExample = () => {
   return (
     <PureGlobal
@@ -8,40 +9,44 @@ const BaseExample = () => {
         features: {
           debug: true,
           profile: {
-            id: "erc",
+            id: "hr-system",
             type: "system",
-            name: "业务系统",
+            name: "人力资源管理系统",
             children: [
               {
-                id: "home",
+                id: "employee",
                 type: "module",
-                name: "首页",
+                name: "员工管理",
                 children: [
                   {
-                    id: "test",
+                    id: "import",
                     type: "feature",
-                    name: "测试功能",
-                    dependencies: ["erc:client"],
+                    name: "批量导入",
+                    dependencies: ["hr-system:employee:edit"],
+                  },
+                  {
+                    id: "export",
+                    type: "feature",
+                    name: "数据导出",
                   },
                 ],
               },
               {
-                id: "position",
+                id: "attendance",
                 type: "module",
-                name: "职位",
+                name: "考勤管理",
                 children: [
                   {
-                    id: "position-list",
+                    id: "check-in",
                     type: "feature",
-                    options: [],
-                    rejectedOptions: [],
+                    name: "签到打卡",
                   },
                 ],
               },
               {
-                id: "client",
+                id: "edit",
                 type: "module",
-                name: "客户",
+                name: "编辑模块",
               },
             ],
           },
@@ -49,9 +54,25 @@ const BaseExample = () => {
       }}
     >
       <Layout navigation={{ isFixed: false }}>
-        <PermissionsPage name="home" openFeatures>
-          <Features id="test">功能模块一</Features>
-          <Features id="test2">功能模块二</Features>
+        <PermissionsPage name="employee" openFeatures>
+          <Features id="import">
+            <div>
+              <h3>批量导入员工数据</h3>
+              <p>支持 Excel 文件批量导入，一次性添加多名员工</p>
+            </div>
+          </Features>
+          <Features id="export">
+            <div>
+              <h3>导出员工数据</h3>
+              <p>导出员工列表到 Excel，支持自定义筛选条件</p>
+            </div>
+          </Features>
+          <Features id="analytics">
+            <div>
+              <h3>数据分析</h3>
+              <p>统计分析员工数据，生成可视化报表</p>
+            </div>
+          </Features>
         </PermissionsPage>
       </Layout>
     </PureGlobal>

@@ -3,7 +3,7 @@
   "list": [
     {
       "title": "获取文件地址",
-      "description": "通过一个ossId获取文件地址",
+      "description": "通过 OSS ID 获取文件访问地址，展示员工头像和公司 Logo 地址获取",
       "code": "./base.js",
       "scope": [
         {
@@ -17,12 +17,16 @@
         {
           "name": "remoteLoader",
           "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "文件下载",
-      "description": "展示文件下载",
+      "description": "展示不同类型文件的下载功能，包括成功和失败回调，人力资源相关文档下载",
       "code": "./download.js",
       "scope": [
         {
@@ -36,39 +40,39 @@
         {
           "name": "remoteLoader",
           "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "文件列表",
-      "description": "展示文件列表",
+      "description": "展示文件列表组件，支持上传状态、文件信息展示、编辑、预览、删除等操作，项目文档库和员工简历场景",
       "code": "./list.js",
       "scope": [
         {
-          "name": "_FileList",
+          "name": "_File",
           "packageName": "@components/File"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
         },
         {
           "name": "global",
           "packageName": "@components/Global"
         },
         {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
           "name": "remoteLoader",
           "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "文件链接",
-      "description": "展示文件链接",
+      "description": "展示 FileLink 和 useFileModal 的使用，合同文档、财务发票、政策文档预览",
       "code": "./file-link.js",
       "scope": [
         {

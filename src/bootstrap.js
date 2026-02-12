@@ -5,12 +5,8 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const themeToken = {
-  colorPrimary: "#4F185A",
-};
-
 root.render(
   <React.StrictMode>
-    <App preset={{ ajax }} themeToken={themeToken} />
+    <App preset={{ ajax }} />
   </React.StrictMode>
 );

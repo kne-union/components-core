@@ -1,23 +1,54 @@
-| 属性名 | 说明                                              | 类型     | 默认值 |
-|-----|-------------------------------------------------|--------|-----|
-| id  | 模块或功能id，通过Global里面的preset的features配置确定该模块开启或者关闭 | string | -   |
+### Features 组件
 
-* features 参数设置
+Features 是一个功能开关组件，用于根据配置控制子组件的显示或隐藏。
 
-| 属性名     | 说明                             | 类型      | 默认值   |
-|---------|--------------------------------|---------|-------|
-| debug   | 是否开启调试模式，开启后控制台会打印所有模块的id和判断结果 | boolean | false |
-| profile | 模块配置列表，具体参考下面profile参数说明       | object  | -     |
+#### 组件属性
 
-* profile参数说明
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| id | 功能标识符，对应 preset.features.profile 中定义的 id | string | 是 | - |
+| children | 子内容，可以是 JSX 或函数。为函数时接收 {isPass, options, currentId} 参数 | ReactNode \| Function | 是 | - |
 
-| 属性名             | 说明                                                                                                                                                          | 类型            | 默认值   |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------|
-| id              | 模块的唯一标识符，需要保证在当前一级中不重复，实际id为所有父级的id用’:‘链接的字符串                                                                                                               | string        | -     |
-| type            | 可能取值为system,module,feature，注意最外层的type必须为system                                                                                                              | string        | -     |
-| name            | 模块的中文名称，不参与判断，只标识模块名帮助开发者识别                                                                                                                                 | string        | -     |
-| close           | 模块是否关闭，可以缺省该值，缺省时profile里面存在某id的模块即为模块开启，不存在即为关闭。在特殊情况下，在profile存在该模块配置但是希望其关闭时可以显示指定该参数为true来关闭模块                                                          | boolean       | false |
-| dependencies    | 依赖模块列表，每一项为一个模块id（该id必须为完整的id串，即带有所有父级id的用’:‘链接起来的字符串）,当所有id的指代模块都被判断开启时，该模块被判断为开启                                                                          | array[string] | -     |
-| options         | 模块开启时获取的参数                                                                                                                                                  | any           | -     |
-| rejectedOptions | 模块关闭时获取的参数                                                                                                                                                  | any           | -     |
-| children        | 被控制的模块，为function时可以接收到({isPass,options})参数 isPass为模块是否开启，options在模块开启时为options参数，在模块关闭时为rejectedOptions参数，其不为function类型时当模块关闭则不显示children，模块开启时正常显示children | jsx,function  | -     |
+#### children 函数参数
+
+当 children 为函数时，接收的参数对象包含以下属性：
+
+| 参数名 | 说明 | 类型 |
+|--------|------|------|
+| isPass | 功能是否通过（开启） | boolean |
+| options | 开启或关闭状态对应的配置参数 | any |
+| currentId | 当前功能的完整 ID（包含父级路径） | string |
+
+### features 配置
+
+features 配置在 Global preset 中定义。
+
+#### features 配置属性
+
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| debug | 是否开启调试模式，开启后会在控制台打印所有功能的 ID 和判断状态 | boolean | 否 | false |
+| profile | 功能配置树结构 | object | 是 | - |
+
+### profile 配置结构
+
+profile 采用树形结构配置系统的功能模块。
+
+#### profile 节点属性
+
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| id | 当前节点的标识符，同级节点中需唯一，完整 ID 由父级 ID 和当前 ID 通过冒号连接 | string | 是 | - |
+| type | 节点类型，可选值为：system（系统根节点）、module（功能模块）、feature（具体功能） | string | 是 | - |
+| name | 节点中文名称，仅用于标识和说明 | string | 否 | - |
+| close | 是否强制关闭该功能。true 表示关闭，false 或不配置表示开启（存在该节点配置时） | boolean | 否 | false |
+| dependencies | 依赖的功能列表，数组中的 ID 必须是完整的功能 ID。只有所有依赖功能都开启时，当前功能才会被标记为开启 | array\<string\> | 否 | - |
+| options | 功能开启时传递给 children 的参数 | any | 否 | - |
+| rejectedOptions | 功能关闭时传递给 children 的参数 | any | 否 | - |
+| children | 子功能节点数组 | array\<object\> | 否 | - |
+
+#### 功能判断规则
+
+1. 功能开启条件：profile 中存在该节点配置，且 close 不为 true，且所有 dependencies 依赖的功能都已开启
+2. 功能关闭条件：profile 中不存在该节点配置，或 close 为 true，或存在依赖项功能关闭
+3. 根节点 type 必须为 system
