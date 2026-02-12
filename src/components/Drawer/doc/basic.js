@@ -1,7 +1,7 @@
 const { default: Drawer, useDrawer, DrawerButton } = _Drawer;
 const { Button, Space, Typography, Descriptions, Avatar, Tag } = _antd;
 const { useState } = React;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const BasicExample = () => {
   const [open, setOpen] = useState(false);
@@ -49,4 +49,4 @@ const BasicExample = () => {
   );
 };
 
-render(<Global><BasicExample /></Global>);
+render(<PureGlobal><BasicExample /></PureGlobal>);
