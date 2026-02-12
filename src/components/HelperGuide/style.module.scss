@@ -1,19 +1,42 @@
 .helper-guide {
   color: var(--font-color-grey);
   line-height: 20px;
-  height: 20px;
+  min-height: 20px;
+  width: 100%;
+  max-width: 100%;
+  display: block;
 }
 
 .inner {
   background: var(--primary-color-1);
   border-radius: var(--radius-default, 2px);
   padding: 0 8px;
-
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 20px;
+  
   :global {
+    .ant-space {
+      width: 100%;
+      display: flex;
+    }
+    
     .ant-space-item {
       height: 20px;
       line-height: 20px;
       font-size: 12px;
+    }
+
+    /* 确保内容项能够收缩 */
+    .ant-space-item:last-child {
+      flex-shrink: 0; /* 链接项不收缩 */
+    }
+    
+    .ant-space-item:nth-child(2) {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .iconfont--color {
@@ -25,13 +48,25 @@
 }
 
 .content {
-  max-width: 216px;
+  display: block;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
 }
 
 .link {
   font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0; /* 防止链接收缩 */
+}
+
+/* 在表单项中的 HelperGuide 样式调整 */
+:global {
+  .ant-form-item {
+    .helper-guide {
+      margin-top: 4px;
+      max-width: 100%;
+    }
+  }
 }

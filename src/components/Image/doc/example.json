@@ -2,19 +2,23 @@
   "isFull": false,
   "list": [
     {
-      "title": "通过src加载一个普通图片",
-      "description": "通过src加载一个普通图片",
+      "title": "基础图片加载",
+      "description": "通过src属性直接加载图片",
       "code": "./base.js",
       "scope": [
         {
           "name": "_Image",
           "packageName": "@components/Image"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
-      "title": "通过id加载一个oss图片",
-      "description": "图片一加载成功，图片二加载中，图片三加载失败",
+      "title": "OSS图片加载",
+      "description": "通过id从OSS服务器加载图片，展示加载中和失败状态",
       "code": "./id-loader.js",
       "scope": [
         {
@@ -32,9 +36,58 @@
       ]
     },
     {
-      "title": "显示一个头像",
-      "description": "显示图片头像和默认头像",
+      "title": "头像组件",
+      "description": "展示Image.Avatar头像组件的各种用法",
       "code": "./avatar.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "自定义状态组件",
+      "description": "自定义加载中和错误状态的显示组件",
+      "code": "./custom-states.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "icon",
+          "packageName": "@components/Icon"
+        }
+      ]
+    },
+    {
+      "title": "图片交互",
+      "description": "展示图片点击事件和图片预览功能",
+      "code": "./image-interaction.js",
+      "scope": [
+        {
+          "name": "_Image",
+          "packageName": "@components/Image"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "真实业务场景",
+      "description": "用户信息卡片中的头像和商品列表中的图片展示",
+      "code": "./real-scenario.js",
       "scope": [
         {
           "name": "_Image",

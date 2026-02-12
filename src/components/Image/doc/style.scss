@@ -1,0 +1,24 @@
+/* Image 组件示例样式 */
+.product-card {
+  .ant-card-cover {
+    height: 180px;
+    overflow: hidden;
+  }
+}
+
+.user-avatar {
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+  }
+}
+
+.image-preview {
+  text-align: center;
+  
+  img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
