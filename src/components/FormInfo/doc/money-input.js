@@ -10,7 +10,7 @@ const BaseExample = () => {
       col={2}
       list={[
         {
-          label: "金额输入",
+          label: "合同金额输入",
           content: <MoneyInput />,
         },
       ]}

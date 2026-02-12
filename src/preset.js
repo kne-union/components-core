@@ -6,11 +6,11 @@ import monacoLoader from "@monaco-editor/loader";
 
 window.PUBLIC_URL = process.env.PUBLIC_URL;
 
-monacoLoader.config({
+/*monacoLoader.config({
   paths: {
     vs: "https://uc.fatalent.cn/packages/monaco-editor/0.48.0/min/vs",
   },
-});
+});*/
 
 const remote =
   process.env.NODE_ENV === "development"

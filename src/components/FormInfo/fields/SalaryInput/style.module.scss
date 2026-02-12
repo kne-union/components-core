@@ -1,11 +1,13 @@
 .salary {
   .salary-type {
-    min-width: 80px;
+    min-width: 100px;
   }
+
   :global {
     .react-form__field-component {
       border-color: #d9d9d9;
     }
+
     .error .ant-input-number {
       border-color: #fc3333;
     }
@@ -15,6 +17,8 @@
 .input-number {
   line-height: 30px;
   padding: 0 3px;
+  display: inline-block;
+  color: #999;
 }
 
 .full {
@@ -23,18 +27,47 @@
 
 .input-group {
   :global {
+    .ant-space-compact {
+      width: 100%;
+    }
+
     .react-form__field {
       .react-form__field-describable {
         width: 200%;
         position: absolute;
+        left: 0;
+        top: 100%;
+        z-index: 1;
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+        padding: 4px 8px;
+        background: #fff7e6;
+        border: 1px solid #ffd591;
+        border-radius: 2px;
       }
     }
   }
 }
+
 .input-group-no-mb {
   :global {
     .react-form__field {
       margin-bottom: 0 !important;
     }
   }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+}
+
+.separator-text {
+  color: #999;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
 }

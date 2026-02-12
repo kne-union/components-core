@@ -15,7 +15,7 @@ const BaseExample = () => {
       col={2}
       list={[
         {
-          label: "多选",
+          label: "业务区域多选",
           content: (
             <AddressSelect
               maxLength={3}
@@ -27,7 +27,7 @@ const BaseExample = () => {
           ),
         },
         {
-          label: "单选",
+          label: "业务区域单选",
           content: (
             <AddressSelect
               single
@@ -39,7 +39,7 @@ const BaseExample = () => {
           ),
         },
         {
-          label: "modal多选",
+          label: "modal业务区域多选",
           content: (
             <AddressSelect
               maxLength={3}
@@ -52,7 +52,7 @@ const BaseExample = () => {
           ),
         },
         {
-          label: "modal单选",
+          label: "modal业务区域单选",
           content: (
             <AddressSelect
               isPopup={false}
@@ -84,7 +84,7 @@ const BaseExample = () => {
           content: <AddressEnum name="270070" displayParent />,
         },
         {
-          label: "地址输入",
+          label: "详细地址输入",
           content: (
             <AddressInput
               onChange={(value) => {
@@ -99,9 +99,7 @@ const BaseExample = () => {
 };
 
 render(
-  <PureGlobal preset={{ locale: "en-US" }}>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
+  <div className="input">
+    <BaseExample />
+  </div>
 );

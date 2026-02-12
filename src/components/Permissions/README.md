@@ -1,6 +1,4 @@
-
 # Permissions
-
 
 ### 概述
 
@@ -19,7 +17,6 @@
 3. 隐藏内部组件，一般用在不需要干扰到用户或用户不需要了解其没有权限的功能或数据等场景
 
 ### 示例
-
 
 #### 示例样式
 
@@ -86,7 +83,6 @@ render(<BaseExample />);
 
 ```
 
-
 ### API
 
 | 属性名      | 说明                                                                                                      | 类型            | 默认值          |
@@ -96,4 +92,3 @@ render(<BaseExample />);
 | message  | 提示文案                                                                                                    | string        | 您暂无权限，请联系管理员 |
 | request  | 权限列表为一个字符串数组，每个item为一项权限的key，所有权限在全局的permissions中存在则判断为权限通过                                             | array[string] | []           |
 | children | 该参数可以传function类型，children({isPass, type, request})，isPass为权限校验是否通过，type为提示类型，request为所需权限列表，可以自行实现权限的展示 | jsx,function  | -            |
-

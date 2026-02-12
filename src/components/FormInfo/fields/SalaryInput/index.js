@@ -2,7 +2,7 @@ import React, {cloneElement} from "react";
 import {withFetch} from "@kne/react-fetch";
 import {hooks} from "@kne/react-form-antd";
 import useSimulationBlur from "@kne/use-simulation-blur";
-import {Col, Input, InputNumber, Row, Select} from "antd";
+import {Col, Input, InputNumber, Row, Select, Flex} from "antd";
 import style from "./style.module.scss";
 import {IntlProvider, useIntl} from "@components/Intl";
 import importMessages from "../../locale";
@@ -90,6 +90,8 @@ const SalaryInputField = ({
                 {isRange && (<Row
                     className={remindUnit && [5, 6].includes(value?.type) ? style["input-group"] : style["input-group-no-mb"]}
                     wrap={false}
+                    gutter={8}
+                    align="middle"
                 >
                     <Col flex={1}>
                         <FormField isError={!get(value, "min") && req}>
@@ -99,7 +101,7 @@ const SalaryInputField = ({
                                 formatter={numberFormat}
                                 value={transform(get(value, "min"))}
                                 style={{
-                                    textAlign: "center",
+                                    width: "100%",
                                 }}
                                 onChange={(min) => {
                                     onChange(Object.assign({}, value, {
@@ -120,14 +122,8 @@ const SalaryInputField = ({
                             />
                         </FormField>
                     </Col>
-                    <Col>
-                        <Input
-                            style={{
-                                width: 30, borderLeft: 0, borderRight: 0, pointerEvents: "none",
-                            }}
-                            placeholder="~"
-                            disabled
-                        />
+                    <Col className={style["separator"]}>
+                        <span className={style["separator-text"]}>~</span>
                     </Col>
                     <Col flex={1}>
                         <FormField isError={!get(value, "max") && req}>
@@ -137,7 +133,7 @@ const SalaryInputField = ({
                                 formatter={numberFormat}
                                 value={transform(get(value, "max"))}
                                 style={{
-                                    textAlign: "center",
+                                    width: "100%"
                                 }}
                                 addonAfter={isTenThousand ? formatMessage({id: "thousand"}) : isOther ? "" : formatMessage({id: "yuan"})}
                                 onChange={(max) => {
@@ -149,24 +145,23 @@ const SalaryInputField = ({
                         </FormField>
                     </Col>
                     {get(value, "type") === 5 && showMonth && (<Col>
-                    <span
-                        className={get(value, "max") && get(value, "min") && !get(value, "month") && req ? "error" : ""}
-                    >
-                      <span className={style["input-number"]}>X</span>
-                      <InputNumber
-                          min={12}
-                          disabled={disabled}
-                          value={get(value, "month")}
-                          onChange={(v) => {
-                              onChange(Object.assign({}, value, {month: v}));
-                          }}
-                          style={{
-                              width: 100, textAlign: "center",
-                          }}
-                          placeholder="数量"
-                          addonAfter="月"
-                      />
-                    </span>
+                        <Flex
+                            className={get(value, "max") && get(value, "min") && !get(value, "month") && req ? "error" : ""}>
+                            <span className={style["input-number"]}>X</span>
+                            <InputNumber
+                                min={12}
+                                disabled={disabled}
+                                value={get(value, "month")}
+                                onChange={(v) => {
+                                    onChange(Object.assign({}, value, {month: v}));
+                                }}
+                                style={{
+                                    width: 100, textAlign: "center",
+                                }}
+                                placeholder="数量"
+                                addonAfter="月"
+                            />
+                        </Flex>
                     </Col>)}
                 </Row>)}
                 {!isRange && !isOther && (<InputNumber

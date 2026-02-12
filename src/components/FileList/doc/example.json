@@ -3,7 +3,7 @@
   "list": [
     {
       "title": "完整示例",
-      "description": "提供一个上传文件，显示文件列表，预览文件的展示",
+      "description": "展示完整的文件列表功能，包含文件展示、预览、上传、编辑、删除等操作，员工简历、合同、政策文档场景",
       "code": "./base.js",
       "scope": [
         {
@@ -21,8 +21,8 @@
       ]
     },
     {
-      "title": "上传文件列表",
-      "description": "展示一个上传文件展示上传成功文件列表",
+      "title": "文件上传",
+      "description": "展示受控和非受控模式的文件上传功能，支持设置文件大小和数量限制",
       "code": "./file-upload.js",
       "scope": [
         {
@@ -36,12 +36,16 @@
         {
           "name": "lodash",
           "packageName": "lodash"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
       "title": "拖拽上传",
-      "description": "展示一个拖拽上传文件，得到File对象",
+      "description": "展示拖拽上传功能，支持自定义上传提示，项目文档和员工资料上传场景",
       "code": "./drag-area.js",
       "scope": [
         {

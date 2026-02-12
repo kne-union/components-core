@@ -122,7 +122,7 @@ export default FormStepModal;
 
 export const useFormStepModal = () => {
     const modal = useModal();
-    return (props) => modal(computedCommonProps(Object.assign({}, props, {className: style["form-modal"]})));
+    return (props) => modal({...computedCommonProps(Object.assign({}, props, {className: style["form-modal"]}))});
 };
 
 export const FormStepModalButton = (props) => {

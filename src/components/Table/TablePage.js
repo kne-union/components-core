@@ -42,7 +42,7 @@ const TablePageInnerContent = withLocale(({
                                       send,
                                       dataFormat = (data) => {
                                           return {
-                                              list: data.pageData, total: data.totalCount,
+                                              list: data.pageData, total: data.totalCount,data
                                           };
                                       },
                                       className,

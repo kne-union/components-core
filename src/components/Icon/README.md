@@ -1,6 +1,4 @@
-
 # Icon
-
 
 ### 概述
 
@@ -8,7 +6,6 @@
 
 
 ### 示例(全屏)
-
 
 #### 示例样式
 
@@ -176,7 +173,6 @@ render(<BaseExample />);
 
 ```
 
-
 ### API
 
 |属性名| 说明            |类型| 默认值   |
@@ -185,4 +181,3 @@ render(<BaseExample />);
 | colorful | 是否是彩色图标       | boolean| false |
 | prefix| 图标前缀          |string| "" |
 |size| 图标大小          |number| -     |
-

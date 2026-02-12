@@ -184,4 +184,6 @@ function generateCheckCode(first17) {
     return checkCodes[sum % 11];
 }
 
+validateIDCard.generateCheckCode = generateCheckCode;
+
 export default validateIDCard;

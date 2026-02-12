@@ -21,6 +21,8 @@ export {
     default as SuperSelectField, SuperSelectTableListField, SuperSelectUserField, SuperSelectTreeField,
 } from "@common/components/SuperSelectField";
 
+export {default as TreeField} from "@common/components/TreeField";
+
 export {
     default as CascaderField, createTreeUtils,
 } from "@common/components/CascaderField";

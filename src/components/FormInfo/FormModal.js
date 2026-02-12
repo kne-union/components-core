@@ -19,11 +19,11 @@ export default FormModal;
 export const useFormModal = () => {
   const modal = useModal();
   return (props) =>
-    modal(
-      computedCommonProps(
+    modal({
+      ...computedCommonProps(
         Object.assign({}, props, { className: style["form-modal"] })
-      )
-    );
+      ),
+    });
 };
 
 export const FormModalButton = ({ classNames, ...props }) => {
