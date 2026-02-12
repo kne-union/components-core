@@ -2,8 +2,8 @@
   "isFull": true,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "基础用法",
+      "description": "展示 Filter 组件的基本使用方式，包括各种常见的筛选字段类型",
       "code": "./base.js",
       "scope": [
         {
@@ -14,7 +14,7 @@
     },
     {
       "title": "高级筛选",
-      "description": "高级筛选",
+      "description": "展示 AdvancedFilter 组件的高级筛选功能，适用于复杂筛选场景",
       "code": "./advanced-filter.js",
       "scope": [
         {
@@ -24,8 +24,8 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "树形筛选",
+      "description": "展示 TreeFilterItem 树形选择组件的使用",
       "code": "./tree-item.js",
       "scope": [
         {
@@ -43,9 +43,61 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "筛选值展示",
+      "description": "展示 FilterValueDisplay、FilterItem、FilterLines、PopoverItem 等组件的独立使用",
       "code": "./filter-value-display.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "数值范围筛选",
+      "description": "展示 NumberRangeFilterItem 数值范围筛选组件的使用",
+      "code": "./number-range.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        }
+      ]
+    },
+    {
+      "title": "级联筛选",
+      "description": "展示 CascaderFilterItem 级联选择组件的使用",
+      "code": "./cascader.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        }
+      ]
+    },
+    {
+      "title": "自定义筛选字段",
+      "description": "展示如何使用 withFilterValue 将原生 Select 组件包装成筛选字段",
+      "code": "./custom-fields.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "FilterProvider 和 useFilter",
+      "description": "展示如何使用 FilterProvider 和 useFilter Hook 自定义筛选界面",
+      "code": "./filter-provider.js",
       "scope": [
         {
           "name": "_Filter",

@@ -1,6 +1,4 @@
-
 # Table
-
 
 ### 概述
 
@@ -27,7 +25,7 @@ const ajax = (config) => {
         resolve({
           data: {
             code: 0,
-            data: `{"date":{"visible":false},"serialNumber":{"width":400}}`,
+            data: &#96;{"date":{"visible":false},"serialNumber":{"width":400}}&#96;,
           },
         });
       } else if (config.url === "/api/v1/user/user/user_key_set") {
@@ -57,7 +55,7 @@ const BaseExample = () => {
                       url: "/api/v1/user/user/user_key_get",
                       method: "GET",
                       params: {
-                        key: `table_config_v2_${name}`,
+                        key: &#96;table_config_v2_${name}&#96;,
                       },
                       transformResponse: (response) => {
                         const { data } = response;
@@ -87,7 +85,7 @@ const BaseExample = () => {
                       url: "/api/v1/user/user/user_key_set",
                       data: {
                         map: {
-                          [`table_config_v2_${name}`]: JSON.stringify(data),
+                          [&#96;table_config_v2_${name}&#96;]: JSON.stringify(data),
                         },
                       },
                     });
@@ -203,7 +201,7 @@ const BaseExample = () => {
             name: "user",
             title: "用户",
             type: "user",
-            valueOf: (item) => `${item.enUserName} ${item.userName}`,
+            valueOf: (item) => &#96;${item.enUserName} ${item.userName}&#96;,
           },
           {
             name: "hideInfo",
@@ -225,7 +223,7 @@ const BaseExample = () => {
             name: "contacts",
             title: "联系人",
             type: "contacts",
-            valueOf: (item) => `${item.userName} ${item.phoneNumber}`,
+            valueOf: (item) => &#96;${item.userName} ${item.phoneNumber}&#96;,
           },
           {
             name: "count",
@@ -418,7 +416,7 @@ const BaseExample = () => {
                 return item["email"] + "-" + item["id"];
               },
               children: (data) => {
-                return `${data},${item["userName"]}`;
+                return &#96;${data},${item["userName"]}&#96;;
               },
             }),
           },
@@ -438,7 +436,7 @@ const BaseExample = () => {
             name: "user",
             title: "用户",
             type: "user",
-            valueOf: (item) => `${item.enUserName} ${item.userName}`,
+            valueOf: (item) => &#96;${item.enUserName} ${item.userName}&#96;,
           },
           {
             name: "userName",
@@ -449,7 +447,7 @@ const BaseExample = () => {
             name: "contacts",
             title: "联系人",
             type: "contacts",
-            valueOf: (item) => `${item.userName} ${item.phoneNumber}`,
+            valueOf: (item) => &#96;${item.userName} ${item.phoneNumber}&#96;,
           },
           {
             name: "count",
@@ -550,7 +548,7 @@ const ajax = (config) => {
         resolve({
           data: {
             code: 0,
-            data: `{"date":{},"serialNumber":{"width":400}}`,
+            data: &#96;{"date":{},"serialNumber":{"width":400}}&#96;,
           },
         });
       } else if (config.url === "/api/v1/user/user/user_key_set") {
@@ -605,7 +603,7 @@ const BaseExample = () => {
               url: "/api/v1/user/user/user_key_get",
               method: "GET",
               params: {
-                key: `table_config_v2_${name}`,
+                key: &#96;table_config_v2_${name}&#96;,
               },
               transformResponse: (response) => {
                 const { data } = response;
@@ -635,7 +633,7 @@ const BaseExample = () => {
               url: "/api/v1/user/user/user_key_set",
               data: {
                 map: {
-                  [`table_config_v2_${name}`]: JSON.stringify(data),
+                  [&#96;table_config_v2_${name}&#96;]: JSON.stringify(data),
                 },
               },
             });
@@ -775,7 +773,7 @@ const BaseExample = () => {
             name: "user",
             title: "用户",
             type: "user",
-            valueOf: (item) => `${item.enUserName} ${item.userName}`,
+            valueOf: (item) => &#96;${item.enUserName} ${item.userName}&#96;,
           },
           {
             name: "hideInfo",
@@ -796,7 +794,7 @@ const BaseExample = () => {
             name: "contacts",
             title: "联系人",
             type: "contacts",
-            valueOf: (item) => `${item.userName} ${item.phoneNumber}`,
+            valueOf: (item) => &#96;${item.userName} ${item.phoneNumber}&#96;,
           },
           {
             name: "count",
@@ -874,9 +872,7 @@ render(<BaseExample />);
 
 ```
 
-
 ### API
 
 |属性名|说明|类型|默认值|
 |  ---  | ---  | --- | --- |
-

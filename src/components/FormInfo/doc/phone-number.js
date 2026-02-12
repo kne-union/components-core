@@ -10,7 +10,7 @@ const BaseExample = () => {
       col={2}
       list={[
         {
-          label: "电话输入",
+          label: "联系电话",
           content: (
             <PhoneNumber
               onChange={(value) => {

@@ -2,8 +2,8 @@
   "isFull": true,
   "list": [
     {
-      "title": "一个简单表单示例",
-      "description": "展示了一个简单表单示例",
+      "title": "基础表单",
+      "description": "最简单的表单示例，包含常用的输入框、日期选择、下拉选择等基础字段，适合快速上手",
       "code": "./base.js",
       "scope": [
         {
@@ -11,22 +11,56 @@
           "packageName": "@components/FormInfo"
         },
         {
-          "name": "global",
-          "packageName": "@components/Global"
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "字段类型",
+      "description": "展示FormInfo支持的各种字段类型，包括输入类、选择类、以及其他特殊字段类型",
+      "code": "./field-types.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
         },
         {
           "name": "_Modal",
           "packageName": "@components/Modal"
         },
         {
-          "name": "lodash",
-          "packageName": "lodash"
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
-      "title": "多行",
-      "description": "展示了一个多行字段示例",
+      "title": "表单校验",
+      "description": "展示表单的校验规则使用，包括内置规则和自定义规则，以及异步校验和错误提示",
+      "code": "./validation.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "多行字段",
+      "description": "展示MultiField的使用，可以将多个字段在一行中横向排列",
       "code": "./multi-field.js",
       "scope": [
         {
@@ -40,9 +74,146 @@
       ]
     },
     {
-      "title": "一个含有多段列表的表单示例",
-      "description": "展示了一个含有多段列表的表单示例，列表的最大长度为5，在添加5段之后添加按钮自动隐藏",
+      "title": "业务字段",
+      "description": "展示FormInfo提供的业务字段组件，如手机号、职能选择、行业选择、地址选择等",
+      "code": "./business-fields.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "高级选择组件",
+      "description": "展示AdvancedSelect高级选择组件的使用，支持从API加载数据、自定义列配置、多选等功能",
+      "code": "./advanced-select.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "列表字段",
+      "description": "展示List和TableList多段式列表字段的使用，支持动态添加、删除、最大长度限制等功能",
       "code": "./list.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "嵌套列表",
+      "description": "展示在List中嵌套TableList的使用场景，实现更复杂的多层级数据结构",
+      "code": "./nested-list.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "动态字段",
+      "description": "展示根据选择值动态显示/隐藏字段的使用场景，实现字段联动效果",
+      "code": "./dynamic-fields.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "表单弹窗",
+      "description": "展示FormModal的使用，在弹窗中展示表单，适合数据录入、编辑等场景",
+      "code": "./form-modal.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "表单抽屉",
+      "description": "展示FormDrawer的使用，在抽屉中展示表单，适合展示更多表单内容的场景",
+      "code": "./form-drawer.js",
+      "scope": [
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "分步表单弹窗",
+      "description": "展示FormStepModal的使用，将表单分为多个步骤，逐步引导用户填写，适合复杂表单场景",
+      "code": "./form-step-modal.js",
       "scope": [
         {
           "name": "_FormInfo",
@@ -63,40 +234,13 @@
       ]
     },
     {
-      "title": "Modal Form弹窗",
-      "description": "展示一个form弹窗",
-      "code": "./form-modal.js",
+      "title": "useFormContext",
+      "description": "展示如何使用useFormContext Hook访问表单API，实现查看值、设置值、校验、重置等操作",
+      "code": "./use-form-context.js",
       "scope": [
         {
           "name": "_FormInfo",
           "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
-        }
-      ]
-    },
-    {
-      "title": "FormStepModal表单弹窗示例",
-      "description": "展示了一个FormStepModal表单弹窗示例",
-      "code": "./form-step-modal.js",
-      "scope": [
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
         },
         {
           "name": "antd",
@@ -105,44 +249,13 @@
       ]
     },
     {
-      "title": "Drawer Form 抽屉弹窗",
-      "description": "展示一个form抽屉弹窗",
-      "code": "./form-drawer.js",
+      "title": "FormApiButton",
+      "description": "展示FormApiButton的使用，通过按钮访问表单API，实现各种表单操作",
+      "code": "./form-api-button.js",
       "scope": [
         {
           "name": "_FormInfo",
           "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
-        }
-      ]
-    },
-    {
-      "title": "选择控件的数据展示框",
-      "description": "展示了一个选择控件的数据展示框，它是其他选择器的子组件一般不独立使用，开放该组件是为了方面自定义新的选择控件，但是请谨慎使用",
-      "code": "./input.js",
-      "scope": [
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
         },
         {
           "name": "antd",
@@ -151,89 +264,27 @@
       ]
     },
     {
-      "title": "高级选择组件",
-      "description": "展示了高级选择组件的List形态",
-      "code": "./advanced-select-list.js",
+      "title": "自定义校验规则",
+      "description": "展示如何定义自定义校验规则，包括同步校验、异步校验和字段间联动校验",
+      "code": "./custom-rules.js",
       "scope": [
         {
           "name": "_FormInfo",
           "packageName": "@components/FormInfo"
         },
         {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
+          "name": "_Modal",
+          "packageName": "@components/Modal"
         },
         {
           "name": "antd",
           "packageName": "antd"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
         }
       ]
     },
     {
-      "title": "用户选择组件",
-      "description": "在List的交互逻辑基础上扩展出的不同列表样式",
-      "code": "./advanced-select-user.js",
-      "scope": [
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
-        }
-      ]
-    },
-    {
-      "title": "表格选择组件",
-      "description": "在List的交互逻辑基础上扩展出的不同列表样式",
-      "code": "./advanced-select-table.js",
-      "scope": [
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
-        }
-      ]
-    },
-    {
-      "title": "地址选择组件",
-      "description": "展示地址选择组件",
+      "title": "地址选择",
+      "description": "展示AddressSelect地址选择组件，支持省市区三级联动选择",
       "code": "./address-select.js",
       "scope": [
         {
@@ -259,8 +310,8 @@
       ]
     },
     {
-      "title": "级联选择组件",
-      "description": "展示级联选择组件",
+      "title": "级联选择",
+      "description": "展示级联选择组件，支持多级联动选择",
       "code": "./cascader.js",
       "scope": [
         {
@@ -283,7 +334,7 @@
     },
     {
       "title": "职能选择",
-      "description": "展示行业职能选择",
+      "description": "展示FunctionSelect职能选择组件，支持多级职能树选择",
       "code": "./function-select.js",
       "scope": [
         {
@@ -306,7 +357,7 @@
     },
     {
       "title": "行业选择",
-      "description": "展示行业选择组件",
+      "description": "展示IndustrySelect行业选择组件，支持多级行业树选择",
       "code": "./industry-select.js",
       "scope": [
         {
@@ -329,7 +380,7 @@
     },
     {
       "title": "金额输入",
-      "description": "展示金额输入组件",
+      "description": "展示MoneyInput金额输入组件，支持金额格式化和单位选择",
       "code": "./money-input.js",
       "scope": [
         {
@@ -347,8 +398,8 @@
       ]
     },
     {
-      "title": "电话号码输入",
-      "description": "展示电话号码输入组件",
+      "title": "电话号码",
+      "description": "展示PhoneNumber手机号输入组件，支持手机号格式化和校验",
       "code": "./phone-number.js",
       "scope": [
         {
@@ -366,8 +417,8 @@
       ]
     },
     {
-      "title": "薪资组件",
-      "description": "展示填写薪资范围输入组件",
+      "title": "薪资范围",
+      "description": "展示SalaryInput薪资范围输入组件，支持薪资类型、月薪/年薪选择和范围校验",
       "code": "./salary-input.js",
       "scope": [
         {
@@ -385,33 +436,25 @@
       ]
     },
     {
-      "title": "可扩展的AdvanceSelect",
-      "description": "AdvanceSelect支持左右布局",
-      "code": "./advanced-select-layout.js",
+      "title": "helperGuideName 和 lang",
+      "description": "展示 helperGuideName 为字段添加帮助指引功能，以及 lang 配置实现多语言支持",
+      "code": "./helper-guide-lang.js",
       "scope": [
         {
           "name": "_FormInfo",
           "packageName": "@components/FormInfo"
         },
         {
-          "name": "icon",
-          "packageName": "@components/Icon"
+          "name": "_Modal",
+          "packageName": "@components/Modal"
         },
         {
-          "name": "_antd",
+          "name": "antd",
           "packageName": "antd"
         },
         {
           "name": "global",
           "packageName": "@components/Global"
-        },
-        {
-          "name": "_lodash",
-          "packageName": "lodash"
-        },
-        {
-          "name": "_dayjs",
-          "packageName": "dayjs"
         }
       ]
     }

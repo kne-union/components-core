@@ -1,0 +1,11 @@
+.form-drawer {
+  :global {
+    .react-form {
+      width: 100%;
+
+      > span > .ant-flex {
+        height: 100%;
+      }
+    }
+  }
+}

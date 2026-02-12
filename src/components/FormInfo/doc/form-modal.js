@@ -1,286 +1,56 @@
-const { Space, Button } = antd;
-const { PureGlobal } = global;
-const {
-  default: FormInfo,
-  List,
-  Input,
-  TextArea,
-  FormModal,
-  useFormModal,
-  CancelButton,
-  FormApiButton,
-  SubmitButton,
-  FormModalButton,
-} = _FormInfo;
-const { useState } = React;
-const { default: Fetch } = fetch;
+const {default: FormInfo, useFormModal, fields} = _FormInfo;
+const {PureGlobal} = global;
+const {Button, Space} = antd;
+const {useState} = React;
 
-const BaseExample = () => {
-  const [open, setOpen] = useState(false);
-  const formModal = useFormModal();
-  return (
-    <Space wrap>
-      <FormModal
-        open={open}
-        title="表单弹窗"
-        onClose={() => {
-          setOpen(false);
-        }}
-        formProps={{
-          data: {
-            field1: "field1field1field1field1",
-          },
-          onSubmit: async (data) => {
-            console.log(data);
-            await new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-              }, 1000);
-            });
-            setOpen(false);
-          },
-        }}
-      >
-        <FormInfo
-          title="基本信息"
-          list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
-          ]}
-        />
-        <List
-          title="列表"
-          name="list"
-          maxLength={3}
-          list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
-          ]}
-        />
-      </FormModal>
-      <Button
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        组件调用
-      </Button>
-      <Button
-        onClick={() => {
-          const api = formModal({
-            title: "表单弹窗",
-            formProps: {
-              data: {
-                field1: "field1field1field1field1",
-              },
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                api.close();
-              },
-            },
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        hooks调用
-      </Button>
-      <Button
-        onClick={() => {
-          const api = formModal({
-            title: "表单弹窗",
-            formProps: ({ data }) => {
-              return {
-                data: data,
-                onSubmit: async (data) => {
-                  console.log(data);
-                  await new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve();
-                    }, 1000);
-                  });
-                  api.close();
+const {Input, DatePicker, Select} = fields;
+
+const EmployeeModal = () => {
+    const modal = useFormModal();
+
+    const handleAddEmployee = () => {
+        const modalApi = modal({
+            title: "新建员工档案", formProps: {
+                onSubmit: (data) => {
+                    console.log("提交数据:", data);
+                    modalApi.close();
                 },
-              };
-            },
-            withDecorator: (render) => (
-              <Fetch
-                loader={() => {
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve({
-                        field1: "我接口获取的数据",
-                      });
-                    }, 1000);
-                  });
-                }}
-                render={({ data }) => render({ data })}
-              />
-            ),
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        hooks加载form数据调用
-      </Button>
-      <Button
-        onClick={() => {
-          const api = formModal({
-            title: "表单弹窗",
-            footerButtons: [
-              { ButtonComponent: CancelButton, children: "取消" },
-              {
-                ButtonComponent: FormApiButton,
-                autoClose: false,
-                onClick: (context) => {
-                  console.log(context);
-                },
-                children: "FormApiButton",
-              },
-              {
-                ButtonComponent: SubmitButton,
-                autoClose: false,
-                children: "提交",
-              },
-            ],
-            formProps: {
-              data: {
-                field1: "field1field1field1field1",
-              },
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                api.close();
-              },
-            },
-            children: (
-              <div>
-                <FormInfo
-                  title="基本信息"
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-                <List
-                  title="列表"
-                  name="list"
-                  maxLength={3}
-                  list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
-                  ]}
-                />
-              </div>
-            ),
-          });
-        }}
-      >
-        自定义footerButtons
-      </Button>
-      <FormModalButton
-        api={{
-          loader: () => {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve({
-                  name: "Lucy",
-                  desc: "个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍个人介绍",
-                });
-              }, 1000);
-            });
-          },
-        }}
-        modalProps={({ data, close }) => {
-          return {
-            title: "加载数据的form弹窗",
-            formProps: {
-              data,
-              onSubmit: async (data) => {
-                console.log(data);
-                await new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve();
-                  }, 1000);
-                });
-                close();
-              },
-            },
-            children: (
-              <FormInfo
-                title="基本信息"
-                column={1}
-                list={[
-                  <Input name="name" label="姓名" rule="REQ" />,
-                  <TextArea name="desc" label="介绍" rule="REQ" />,
-                ]}
-              />
-            ),
-          };
-        }}
-      >
-        加载form数据按钮
-      </FormModalButton>
-    </Space>
-  );
+            }, children: (<FormInfo
+                list={[<Input name="name" label="员工姓名" rule="REQ"/>,
+                    <Input name="phone" label="联系电话" rule="REQ PHONE"/>,
+                    <DatePicker name="joinDate" label="入职日期" rule="REQ"/>, <Select
+                        name="department"
+                        label="所属部门"
+                        rule="REQ"
+                        options={[{label: "技术研发中心", value: "tech"}, {
+                            label: "产品管理中心",
+                            value: "product"
+                        }, {label: "市场营销中心", value: "marketing"},]}
+                    />, <Select
+                        name="position"
+                        label="职位名称"
+                        rule="REQ"
+                        options={[{label: "高级工程师", value: "senior"}, {
+                            label: "产品经理",
+                            value: "pm"
+                        }, {label: "UI设计师", value: "designer"},]}
+                    />,]}
+            />),
+        });
+    };
+
+    return (<Space>
+        <Button type="primary" onClick={handleAddEmployee}>
+            新建员工档案
+        </Button>
+        <Button onClick={() => modalApi.close()}>关闭</Button>
+    </Space>);
 };
 
-render(
-  <PureGlobal>
-    <BaseExample />
-  </PureGlobal>
-);
+const BaseExample = () => {
+    return (<PureGlobal>
+        <EmployeeModal/>
+    </PureGlobal>);
+};
+
+render(<BaseExample/>);

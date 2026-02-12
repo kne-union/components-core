@@ -18,11 +18,11 @@ export default FormDrawer;
 export const useFormDrawer = () => {
   const drawer = useDrawer();
   return (props) =>
-    drawer(
-      computedCommonProps(
+    drawer({
+      ...computedCommonProps(
         Object.assign({}, props, { className: style["form-drawer"] })
-      )
-    );
+      ),
+    });
 };
 
 export const FormDrawerButton = (props) => {

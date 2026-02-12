@@ -1,7 +1,7 @@
 const { default: FormInfo, Form, MultiField, SubmitButton, fields } = _FormInfo;
 const { useModal } = _Modal;
 
-const { Input, TextArea } = fields;
+const { Input, TextArea, DatePicker } = fields;
 
 const BaseExample = () => {
   const modal = useModal();
@@ -9,7 +9,7 @@ const BaseExample = () => {
     <Form
       onSubmit={(data) => {
         modal({
-          title: "表单提交数据",
+          title: "采购订单信息提交成功",
           children: <pre>{JSON.stringify(data, null, 2)}</pre>,
         });
       }}
@@ -17,18 +17,20 @@ const BaseExample = () => {
       <FormInfo
         list={[
           <MultiField
-            name="no"
-            label="单号"
+            name="purchaseOrderNo"
+            label="采购单号"
             rule="REQ"
             field={Input}
-            maxLength={5}
-            tips={"单号"}
+            maxLength={20}
           />,
-          <Input name="name" label="名称" />,
-          <MultiField name="description" label="说明" field={TextArea} />,
+          <MultiField name="productName" label="采购产品" field={Input} />,
+          <MultiField name="quantity" label="采购数量" field={Input} type="number" />,
+          <MultiField name="unitPrice" label="单价" field={Input} type="number" />,
+          <MultiField name="deliveryDate" label="交付日期" field={DatePicker} />,
+          <MultiField name="note" label="备注说明" field={TextArea} />,
         ]}
       />
-      <SubmitButton>提交</SubmitButton>
+      <SubmitButton type="primary">提交采购订单</SubmitButton>
     </Form>
   );
 };

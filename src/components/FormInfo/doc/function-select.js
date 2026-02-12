@@ -53,9 +53,7 @@ const BaseExample = () => {
 };
 
 render(
-  <PureGlobal preset={{ locale: "en-US" }}>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
+  <div className="input">
+    <BaseExample />
+  </div>
 );
