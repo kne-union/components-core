@@ -1,6 +1,6 @@
 const { useDrawer } = _Drawer;
 const { Button, Space, Typography, Descriptions, Timeline, Card } = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const SizesExample = () => {
   const drawer = useDrawer();
@@ -164,4 +164,4 @@ const SizesExample = () => {
   );
 };
 
-render(<Global><SizesExample /></Global>);
+render(<PureGlobal><SizesExample /></PureGlobal>);

@@ -1,6 +1,6 @@
 const { useDrawer, DrawerButton } = _Drawer;
 const { Button, Space, Typography, message, Popconfirm, Tag, Descriptions } = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const CustomActionsExample = () => {
   const drawer = useDrawer();
@@ -160,4 +160,4 @@ const CustomActionsExample = () => {
   );
 };
 
-render(<Global><CustomActionsExample /></Global>);
+render(<PureGlobal><CustomActionsExample /></PureGlobal>);

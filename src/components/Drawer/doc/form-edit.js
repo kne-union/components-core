@@ -1,6 +1,6 @@
 const {useFormDrawer, FormDrawerButton, default: FormInfo} = _FormInfo;
 const {Button, Space, Typography, message, Divider} = _antd;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const FormDrawerExample = () => {
     const formDrawer = useFormDrawer();
@@ -89,4 +89,4 @@ const FormDrawerExample = () => {
     </Space>);
 };
 
-render(<Global><FormDrawerExample/></Global>);
+render(<PureGlobal><FormDrawerExample/></PureGlobal>);

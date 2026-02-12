@@ -1,7 +1,7 @@
 const { DrawerButton } = _Drawer;
 const { Card, Avatar, Typography, Tag, Space, Divider, Descriptions, Timeline } = _antd;
 const { range } = lodash;
-const {default: Global} = _Global;
+const {PureGlobal} = _Global;
 
 const UserDetailExample = () => {
   const mockUserData = {
@@ -125,4 +125,4 @@ const UserDetailExample = () => {
   );
 };
 
-render(<Global><UserDetailExample /></Global>);
+render(<PureGlobal><UserDetailExample /></PureGlobal>);
