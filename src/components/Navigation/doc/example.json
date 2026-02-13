@@ -2,8 +2,8 @@
   "isFull": true,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "基础导航",
+      "description": "展示Navigation组件的基本用法，包括基础导航和权限控制",
       "code": "./base.js",
       "scope": [
         {
@@ -17,8 +17,27 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "导航功能特性",
+      "description": "展示Navigation组件的各种功能特性，包括权限控制、自定义右侧选项、图标和标题",
+      "code": "./navigation-features.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "折叠导航",
+      "description": "展示Navigation组件在空间不足时的折叠功能",
       "code": "./fold.js",
       "scope": [
         {
@@ -32,8 +51,8 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "权限控制",
+      "description": "展示Navigation组件的权限控制功能",
       "code": "./permission.js",
       "scope": [
         {

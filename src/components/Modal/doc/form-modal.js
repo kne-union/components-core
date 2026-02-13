@@ -1,4 +1,4 @@
-const { FormModal, useFormModal } = _Modal;
+const { FormModal, useFormModal } = _FormInfo;
 const { Space, Button } = antd;
 const { PureGlobal } = global;
 const { default: FormInfo, List, Input, TextArea } = _FormInfo;
