@@ -68,6 +68,63 @@
           "packageName": "@components/Global"
         }
       ]
+    },
+    {
+      "title": "自定义配置",
+      "description": "展示Navigation组件的自定义基础配置，包括base、headerLogo、indexLabel、rightOptions等属性",
+      "code": "./custom-config.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "导航事件",
+      "description": "展示Navigation组件的导航事件处理，包括onChange回调和navigateTo自定义导航函数",
+      "code": "./navigation-events.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "溢出指示器",
+      "description": "展示Navigation组件的自定义溢出指示器和大量菜单项的处理",
+      "code": "./overflow-indicator.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

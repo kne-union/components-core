@@ -388,6 +388,152 @@ const AdvancedPermissionsExample = () => {
 render(<AdvancedPermissionsExample />);
 ```
 
+- Hooks使用
+- 展示Permissions组件的Hooks使用，包括usePermissions、usePermissionsPass和computedIsPass工具函数
+- _Permissions(@components/Permissions),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Permissions, usePermissions, usePermissionsPass, computedIsPass } = _Permissions;
+const { PureGlobal } = global;
+const { Card, Space, Tag, Typography } = antd;
+
+const PermissionsInfo = () => {
+  const { permissions } = usePermissions();
+  const hasUserPermission = usePermissionsPass({ request: ["user:view"] });
+  const hasOrderPermission = usePermissionsPass({ request: ["order:view"] });
+  
+  const manualCheck = computedIsPass({
+    permissions,
+    request: ["user:edit", "user:delete"]
+  });
+
+  return (
+    <Card title="权限信息展示" style={{ width: 600 }}>
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <div>
+          <Typography.Text strong>当前用户权限列表: </Typography.Text>
+          <Space wrap>
+            {permissions.map((perm) => (
+              <Tag key={perm} color="blue">{perm}</Tag>
+            ))}
+          </Space>
+        </div>
+        
+        <div>
+          <Typography.Text strong>用户查看权限: </Typography.Text>
+          <Tag color={hasUserPermission ? "green" : "red"}>
+            {hasUserPermission ? "有权限" : "无权限"}
+          </Tag>
+        </div>
+        
+        <div>
+          <Typography.Text strong>订单查看权限: </Typography.Text>
+          <Tag color={hasOrderPermission ? "green" : "red"}>
+            {hasOrderPermission ? "有权限" : "无权限"}
+          </Tag>
+        </div>
+        
+        <div>
+          <Typography.Text strong>手动权限检查(用户编辑/删除): </Typography.Text>
+          <Tag color={manualCheck ? "green" : "red"}>
+            {manualCheck ? "有权限" : "无权限"}
+          </Tag>
+        </div>
+      </Space>
+    </Card>
+  );
+};
+
+const HooksUsageExample = () => {
+  return (
+    <PureGlobal
+      preset={{
+        permissions: ["user:view", "user:edit", "dashboard:view", "report:view"],
+      }}
+    >
+      <Space direction="vertical" size="large">
+        <PermissionsInfo />
+        
+        <Permissions request={["user:view"]} type="tooltip">
+          <Card title="用户信息" style={{ width: 600 }}>
+            <Space direction="vertical">
+              <div>用户名: 张三</div>
+              <div>部门: 技术部</div>
+              <div>职位: 前端开发工程师</div>
+            </Space>
+          </Card>
+        </Permissions>
+        
+        <Permissions request={["order:view"]} type="error" message="您没有订单查看权限，请联系部门管理员">
+          <Card title="订单信息" style={{ width: 600 }}>
+            <div>订单列表内容...</div>
+          </Card>
+        </Permissions>
+      </Space>
+    </PureGlobal>
+  );
+};
+
+render(<HooksUsageExample />);
+
+```
+
+- 自定义标签
+- 展示Permissions组件的tagName属性，使用不同的HTML标签包裹无权限内容
+- _Permissions(@components/Permissions),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Permissions } = _Permissions;
+const { PureGlobal } = global;
+const { Space, Button } = antd;
+
+const CustomTagExample = () => {
+  return (
+    <PureGlobal
+      preset={{
+        permissions: ["document:view", "document:edit"],
+      }}
+    >
+      <Space direction="vertical">
+        <div>
+          <h4>默认 span 标签:</h4>
+          <Permissions request={["document:view"]} type="tooltip">
+            <Button>查看文档</Button>
+          </Permissions>
+        </div>
+        
+        <div>
+          <h4>自定义 div 标签:</h4>
+          <Permissions
+            request={["document:delete"]}
+            type="tooltip"
+            tagName="div"
+            className="permission-wrapper"
+          >
+            <Button danger>删除文档（无权限）</Button>
+          </Permissions>
+        </div>
+        
+        <div>
+          <h4>自定义 section 标签:</h4>
+          <Permissions
+            request={["document:edit"]}
+            type="tooltip"
+            tagName="section"
+            className="permission-section"
+          >
+            <Button type="primary">编辑文档</Button>
+          </Permissions>
+        </div>
+      </Space>
+    </PureGlobal>
+  );
+};
+
+render(<CustomTagExample />);
+
+```
+
 ### API
 
 | 属性名      | 说明                                                                                                      | 类型            | 默认值          |

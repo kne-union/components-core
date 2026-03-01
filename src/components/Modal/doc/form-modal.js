@@ -17,7 +17,7 @@ const BaseExample = () => {
         }}
         formProps={{
           data: {
-            field1: "field1field1field1field1",
+            productName: "示例产品",
           },
           onSubmit: async (data) => {
             console.log(data);
@@ -33,19 +33,19 @@ const BaseExample = () => {
         <FormInfo
           title="基本信息"
           list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
+            <Input name="productName" label="产品名称" rule="REQ LEN-0-50" />,
+            <Input name="productCode" label="产品编码" rule="REQ LEN-0-20" />,
+            <TextArea name="description" label="产品描述" />,
           ]}
         />
         <List
-          title="列表"
-          name="list"
+          title="规格列表"
+          name="specifications"
           maxLength={3}
           list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
+            <Input name="specName" label="规格名称" rule="REQ LEN-0-20" />,
+            <Input name="specValue" label="规格值" rule="REQ LEN-0-20" />,
+            <TextArea name="specRemark" label="备注" />,
           ]}
         />
       </FormModal>
@@ -59,10 +59,10 @@ const BaseExample = () => {
       <Button
         onClick={() => {
           const api = formModal({
-            title: "表单弹窗",
+            title: "员工信息表单",
             formProps: {
               data: {
-                field1: "field1field1field1field1",
+                employeeName: "张三",
               },
               onSubmit: async (data) => {
                 console.log(data);
@@ -79,19 +79,19 @@ const BaseExample = () => {
                 <FormInfo
                   title="基本信息"
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="employeeName" label="员工姓名" rule="REQ LEN-0-20" />,
+                    <Input name="employeeEmail" label="邮箱" rule="EMAIL" />,
+                    <TextArea name="workExperience" label="工作经历" />,
                   ]}
                 />
                 <List
-                  title="列表"
-                  name="list"
+                  title="教育背景"
+                  name="education"
                   maxLength={3}
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="schoolName" label="学校名称" rule="REQ LEN-0-30" />,
+                    <Input name="major" label="专业" rule="REQ LEN-0-20" />,
+                    <TextArea name="degree" label="学历学位" />,
                   ]}
                 />
               </div>
@@ -123,7 +123,7 @@ const BaseExample = () => {
             ],
             formProps: {
               data: {
-                field1: "field1field1field1field1",
+                projectName: "新项目",
               },
               onSubmit: async (data) => {
                 console.log(data);
@@ -138,21 +138,21 @@ const BaseExample = () => {
             children: (
               <div>
                 <FormInfo
-                  title="基本信息"
+                  title="项目信息"
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="projectName" label="项目名称" rule="REQ LEN-0-30" />,
+                    <Input name="projectManager" label="项目经理" rule="REQ LEN-0-20" />,
+                    <TextArea name="projectDescription" label="项目描述" />,
                   ]}
                 />
                 <List
-                  title="列表"
-                  name="list"
+                  title="项目成员"
+                  name="members"
                   maxLength={3}
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="memberName" label="成员姓名" rule="REQ LEN-0-20" />,
+                    <Input name="memberRole" label="成员角色" rule="REQ LEN-0-20" />,
+                    <TextArea name="memberRemark" label="备注" />,
                   ]}
                 />
               </div>

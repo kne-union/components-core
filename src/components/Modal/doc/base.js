@@ -43,7 +43,7 @@ const BaseExample = () => {
             });
           }}
         >
-          <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>
+          <div>这是一个基础弹窗示例，展示了Modal组件的基本用法，包括确认和取消操作</div>
         </Modal>
         <Button
           onClick={() => {
@@ -57,7 +57,7 @@ const BaseExample = () => {
             modal({
               title: "hooks调用弹框",
               size,
-              children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
+              children: <div>通过hooks方式调用的弹窗，无需手动管理状态</div>,
             });
           }}
         >
@@ -69,8 +69,29 @@ const BaseExample = () => {
               title: "超高弹窗",
               size,
               children: (
-                <div style={{ height: "2000px" }}>
-                  超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗超高弹窗
+                <div style={{ height: "2000px", padding: '20px' }}>
+                  <h3>这是一个用于测试滚动功能的高内容弹窗</h3>
+                  <p>此处放置大量内容以展示弹窗的滚动效果和内部布局能力。当内容超出弹窗可视区域时，会自动显示滚动条，确保所有内容都可以访问。</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p>在实际的业务场景中，这种长内容弹窗常用于展示详细的使用条款、产品说明、操作指南等信息。</p>
+                  <p>您可以通过滚动查看所有内容，同时保持底部操作按钮始终可见。</p>
+                  <p>继续添加更多内容以测试滚动效果...</p>
+                  <p>这是第5段测试内容。</p>
+                  <p>这是第6段测试内容。</p>
+                  <p>这是第7段测试内容。</p>
+                  <p>这是第8段测试内容。</p>
+                  <p>这是第9段测试内容。</p>
+                  <p>这是第10段测试内容，可以看到滚动条已经出现。</p>
+                  <p>继续向下滚动查看更多内容...</p>
+                  <p>第12段内容：在实际应用中，这里可能是长文本、图片、表格等复杂内容。</p>
+                  <p>第13段内容：弹窗的滚动功能确保用户能够访问所有信息。</p>
+                  <p>第14段内容：同时保持操作按钮在底部固定，方便用户随时进行操作。</p>
+                  <p>第15段内容：测试长内容在弹窗中的显示效果。</p>
+                  <p>第16段内容：确保用户体验的流畅性和可用性。</p>
+                  <p>第17段内容：这是测试内容的最后几段。</p>
+                  <p>第18段内容：长内容弹窗在复杂的业务场景中非常有用。</p>
+                  <p>第19段内容：例如展示合同条款、技术文档、详细报告等。</p>
+                  <p>第20段内容：滚动到底部，测试完成。</p>
                 </div>
               ),
             });
@@ -83,7 +104,7 @@ const BaseExample = () => {
             modal({
               title: "自定义footer弹框",
               size,
-              children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
+              children: <div>自定义footer的弹窗内容，底部按钮区域被完全自定义</div>,
               footer: ({ close }) => (
                 <Space>
                   <span>自定义footer</span>
@@ -107,7 +128,7 @@ const BaseExample = () => {
             modal({
               title: "无footer弹框",
               size,
-              children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
+              children: <div>无footer的弹窗示例，适合展示信息或自定义操作</div>,
               footer: null,
             });
           }}
@@ -142,8 +163,8 @@ const BaseExample = () => {
             modal({
               title: "有rightOptions的弹窗",
               size,
-              children: <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>,
-              rightOptions: <div>右侧内容右侧内容右侧内容右侧内容</div>,
+              children: <div>带右侧选项的弹窗布局示例</div>,
+              rightOptions: <div>右侧辅助信息区域，常用于显示相关数据或快捷操作</div>,
               rightSpan: 12,
             });
           }}
@@ -172,7 +193,7 @@ const BaseExample = () => {
               ],
               children: ({ disabled, setDisabled }) => (
                 <div>
-                  弹窗弹窗弹窗弹窗弹窗弹窗弹窗[{String(disabled)}]
+                  子组件状态控制示例，当前disabled状态：[{String(disabled)}]
                   <Button
                     onClick={() => {
                       setDisabled((disabled) => !disabled);

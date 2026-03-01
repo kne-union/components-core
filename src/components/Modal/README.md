@@ -839,7 +839,7 @@ const BaseExample = () => {
         }}
         formProps={{
           data: {
-            field1: "field1field1field1field1",
+            productName: "示例产品",
           },
           onSubmit: async (data) => {
             console.log(data);
@@ -855,19 +855,19 @@ const BaseExample = () => {
         <FormInfo
           title="基本信息"
           list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
+            <Input name="productName" label="产品名称" rule="REQ LEN-0-50" />,
+            <Input name="productCode" label="产品编码" rule="REQ LEN-0-20" />,
+            <TextArea name="description" label="产品描述" />,
           ]}
         />
         <List
-          title="列表"
-          name="list"
+          title="规格列表"
+          name="specifications"
           maxLength={3}
           list={[
-            <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-            <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-            <TextArea name="field3" label="字段3" />,
+            <Input name="specName" label="规格名称" rule="REQ LEN-0-20" />,
+            <Input name="specValue" label="规格值" rule="REQ LEN-0-20" />,
+            <TextArea name="specRemark" label="备注" />,
           ]}
         />
       </FormModal>
@@ -881,10 +881,10 @@ const BaseExample = () => {
       <Button
         onClick={() => {
           const api = formModal({
-            title: "表单弹窗",
+            title: "员工信息表单",
             formProps: {
               data: {
-                field1: "field1field1field1field1",
+                employeeName: "张三",
               },
               onSubmit: async (data) => {
                 console.log(data);
@@ -901,19 +901,19 @@ const BaseExample = () => {
                 <FormInfo
                   title="基本信息"
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="employeeName" label="员工姓名" rule="REQ LEN-0-20" />,
+                    <Input name="employeeEmail" label="邮箱" rule="EMAIL" />,
+                    <TextArea name="workExperience" label="工作经历" />,
                   ]}
                 />
                 <List
-                  title="列表"
-                  name="list"
+                  title="教育背景"
+                  name="education"
                   maxLength={3}
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="schoolName" label="学校名称" rule="REQ LEN-0-30" />,
+                    <Input name="major" label="专业" rule="REQ LEN-0-20" />,
+                    <TextArea name="degree" label="学历学位" />,
                   ]}
                 />
               </div>
@@ -945,7 +945,7 @@ const BaseExample = () => {
             ],
             formProps: {
               data: {
-                field1: "field1field1field1field1",
+                projectName: "新项目",
               },
               onSubmit: async (data) => {
                 console.log(data);
@@ -960,21 +960,21 @@ const BaseExample = () => {
             children: (
               <div>
                 <FormInfo
-                  title="基本信息"
+                  title="项目信息"
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="projectName" label="项目名称" rule="REQ LEN-0-30" />,
+                    <Input name="projectManager" label="项目经理" rule="REQ LEN-0-20" />,
+                    <TextArea name="projectDescription" label="项目描述" />,
                   ]}
                 />
                 <List
-                  title="列表"
-                  name="list"
+                  title="项目成员"
+                  name="members"
                   maxLength={3}
                   list={[
-                    <Input name="field1" label="字段1" rule="REQ LEN-0-10" />,
-                    <Input name="field2" label="字段2" rule="REQ LEN-0-10" />,
-                    <TextArea name="field3" label="字段3" />,
+                    <Input name="memberName" label="成员姓名" rule="REQ LEN-0-20" />,
+                    <Input name="memberRole" label="成员角色" rule="REQ LEN-0-20" />,
+                    <TextArea name="memberRemark" label="备注" />,
                   ]}
                 />
               </div>
@@ -1015,21 +1015,21 @@ const BaseExample = () => {
     <TabsModal open={open} onClose={() => {
       setOpen(false);
     }} items={[{
-      label: "项目 1", key: "item-1", children: <div>项目 1项目 1项目 1项目 1项目 1项目 1项目 1项目 1</div>
+      label: "项目概述", key: "overview", children: <div>项目基本信息、目标、时间计划和关键里程碑，帮助团队了解项目全貌</div>
     }, {
-      label: "项目 2", key: "item-2", children: <div>项目 2项目 2项目 2项目 2项目 2项目 2项目 2项目 2</div>
-    }]} rightOptions={<div>右边栏内容右边栏内容右边栏内容右边栏内容</div>}>
-      <div>弹窗弹窗弹窗弹窗弹窗弹窗弹窗</div>
+      label: "任务分配", key: "tasks", children: <div>项目任务分解、责任人分配、进度跟踪和优先级管理，确保项目按计划推进</div>
+    }]} rightOptions={<div>快速操作面板：常用功能的快捷入口，提高操作效率</div>}>
+      <div>选项卡弹窗主内容区域：展示多标签页的详细信息，支持在不同标签间切换查看</div>
     </TabsModal>
     <Button onClick={() => {
       setOpen(true);
     }}>组件调用方式</Button>
     <Button onClick={() => {
       tabsModal({
-        rightOptions: <div>右边栏内容右边栏内容右边栏内容右边栏内容</div>, items: [{
-          label: "项目 1", key: "item-1", children: <div>项目 1项目 1项目 1项目 1项目 1项目 1项目 1项目 1</div>
+        rightOptions: <div>快捷操作：创建任务、分配成员、设置提醒</div>, items: [{
+          label: "项目文档", key: "documents", children: <div>项目相关文档、合同、技术资料等文件的管理和查看</div>
         }, {
-          label: "项目 2", key: "item-2", children: <div>项目 2项目 2项目 2项目 2项目 2项目 2项目 2项目 2</div>
+          label: "团队协作", key: "collaboration", children: <div>团队成员沟通记录、会议纪要、讨论内容等协作信息</div>
         }]
       });
     }}>hooks调用方式</Button>
@@ -1040,26 +1040,26 @@ const BaseExample = () => {
         withDecorator: (render) => <Fetch loader={() => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              resolve([{ label: "内容1", content: "内容1内容1内容1内容1内容1内容1内容1" }, {
-                label: "内容2", content: "内容2内容2内容2内容2内容2内容2内容2内容2"
+              resolve([{ label: "任务列表", content: "项目任务清单、完成状态、负责人和截止日期" }, {
+                label: "进度报告", content: "项目进度百分比、已完成的任务、待办事项和风险提示"
               }]);
             }, 1000);
           });
         }} render={({ data }) => render({ data })} />,
         items: [{
-          label: "项目 1", key: "item-1", children: ({ data }) => <Content list={data} col={2} />
+          label: "任务管理", key: "tasks", children: ({ data }) => <Content list={data} col={2} />
         }, {
           withDecorator: (render) => <Fetch loader={() => {
             return new Promise((resolve) => {
               setTimeout(() => {
-                resolve([{ label: "内容3", content: "内容3内容3内容3内容3内容3内容3内容3" }, {
-                  label: "内容4", content: "内容4内容4内容4内容4内容4内容4内容4内容4"
+                resolve([{ label: "资源分配", content: "项目资源使用情况、预算消耗、人力配置" }, {
+                  label: "风险跟踪", content: "项目风险列表、影响程度、应对措施和负责人"
                 }]);
               }, 1000);
             });
           }} render={({ data }) => render({ tabData: data })} />,
-          label: "项目 2",
-          key: "item-2",
+          label: "资源与风险",
+          key: "resources",
           children: ({ data, tabData }) => <Content list={[...data, ...tabData]} col={2} />
         }]
       });
@@ -1086,10 +1086,10 @@ const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
-          { label: "内容1", content: "内容1内容1内容1内容1内容1内容1内容1" },
+          { label: "客户基本信息", content: "客户公司名称、联系人、联系电话、地址等基础信息" },
           {
-            label: "内容2",
-            content: "内容2内容2内容2内容2内容2内容2内容2内容2",
+            label: "合作记录",
+            content: "历史合作项目、合作金额、合作状态、合同到期时间等合作相关信息",
           },
         ]);
       }, 1000);
@@ -1498,12 +1498,12 @@ const BaseExample = () => {
                 setTimeout(() => {
                   resolve([
                     {
-                      label: "内容1",
-                      content: "内容1内容1内容1内容1内容1内容1内容1",
+                      label: "用户基本信息",
+                      content: "展示用户的姓名、邮箱、部门等基础信息，用于身份识别和管理",
                     },
                     {
-                      label: "内容2",
-                      content: "内容2内容2内容2内容2内容2内容2内容2内容2",
+                      label: "联系信息",
+                      content: "电话号码、地址、紧急联系人等通讯信息，便于工作沟通和紧急联络",
                     },
                   ]);
                 }, 1000);
@@ -1537,12 +1537,12 @@ const BaseExample = () => {
                     setTimeout(() => {
                       resolve([
                         {
-                          label: "内容1",
-                          content: "内容1内容1内容1内容1内容1内容1内容1",
+                          label: "订单详情",
+                          content: "订单编号、下单时间、客户信息、订单状态等订单基本信息",
                         },
                         {
-                          label: "内容2",
-                          content: "内容2内容2内容2内容2内容2内容2内容2内容2",
+                          label: "支付信息",
+                          content: "支付方式、支付时间、支付金额、交易流水号等支付相关信息",
                         },
                       ]);
                     }, 1000);
@@ -1570,12 +1570,12 @@ const BaseExample = () => {
                     setTimeout(() => {
                       resolve([
                         {
-                          label: "内容1",
-                          content: "内容1内容1内容1内容1内容1内容1内容1",
+                          label: "订单详情",
+                          content: "订单编号、下单时间、客户信息、订单状态等订单基本信息",
                         },
                         {
-                          label: "内容2",
-                          content: "内容2内容2内容2内容2内容2内容2内容2内容2",
+                          label: "支付信息",
+                          content: "支付方式、支付时间、支付金额、交易流水号等支付相关信息",
                         },
                       ]);
                     }, 1000);
@@ -1620,9 +1620,9 @@ const BaseExample = () => {
           confirmModal({
             danger: true,
             type: "confirm",
-            title: "确定要删除吗？",
+            title: "确定要删除该记录吗？",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "此操作将永久删除该记录，相关数据将无法恢复。请确认是否继续删除操作？",
           });
         }}
       >
@@ -1633,9 +1633,9 @@ const BaseExample = () => {
           confirmModal({
             type: "confirm",
             confirmType: "warning",
-            title: "确定要编辑吗？",
+            title: "确定要编辑此内容吗？",
             message:
-              "确定要编辑确定要编辑确定要编辑确定要编辑确定要编辑确定要编辑确定要编辑",
+              "编辑后需要重新提交审核，未保存的修改将丢失。请确认是否继续编辑？",
           });
         }}
       >
@@ -1645,9 +1645,9 @@ const BaseExample = () => {
         onClick={() => {
           confirmModal({
             type: "info",
-            title: "确定要删除吗？",
+            title: "操作提示",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "该操作将更新系统配置，可能影响其他用户的使用。建议在非工作时间进行此操作。",
           });
         }}
       >
@@ -1658,7 +1658,7 @@ const BaseExample = () => {
           confirmModal({
             type: "info",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "数据已保存成功，系统将在后台进行同步处理，请稍候查看处理结果。",
           });
         }}
       >
@@ -1668,9 +1668,9 @@ const BaseExample = () => {
         onClick={() => {
           confirmModal({
             type: "success",
-            title: "确定要删除吗？",
+            title: "操作成功",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "恭喜！您的操作已成功完成。系统已发送通知邮件给相关团队成员。",
           });
         }}
       >
@@ -1680,9 +1680,9 @@ const BaseExample = () => {
         onClick={() => {
           confirmModal({
             type: "warning",
-            title: "确定要删除吗？",
+            title: "操作警告",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "检测到数据异常，继续操作可能导致数据不一致。建议先备份数据或联系技术支持。",
           });
         }}
       >
@@ -1692,9 +1692,9 @@ const BaseExample = () => {
         onClick={() => {
           confirmModal({
             type: "error",
-            title: "确定要删除吗？",
+            title: "操作失败",
             message:
-              "确定要删除确定要删除确定要删除确定要删除确定要删除确定要删除",
+              "系统处理出错，请检查网络连接或联系系统管理员。错误代码：ERR-500",
           });
         }}
       >
@@ -1730,7 +1730,7 @@ const BaseExample = () => {
           children: ({ childrenRef }) => {
             return (
               <div ref={childrenRef}>
-                示例弹框示例弹框示例弹框示例弹框示例弹框示例弹框
+                这是使用childrenRef的示例弹窗内容，展示了如何通过ref获取子组件的DOM引用。
               </div>
             );
           },

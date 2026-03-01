@@ -9,10 +9,10 @@ const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
-          { label: "内容1", content: "内容1内容1内容1内容1内容1内容1内容1" },
+          { label: "客户基本信息", content: "客户公司名称、联系人、联系电话、地址等基础信息" },
           {
-            label: "内容2",
-            content: "内容2内容2内容2内容2内容2内容2内容2内容2",
+            label: "合作记录",
+            content: "历史合作项目、合作金额、合作状态、合同到期时间等合作相关信息",
           },
         ]);
       }, 1000);

@@ -2,8 +2,8 @@
   "isFull": false,
   "list": [
     {
-      "title": "State Bar",
-      "description": "State Bar",
+      "title": "基础状态栏",
+      "description": "展示StateBar组件的基础用法，包括不同类型和尺寸的配置",
       "code": "./base.js",
       "scope": [
         {
@@ -17,8 +17,8 @@
       ]
     },
     {
-      "title": "Radio State Bar",
-      "description": "Radio State Bar",
+      "title": "Radio类型状态栏",
+      "description": "展示StateBar组件的radio类型，适合选项较多的场景",
       "code": "./radio-state.js",
       "scope": [
         {
@@ -32,13 +32,28 @@
       ]
     },
     {
-      "title": "Step State Bar",
-      "description": "Step State Bar",
+      "title": "Step类型状态栏",
+      "description": "展示StateBar组件的step类型，适合展示流程步骤",
       "code": "./step-state.js",
       "scope": [
         {
           "name": "_StateBar",
           "packageName": "@components/StateBar"
+        }
+      ]
+    },
+    {
+      "title": "受控模式",
+      "description": "展示StateBar组件的受控模式，包括activeKey和onChange事件的使用",
+      "code": "./controlled-mode.js",
+      "scope": [
+        {
+          "name": "_StateBar",
+          "packageName": "@components/StateBar"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }

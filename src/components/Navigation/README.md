@@ -588,6 +588,215 @@ render(<Example />);
 
 ```
 
+- 自定义配置
+- 展示Navigation组件的自定义基础配置，包括base、headerLogo、indexLabel、rightOptions等属性
+- _Navigation(@components/Navigation),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Navigation } = _Navigation;
+const { PureGlobal } = global;
+const { Avatar, Badge, Dropdown, Space } = antd;
+
+const menuList = [
+  {
+    key: "dashboard",
+    title: "数据概览",
+    path: "/dashboard",
+    icon: <span style={{ fontSize: 16 }}>📊</span>,
+  },
+  {
+    key: "project",
+    title: "项目管理",
+    path: "/project",
+    icon: <span style={{ fontSize: 16 }}>📁</span>,
+  },
+  {
+    key: "contract",
+    title: "合同管理",
+    path: "/contract",
+    icon: <span style={{ fontSize: 16 }}>📄</span>,
+  },
+  {
+    key: "invoice",
+    title: "发票管理",
+    path: "/invoice",
+    icon: <span style={{ fontSize: 16 }}>🧾</span>,
+  },
+  {
+    key: "approval",
+    title: "审批中心",
+    path: "/approval",
+    icon: <span style={{ fontSize: 16 }}>✅</span>,
+  },
+  {
+    key: "report",
+    title: "报表分析",
+    path: "/report",
+    icon: <span style={{ fontSize: 16 }}>📈</span>,
+  },
+];
+
+const CustomConfigExample = () => {
+  return (
+    <PureGlobal>
+      <Navigation
+        base="/app"
+        className="custom-navigation"
+        defaultTitle="企业管理系统"
+        headerLogo={{
+          src: "https://api.dicebear.com/7.x/icons/svg?seed=company",
+          width: 32,
+          height: 32,
+        }}
+        indexLabel="🏠 首页"
+        isFixed={false}
+        list={menuList}
+        showIndex={true}
+        permissions={[
+          "dashboard:view",
+          "project:view",
+          "contract:view",
+          "invoice:view",
+          "approval:view",
+          "report:view",
+        ]}
+        rightOptions={
+          <Space size="middle">
+            <Badge count={5}>
+              <span style={{ fontSize: 18, cursor: "pointer" }}>🔔</span>
+            </Badge>
+            <Dropdown
+              menu={{
+                items: [
+                  { key: "profile", label: "个人设置" },
+                  { key: "logout", label: "退出登录" },
+                ],
+              }}
+            >
+              <Avatar
+                size="small"
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=manager"
+                style={{ cursor: "pointer" }}
+              />
+            </Dropdown>
+          </Space>
+        }
+      />
+    </PureGlobal>
+  );
+};
+
+render(<CustomConfigExample />);
+
+```
+
+- 导航事件
+- 展示Navigation组件的导航事件处理，包括onChange回调和navigateTo自定义导航函数
+- _Navigation(@components/Navigation),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Navigation } = _Navigation;
+const { PureGlobal } = global;
+const { message } = antd;
+
+const menuList = [
+  {
+    key: "home",
+    title: "首页",
+    path: "/",
+  },
+  {
+    key: "client",
+    title: "客户管理",
+    path: "/client",
+    permission: "client:view",
+  },
+  {
+    key: "project",
+    title: "项目管理",
+    path: "/project",
+    permission: "project:view",
+  },
+  {
+    key: "talent",
+    title: "人才库",
+    path: "/talent",
+    permission: ["talent:view", "resume:view"],
+  },
+];
+
+const NavigationEventsExample = () => {
+  return (
+    <PureGlobal>
+      <Navigation
+        list={menuList}
+        isFixed={false}
+        permissions={["client:view", "project:view", "talent:view", "resume:view"]}
+        onChange={(path) => {
+          message.success(&#96;导航到路径: ${path}&#96;);
+        }}
+        navigateTo={(path) => {
+          message.info(&#96;自定义导航: ${path}&#96;);
+        }}
+      />
+    </PureGlobal>
+  );
+};
+
+render(<NavigationEventsExample />);
+
+```
+
+- 溢出指示器
+- 展示Navigation组件的自定义溢出指示器和大量菜单项的处理
+- _Navigation(@components/Navigation),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Navigation } = _Navigation;
+const { PureGlobal } = global;
+const { Space } = antd;
+
+const menuList = [
+  { key: "home", title: "首页", path: "/" },
+  { key: "module1", title: "业务模块一", path: "/module1" },
+  { key: "module2", title: "业务模块二", path: "/module2" },
+  { key: "module3", title: "业务模块三", path: "/module3" },
+  { key: "module4", title: "业务模块四", path: "/module4" },
+  { key: "module5", title: "业务模块五", path: "/module5" },
+  { key: "module6", title: "业务模块六", path: "/module6" },
+  { key: "module7", title: "业务模块七", path: "/module7" },
+  { key: "module8", title: "业务模块八", path: "/module8" },
+  { key: "module9", title: "业务模块九", path: "/module9" },
+  { key: "module10", title: "业务模块十", path: "/module10" },
+  { key: "module11", title: "业务模块十一", path: "/module11" },
+  { key: "module12", title: "业务模块十二", path: "/module12" },
+  { key: "module13", title: "业务模块十三", path: "/module13" },
+  { key: "module14", title: "业务模块十四", path: "/module14" },
+  { key: "module15", title: "业务模块十五", path: "/module15" },
+];
+
+const OverflowIndicatorExample = () => {
+  return (
+    <PureGlobal>
+      <Navigation
+        list={menuList}
+        isFixed={false}
+        showIndex={false}
+        overflowedIndicator={
+          <Space size={4}>
+            <span>更多菜单</span>
+            <span style={{ fontSize: 12 }}>▼</span>
+          </Space>
+        }
+      />
+    </PureGlobal>
+  );
+};
+
+render(<OverflowIndicatorExample />);
+
+```
+
 ### API
 
 |属性名|说明|类型|默认值|
