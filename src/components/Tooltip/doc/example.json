@@ -2,8 +2,8 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "基础用法",
+      "description": "展示 Tooltip 组件的基础用法，包括纯文本提示、带标题的提示、带副标题的提示、点击触发方式以及自定义位置等常用场景。",
       "code": "./base.js",
       "scope": [
         {
@@ -11,18 +11,78 @@
           "packageName": "@components/Tooltip"
         },
         {
-          "name": "space",
-          "packageName": "antd/lib/space"
-        },
-        {
-          "name": "formInfo",
-          "packageName": "@components/FormInfo"
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     },
     {
-      "title": "带有远程数据加载的提示",
-      "description": "展示带有远程数据加载的提示",
+      "title": "不同尺寸",
+      "description": "展示 Tooltip 组件的三种尺寸（small 240px、默认 360px、large 480px），以及在实际业务场景中如何选择合适的尺寸。",
+      "code": "./sizes.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "重要信息提示",
+      "description": "展示如何使用 importantInfo 属性突出显示重要信息，支持 success、warning、error 三种类型，适用于审核状态、库存预警、支付结果等业务场景。",
+      "code": "./important-info.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "嵌入表单内容",
+      "description": "展示如何在 Tooltip 中嵌入表单组件（如筛选表单、审批表单），实现快速操作功能，适用于批量操作、数据导出等复杂交互场景。",
+      "code": "./with-form.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "TooltipInfoLabel 标签组件",
+      "description": "展示 TooltipInfoLabel 组件的使用方法，该组件结合了标签和提示功能，常用于表单字段标签，可以快速为字段添加帮助说明和重要提示。",
+      "code": "./info-label.js",
+      "scope": [
+        {
+          "name": "_Tooltip",
+          "packageName": "@components/Tooltip"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "远程数据加载",
+      "description": "展示 TooltipFetch 组件的使用方法，该组件支持从远程接口加载数据并动态展示，适用于员工信息、订单详情、库存信息等需要实时数据的场景。支持数据缓存和强制刷新。",
       "code": "./tooltip-fetch.js",
       "scope": [
         {
@@ -34,12 +94,8 @@
           "packageName": "@kne/react-fetch"
         },
         {
-          "name": "_Descriptions",
-          "packageName": "@components/Descriptions"
-        },
-        {
-          "name": "_StateTag",
-          "packageName": "@components/StateTag"
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }
