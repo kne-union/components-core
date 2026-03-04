@@ -1,31 +1,7 @@
 import {preset} from "@kne/react-enum";
 import transform from "lodash/transform";
 
-const baseLoaders = [['commonStatus', () => [{value: 'open', description: '开启', type: 'success',}, {
-    value: 'close', description: '关闭', type: 'danger'
-}]], ["gender", () => [{value: "M", description: "男"}, {
-    value: "F", description: "女",
-},],], ["marital", () => [{description: "已婚", value: "Y"}, {
-    description: "未婚", value: "N",
-},],], ["confirm", () => [{description: "是", value: "Y"}, {
-    description: "否", value: "N",
-},],], ["political", () => [{description: "中共党员", value: "中共党员"}, {
-    description: "共青团员", value: "共青团员",
-}, {description: "群众", value: "群众"}, {
-    description: "其他党派", value: "其他党派",
-},],], ["phoneStateEnum", () => [{
-    value: 0, description: "空号",
-}, {
-    value: 1, description: "实号",
-}, {
-    value: 2, description: "停机",
-}, {
-    value: 3, description: "库无",
-}, {
-    value: 4, description: "沉默号",
-}, {
-    value: 5, description: "风险号",
-},],], ["degreeEnum", () => [{
+const degree = [{
     description: "初中", value: 10,
 }, {
     description: "中专", value: 20,
@@ -43,7 +19,41 @@ const baseLoaders = [['commonStatus', () => [{value: 'open', description: '开�
     description: "博士后", value: 75,
 }, {
     description: "学历不限", value: 999,
-},],],];
+}];
+
+const phoneState = [{
+    value: 0, description: "空号",
+}, {
+    value: 1, description: "实号",
+}, {
+    value: 2, description: "停机",
+}, {
+    value: 3, description: "库无",
+}, {
+    value: 4, description: "沉默号",
+}, {
+    value: 5, description: "风险号",
+}];
+
+const openStatus = [{value: 'open', description: '开启', type: 'success',}, {
+    value: 'closed', description: '关闭', type: 'danger'
+}];
+
+const baseLoaders = [['openStatus', openStatus], ['commonStatus', () => [{
+    value: 'open', description: '开启', type: 'success',
+}, {
+    value: 'close', description: '关闭', type: 'danger'
+}]], ["gender", () => [{value: "M", description: "男"}, {
+    value: "F", description: "女",
+},],], ["marital", () => [{description: "已婚", value: "Y"}, {
+    description: "未婚", value: "N",
+},],], ["confirm", () => [{description: "是", value: "Y"}, {
+    description: "否", value: "N",
+},],], ["political", () => [{description: "中共党员", value: "中共党员"}, {
+    description: "共青团员", value: "共青团员",
+}, {description: "群众", value: "群众"}, {
+    description: "其他党派", value: "其他党派",
+},],], ["phoneStateEnum", phoneState], ["phoneState", phoneState], ["degreeEnum", degree], ["degree", degree]];
 
 preset({
     base: transform(baseLoaders, (result, value) => {

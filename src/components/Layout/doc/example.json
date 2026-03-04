@@ -125,6 +125,78 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "Affix 固定布局",
+      "description": "展示 Affix 组件的固定布局功能",
+      "code": "./affix.js",
+      "scope": [
+        {
+          "name": "_Layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "TablePage 表格页面",
+      "description": "展示 TablePage 组件快速创建表格列表页",
+      "code": "./table-page.js",
+      "scope": [
+        {
+          "name": "_Layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "StateBarPage 状态栏页面",
+      "description": "展示 StateBarPage 组件创建带状态栏的页面",
+      "code": "./state-bar-page.js",
+      "scope": [
+        {
+          "name": "_Layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "PermissionsPage 权限页面",
+      "description": "展示 PermissionsPage 组件的权限控制功能",
+      "code": "./permissions-page.js",
+      "scope": [
+        {
+          "name": "_Layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

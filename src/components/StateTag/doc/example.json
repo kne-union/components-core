@@ -25,8 +25,8 @@
       ]
     },
     {
-      "title": "基本示例",
-      "description": "技能标签",
+      "title": "技能标签示例",
+      "description": "展示技能标签的使用，包括边框和背景的配置",
       "code": "./skill.js",
       "scope": [
         {
@@ -36,8 +36,8 @@
       ]
     },
     {
-      "title": "基本示例",
-      "description": "下拉菜单、弹窗中已选结果标签",
+      "title": "结果标签示例",
+      "description": "展示下拉菜单、弹窗中已选结果标签的使用",
       "code": "./result.js",
       "scope": [
         {
@@ -47,8 +47,8 @@
       ]
     },
     {
-      "title": "基本示例",
-      "description": "筛选组件中筛选结果标签",
+      "title": "筛选结果标签",
+      "description": "展示筛选组件中筛选结果标签的使用，包括filterName属性",
       "code": "./filterResult.js",
       "scope": [
         {
@@ -58,8 +58,8 @@
       ]
     },
     {
-      "title": "基本示例",
-      "description": "枚举状态标签",
+      "title": "枚举状态标签",
+      "description": "展示StateTagEnum组件的使用，从枚举数据自动生成状态标签",
       "code": "./stateTagEnum.js",
       "scope": [
         {
@@ -73,6 +73,21 @@
         {
           "name": "global",
           "packageName": "@components/Global"
+        }
+      ]
+    },
+    {
+      "title": "边框背景组合",
+      "description": "展示StateTag组件不同type下showBorder和showBackground属性的组合效果，以及Antd Tag的其他属性",
+      "code": "./border-bg-combinations.js",
+      "scope": [
+        {
+          "name": "_StateTag",
+          "packageName": "@components/StateTag"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }

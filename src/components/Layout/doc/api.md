@@ -1,7 +1,15 @@
-| 属性名        | 说明                     | 类型     | 默认值 |
-|------------|------------------------|--------|-----|
-| navigation | 导航参数参考 Navigation 组件参数 | object | -   |
-| children   | 一般放置Page组件             | jsx    | -   |
+### Layout
+
+Layout 组件是页面布局的容器组件，包裹所有页面内容并提供统一的布局结构。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| navigation | object | 否 | {} | 导航参数，参考 Navigation 组件参数 |
+| children | ReactNode | 是 | - | 子组件，一般放置 Page 组件 |
+| className | string | 否 | - | 自定义类名 |
+| theme | object | 否 | - | 主题样式配置 |
 
 ### Page
 
@@ -60,8 +68,47 @@
 
 ### PermissionsPage
 
-加入权限判断的Page，错误类型默认为error，即在该页面没有权限时显示错误
+加入权限判断的 Page 组件，错误类型默认为 error，即在该页面没有权限时显示错误。
 
-| 属性名         | 说明                      | 类型     | 默认值 |
-|-------------|-------------------------|--------|-----|
-| permissions | 权限列表参考 Permissions 组件参数 | object | -   |
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| name | string | 是 | - | 页面名称，必填 |
+| openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
+
+注意：PermissionsPage 继承了 Page 的所有属性。
+
+### TablePage
+
+快速集成 Table 组件的列表页面，内置了权限控制和帮助文档支持。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| helperGuideName | string | 否 | - | 帮助文档的名称 |
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| page | object | 否 | - | Page 组件的配置参数 |
+| openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
+| name | string | 是 | - | 页面名称，必填 |
+| topArea | ReactNode \| function | 否 | - | 顶部额外内容区，可以是组件或函数（接收 tableData 参数） |
+
+注意：除了以上属性，TablePage 还支持 Table 组件的所有属性（如 columns、api、pagination 等）。
+
+### StateBarPage
+
+带有状态栏的状态展示页面，内置了权限控制和帮助文档支持。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| helperGuideName | string | 否 | - | 帮助文档的名称 |
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| page | object | 否 | - | Page 组件的配置参数 |
+| stateBar | object | 否 | - | StateBar 组件的配置参数 |
+| children | ReactNode | 否 | - | 页面内容区 |
+
+注意：除了以上属性，StateBarPage 还继承了 Page 的所有属性。

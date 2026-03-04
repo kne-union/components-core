@@ -2,8 +2,8 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "基础用法",
+      "description": "展示不带链接的简单帮助提示",
       "code": "./base.js",
       "scope": [
         {
@@ -13,6 +13,94 @@
         {
           "name": "Global",
           "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "带帮助链接",
+      "description": "展示带帮助链接的提示，可跳转到文档页面",
+      "code": "./link.js",
+      "scope": [
+        {
+          "name": "_HelperGuide",
+          "packageName": "@components/HelperGuide"
+        },
+        {
+          "name": "Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "多个帮助提示",
+      "description": "展示在同一页面中使用多个 HelperGuide 组件",
+      "code": "./multiple.js",
+      "scope": [
+        {
+          "name": "_HelperGuide",
+          "packageName": "@components/HelperGuide"
+        },
+        {
+          "name": "Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "自定义样式",
+      "description": "展示通过 className 属性自定义组件样式",
+      "code": "./custom-style.js",
+      "scope": [
+        {
+          "name": "_HelperGuide",
+          "packageName": "@components/HelperGuide"
+        },
+        {
+          "name": "Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "真实业务场景",
+      "description": "展示在员工信息录入表单中的实际应用",
+      "code": "./real-scenario.js",
+      "scope": [
+        {
+          "name": "_HelperGuide",
+          "packageName": "@components/HelperGuide"
+        },
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }

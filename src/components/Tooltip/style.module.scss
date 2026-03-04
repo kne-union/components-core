@@ -2,6 +2,7 @@
 
 .tooltip {
   max-width: 360px;
+
   &.large {
     max-width: unset;
   }
@@ -71,13 +72,8 @@
   }
 }
 
-.fetch-content {
-  position: relative;
-  display: inline-flex;
-}
-
-.fetch-loading {
-  margin-left: 8px;
+.fetch-content > div {
+  display: inline-block !important;
 }
 
 .title-info-icon {
