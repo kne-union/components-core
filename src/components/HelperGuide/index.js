@@ -15,7 +15,7 @@ const HelperGuide = ({ name, className }) => {
             data &&
             data.value && (
               <div className={classnames(style["helper-guide"], className)}>
-                <Space className={style["inner"]}>
+                <Space className={style["inner"]} size={4}>
                   <Icon colorful type="icon-color-bangzhuyindao" />
                   <span className={style["content"]}>{data.content}</span>
                   {data.url && (

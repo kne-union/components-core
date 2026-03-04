@@ -2,8 +2,8 @@
   "isFull": true,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "基础表格 - 所有列类型展示",
+      "description": "展示 Table 组件的 16+ 种列类型（日期、日期时间、短日期、日期范围、编号、短编号、用户、用户名、联系人、头像、标签、隐藏信息、敏感信息、单行文本、描述、其他等），演示 primary、hover、ellipsis、onClick 等常用列属性。业务场景：候选人面试管理系统。",
       "code": "./base.js",
       "scope": [
         {
@@ -21,8 +21,50 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "列配置详解",
+      "description": "详细展示列配置的各种属性，包括 width、min、max 控制列宽，hidden 隐藏列，fixed 固定列，primary 主要字段标识，hover 效果，ellipsis 省略号等。业务场景：项目管理列表。",
+      "code": "./column-features.js",
+      "scope": [
+        {
+          "name": "_Table",
+          "packageName": "@components/Table"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "reactFetch",
+          "packageName": "@kne/react-fetch"
+        }
+      ]
+    },
+    {
+      "title": "Table 高级功能",
+      "description": "展示 Table 组件的高级功能：sticky 固定表头、stickyOffset 表头偏移、pagination 分页、summary 总结栏、scroll 滚动配置、controllerOpen 列控制开关、rowKey 自定义行键、className 自定义样式等。业务场景：订单管理系统。",
+      "code": "./table-advanced.js",
+      "scope": [
+        {
+          "name": "_Table",
+          "packageName": "@components/Table"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "reactFetch",
+          "packageName": "@kne/react-fetch"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "TablePage 分页表格",
+      "description": "展示 TablePage 组件的完整功能：loader 数据加载（支持分页参数）、featureId 权限控制（自动隐藏指定列）、pagination 详细配置、dataFormat 数据格式化、columns 列配置、columnRenderProps 列渲染属性、summary 总结栏。业务场景：员工管理系统。",
       "code": "./table-page.js",
       "scope": [
         {
@@ -40,8 +82,27 @@
       ]
     },
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "行选择与批量操作",
+      "description": "展示 useSelectedRow Hook 的使用方法，实现行选择（checkbox）功能，包括 selectedRowKeys、setSelectedRowKeys、onSelectAll、onSelect 等 API。演示批量审批、批量拒绝、批量导出等常见批量操作场景。业务场景：请假审批系统。",
+      "code": "./row-selection.js",
+      "scope": [
+        {
+          "name": "_Table",
+          "packageName": "@components/Table"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "分组表头与排序",
+      "description": "展示分组表头（groupHeader）功能，实现多级表头结构。演示 sort 排序功能（单列排序、多列排序）和 onSortChange 排序变更回调。同时展示 disableColItem 禁用 ColItem 包装，实现自定义编辑组件。业务场景：销售数据报表。",
       "code": "./group-header.js",
       "scope": [
         {

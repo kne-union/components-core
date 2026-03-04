@@ -2,15 +2,32 @@
 
 ### 概述
 
-用于 State Bar
+### 概述
+
+StateBar 是一个基于 Ant Design Tabs 组件的状态栏组件，支持多种展示类型（tab、radio、step），适用于需要状态切换和流程展示的场景。
+
+### 何时使用
+
+当需要在页面中展示不同状态的选项卡或步骤流程时使用，例如：
+- 数据列表的状态筛选（全部、待处理、已完成等）
+- 表单或流程的步骤展示
+- 选项卡切换界面
+
+### 特点
+
+* 支持三种展示类型：tab（标签页）、radio（单选）、step（步骤）
+* 可自定义样式和尺寸（small、default、large）
+* 支持底部线条延展效果（isInner 属性）
+* 可添加额外内容在状态栏右侧
+* 基于 Ant Design Tabs，兼容其大部分属性
 
 
 ### 示例
 
 #### 示例代码
 
-- State Bar
-- State Bar
+- 基础状态栏
+- 展示StateBar组件的基础用法，包括不同类型和尺寸的配置
 - _StateBar(@components/StateBar),antd(antd)
 
 ```jsx
@@ -70,8 +87,8 @@ render(<BaseExample />);
 
 ```
 
-- Radio State Bar
-- Radio State Bar
+- Radio类型状态栏
+- 展示StateBar组件的radio类型，适合选项较多的场景
 - _StateBar(@components/StateBar),antd(antd)
 
 ```jsx
@@ -119,8 +136,8 @@ render(<BaseStateExample />);
 
 ```
 
-- Step State Bar
-- Step State Bar
+- Step类型状态栏
+- 展示StateBar组件的step类型，适合展示流程步骤
 - _StateBar(@components/StateBar)
 
 ```jsx
@@ -147,6 +164,92 @@ const BaseStateExample = () => {
 };
 
 render(<BaseStateExample />);
+
+```
+
+- 受控模式
+- 展示StateBar组件的受控模式，包括activeKey和onChange事件的使用
+- _StateBar(@components/StateBar),antd(antd)
+
+```jsx
+const { default: StateBar } = _StateBar;
+const { Button, Card, Space, Tag } = antd;
+const { useState } = React;
+
+const ControlledModeExample = () => {
+  const [activeKey, setActiveKey] = useState("1");
+  
+  const stateOption = [
+    { key: "1", tab: "待处理" },
+    { key: "2", tab: "处理中" },
+    { key: "3", tab: "待审核" },
+    { key: "4", tab: "已完成" },
+    { key: "5", tab: "已拒绝" },
+  ];
+  
+  const statusData = {
+    "1": { count: 15, color: "orange", description: "等待处理的工单" },
+    "2": { count: 8, color: "blue", description: "正在处理的工单" },
+    "3": { count: 5, color: "purple", description: "等待审核的工单" },
+    "4": { count: 128, color: "green", description: "已完成的工单" },
+    "5": { count: 3, color: "red", description: "已拒绝的工单" },
+  };
+
+  const handleTabChange = (key) => {
+    setActiveKey(key);
+  };
+
+  return (
+    <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Card title="工单状态管理" style={{ width: "100%" }}>
+        <StateBar
+          type="tab"
+          activeKey={activeKey}
+          stateOption={stateOption}
+          onChange={handleTabChange}
+          tabBarExtraContent={
+            <Button type="primary" size="small">
+              新建工单
+            </Button>
+          }
+        />
+        
+        <Card style={{ marginTop: 20 }}>
+          <Space direction="vertical" size="middle">
+            <div>
+              <Tag color={statusData[activeKey].color}>
+                {stateOption.find(item => item.key === activeKey)?.tab}
+              </Tag>
+              <span style={{ marginLeft: 8 }}>数量: {statusData[activeKey].count} 个</span>
+            </div>
+            <div>
+              <strong>状态描述:</strong> {statusData[activeKey].description}
+            </div>
+            <div>
+              <strong>当前选中:</strong> {activeKey}
+            </div>
+          </Space>
+        </Card>
+      </Card>
+      
+      <Card title="快速切换" style={{ width: "100%" }}>
+        <Space wrap>
+          {stateOption.map(item => (
+            <Button
+              key={item.key}
+              onClick={() => setActiveKey(item.key)}
+              type={activeKey === item.key ? "primary" : "default"}
+            >
+              切换到: {item.tab}
+            </Button>
+          ))}
+        </Space>
+      </Card>
+    </Space>
+  );
+};
+
+render(<ControlledModeExample />);
 
 ```
 

@@ -1,17 +1,32 @@
-| 属性名               | 说明                           | 类型         | 默认值 |
-|-------------------|------------------------------|------------|-----|
-| size              | 默认宽度 360，small 宽度 240        | string     | -   |
-| title             | 标题内容                         | string,jsx | -   |
-| showInfo          | 展示标题旁的提示按钮                   | boolean    | -   |
-| importantInfo     | 重要内容                         | string,jsx | -   |
-| subtitle          | 副标题                          | string,jsx | -   |
-| content           | 内容                           | string,jsx | -   |
-| importantInfoType | 重要内容类型，success,error,warning | string,jsx | -   |
-| moreInfo          | 其他内容                         | jsx        | -   |
+### Tooltip 组件
 
-### TooltipFetch
+| 属性名 | 说明 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| size | 提示框宽度，可选值：small(240px)、默认(360px)、large(480px) | string | - |
+| title | 标题内容 | string/ReactNode | - |
+| content | 主要内容 | string/ReactNode | - |
+| subtitle | 副标题内容 | string/ReactNode | - |
+| importantInfo | 重要提示信息 | string/ReactNode | - |
+| importantInfoType | 重要信息类型，可选值：success、warning、error | string | - |
+| showInfo | 是否显示标题旁的提示图标 | boolean | false |
+| moreInfo | 扩展内容区域，可嵌入表单、图表等 | ReactNode | - |
+| trigger | 触发方式，可选值：hover、click、focus | string | 'hover' |
+| placement | 气泡框位置 | string | 'top' |
+| overlayClassName | 自定义气泡框类名 | string | - |
 
-| 属性名          | 说明                                         | 类型       | 默认值 |
-|--------------|--------------------------------------------|----------|-----|
-| api          | 获取数据的接口，参考@kne/react-fetch                 | object   | -   |
-| fetchContent | 当api接口返回值的时候调用，可以获取到接口参数，返回值会更新到Tootip的参数中 | function | -   |
+### TooltipFetch 组件
+
+| 属性名 | 说明 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| api | 数据接口配置，参考 @kne/react-fetch | object | - |
+| fetchContent | 数据转换函数，接收接口返回数据，返回 Tooltip 的 props | function | - |
+| showLoading | 是否显示加载状态 | boolean | true |
+| loadingClassName | 加载动画的自定义类名 | string | - |
+| force | 是否每次显示都重新加载数据 | boolean | false |
+
+### TooltipInfoLabel 组件
+
+| 属性名 | 说明 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| title | 标签文字 | string | - |
+| tooltipTitle | Tooltip 的属性对象，会传递给 Tooltip 组件 | object | - |

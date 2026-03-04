@@ -17,6 +17,66 @@
       ]
     },
     {
+      "title": "Preset 配置",
+      "description": "展示了 preset 全局配置的使用方法",
+      "code": "./preset.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "主题配置",
+      "description": "展示了主题色的自定义和预览效果",
+      "code": "./theme.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "全局状态管理",
+      "description": "展示了 useGlobalContext、SetGlobal、GetGlobal 的使用",
+      "code": "./global-state.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "初始化加载",
+      "description": "展示了 init 方法的使用，用于系统首次加载时的异步操作",
+      "code": "./init.js",
+      "scope": [
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "警告提示",
       "description": "展示了警告提示的覆盖样式",
       "code": "./alert.js",

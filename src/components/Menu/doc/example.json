@@ -2,9 +2,54 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
-      "code": "./base.js",
+      "title": "基础菜单",
+      "description": "展示菜单的基本用法，包括多级菜单、无图标菜单、不可折叠菜单和单级菜单",
+      "code": "./basic-menu.js",
+      "scope": [
+        {
+          "name": "_Menu",
+          "packageName": "@components/Menu"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "远程数据加载",
+      "description": "展示菜单的远程数据加载功能，包括嵌套远程加载和自定义加载状态",
+      "code": "./remote-data.js",
+      "scope": [
+        {
+          "name": "_Menu",
+          "packageName": "@components/Menu"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "自定义交互",
+      "description": "展示菜单的交互功能，包括菜单项点击、动态菜单控制和展开状态控制",
+      "code": "./custom-interaction.js",
+      "scope": [
+        {
+          "name": "_Menu",
+          "packageName": "@components/Menu"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "权限控制与路由匹配",
+      "description": "展示菜单的权限控制和路由匹配功能，包括自定义路径匹配和嵌套路由",
+      "code": "./permission-routing.js",
       "scope": [
         {
           "name": "_Menu",

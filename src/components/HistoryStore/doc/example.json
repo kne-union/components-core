@@ -2,9 +2,69 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "搜索框历史记录",
+      "description": "展示基础用法，搜索框获取焦点时显示历史记录",
       "code": "./base.js",
+      "scope": [
+        {
+          "name": "_HistoryStore",
+          "packageName": "@components/HistoryStore"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "自定义配置",
+      "description": "展示 maxLength、label 等配置属性的用法",
+      "code": "./custom-config.js",
+      "scope": [
+        {
+          "name": "_HistoryStore",
+          "packageName": "@components/HistoryStore"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Select 组件历史记录",
+      "description": "展示与 Select 组件结合使用，记录选择历史",
+      "code": "./select.js",
+      "scope": [
+        {
+          "name": "_HistoryStore",
+          "packageName": "@components/HistoryStore"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "多个独立存储",
+      "description": "展示通过不同 storeName 创建多个独立的历史记录",
+      "code": "./multiple-stores.js",
+      "scope": [
+        {
+          "name": "_HistoryStore",
+          "packageName": "@components/HistoryStore"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "真实业务场景",
+      "description": "展示在订单管理页面中的实际应用",
+      "code": "./real-scenario.js",
       "scope": [
         {
           "name": "_HistoryStore",

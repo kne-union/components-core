@@ -11,7 +11,7 @@ const BaseExample = () => {
           children: ({ childrenRef }) => {
             return (
               <div ref={childrenRef}>
-                示例弹框示例弹框示例弹框示例弹框示例弹框示例弹框
+                这是使用childrenRef的示例弹窗内容，展示了如何通过ref获取子组件的DOM引用。
               </div>
             );
           },

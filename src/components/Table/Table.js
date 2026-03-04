@@ -137,5 +137,8 @@ const Table = ({
 
 Table.useSelectedRow = useSelectedRow;
 Table.TablePage = TablePage;
+Table.Summary = AntdTable.Summary;
+Table.Summary.Row = AntdTable.Summary.Row;
+Table.Summary.Cell = AntdTable.Summary.Cell;
 
 export default Table;

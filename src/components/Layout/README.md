@@ -2,29 +2,31 @@
 
 ### 概述
 
-### 何时使用
+Layout 是一个完整的页面布局框架，为登录后的系统页面提供统一的布局结构和样式规范。它将页面划分为多个区域，包括导航区、内容区、左菜单区、右操作区、页头区、页头信息区、页面标题区等，通过灵活的配置可以组合出不同布局风格的页面。
 
-每个登录后的系统页面都应该在Layout的框架之下，它定义了页面的基本框架。根据设计对于页面的不同要求，适当选择不同的组合
+**核心特性**
 
-### 特点
+- **统一布局**：提供标准化的页面布局结构，确保系统页面风格统一
+- **灵活配置**：通过 Page 组件的参数配置不同区域的显示和样式
+- **性能优化**：页面参数通过 Context 保存，页面跳转时非页面区域走更新周期而非挂载周期，提升渲染速度
+- **区域划分**：支持导航区、内容区、左菜单区、右操作区、页头区、页头信息区、页面标题区等多种区域
+- **权限集成**：内置权限判断，支持 PermissionsPage 快速实现权限控制
+- **组件丰富**：提供 Page、Menu、PageHeader、TablePage、StateBarPage 等多个子组件满足不同需求
 
-Layout将整个页面划分成以下几个区域
+**适用场景**
 
-1. 导航区
-2. 内容区
-3. 左菜单区
-4. 右操作区
-5. 页头区
-6. 页头信息区
-7. 页面标题区
+- **基础页面**：简单的上下布局，导航栏+内容区
+- **左侧菜单页**：带有左侧导航菜单的页面，支持多级菜单
+- **筛选列表页**：顶部带筛选器的列表页面
+- **详情页**：带有页面头和额外信息的详情页面
+- **表格页**：快速集成 Table 组件的列表页面
+- **状态栏页**：带有状态栏的状态展示页面
 
-通过给Page配置不同的参数实现不同区域的显示
+**重要说明**
 
-### 注意
-
-* Page的name参数必须要传，用来在页面跳转时确定Page是不是同一个，决定着Page是否走install周期
-* Page组件的参数是通过Context保存在Layout中的，这样做的目的是为了让页面跳转时，除页面区以外的区域在前后俩页面差别不大的情况下走更新周期而不是install周期，以此带来更快的渲染速度避免不必要的重复安装和卸载
-* 请尽量通过Page提供的参数来配置出设计要求的页面，不要自行用css实现，以便于Layout组件能从整体控制页面的基本形式和不同区域的padding和margin，让系统更加统一化标准化
+- Page 组件的 `name` 参数必须传递，用于页面跳转时判断是否为同一页面，决定是否走挂载周期
+- 请尽量通过 Page 提供的参数配置页面布局，避免自定义 CSS，以便 Layout 组件统一控制页面形式和样式
+- Page 组件参数通过 Context 保存，页面跳转时非页面区域会走更新周期，提升性能
 
 ### 示例(全屏)
 
@@ -679,12 +681,350 @@ render(<Example />);
 
 ```
 
+- Affix 固定布局
+- 展示 Affix 组件的固定布局功能
+- _Layout(@components/Layout),antd(antd)
+
+```jsx
+const { default: Layout, Affix } = _Layout;
+const { Space, Card, Button, Typography } = antd;
+
+const { Text } = Typography;
+
+const AffixExample = () => {
+  const [fixed, setFixed] = React.useState(false);
+
+  return (
+    <Layout navigation={{ isFixed: false }}>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Card title="Affix 固定布局组件" size="small">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div>
+              <Text strong>固定到顶部（offsetTop: 100）：</Text>
+              <div style={{ marginTop: 16 }}>
+                <Affix offsetTop={100} onChange={(fixed) => setFixed(fixed)}>
+                  <div style={{
+                    background: 'var(--primary-color)',
+                    color: 'white',
+                    padding: '16px 24px',
+                    borderRadius: '4px',
+                    textAlign: 'center',
+                    width: '200px'
+                  }}>
+                    我会在距离顶部 100px 时固定
+                    {fixed && ' (已固定)'}
+                  </div>
+                </Affix>
+              </div>
+            </div>
+
+            <div style={{ marginTop: 32 }}>
+              <Text strong>不固定（isFixed: false）：</Text>
+              <div style={{ marginTop: 16 }}>
+                <Affix isFixed={false}>
+                  <div style={{
+                    background: 'var(--state-warning-color)',
+                    color: 'white',
+                    padding: '16px 24px',
+                    borderRadius: '4px',
+                    textAlign: 'center',
+                    width: '200px'
+                  }}>
+                    我不会被固定
+                  </div>
+                </Affix>
+              </div>
+            </div>
+          </Space>
+        </Card>
+
+        <Card title="说明" size="small">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Text type="secondary">
+              Affix 组件用于控制内容的固定布局行为，基于 Antd 的 Affix 组件进行了封装。
+            </Text>
+            <Text type="secondary">
+              当 isFixed 为 true 时，内容会在滚动到指定位置后固定显示；
+              当 isFixed 为 false 时，内容固定行为被禁用。
+            </Text>
+          </Space>
+        </Card>
+
+        <div style={{ height: 800 }}>
+          <Text type="secondary">（向下滚动查看 Affix 固定效果）</Text>
+        </div>
+      </Space>
+    </Layout>
+  );
+};
+
+render(<AffixExample />);
+
+```
+
+- TablePage 表格页面
+- 展示 TablePage 组件快速创建表格列表页
+- _Layout(@components/Layout),global(@components/Global),antd(antd)
+
+```jsx
+const {default: Layout, TablePage} = _Layout;
+const {PureGlobal} = global;
+const {Button} = antd;
+
+const TablePageExample = () => {
+    const columns = [{
+        title: '订单号', name: 'orderNo'
+    }, {
+        title: '客户姓名', name: 'customerName'
+    }, {
+        title: '金额', name: 'amount', render: (amount) => &#96;¥${amount.toLocaleString()}&#96;
+    }, {
+        title: '状态', name: 'status'
+    }, {
+        title: '创建时间', name: 'createTime'
+    }];
+
+    return (<PureGlobal preset={{
+        enums: {
+            helperGuide: () => [{
+                value: 'order-list-help',
+                content: '这是一个订单列表页面，可以查看和管理所有订单信息。',
+                url: 'https://example.com/help/order-list'
+            }]
+        }
+    }}>
+        <Layout navigation={{isFixed: false}}>
+            <TablePage
+                name="order-list"
+                helperGuideName="order-list-help"
+                page={{
+                    title: '订单列表', titleExtra: <Button type="primary">新建订单</Button>
+                }}
+                columns={columns}
+                loader={() => {
+                    return {
+                        pageData: [{
+                            key: '1',
+                            orderNo: 'ORD202401001',
+                            customerName: '张三',
+                            amount: 1200.00,
+                            status: '已完成',
+                            createTime: '2024-01-15 10:30:00'
+                        }, {
+                            key: '2',
+                            orderNo: 'ORD202401002',
+                            customerName: '李四',
+                            amount: 3500.00,
+                            status: '处理中',
+                            createTime: '2024-01-15 11:20:00'
+                        }, {
+                            key: '3',
+                            orderNo: 'ORD202401003',
+                            customerName: '王五',
+                            amount: 890.00,
+                            status: '待处理',
+                            createTime: '2024-01-15 14:45:00'
+                        }], total: 3
+                    };
+                }}
+                topArea={(tableData) => (<div style={{padding: '16px', background: '#fafafa', marginBottom: '16px'}}>
+                    <div>数据统计：共 {tableData?.pageData?.length || 0} 条记录</div>
+                </div>)}
+            />
+        </Layout>
+    </PureGlobal>);
+};
+
+render(<TablePageExample/>);
+
+```
+
+- StateBarPage 状态栏页面
+- 展示 StateBarPage 组件创建带状态栏的页面
+- _Layout(@components/Layout),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Layout, StateBarPage } = _Layout;
+const { PureGlobal } = global;
+const { Card, Descriptions, Button, Space, Typography } = antd;
+
+const { Text } = Typography;
+
+const StateBarPageExample = () => {
+  return (
+    <PureGlobal preset={{}}>
+      <Layout navigation={{ isFixed: false }}>
+        <StateBarPage
+          name="order-detail"
+          helperGuideName="order-detail-help"
+          page={{
+            title: '订单详情',
+            titleExtra: (
+              <Space>
+                <Button>编辑</Button>
+                <Button type="primary">导出</Button>
+              </Space>
+            )
+          }}
+          stateBar={{
+            list: [
+              {
+                label: '全部',
+                value: 'all',
+                count: 100
+              },
+              {
+                label: '待处理',
+                value: 'pending',
+                count: 25
+              },
+              {
+                label: '处理中',
+                value: 'processing',
+                count: 30
+              },
+              {
+                label: '已完成',
+                value: 'completed',
+                count: 40
+              },
+              {
+                label: '已取消',
+                value: 'cancelled',
+                count: 5
+              }
+            ],
+            onChange: (value) => {
+              console.log('状态切换：', value);
+            }
+          }}
+        >
+          <Card title="订单信息" size="small">
+            <Descriptions column={2} bordered>
+              <Descriptions.Item label="订单号">ORD202401001</Descriptions.Item>
+              <Descriptions.Item label="客户姓名">张三</Descriptions.Item>
+              <Descriptions.Item label="订单金额">¥1,200.00</Descriptions.Item>
+              <Descriptions.Item label="创建时间">2024-01-15 10:30:00</Descriptions.Item>
+              <Descriptions.Item label="收货地址" span={2}>
+                北京市朝阳区某某街道123号
+              </Descriptions.Item>
+              <Descriptions.Item label="订单备注" span={2}>
+                用户要求尽快发货
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        </StateBarPage>
+      </Layout>
+    </PureGlobal>
+  );
+};
+
+render(<StateBarPageExample />);
+
+```
+
+- PermissionsPage 权限页面
+- 展示 PermissionsPage 组件的权限控制功能
+- _Layout(@components/Layout),global(@components/Global),antd(antd)
+
+```jsx
+const { default: Layout, PermissionsPage } = _Layout;
+const { PureGlobal } = global;
+const { Card, Button, Space, Typography, Alert } = antd;
+
+const { Text } = Typography;
+
+const PermissionsPageExample = () => {
+  return (
+    <PureGlobal
+      preset={{
+        permissions: ['order:view', 'order:edit', 'order:delete']
+      }}
+    >
+      <Layout navigation={{ isFixed: false }}>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Card title="有权限访问的页面" size="small">
+            <PermissionsPage
+              name="order-detail-with-perm"
+              permissions={{
+                permissions: ['order:view']
+              }}
+              page={{
+                title: '订单详情（有权限）'
+              }}
+            >
+              <Alert
+                message="您有权限访问此页面"
+                description="当前用户拥有 order:view 权限，可以查看订单详情"
+                type="success"
+                showIcon
+                style={{ marginBottom: 16 }}
+              />
+              <Card size="small">
+                <Text>这里是订单详情内容</Text>
+              </Card>
+            </PermissionsPage>
+          </Card>
+
+          <Card title="无权限访问的页面" size="small">
+            <PermissionsPage
+              name="order-edit-without-perm"
+              permissions={{
+                permissions: ['order:edit:advanced']
+              }}
+              page={{
+                title: '订单编辑（无权限）'
+              }}
+            >
+              <Alert
+                message="您不会看到这个内容"
+                description="因为当前用户没有 order:edit:advanced 权限"
+                type="info"
+                showIcon
+              />
+              <Card size="small">
+                <Text>这里不会显示，因为缺少权限</Text>
+              </Card>
+            </PermissionsPage>
+          </Card>
+
+          <Card title="说明" size="small">
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Text type="secondary">
+                PermissionsPage 组件在 Page 的基础上增加了权限判断功能。
+              </Text>
+              <Text type="secondary">
+                如果用户没有所需权限，会显示错误提示页面，不会渲染页面内容。
+              </Text>
+              <Text type="secondary">
+                权限通过 preset.permissions 配置，组件内部会自动检查是否拥有所需权限。
+              </Text>
+            </Space>
+          </Card>
+        </Space>
+      </Layout>
+    </PureGlobal>
+  );
+};
+
+render(<PermissionsPageExample />);
+
+```
+
 ### API
 
-| 属性名        | 说明                     | 类型     | 默认值 |
-|------------|------------------------|--------|-----|
-| navigation | 导航参数参考 Navigation 组件参数 | object | -   |
-| children   | 一般放置Page组件             | jsx    | -   |
+### Layout
+
+Layout 组件是页面布局的容器组件，包裹所有页面内容并提供统一的布局结构。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| navigation | object | 否 | {} | 导航参数，参考 Navigation 组件参数 |
+| children | ReactNode | 是 | - | 子组件，一般放置 Page 组件 |
+| className | string | 否 | - | 自定义类名 |
+| theme | object | 否 | - | 主题样式配置 |
 
 ### Page
 
@@ -743,8 +1083,47 @@ render(<Example />);
 
 ### PermissionsPage
 
-加入权限判断的Page，错误类型默认为error，即在该页面没有权限时显示错误
+加入权限判断的 Page 组件，错误类型默认为 error，即在该页面没有权限时显示错误。
 
-| 属性名         | 说明                      | 类型     | 默认值 |
-|-------------|-------------------------|--------|-----|
-| permissions | 权限列表参考 Permissions 组件参数 | object | -   |
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| name | string | 是 | - | 页面名称，必填 |
+| openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
+
+注意：PermissionsPage 继承了 Page 的所有属性。
+
+### TablePage
+
+快速集成 Table 组件的列表页面，内置了权限控制和帮助文档支持。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| helperGuideName | string | 否 | - | 帮助文档的名称 |
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| page | object | 否 | - | Page 组件的配置参数 |
+| openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
+| name | string | 是 | - | 页面名称，必填 |
+| topArea | ReactNode \| function | 否 | - | 顶部额外内容区，可以是组件或函数（接收 tableData 参数） |
+
+注意：除了以上属性，TablePage 还支持 Table 组件的所有属性（如 columns、api、pagination 等）。
+
+### StateBarPage
+
+带有状态栏的状态展示页面，内置了权限控制和帮助文档支持。
+
+#### 属性说明
+
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| helperGuideName | string | 否 | - | 帮助文档的名称 |
+| permissions | object | 否 | - | 权限配置，参考 Permissions 组件参数 |
+| page | object | 否 | - | Page 组件的配置参数 |
+| stateBar | object | 否 | - | StateBar 组件的配置参数 |
+| children | ReactNode | 否 | - | 页面内容区 |
+
+注意：除了以上属性，StateBarPage 还继承了 Page 的所有属性。

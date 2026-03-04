@@ -2,9 +2,66 @@
   "isFull": false,
   "list": [
     {
-      "title": "展示权限不通过的几种形式",
-      "description": "通过切换不同的type，可以预览三种不同type的表现形式",
+      "title": "基础权限控制",
+      "description": "展示Permissions组件的基本用法，包括不同类型的权限控制方式",
       "code": "./base.js",
+      "scope": [
+        {
+          "name": "_Permissions",
+          "packageName": "@components/Permissions"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "高级权限控制",
+      "description": "展示Permissions组件的高级用法，包括权限函数控制、多重权限控制和函数式子组件",
+      "code": "./advanced-permissions.js",
+      "scope": [
+        {
+          "name": "_Permissions",
+          "packageName": "@components/Permissions"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Hooks使用",
+      "description": "展示Permissions组件的Hooks使用，包括usePermissions、usePermissionsPass和computedIsPass工具函数",
+      "code": "./hooks-usage.js",
+      "scope": [
+        {
+          "name": "_Permissions",
+          "packageName": "@components/Permissions"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "自定义标签",
+      "description": "展示Permissions组件的tagName属性，使用不同的HTML标签包裹无权限内容",
+      "code": "./custom-tag.js",
       "scope": [
         {
           "name": "_Permissions",
