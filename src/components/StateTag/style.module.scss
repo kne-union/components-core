@@ -47,6 +47,7 @@
   //height: auto;
   display: flex;
   border-radius: var(--radius-default, 2px);
+
   .state-tag-filter-name {
     color: var(--font-color-grey);
     padding-right: 4px;
@@ -81,12 +82,12 @@
 }
 
 .tag-text {
-  display: block;
   max-width: 360px;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-flex;
+  align-items: center;
 }
 
 .state-tag-wrapper {

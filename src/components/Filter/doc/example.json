@@ -13,6 +13,21 @@
       ]
     },
     {
+      "title": "展示和Enum一起使用",
+      "description": "",
+      "code": "./use-enum.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "_Enum",
+          "packageName": "@components/Enum"
+        }
+      ]
+    },
+    {
       "title": "高级筛选",
       "description": "展示 AdvancedFilter 组件的高级筛选功能，适用于复杂筛选场景",
       "code": "./advanced-filter.js",

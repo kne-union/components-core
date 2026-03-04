@@ -79,7 +79,8 @@ export const SuperSelectUserField = forwardRef((p, ref) => {
                     <div
                         className={classnames(style["select-list-item-label"], "select-list-item-label")}>{item[labelKey]}</div>
                     {item[descriptionKey || 'description'] && (<div
-                        className={classnames(style["select-list-item-description"], "select-list-item-description")} title={item[descriptionKey || 'description']}>
+                        className={classnames(style["select-list-item-description"], "select-list-item-description")}
+                        title={item[descriptionKey || 'description']}>
                         {item[descriptionKey || 'description']}
                     </div>)}
                 </Flex>

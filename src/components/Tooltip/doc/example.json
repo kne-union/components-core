@@ -94,6 +94,10 @@
           "packageName": "@kne/react-fetch"
         },
         {
+          "name": "_Descriptions",
+          "packageName": "@components/Descriptions"
+        },
+        {
           "name": "antd",
           "packageName": "antd"
         }
