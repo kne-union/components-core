@@ -197,6 +197,25 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "移动端适配",
+      "description": "展示 Layout 组件的移动端响应式适配功能，菜单在移动端以Drawer形式显示",
+      "code": "./mobile.js",
+      "scope": [
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        }
+      ]
     }
   ]
 }

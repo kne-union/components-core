@@ -10,6 +10,7 @@ const SearchInput = ({
                      }) => {
     const [state, setState] = useState(value);
     const valueRef = useRef(value);
+    const compositionRef = useRef(false);
     const debouncedFunc = useDebouncedCallback(onSearch, debounce);
     useEffect(() => {
         if (value !== valueRef.current) {
@@ -31,6 +32,16 @@ const SearchInput = ({
             const value = e.target.value;
             valueRef.current = value;
             setState(value);
+            if (!compositionRef.current) {
+                debouncedFunc(value.trim());
+            }
+        }}
+        onCompositionStart={() => {
+            compositionRef.current = true;
+        }}
+        onCompositionEnd={(e) => {
+            compositionRef.current = false;
+            const value = e.target.value;
             debouncedFunc(value.trim());
         }}
         onSearch={(value) => {

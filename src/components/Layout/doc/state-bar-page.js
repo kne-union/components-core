@@ -6,7 +6,15 @@ const { Text } = Typography;
 
 const StateBarPageExample = () => {
   return (
-    <PureGlobal preset={{}}>
+    <PureGlobal preset={{
+        enums: {
+            helperGuide: () => [{
+                value: 'order-detail-help',
+                content: '这是一个订单详情页面，可以查看和管理订单详情信息。',
+                url: 'https://example.com/help/order-detail'
+            }]
+        }
+    }}>
       <Layout navigation={{ isFixed: false }}>
         <StateBarPage
           name="order-detail"

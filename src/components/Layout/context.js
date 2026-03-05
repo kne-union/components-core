@@ -25,6 +25,7 @@ export const defaultProps = {
     optionNoPadding: false,
     optionFixed: true,
     optionFooter: null,
+    isMobile: false,
 };
 
 export const context = createContext({});

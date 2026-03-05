@@ -1,4 +1,4 @@
-import {Button, Col} from "antd";
+import {Button, Col, Drawer} from "antd";
 import classnames from "classnames";
 import style from "../style.module.scss";
 import FixedContainer from "./FixedContainer";
@@ -9,7 +9,7 @@ import {useLocation} from "react-router-dom";
 import get from "lodash/get";
 import isNotEmpty from "@utils/isNotEmpty";
 import localStorage from "@utils/localStorage";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 
 const pageMenuOpenKey = "CORE_PAGE_MENU_OPEN_KEY";
 
@@ -24,13 +24,59 @@ export const useMenuOpen = () => {
     }, [pathModuleName]);
 };
 
-const Menu = () => {
+const Menu = ({isMobile}) => {
     const {pageProps, setPageProps} = useContext();
     const {menu, menuOpen, menuWidth, menuCloseWidth, menuFixed, menuCloseButton} = pageProps;
+    const [drawerVisible, setDrawerVisible] = useState(false);
 
     const location = useLocation();
     const pathModuleName = location.pathname.split("/")[1];
 
+    // 移动端渲染
+    if (isMobile && menu) {
+        return (
+            <>
+                <FixedContainer
+                    className={classnames(style["page-menu-btn-outer"], 'core-page-menu-btn-outer', {
+                        [style["is-fixed"]]: menuFixed,
+                    })}
+                    isFixed={menuFixed}
+                >
+                    <Button
+                        className={classnames(style["page-menu-btn"], {
+                            [style["closed"]]: true,
+                        })}
+                        icon={<Icon type="icon-arrow-bold-right"/>}
+                        onClick={() => setDrawerVisible(true)}
+                    />
+                </FixedContainer>
+                <Drawer
+                    placement="left"
+                    open={drawerVisible}
+                    onClose={() => setDrawerVisible(false)}
+                    width={menuWidth}
+                    className={style["mobile-menu-drawer"]}
+                    closable={false}
+                    styles={{
+                        body: {padding: 0, position: 'relative', height: '100vh'}
+                    }}
+                >
+                    <Button
+                        className={classnames(style["page-menu-btn"])}
+                        icon={<Icon type="icon-arrow-bold-left"/>}
+                        onClick={() => setDrawerVisible(false)}
+                    />
+                    <div className={style["mobile-menu-wrapper"]}>
+                        <SimpleBar className={style["mobile-menu-content"]}>
+                            {typeof menu === 'function' ? menu({open: true}) : menu}
+                        </SimpleBar>
+                    </div>
+                </Drawer>
+            </>
+        );
+    }
+
+    // 桌面端渲染
     return menu ? (
         <Col
             className={classnames(style["page-menu"],'core-page-menu', {
