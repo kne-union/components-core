@@ -15,6 +15,7 @@ import style from "./style.module.scss";
 
 const {Header} = Layout;
 
+export const navigationHeight = 48;
 export const mobileBreakpoint = 768;
 
 const SetTitle = ({name, mapping, defaultTitle}) => {

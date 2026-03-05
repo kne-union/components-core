@@ -1,5 +1,5 @@
 import {Alert, Button, Col, Layout as AntdLayout, Row} from "antd";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, useMemo} from "react";
 import {defaultProps, Provider} from "./context";
 import Navigation, {navigationHeight} from "@components/Navigation";
 import {getScrollEl} from "@common/utils/importantContainer";
@@ -9,6 +9,23 @@ import classnames from "classnames";
 import style from "./style.module.scss";
 import HelperGuide from "@components/HelperGuide";
 import {usePermissions} from "../Permissions";
+
+const useIsMobile = (isMobileProp) => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
+    return useMemo(() => {
+        if (typeof isMobileProp === 'boolean') {
+            return isMobileProp;
+        }
+        return windowWidth < 768;
+    }, [isMobileProp, windowWidth]);
+};
 
 const {Content} = AntdLayout;
 
@@ -31,10 +48,12 @@ const ErrorBoundary = (props) => {
     return <ReactErrorBoundary {...props} errorComponent={ErrorComponent}/>;
 };
 
-const Layout = ({className, children, theme, navigation = {}}) => {
+const Layout = ({className, children, theme, navigation = {}, isMobile: isMobileProp}) => {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [pageProps, _setPageProps] = useState(Object.assign({}, defaultProps));
     const {permissions} = usePermissions();
+    const isMobile = useIsMobile(isMobileProp);
+    
     const setPageProps = useCallback((value) => {
         return _setPageProps((pageProps) => {
             return Object.assign({}, pageProps, value);
@@ -52,7 +71,9 @@ const Layout = ({className, children, theme, navigation = {}}) => {
     }, []);
     return (
         <AntdLayout
-            className={classnames(style["layout"], className, 'core-layout')}
+            className={classnames(style["layout"], className, 'core-layout', {
+                [style["is-mobile"]]: isMobile
+            })}
             style={Object.assign(
                 {},
                 {
@@ -76,7 +97,7 @@ const Layout = ({className, children, theme, navigation = {}}) => {
             )}
             <ErrorBoundary>
                 <Content className={classnames(style["layout-content-wrap"], 'core-layout-content-wrap')}>
-                    <Provider value={{pageProps, setPageProps}}>
+                    <Provider value={{pageProps, setPageProps, isMobile}}>
                         <ErrorBoundary>
                             <Header/>
                         </ErrorBoundary>
@@ -95,7 +116,7 @@ const Layout = ({className, children, theme, navigation = {}}) => {
                                 }}
                             >
                                 <ErrorBoundary>
-                                    <Menu/>
+                                    <Menu isMobile={isMobile}/>
                                 </ErrorBoundary>
                                 <Col className={classnames(style["page-content"], 'core-page-content', {
                                     [style["no-margin"]]: pageProps.noMargin,
