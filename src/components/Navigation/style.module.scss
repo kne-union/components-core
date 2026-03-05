@@ -19,14 +19,13 @@
     transform: translateX(var(--scroll-left, 0px));
   }
 
-  line-height: var(--nav-height) !important;
-  height: var(--nav-height) !important;
-
   :global(.ant-row) {
     height: var(--nav-height);
   }
 
-  &:global(.ant-layout-header) {
+  :global(.ant-layout-header) {
+    line-height: var(--nav-height) !important;
+    height: var(--nav-height) !important;
     padding: 0 32px;
     background: var(--primary-color);
     color: #fff;
@@ -160,4 +159,158 @@
   transform: scale(0.85);
   display: inline-block;
   font-size: var(--font-size-small);
+}
+
+// 移动端适配
+.navigation-wrap {
+  &.is-mobile {
+    .navigation {
+      :global(.ant-layout-header) {
+        padding: 0 16px !important;
+        height: var(--nav-height);
+        line-height: var(--nav-height);
+      }
+
+      :global(.ant-row) {
+        height: var(--nav-height);
+      }
+
+      .navigation-logo {
+        display: none;
+      }
+
+      .navigation-mobile-menu {
+        flex: 0 0 auto;
+      }
+
+      .navigation-mobile-title {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .navigation-options {
+        display: none;
+      }
+    }
+  }
+}
+
+.navigation-mobile-menu {
+  display: none !important;
+
+  .is-mobile & {
+    display: flex !important;
+    align-items: center;
+  }
+}
+
+.mobile-menu-trigger {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  :global(.anticon) {
+    font-size: 24px;
+  }
+}
+
+.mobile-dropdown-content {
+  min-width: 280px;
+  max-width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+              0 3px 6px -4px rgba(0, 0, 0, 0.12),
+              0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  :global(.ant-dropdown-menu) {
+    border-radius: 0;
+    box-shadow: none;
+    padding: 8px 0;
+  }
+
+  :global(.ant-dropdown-menu-item) {
+    padding: 12px 20px;
+    height: auto;
+    line-height: 1.5;
+    font-size: 14px;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+
+  :global(.ant-dropdown-menu-item-selected) {
+    background: #e6f7ff;
+    color: var(--primary-color);
+  }
+}
+
+.mobile-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.dropdown-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile-dropdown-options {
+  padding: 12px 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+
+  :global(.ant-space) {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+// 响应式断点
+@media (max-width: 767px) {
+  .navigation-list {
+    display: none;
+  }
+
+  .navigation-options {
+    display: none;
+  }
+
+  .navigation-mobile-menu {
+    display: flex !important;
+  }
 }

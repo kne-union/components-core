@@ -43,6 +43,7 @@
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
+    "@kne/use-resize": "^0.1.1",
     "@kne/use-simulation-blur": "^0.1.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
