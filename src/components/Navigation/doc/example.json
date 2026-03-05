@@ -125,6 +125,44 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "移动端适配",
+      "description": "展示Navigation组件在移动端设备上的响应式布局",
+      "code": "./mobile-responsive.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "强制移动端模式",
+      "description": "展示如何通过isMobile属性强制指定导航栏的显示模式",
+      "code": "./force-mobile.js",
+      "scope": [
+        {
+          "name": "_Navigation",
+          "packageName": "@components/Navigation"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

@@ -1,19 +1,22 @@
-import {Col, Layout, Menu, Row, Space, Flex} from "antd";
+import {Col, Layout, Menu, Row, Space, Flex, Dropdown} from "antd";
+import {MenuOutlined} from "@ant-design/icons";
 import {useLocation, useNavigate} from "react-router-dom";
 import get from "lodash/get";
 import {useEffect, useMemo, useRef, useState} from "react";
 import classnames from "classnames";
 import logo from "./favicon.svg";
 import Image from "@components/Image";
-import importMessages from "./locale";
-import {FormattedMessage, IntlProvider} from "@components/Intl";
+import withLocale from './withLocale';
+import {useIntl} from "@kne/react-intl";
 import useRefCallback from "@kne/use-ref-callback";
+import useResize from "@kne/use-resize";
 import Icon from "@components/Icon";
 import style from "./style.module.scss";
 
 const {Header} = Layout;
 
 export const navigationHeight = 48;
+export const mobileBreakpoint = 768;
 
 const SetTitle = ({name, mapping, defaultTitle}) => {
     const propsRef = useRef({
@@ -34,21 +37,23 @@ const MenuReady = ({onReady}) => {
     return null;
 };
 
-const Navigation = ({
-                        permissions = [],
-                        list = [],
-                        headerLogo,
-                        rightOptions,
-                        isFixed = true,
-                        showIndex = true,
-                        indexLabel,
-                        defaultTitle,
-                        overflowedIndicator,
-                        base = '',
-                        onChange,
-                        className,
-                        navigateTo,
-                    }) => {
+const Navigation = withLocale(({
+                                   permissions = [],
+                                   list = [],
+                                   headerLogo,
+                                   rightOptions,
+                                   isFixed = true,
+                                   showIndex = true,
+                                   indexLabel,
+                                   defaultTitle,
+                                   overflowedIndicator,
+                                   base = '',
+                                   onChange,
+                                   className,
+                                   navigateTo,
+                                   isMobile: forceMobile,
+                               }) => {
+    const {formatMessage} = useIntl();
     const mapping = useMemo(() => {
         return new Map(list.map(({key, ...others}) => [key, others]));
     }, [list]);
@@ -59,6 +64,21 @@ const Navigation = ({
     const resizeObserverRef = useRef(null);
     const [nameLabel, setNameLabel] = useState("更多");
     const [ready, setReady] = useState(false);
+    const [autoIsMobile, setAutoIsMobile] = useState(false);
+    const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+    const callback = (el) => {
+        const width = el ? el.getBoundingClientRect().width : window.innerWidth;
+        if (forceMobile === undefined) {
+            setAutoIsMobile(width < mobileBreakpoint);
+            if (!autoIsMobile && width < mobileBreakpoint) {
+                setMobileMenuVisible(false);
+            }
+        }
+    }
+    const windowResizeRef = useResize(callback);
+    useEffect(() => {
+        callback(windowResizeRef.current);
+    }, []);
     const pathModuleName = location.pathname
         .replace(new RegExp(`^${base}`), "")
         .split("/")[1];
@@ -66,6 +86,18 @@ const Navigation = ({
         const _path = typeof path === "function" ? path(permission, permissions) : path;
         return _path.indexOf("/" + pathModuleName) !== -1;
     }), "[0]") : "home";
+
+    // 是否为移动端（优先使用强制指定的值，否则使用自动检测的值）
+    const isMobile = forceMobile !== undefined ? forceMobile : autoIsMobile;
+
+    // 处理移动端菜单项点击
+    const handleMobileMenuClick = (path) => {
+        setMobileMenuVisible(false);
+        onChange && onChange(path);
+        setTimeout(() => {
+            navigate(path);
+        }, 0);
+    };
 
     useEffect(() => {
         const callback = () => {
@@ -101,9 +133,7 @@ const Navigation = ({
         };
     }, [name, mapping, ready]);
     const indexNav = showIndex ? {
-        label: indexLabel || (<FormattedMessage id="indexLabel" moduleName="Navigation"/>),
-        key: "home",
-        onClick: () => {
+        label: indexLabel || formatMessage({id: 'indexLabel'}), key: "home", onClick: () => {
             onChange && onChange("/");
             setTimeout(() => {
                 navigate("/");
@@ -111,93 +141,143 @@ const Navigation = ({
         },
     } : false;
 
-    return (<IntlProvider importMessages={importMessages} moduleName="Navigation">
-        <FormattedMessage id="defaultTitle" moduleName="Navigation">
-            {(text) => (<SetTitle
-                defaultTitle={defaultTitle || text}
-                mapping={mapping}
-                name={name}
-            />)}
-        </FormattedMessage>
-        <div className={classnames(style["navigation-wrap"], className)}>
-            <Header
-                className={classnames("navigation", style["navigation"], {
-                    [style["is-fixed"]]: isFixed,
-                })}
-            >
-                <Row justify="space-around" wrap={false}>
-                    <Col
-                        className={classnames("navigation-logo", style["navigation-logo"])}
-                    >
-                        <Image
-                            className={classnames(style["logo"])}
-                            alt="logo"
-                            {...Object.assign({}, headerLogo || {src: logo})}
-                        />
-                    </Col>
-                    <Col
-                        ref={navigationRef}
-                        flex={1}
-                        className={classnames("navigation-list", style["navigation-list"])}
-                    >
-                        <MenuReady
-                            onReady={() => {
-                                setReady(true);
-                            }}
-                        />
-                        <Menu className={classnames(style['main-menu'], 'navigation-main-menu')}
-                              selectedKeys={[name]}
-                              mode="horizontal"
-                              overflowedIndicator={overflowedIndicator || (<Space size={4}>
+    return (<>
+        <SetTitle
+            defaultTitle={defaultTitle || formatMessage({id: 'defaultTitle'})}
+            mapping={mapping}
+            name={name}
+        />
+        <div className={classnames(style["navigation-wrap"], className, {
+            [style["is-mobile"]]: isMobile,
+        })}>
+            <div ref={windowResizeRef} className={classnames("navigation", style["navigation"], {
+                [style["is-fixed"]]: isFixed,
+            })}>
+                <Header>
+                    <Row wrap={false}>
+                        {isMobile && (
+                            <Col className={classnames(style["navigation-mobile-menu"], "navigation-mobile-menu")}>
+                                <Dropdown
+                                    placement="bottomLeft"
+                                    trigger={['click']}
+                                    open={mobileMenuVisible}
+                                    onOpenChange={setMobileMenuVisible}
+                                    dropdownRender={(menu) => (<div className={style["mobile-dropdown-content"]}>
+                                        {menu}
+                                        {rightOptions && (<div className={style["mobile-dropdown-options"]}>
+                                            {rightOptions}
+                                        </div>)}
+                                    </div>)}
+                                    menu={{
+                                        selectedKeys: [name], items: [indexNav, ...Array.from(mapping.entries())
+                                            .filter(([name, {permission}]) => {
+                                                if (typeof permission === "string") {
+                                                    return permissions.indexOf(permission) > -1;
+                                                }
+                                                if (typeof permission === "function") {
+                                                    return permission(permissions);
+                                                }
+                                                if (Array.isArray(permission)) {
+                                                    for (let item of permission) {
+                                                        if (permissions.indexOf(item) > -1) {
+                                                            return true;
+                                                        }
+                                                    }
+                                                    return false;
+                                                }
+                                                return true;
+                                            })
+                                            .map(([name, {title, icon, path, permission}]) => {
+                                                const _path = typeof path === "function" ? path(permission, permissions) : path;
+                                                return {
+                                                    label: icon ? <Flex gap={8} align="center">
+                                                        {icon}
+                                                        <span>{title}</span>
+                                                    </Flex> : title,
+                                                    key: name,
+                                                    onClick: () => handleMobileMenuClick(_path),
+                                                };
+                                            })],
+                                    }}
+                                >
+                                    <div className={classnames(style["mobile-menu-trigger"], "mobile-menu-trigger")}>
+                                        <MenuOutlined/>
+                                    </div>
+                                </Dropdown>
+                            </Col>)}
+                        {!isMobile && (<Col
+                            className={classnames("navigation-logo", style["navigation-logo"])}
+                        >
+                            <Image
+                                className={classnames(style["logo"])}
+                                alt="logo"
+                                {...Object.assign({}, headerLogo || {src: logo})}
+                            />
+                        </Col>)}
+                        {!isMobile && (<Col
+                            ref={navigationRef}
+                            flex={1}
+                            className={classnames("navigation-list", style["navigation-list"])}
+                        >
+                            <MenuReady
+                                onReady={() => {
+                                    setReady(true);
+                                }}
+                            />
+                            <Menu className={classnames(style['main-menu'], 'navigation-main-menu')}
+                                  selectedKeys={[name]}
+                                  mode="horizontal"
+                                  overflowedIndicator={overflowedIndicator || (<Space size={4}>
                       <span>
-                        {nameLabel || (<FormattedMessage
-                            id="overflowedIndicator"
-                            moduleName="Navigation"
-                        />)}
+                        {nameLabel || formatMessage({id: 'overflowedIndicator'})}
                       </span>
-                                  <span className={style["more-icon"]}>
+                                      <span className={style["more-icon"]}>
                         <Icon type="icon-arrow-thin-down"/>
                       </span>
-                              </Space>)}
-                              items={[indexNav, ...Array.from(mapping.entries())
-                                  .filter(([name, {permission}]) => {
-                                      if (typeof permission === "string") {
-                                          return permissions.indexOf(permission) > -1;
-                                      }
-                                      if (typeof permission === "function") {
-                                          return permission(permissions);
-                                      }
-                                      if (Array.isArray(permission)) {
-                                          for (let item of permission) {
-                                              if (permissions.indexOf(item) > -1) {
-                                                  return true;
-                                              }
+                                  </Space>)}
+                                  items={[indexNav, ...Array.from(mapping.entries())
+                                      .filter(([name, {permission}]) => {
+                                          if (typeof permission === "string") {
+                                              return permissions.indexOf(permission) > -1;
                                           }
-                                          return false;
-                                      }
-                                      return true;
-                                  })
-                                  .map(([name, {title, icon, path, permission}]) => {
-                                      const _path = typeof path === "function" ? path(permission, permissions) : path;
-                                      return {
-                                          label: icon ? <Flex gap={8}>
-                                              {icon}
-                                              <span>{title}</span>
-                                          </Flex> : title, key: name, onClick: () => {
-                                              onChange && onChange(_path);
-                                              setTimeout(() => {
-                                                  navigate(_path);
-                                              }, 0);
-                                          },
-                                      };
-                                  }),]}
-                        />
-                    </Col>
-                    <Col className={style["navigation-options"]}>{rightOptions}</Col>
-                </Row>
-            </Header>
+                                          if (typeof permission === "function") {
+                                              return permission(permissions);
+                                          }
+                                          if (Array.isArray(permission)) {
+                                              for (let item of permission) {
+                                                  if (permissions.indexOf(item) > -1) {
+                                                      return true;
+                                                  }
+                                              }
+                                              return false;
+                                          }
+                                          return true;
+                                      })
+                                      .map(([name, {title, icon, path, permission}]) => {
+                                          const _path = typeof path === "function" ? path(permission, permissions) : path;
+                                          return {
+                                              label: icon ? <Flex gap={8}>
+                                                  {icon}
+                                                  <span>{title}</span>
+                                              </Flex> : title, key: name, onClick: () => {
+                                                  onChange && onChange(_path);
+                                                  setTimeout(() => {
+                                                      navigate(_path);
+                                                  }, 0);
+                                              },
+                                          };
+                                      }),]}
+                            />
+                        </Col>)}
+                        {isMobile && (<Col className={style["navigation-mobile-title"]}>
+                            {defaultTitle || formatMessage({id: 'defaultTitle'})}
+                        </Col>)}
+                        {!isMobile && <Col className={style["navigation-options"]}>{rightOptions}</Col>}
+                    </Row>
+                </Header>
+            </div>
         </div>
-    </IntlProvider>);
-};
+    </>);
+});
 
 export default Navigation;

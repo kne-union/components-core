@@ -4,6 +4,7 @@
   --menu-padding-width: 16px;
   background: var(--bg-color-grey-1);
   min-height: 100vh;
+  position: relative;
 
   .page-content,
   .page-main,
@@ -192,6 +193,7 @@
   background: var(--background-color, #ffffff);
   border-bottom-left-radius: var(--radius-default, 2px);
   border-bottom-right-radius: var(--radius-default, 2px);
+
   &.no-padding {
     padding: 0;
   }
@@ -469,4 +471,63 @@
 .helper-guide {
   padding: 0;
   margin-bottom: 8px;
+}
+
+.mobile-menu-drawer {
+  overflow: visible !important;
+
+  .page-menu-btn {
+    position: absolute;
+    left: var(--menu-width, 240px);
+    top: calc(22px + var(--nav-height, 48px));
+    transform: none;
+  }
+
+  :global {
+    .ant-drawer-body {
+      position: relative;
+      height: 100%;
+      overflow: visible;
+    }
+  }
+}
+
+.mobile-menu-wrapper {
+  height: 100%;
+  max-height: 100vh;
+  padding: var(--menu-padding-width);
+  box-sizing: border-box;
+}
+
+.mobile-menu-content {
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.page-menu-btn-outer.in-drawer {
+  left: 100%;
+  top: calc(22px + var(--nav-height));
+  z-index: 1000;
+
+  &:not(.is-fixed) {
+    left: 100%;
+    top: 22px;
+  }
+}
+
+.is-mobile {
+  .page-content {
+    margin: var(--margin-width) var(--margin-width) var(--margin-width) var(--margin-width);
+  }
+
+  .page-main {
+    border-radius: var(--radius-default, 2px);
+  }
+
+  .page-menu-btn {
+    &:global(.ant-btn.ant-btn-icon-only) {
+      transform: translateX(0);
+    }
+  }
 }
