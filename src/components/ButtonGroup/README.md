@@ -169,8 +169,9 @@ const BasicExample = () => {
               { type: 'default', children: '编辑' },
               { type: 'default', children: '导出' },
               { type: 'default', children: '打印' },
-              { children: '更多操作1', message: '确定执行吗？' },
-              { children: '更多操作2', message: '确定执行吗？' }
+              { children: '更多操作1', isDelete: false, message: '确定执行吗？' },
+              { children: '更多操作2', message: '确定执行吗？' },
+              { children: '删除', isDelete: true }
             ]}
           />
         </div>
@@ -188,15 +189,7 @@ const CompactExample = () => {
   return (
     <Flex gap={16} vertical>
       <Text type="secondary">紧凑模式（适用于工具栏）</Text>
-      <ButtonGroup
-        compact
-        list={[
-          { type: 'primary', children: '保存' },
-          { children: '撤销' },
-          { children: '重做' },
-          { children: '删除', isDelete: true }
-        ]}
-      />
+      <ButtonGroup compact list={[{ type: 'primary', children: '保存' }, { children: '撤销' }, { children: '重做' }, { children: '删除', isDelete: true }]} />
     </Flex>
   );
 };
@@ -234,42 +227,24 @@ const FixedLengthExample = () => {
     <Flex gap={16} vertical>
       <Text type="secondary">指定显示按钮数量（showLength）</Text>
       <Space>
-        <Button
-          type={showLength === 1 ? 'primary' : 'default'}
-          onClick={() => setShowLength(1)}
-        >
+        <Button type={showLength === 1 ? 'primary' : 'default'} onClick={() => setShowLength(1)}>
           显示1个
         </Button>
-        <Button
-          type={showLength === 2 ? 'primary' : 'default'}
-          onClick={() => setShowLength(2)}
-        >
+        <Button type={showLength === 2 ? 'primary' : 'default'} onClick={() => setShowLength(2)}>
           显示2个
         </Button>
-        <Button
-          type={showLength === 3 ? 'primary' : 'default'}
-          onClick={() => setShowLength(3)}
-        >
+        <Button type={showLength === 3 ? 'primary' : 'default'} onClick={() => setShowLength(3)}>
           显示3个
         </Button>
       </Space>
-      <ButtonGroup
-        showLength={showLength}
-        list={[
-          { type: 'primary', children: '主要操作' },
-          { children: '次要操作1' },
-          { children: '次要操作2' },
-          { children: '次要操作3' },
-          { children: '次要操作4' }
-        ]}
-      />
+      <ButtonGroup showLength={showLength} list={[{ type: 'primary', children: '主要操作' }, { children: '次要操作1' }, { children: '次要操作2' }, { children: '次要操作3' }, { children: '次要操作4' }]} />
     </Flex>
   );
 };
 
 // 自定义渲染函数
 const CustomRenderExample = () => {
-  const CustomButton = (props) => (
+  const CustomButton = props => (
     <Button {...props} style={{ borderRadius: '4px' }}>
       {props.children}
     </Button>
@@ -282,10 +257,14 @@ const CustomRenderExample = () => {
         <ButtonGroup
           moreType="link"
           list={[
-            (props) => <CustomButton {...props} type="primary">自定义按钮</CustomButton>,
-            (props) => <CustomButton {...props}>按钮2</CustomButton>,
-            (props) => <CustomButton {...props}>按钮3</CustomButton>,
-            (props) => <CustomButton {...props}>按钮4</CustomButton>
+            props => (
+              <CustomButton {...props} type="primary">
+                自定义按钮
+              </CustomButton>
+            ),
+            props => <CustomButton {...props}>按钮2</CustomButton>,
+            props => <CustomButton {...props}>按钮3</CustomButton>,
+            props => <CustomButton {...props}>按钮4</CustomButton>
           ]}
         />
       </div>
@@ -302,22 +281,10 @@ const StateExample = () => {
     <Flex gap={16} vertical>
       <Text type="secondary">禁用与隐藏状态</Text>
       <Space>
-        <Button onClick={() => setDisabled(!disabled)}>
-          {disabled ? '启用' : '禁用'}操作3
-        </Button>
-        <Button onClick={() => setHidden(!hidden)}>
-          {hidden ? '显示' : '隐藏'}操作4
-        </Button>
+        <Button onClick={() => setDisabled(!disabled)}>{disabled ? '启用' : '禁用'}操作3</Button>
+        <Button onClick={() => setHidden(!hidden)}>{hidden ? '显示' : '隐藏'}操作4</Button>
       </Space>
-      <ButtonGroup
-        list={[
-          { type: 'primary', children: '操作1' },
-          { children: '操作2' },
-          { children: '操作3', disabled },
-          { children: '操作4', hidden },
-          { children: '操作5', message: '确定吗？' }
-        ]}
-      />
+      <ButtonGroup list={[{ type: 'primary', children: '操作1' }, { children: '操作2' }, { children: '操作3', disabled }, { children: '操作4', hidden }, { children: '操作5', message: '确定吗？' }]} />
     </Flex>
   );
 };
@@ -356,10 +323,7 @@ const BaseExample = () => {
   return (
     <Space direction="vertical" size="large">
       <Typography.Title level={3}>ButtonGroup 自适应按钮组</Typography.Title>
-      <Typography.Paragraph>
-        ButtonGroup 是一个自适应按钮组组件，能够根据容器宽度自动调整显示的按钮数量，
-        多余的按钮会放入下拉菜单中。适用于操作栏、工具栏、表格操作列等场景。
-      </Typography.Paragraph>
+      <Typography.Paragraph>ButtonGroup 是一个自适应按钮组组件，能够根据容器宽度自动调整显示的按钮数量， 多余的按钮会放入下拉菜单中。适用于操作栏、工具栏、表格操作列等场景。</Typography.Paragraph>
 
       <Flex vertical gap={32}>
         <div>
