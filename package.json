@@ -16,6 +16,10 @@
       "prettier --write"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kne-union/components-core.git"
+  },
   "dependencies": {
     "@kne/button-group": "^0.1.24",
     "@kne/compose": "^0.1.0",
