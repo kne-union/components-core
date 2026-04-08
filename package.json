@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.68",
+  "version": "0.4.69",
   "files": [
     "build"
   ],
@@ -31,7 +31,7 @@
     "@kne/info-page": "^0.2.9",
     "@kne/is-empty": "^1.0.1",
     "@kne/phone-number-input": "^0.1.5",
-    "@kne/react-enum": "^0.1.12",
+    "@kne/react-enum": "^0.1.14",
     "@kne/react-fetch": "^1.5.5",
     "@kne/react-file": "^0.1.35",
     "@kne/react-file-type": "^1.0.5",
@@ -51,7 +51,7 @@
     "@kne/use-simulation-blur": "^0.1.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "axios": "^1.13.5",
+    "axios": "1.13.5",
     "classnames": "^2.3.2",
     "color": "^4.2.3",
     "cross-env": "^7.0.3",
