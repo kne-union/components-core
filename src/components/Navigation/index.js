@@ -76,9 +76,6 @@ const Navigation = withLocale(({
         }
     }
     const windowResizeRef = useResize(callback);
-    useEffect(() => {
-        callback(windowResizeRef.current);
-    }, []);
     const pathModuleName = location.pathname
         .replace(new RegExp(`^${base}`), "")
         .split("/")[1];
@@ -162,9 +159,11 @@ const Navigation = withLocale(({
                                     trigger={['click']}
                                     open={mobileMenuVisible}
                                     onOpenChange={setMobileMenuVisible}
-                                    dropdownRender={(menu) => (<div className={style["mobile-dropdown-content"]}>
+                                    dropdownRender={(menu) => (<div
+                                        className={classnames(style["mobile-dropdown-content"], 'navigation-mobile-dropdown-content')}>
                                         {menu}
-                                        {rightOptions && (<div className={style["mobile-dropdown-options"]}>
+                                        {rightOptions && (<div
+                                            className={classnames(style["mobile-dropdown-options"], 'navigation-mobile-dropdown-options')}>
                                             {rightOptions}
                                         </div>)}
                                     </div>)}
@@ -200,7 +199,8 @@ const Navigation = withLocale(({
                                             })],
                                     }}
                                 >
-                                    <div className={classnames(style["mobile-menu-trigger"], "mobile-menu-trigger")}>
+                                    <div
+                                        className={classnames(style["mobile-menu-trigger"], "navigation-mobile-menu-trigger")}>
                                         <MenuOutlined/>
                                     </div>
                                 </Dropdown>
@@ -231,7 +231,7 @@ const Navigation = withLocale(({
                       <span>
                         {nameLabel || formatMessage({id: 'overflowedIndicator'})}
                       </span>
-                                      <span className={style["more-icon"]}>
+                                      <span className={classnames(style["more-icon"], 'navigation-more-icon')}>
                         <Icon type="icon-arrow-thin-down"/>
                       </span>
                                   </Space>)}
@@ -269,10 +269,12 @@ const Navigation = withLocale(({
                                       }),]}
                             />
                         </Col>)}
-                        {isMobile && (<Col className={style["navigation-mobile-title"]}>
-                            {defaultTitle || formatMessage({id: 'defaultTitle'})}
-                        </Col>)}
-                        {!isMobile && <Col className={style["navigation-options"]}>{rightOptions}</Col>}
+                        {isMobile && (
+                            <Col className={classnames(style["navigation-mobile-title"], 'navigation-mobile-title')}>
+                                {defaultTitle || formatMessage({id: 'defaultTitle'})}
+                            </Col>)}
+                        {!isMobile && <Col
+                            className={classnames(style["navigation-options"], "navigation-options")}>{rightOptions}</Col>}
                     </Row>
                 </Header>
             </div>
