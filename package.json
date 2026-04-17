@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.4.69",
+  "version": "0.4.70",
   "files": [
     "build"
   ],
@@ -51,7 +51,7 @@
     "@kne/use-simulation-blur": "^0.1.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "axios": "1.13.5",
+    "axios": "^1.13.5",
     "classnames": "^2.3.2",
     "color": "^4.2.3",
     "cross-env": "^7.0.3",
@@ -67,7 +67,6 @@
     "react-dom": "^18.3.0",
     "react-intl": "^6.2.10",
     "react-router-dom": "^6.10.0",
-    "react-scripts": "5.0.1",
     "react-sortablejs": "^6.1.4",
     "simplebar": "^6.3.0",
     "simplebar-react": "^3.3.0",
@@ -101,10 +100,9 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
-    "@kne/craco-module-federation": "^1.1.1",
+    "@kne/craco": "^7.1.3",
     "@kne/md-doc": "^0.1.16",
-    "@kne/modules-dev": "^2.1.23",
+    "@kne/modules-dev": "^2.3.0",
     "@kne/react-error-boundary": "^0.1.1",
     "antd": "6.0.0",
     "http-proxy-middleware": "^2.0.6",

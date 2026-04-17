@@ -1,6 +1,7 @@
 @import "../../common/warning-color.scss";
 
 .container {
+  box-sizing: border-box;
   &.is-not-init {
     pointer-events: none;
     opacity: 0.7;
