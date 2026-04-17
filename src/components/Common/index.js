@@ -2,7 +2,8 @@ export {default as changeMoneyToChinese} from "@common/utils/changeMoneyToChines
 export {default as getPopupContainer} from "@common/utils/getPopupContainer";
 export * from "@common/utils/importantContainer";
 export {default as withOSSFile} from "@common/hocs/withOSSFile";
-export {default as ScrollLoader, FetchScrollLoader} from "@common/components/ScrollLoader";
+export {default as ScrollLoader} from "@common/components/ScrollLoader";
+export {FetchScrollLoader} from "@common/components/ScrollLoader";
 export {default as FetchButton} from "@common/components/FetchButton";
 export {default as SimpleBar} from "@common/components/SimpleBar";
 export {default as SearchInput} from "@common/components/SearchInput";
