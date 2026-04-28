@@ -54,6 +54,22 @@ const formPreset = async (options, otherOptions) => {
         return value;
     });
 
+    interceptors.input.use("json-string", (value) => {
+        try {
+            return JSON.stringify(value, null, 2);
+        } catch (e) {
+            return '';
+        }
+    });
+
+    interceptors.output.use("json-string", (value) => {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            return void 0;
+        }
+    });
+
     interceptors.input.use("to-array", (value) => {
         return Array.isArray(value) ? value[0] : value;
     });

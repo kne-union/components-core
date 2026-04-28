@@ -1,18 +1,14 @@
-
 # info-page
-
 
 ### 描述
 
 一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式
-
 
 ### 安装
 
 ```shell
 npm i --save @kne/info-page
 ```
-
 
 ### 概述
 
@@ -450,8 +446,8 @@ const BaseExample = () => {
         bonus: 50000,
         leaveDays: 5,
         projectCount: 8,
-        description: `负责公司核心产品的前端架构设计与开发工作，主导了多个重要项目的技术方案设计。精通React、Vue等主流前端框架，对TypeScript有深入理解。在性能优化方面有丰富经验，成功将项目加载时间减少40%。`,
-        skills: `React, Vue, TypeScript, Node.js, Webpack, Vite, Jenkins, Docker, Kubernetes`
+        description: &#96;负责公司核心产品的前端架构设计与开发工作，主导了多个重要项目的技术方案设计。精通React、Vue等主流前端框架，对TypeScript有深入理解。在性能优化方面有丰富经验，成功将项目加载时间减少40%。&#96;,
+        skills: &#96;React, Vue, TypeScript, Node.js, Webpack, Vite, Jenkins, Docker, Kubernetes&#96;
       }}
       col={3}
       columns={[
@@ -696,6 +692,99 @@ render(<BaseExample />);
 
 ```
 
+- Modal中展示
+- 展示InfoPage在Modal弹窗中的典型用法
+- _InfoPage(@kne/info-page),(@kne/info-page/dist/index.css),antd(antd)
+
+```jsx
+const { default: InfoPage, Content, TableView } = _InfoPage;
+const { Button, Flex, Modal } = antd;
+const { useState } = React;
+
+const ModalExample = () => {
+  const [open, setOpen] = useState(false);
+
+  const data = {
+    id: '10001',
+    name: '产品详情',
+    category: '电子产品',
+    price: 2999,
+    stock: 500,
+    status: '在售',
+    description: '这是一款高性能的智能设备，支持多种功能和应用场景。',
+    createTime: '2024-01-15 10:30:00',
+    updateTime: '2024-03-20 14:22:00',
+  };
+
+  const logDataSource = [
+    { id: '1', action: '创建', operator: '管理员', time: data.createTime },
+    { id: '2', action: '更新', operator: '管理员', time: data.updateTime },
+  ];
+
+  const logColumns = [
+    { name: 'action', title: '操作' },
+    { name: 'operator', title: '操作人' },
+    { name: 'time', title: '时间' },
+  ];
+
+  return (
+    <Flex vertical gap={24}>
+      <Button type="primary" onClick={() => setOpen(true)}>
+        打开Modal详情
+      </Button>
+
+      <Modal
+        title="详情信息"
+        open={open}
+        onCancel={() => setOpen(false)}
+        footer={[
+          <Button key="close" onClick={() => setOpen(false)}>
+            关闭
+          </Button>,
+          <Button key="edit" type="primary">
+            编辑
+          </Button>,
+        ]}
+        width={720}
+      >
+        <InfoPage>
+          <InfoPage.Part title="价格库存" bordered>
+            <Content
+              list={[
+                { label: '价格', content: &#96;¥${data.price}&#96; },
+                { label: '库存', content: &#96;${data.stock} 件&#96; },
+              ]}
+            />
+          </InfoPage.Part>
+
+          <InfoPage.Part title="基本信息">
+            <Content
+              list={[
+                { label: '编号', content: data.id },
+                { label: '名称', content: data.name },
+                { label: '分类', content: data.category },
+                { label: '状态', content: data.status },
+              ]}
+            />
+          </InfoPage.Part>
+
+          <InfoPage.Part title="详细描述">
+            <p style={{ margin: 0, lineHeight: 1.8 }}>{data.description}</p>
+          </InfoPage.Part>
+
+          <InfoPage.Part title="操作日志">
+            <TableView dataSource={logDataSource} columns={logColumns} />
+          </InfoPage.Part>
+        </InfoPage>
+      </Modal>
+    </Flex>
+  );
+};
+
+render(<ModalExample />);
+
+```
+
 - 表格视图
 - 支持行选择、固定表头和多数据展示的表格组件
 - _InfoPage(@kne/info-page),(@kne/info-page/dist/index.css),antd(antd)
@@ -799,7 +888,7 @@ const WithSelected = () => {
   return (
     <div>
       <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
-        <span>已选订单：{selectedOrder ? `${selectedOrder.id} (${selectedOrder.customerName})` : '无'}</span>
+        <span>已选订单：{selectedOrder ? &#96;${selectedOrder.id} (${selectedOrder.customerName})&#96; : '无'}</span>
         {selectedOrder && <Tag color="blue">¥{selectedOrder.amount.toLocaleString()}</Tag>}
       </Flex>
       <TableView dataSource={dataSource} columns={columns} rowSelection={{
@@ -941,8 +1030,8 @@ const BaseExample = () => {
     return (
       <div>
         <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
-          <span>已选客户：{selectedCustomer ? `${selectedCustomer.name} (${selectedCustomer.company})` : '无'}</span>
-          <Tag color={selectedCustomer ? 'blue' : 'default'}>{selectedCustomer ? `¥${selectedCustomer.amount.toLocaleString()}` : '-'}</Tag>
+          <span>已选客户：{selectedCustomer ? &#96;${selectedCustomer.name} (${selectedCustomer.company})&#96; : '无'}</span>
+          <Tag color={selectedCustomer ? 'blue' : 'default'}>{selectedCustomer ? &#96;¥${selectedCustomer.amount.toLocaleString()}&#96; : '-'}</Tag>
         </Flex>
         <TableView
           dataSource={dataSource}
@@ -1100,7 +1189,7 @@ const BaseExample = () => {
               name: 'workYears',
               title: '工作年限',
               icon: <CalendarOutlined />,
-              render: (value) => `${value}年`
+              render: (value) => &#96;${value}年&#96;
             },
             {
               name: 'entryDate',
@@ -1199,7 +1288,7 @@ const BaseExample = () => {
             {
               name: 'teamSize',
               title: '团队规模',
-              render: (value) => `${value}人`
+              render: (value) => &#96;${value}人&#96;
             },
             {
               name: 'startDate',
@@ -1219,12 +1308,12 @@ const BaseExample = () => {
             {
               name: 'budget',
               title: '项目预算',
-              render: (value) => `¥${value.toLocaleString()}`
+              render: (value) => &#96;¥${value.toLocaleString()}&#96;
             },
             {
               name: 'spent',
               title: '已投入',
-              render: (value) => `¥${value.toLocaleString()}`
+              render: (value) => &#96;¥${value.toLocaleString()}&#96;
             }
           ]}
         />
@@ -1437,7 +1526,7 @@ const BaseExample = () => {
                                 },
                                 {
                                     label: '测评工具',
-                                    content: `AI模拟系统：提供基于语音和文本的交互模拟环境。\n评分标准：沟通技巧、信息传达清晰度、候选人反馈、建立关系的能力。`
+                                    content: &#96;AI模拟系统：提供基于语音和文本的交互模拟环境。\n评分标准：沟通技巧、信息传达清晰度、候选人反馈、建立关系的能力。&#96;
                                 },
                                 {
                                     label: '任务目标',
@@ -2127,7 +2216,6 @@ render(<BaseExample />);
 
 ```
 
-
 ### API
 
 ### InfoPage
@@ -2442,4 +2530,3 @@ render(<BaseExample />);
 | emptyIsPlaceholder | boolean      | 否  | true    | 空值是否显示占位符 |
 | removeEmpty        | boolean      | 否  | true    | 是否移除空值列   |
 | placeholder        | ReactNode    | 否  | '-'     | 空值占位符     |
-
