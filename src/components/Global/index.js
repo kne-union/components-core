@@ -1,6 +1,5 @@
 import "./polyfill";
 import "simplebar/dist/simplebar.min.css";
-import "./override.scss";
 import classnames from "classnames";
 import {
     Global as GlobalContext, useGlobalContext as useContext, usePreset, GlobalValue, useGlobalValue, GlobalSetting
@@ -24,13 +23,19 @@ import Color from "color";
 import {createWithRemoteLoader} from "@kne/remote-loader";
 import isEqual from './isEqual';
 
-document.body.classList.add(style["container"]);
-if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
-    new SimpleBar(document.body);
-    getScrollEl().classList.add(style["container"]);
-} else {
-    document.body.classList.add("simplebar-content-wrapper");
-}
+(() => {
+    if (window.__COMPONENTS_CORE_IN_SDK) {
+        return;
+    }
+    document.body.classList.add(style["container"]);
+    if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
+        new SimpleBar(document.body);
+        getScrollEl().classList.add(style["container"]);
+    } else {
+        document.body.classList.add("simplebar-content-wrapper");
+    }
+})();
+
 
 export const containerClassName = style["container"]
     .replace(/\+/g, "\\+")
