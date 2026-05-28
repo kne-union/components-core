@@ -102,11 +102,31 @@ const formPreset = async (options, otherOptions) => {
         return !value;
     });
 
+    interceptors.input.use("object-output-value", (value) => {
+        if (!value) {
+            return value;
+        }
+        if (typeof value === "object") {
+            return value;
+        }
+        return {id: value};
+    });
+
     interceptors.output.use("object-output-value", (value) => {
         if (!value) {
             return value;
         }
         return value.value || value.id;
+    });
+
+    interceptors.input.use("array-output-value", (value) => {
+        if (!Array.isArray(value) || value.length === 0) {
+            return Array.isArray(value) ? value : [];
+        }
+        if (typeof value[0] === "object") {
+            return value;
+        }
+        return value.map((id) => ({id}));
     });
 
     interceptors.output.use("array-output-value", (value) => {
