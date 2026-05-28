@@ -231,6 +231,25 @@
 | label | 字段标签 | string | 否 | - |
 | name | 字段名 | string | 否 | - |
 | options | 选项数据数组 | array | 否 | - |
+| interceptor | 值转换拦截器，用于在组件内部格式和筛选上下文格式之间转换 | object | 否 | - |
+| interceptor.input | 输入拦截器，将上下文值转为组件内部格式 | function | 否 | - |
+| interceptor.output | 输出拦截器，将组件内部值转为上下文格式 | function | 否 | - |
+| value | 选择值 | object | 否 | - |
+| onChange | 值变化回调函数 | function | 否 | - |
+
+### SuperSelectTableListFilterItem 组件
+
+超级表格列表选择筛选项组件，以表格形式展示选项，支持展示多列信息。
+
+#### 组件属性
+
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| label | 字段标签 | string | 否 | - |
+| name | 字段名 | string | 否 | - |
+| interceptor | 值转换拦截器 | object | 否 | - |
+| interceptor.input | 输入拦截器 | function | 否 | - |
+| interceptor.output | 输出拦截器 | function | 否 | - |
 | value | 选择值 | object | 否 | - |
 | onChange | 值变化回调函数 | function | 否 | - |
 
@@ -444,3 +463,333 @@ withFieldItem(WrappedComponent): ReactComponent
 | interceptor | 拦截器，用于值转换 | object |
 | interceptor.input | 输入拦截器 | function |
 | interceptor.output | 输出拦截器 | function |
+
+#### pickSelectValues
+
+从筛选值中提取原始值数组。支持 `null`/`undefined`、原始值、`{ value }` 对象、`{ id }` 对象、以及它们的数组。
+
+**函数签名：**
+```javascript
+pickSelectValues(value): string[]
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 |
+|--------|------|------|
+| value | 筛选值，支持多种格式 | any |
+
+**返回值：**
+
+提取后的字符串值数组，空值会被过滤。
+
+**示例：**
+```javascript
+pickSelectValues([{ value: 1 }, { id: 2 }, '3'])
+// => ['1', '2', '3']
+
+pickSelectValues({ value: 'open' })
+// => ['open']
+
+pickSelectValues(null)
+// => []
+```
+
+#### createFilterValueMapper
+
+声明式创建 `mapFilterValue` 函数。`Filter.getFilterValue` 默认只读取 `{ value }` 格式，而 SuperSelectFilterItem 等组件使用 `{ id, name }` 格式，需要额外处理。此工具通过声明字段映射规则，自动生成符合 `(filter, getFilterValue) => value` 签名的函数。
+
+**函数签名：**
+```javascript
+createFilterValueMapper(fieldMappers): function
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| fieldMappers | 字段名到映射规则的映射 | object | 是 |
+| fieldMappers[fieldName] | 映射规则，支持字符串或函数 | string \| function | 是 |
+
+**映射规则类型：**
+
+| 类型值 | 说明 | 输出格式 |
+|--------|------|----------|
+| `'string'` | 确保值为字符串类型 | `string` |
+| `'multi'` | 多选，从 filter entry 提取值数组 | `string[]` |
+| `'single'` | 单选，从 filter entry 提取第一个值 | `string` |
+| `function` | 自定义转换函数，接收 `(rawValue, { entry, filter, value })` 返回新值 | any |
+
+**返回值：**
+
+返回一个 `mapFilterValue` 函数，签名为 `(filter, getFilterValue) => object`，可直接传给 BizUnit 等组件的 `mapFilterValue` 选项。
+
+**示例：**
+```javascript
+const mapFilterValue = createFilterValueMapper({
+  id: 'string',
+  roles: 'multi',
+  tenantOrgId: 'single',
+  status: (rawValue) => normalizeStatus(rawValue)
+});
+const filterValue = mapFilterValue(filter, Filter.getFilterValue);
+```
+
+#### useUrlFilter
+
+从 URL 参数初始化 Filter 状态的 Hook。读取 URL 参数构建初始筛选值，并在挂载后自动清除已消费的 URL 参数。
+
+**函数签名：**
+```javascript
+useUrlFilter(options): [array, function]
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| options | 配置对象 | object | 是 |
+| options.readUrlParams | 读取 URL 参数的函数，返回包含 `consumedKeys` 的对象 | function | 是 |
+| options.buildFilter | 根据 readUrlParams 返回值构建初始 filter 数组 | function | 是 |
+
+**返回值：**
+
+| 返回值 | 说明 | 类型 |
+|--------|------|------|
+| [0] | 初始筛选值数组 | array |
+| [1] | 设置筛选值的函数 | function |
+
+**示例：**
+```javascript
+const [filter, setFilter] = useUrlFilter({
+  readUrlParams: (searchParams) => {
+    const { take, getConsumedKeys } = createUrlParamsReader(searchParams);
+    const orgId = take('tenantOrgId');
+    return { consumedKeys: getConsumedKeys(), orgId };
+  },
+  buildFilter: ({ orgId }) => [
+    ...(orgId ? [{ name: 'tenantOrgId', value: { label: orgId, value: orgId } }] : [])
+  ]
+});
+```
+
+#### createUrlParamsReader
+
+创建 URL 参数读取器，自动追踪已消费的参数 key。
+
+**函数签名：**
+```javascript
+createUrlParamsReader(searchParams): { take, getConsumedKeys }
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| searchParams | React Router 的 searchParams 对象 | URLSearchParams | 是 |
+
+**返回值：**
+
+| 属性名 | 说明 | 类型 |
+|--------|------|------|
+| take | 读取指定 key 的值并标记为已消费 | function |
+| getConsumedKeys | 获取所有已消费的 key 列表 | function |
+
+#### stripConsumedUrlParams
+
+从 URL 参数中移除已消费的 key，返回新的 URLSearchParams。无变化时返回 `null`。
+
+**函数签名：**
+```javascript
+stripConsumedUrlParams(searchParams, consumedKeys): URLSearchParams | null
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| searchParams | 当前 URL 参数 | URLSearchParams | 是 |
+| consumedKeys | 需要移除的 key 列表 | string[] | 是 |
+
+**返回值：**
+
+移除后的新 URLSearchParams 对象，无变化返回 `null`。
+
+#### filterToUrlParams
+
+将筛选值数组序列化为 URLSearchParams，保留 label 信息以便反序列化还原完整筛选状态。参数以 `prefix[key]` 格式存入 URL，避免与其他查询参数冲突。
+
+**序列化格式**（使用冒号分隔 label 和 value，逗号分隔多值）：
+- 单值且 label === value：`prefix[name]=value`（如输入框）
+- 单值且 label !== value：`prefix[name]=label:value`
+- 多值：`prefix[name]=label1:value1,label2:value2`
+
+**函数签名：**
+```javascript
+filterToUrlParams(filterValue, options?): URLSearchParams
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| filterValue | 筛选值数组，格式为 `[{ name, label, value }, ...]` | array | 是 | - |
+| options.prefix | URL 参数前缀 | string | 否 | `'filterParams'` |
+
+**示例：**
+```javascript
+const params = filterToUrlParams([
+  { name: 'keyword', label: '关键词', value: { label: '测试', value: '测试' } },
+  { name: 'city', label: '城市', value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }] },
+  { name: 'status', label: '状态', value: { label: '启用', value: 'active' } },
+]);
+// params.toString() => 'filterParams[keyword]=测试&filterParams[city]=上海:010,北京:020&filterParams[status]=启用:active'
+```
+
+#### createUrlFilterReader
+
+创建 URL 筛选参数读取器，自动追踪已消费的参数 key。配合 `useUrlFilter` 使用，读取后返回的 `consumedKeys` 可被自动从 URL 中清除。
+
+**函数签名：**
+```javascript
+createUrlFilterReader(searchParams, options?): { takeFilterEntry, getConsumedKeys }
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| searchParams | React Router 的 searchParams 对象 | URLSearchParams | 是 | - |
+| options.prefix | URL 参数前缀，需与 `filterToUrlParams` 使用的前缀一致 | string | 否 | `'filterParams'` |
+
+**返回值：**
+
+| 属性名 | 说明 | 类型 |
+|--------|------|------|
+| takeFilterEntry | 读取指定 key 的筛选值并标记为已消费 | function |
+| getConsumedKeys | 获取所有已消费的 key 列表（含前缀） | function |
+
+**takeFilterEntry 签名：**
+```javascript
+takeFilterEntry(key, options?): { label: string, value: string } | { label: string, value: string }[] | null
+```
+
+| 参数名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| key | 参数名（不含前缀） | string | 是 | - |
+| options.multi | 是否多选，多选返回数组 | boolean | 否 | false |
+
+**示例：**
+```javascript
+const [filter, setFilter] = useUrlFilter({
+  readUrlParams: (searchParams) => {
+    const { takeFilterEntry, getConsumedKeys } = createUrlFilterReader(searchParams);
+    const keyword = takeFilterEntry('keyword');
+    const city = takeFilterEntry('city', { multi: true });
+    return { consumedKeys: getConsumedKeys(), keyword, city };
+  },
+  buildFilter: ({ keyword, city }) => [
+    ...(keyword ? [{ name: 'keyword', label: '关键词', value: keyword }] : []),
+    ...(city ? [{ name: 'city', label: '城市', value: city }] : []),
+  ],
+});
+```
+
+#### parseFilterEntry
+
+解析 URL 参数中的单个筛选值项，反序列化为 `{ label, value }` 对象。
+
+**解析规则：**
+- 无冒号：label 和 value 相同，如 `"测试"` → `{ label: '测试', value: '测试' }`
+- 有冒号：冒号前为 label，冒号后为 value，如 `"启用:active"` → `{ label: '启用', value: 'active' }`
+
+**函数签名：**
+```javascript
+parseFilterEntry(str): { label: string, value: string }
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| str | URL 参数中的原始字符串 | string | 是 |
+
+**示例：**
+```javascript
+parseFilterEntry('测试')
+// => { label: '测试', value: '测试' }
+
+parseFilterEntry('启用:active')
+// => { label: '启用', value: 'active' }
+```
+
+#### takeFilterEntry
+
+从 URL 参数中读取筛选值项（低级 API）。推荐使用 `createUrlFilterReader` 代替，可自动追踪已消费的 key。
+
+**函数签名：**
+```javascript
+takeFilterEntry(searchParams, key, options?): { label: string, value: string } | { label: string, value: string }[] | null
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| searchParams | URL 参数对象 | URLSearchParams | 是 | - |
+| key | 参数名（不含前缀） | string | 是 | - |
+| options.multi | 是否多选，多选返回数组 | boolean | 否 | false |
+| options.prefix | URL 参数前缀 | string | 否 | `'filterParams'` |
+
+**示例：**
+```javascript
+// URL: ?filterParams[city]=上海:010,北京:020
+takeFilterEntry(searchParams, 'city', { multi: true })
+// => [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
+```
+
+#### filterInterceptors
+
+预设拦截器集合，提供用于 SuperSelect 系列组件的值格式转换拦截器。SuperSelect 等组件使用 `{ id, name }` 格式，而 Filter 上下文使用 `{ label, value }` 格式，需要通过拦截器进行自动转换。
+
+**导出成员：**
+
+|| 名称 | 说明 |
+||------|------|
+|| filterInterceptors | 拦截器集合对象，包含 `single` 和 `multi` 两个拦截器 |
+|| singleSelectInterceptor | 单选拦截器，用于 valueKey="id" labelKey="name" 的单选场景 |
+|| multiSelectInterceptor | 多选拦截器，用于 valueKey="id" labelKey="name" 的多选场景 |
+
+**filterInterceptors 结构：**
+
+|| 属性名 | 说明 | 类型 |
+||--------|------|------|
+|| single | 单选拦截器，等价于 singleSelectInterceptor | object |
+|| multi | 多选拦截器，等价于 multiSelectInterceptor | object |
+
+**拦截器结构：**
+
+每个拦截器包含 `input` 和 `output` 两个函数：
+
+|| 属性名 | 说明 | 转换方向 |
+||--------|------|----------|
+|| input | 输入拦截器 | 将上下文值 `{ label, value }` 转为组件内部格式 `{ id, name }` |
+|| output | 输出拦截器 | 将组件内部值 `{ id, name }` 转回上下文格式 `{ label, value }` |
+
+**使用方式：**
+
+配合 `SuperSelectFilterItem` 的 `interceptor` 属性使用：
+
+```javascript
+import { SuperSelectFilterItem, singleSelectInterceptor, multiSelectInterceptor } from '@components/Filter';
+
+// 单选场景
+<SuperSelectFilterItem interceptor={singleSelectInterceptor} ... />
+
+// 多选场景
+<SuperSelectFilterItem interceptor={multiSelectInterceptor} ... />
+
+// 或通过 filterInterceptors 解构
+const { single, multi } = filterInterceptors;
+<SuperSelectFilterItem interceptor={single} ... />
+```
