@@ -123,6 +123,51 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "筛选值映射与提取",
+      "description": "展示 createFilterValueMapper 声明式值映射和 pickSelectValues 值提取工具的用法",
+      "code": "./filter-value-mapper.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "URL 筛选参数",
+      "description": "展示 filterToUrlParams、parseFilterEntry、takeFilterEntry、createUrlFilterReader 等 URL 参数序列化与反序列化工具的用法",
+      "code": "./use-url-filter.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "筛选值拦截器",
+      "description": "展示 filterInterceptors、singleSelectInterceptor、multiSelectInterceptor 拦截器的用法，解决 SuperSelect 组件 { id, name } 与 Filter 上下文 { label, value } 格式不匹配的问题",
+      "code": "./filter-interceptors.js",
+      "scope": [
+        {
+          "name": "_Filter",
+          "packageName": "@components/Filter"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
