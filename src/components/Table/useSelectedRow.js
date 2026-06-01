@@ -1,41 +1,45 @@
 import {useState} from 'react';
-import uniq from "lodash/uniq";
 
 const useSelectedRow = (options) => {
     const {rowKey} = Object.assign({}, {rowKey: 'id'}, options);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
 
     const getRowId = (item) => typeof rowKey === 'function' ? rowKey(item) : item[rowKey];
+    const selectedRowKeys = selectedRows.map(getRowId);
 
     return {
-        type: 'checkbox', selectedRowKeys, onSelectAll: (type, selected, items) => {
+        type: 'checkbox', selectedRowKeys, selectedRows, onSelectAll: (type, selected, items) => {
             const ids = items.map(getRowId);
             if (type) {
-                setSelectedRowKeys(value => {
-                    return uniq([...value, ...ids]);
+                setSelectedRows(value => {
+                    const existingKeys = value.map(getRowId);
+                    return [...value, ...items.filter(item => existingKeys.indexOf(getRowId(item)) === -1)];
                 });
             } else {
-                setSelectedRowKeys(value => {
+                setSelectedRows(value => {
                     return value.filter(item => {
-                        return ids.indexOf(item) === -1;
+                        return ids.indexOf(getRowId(item)) === -1;
                     });
                 });
             }
         }, onSelect: (item, type) => {
             if (type) {
-                setSelectedRowKeys(value => {
+                setSelectedRows(value => {
                     const newValue = value.slice(0);
-                    newValue.push(getRowId(item));
+                    newValue.push(item);
                     return newValue;
                 });
             } else {
-                setSelectedRowKeys(value => {
+                setSelectedRows(value => {
                     const newValue = value.slice(0);
-                    newValue.splice(newValue.indexOf(getRowId(item)), 1);
+                    const index = newValue.findIndex(row => getRowId(row) === getRowId(item));
+                    if (index > -1) {
+                        newValue.splice(index, 1);
+                    }
                     return newValue;
                 });
             }
-        }, setSelectedRowKeys
+        }, setSelectedRows
     };
 };
 
