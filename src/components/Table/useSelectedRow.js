@@ -39,7 +39,9 @@ const useSelectedRow = (options) => {
                     return newValue;
                 });
             }
-        }, setSelectedRows
+        }, setSelectedRows, clearSelectedRows: () => {
+            setSelectedRows([]);
+        }
     };
 };
 
