@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import {useState, useRef, useEffect} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 /**
  * 创建 URL 参数读取器，自动追踪已消费的参数 key。
@@ -14,14 +14,14 @@ import { useSearchParams } from 'react-router-dom';
  * // getConsumedKeys() => ['tenantOrgId', 'orgName']
  */
 export const createUrlParamsReader = (searchParams) => {
-  const consumedKeys = [];
-  const take = (key) => {
-    if (!searchParams.has(key)) return null;
-    consumedKeys.push(key);
-    return searchParams.get(key);
-  };
-  const getConsumedKeys = () => consumedKeys;
-  return { take, getConsumedKeys };
+    const consumedKeys = [];
+    const take = (key) => {
+        if (!searchParams.has(key)) return null;
+        consumedKeys.push(key);
+        return searchParams.get(key);
+    };
+    const getConsumedKeys = () => consumedKeys;
+    return {take, getConsumedKeys};
 };
 
 /**
@@ -32,16 +32,16 @@ export const createUrlParamsReader = (searchParams) => {
  * @returns {URLSearchParams|null}
  */
 export const stripConsumedUrlParams = (searchParams, consumedKeys) => {
-  if (!consumedKeys?.length) return null;
-  const next = new URLSearchParams(searchParams);
-  let changed = false;
-  consumedKeys.forEach(key => {
-    if (next.has(key)) {
-      next.delete(key);
-      changed = true;
-    }
-  });
-  return changed ? next : null;
+    if (!consumedKeys?.length) return null;
+    const next = new URLSearchParams(searchParams);
+    let changed = false;
+    consumedKeys.forEach(key => {
+        if (next.has(key)) {
+            next.delete(key);
+            changed = true;
+        }
+    });
+    return changed ? next : null;
 };
 
 /**
@@ -67,27 +67,27 @@ export const stripConsumedUrlParams = (searchParams, consumedKeys) => {
  *   ]
  * });
  */
-const useUrlFilter = ({ readUrlParams, buildFilter }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const urlFilterSnapshotRef = useRef(null);
+const useUrlFilter = ({readUrlParams, buildFilter}) => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const urlFilterSnapshotRef = useRef(null);
 
-  if (urlFilterSnapshotRef.current === null) {
-    urlFilterSnapshotRef.current = readUrlParams(searchParams);
-  }
-
-  const [filter, setFilter] = useState(() => buildFilter(urlFilterSnapshotRef.current));
-
-  const urlStrippedRef = useRef(false);
-  useEffect(() => {
-    if (urlStrippedRef.current) return;
-    urlStrippedRef.current = true;
-    const nextParams = stripConsumedUrlParams(searchParams, urlFilterSnapshotRef.current?.consumedKeys);
-    if (nextParams) {
-      setSearchParams(nextParams, { replace: true });
+    if (urlFilterSnapshotRef.current === null) {
+        urlFilterSnapshotRef.current = readUrlParams(searchParams);
     }
-  }, [searchParams, setSearchParams]);
 
-  return [filter, setFilter];
+    const [filter, setFilter] = useState(() => buildFilter(urlFilterSnapshotRef.current));
+
+    const urlStrippedRef = useRef(false);
+    useEffect(() => {
+        if (urlStrippedRef.current) return;
+        urlStrippedRef.current = true;
+        const nextParams = stripConsumedUrlParams(searchParams, urlFilterSnapshotRef.current?.consumedKeys);
+        if (nextParams) {
+            setSearchParams(nextParams, {replace: true});
+        }
+    }, [searchParams, setSearchParams]);
+
+    return [filter, setFilter];
 };
 
 export default useUrlFilter;
