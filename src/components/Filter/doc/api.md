@@ -573,6 +573,56 @@ const [filter, setFilter] = useUrlFilter({
 });
 ```
 
+#### useUrlFilterValue
+
+从 URL 参数初始化 Filter 状态的 Hook（简化版）。基于 `useUrlFilter` 封装，使用 `createUrlFilterReader` 解析 `filterParams[key]` 格式的 URL 参数，自动解析 `label:value` 格式，支持单选和多选。
+
+**函数签名：**
+```javascript
+useUrlFilterValue(mapping): [array, function]
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| mapping | URL 参数映射配置，支持数组或对象格式 | string[] \| object | 是 |
+
+**mapping 格式：**
+
+- **数组形式**：`['key1', 'key2']`，默认单选，自动创建 `{ name: key, value: { label, value } }` 格式的筛选项
+- **对象形式**：`{ key1: true, key2: { multi: true }, key3: fn }`
+  - 值为 `true`：单选，使用默认转换
+  - 值为 `{ multi: true }`：多选，value 为 `[{ label, value }, ...]` 数组
+  - 值为函数：自定义转换，接收解析后的值（单选为 `{ label, value }`，多选为数组），返回 filter 项或 `null`/falsy 跳过
+
+**返回值：**
+
+| 返回值 | 说明 | 类型 |
+|--------|------|------|
+| [0] | 初始筛选值数组 | array |
+| [1] | 设置筛选值的函数 | function |
+
+**示例：**
+```javascript
+// 数组形式（默认单选）
+const [filter, setFilter] = useUrlFilterValue(['keyword', 'status']);
+// URL: ?filterParams[keyword]=前端开发&filterParams[status]=招聘中:active
+// → filter: [
+//     { name: 'keyword', value: { label: '前端开发', value: '前端开发' } },
+//     { name: 'status', value: { label: '招聘中', value: 'active' } }
+//   ]
+
+// 对象形式（多选 + 自定义转换）
+const [filter, setFilter] = useUrlFilterValue({
+  keyword: true,
+  city: { multi: true },
+  status: (parsed) => parsed ? { name: 'status', value: parsed } : null
+});
+// URL: ?filterParams[city]=上海:010,北京:020
+// → city 的 value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
+```
+
 #### createUrlParamsReader
 
 创建 URL 参数读取器，自动追踪已消费的参数 key。

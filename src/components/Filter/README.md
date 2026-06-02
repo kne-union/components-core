@@ -947,6 +947,7 @@ const {
   getFilterValue,
   createFilterValueMapper,
   pickSelectValues,
+  useUrlFilterValue,
 } = _Filter;
 const { useState, useMemo } = React;
 const { Space, Card, Divider, Typography, Button, Alert, Tag } = antd;
@@ -1148,6 +1149,67 @@ reader.getConsumedKeys();                               // → ${JSON.stringify(
 mapFilterValue(filterValue, getFilterValue);
 // →&#96;}
 {'  ' + JSON.stringify(mappedSample, null, 2)}
+        </pre>
+      </Card>
+
+      {/* ===== useUrlFilterValue ===== */}
+      <Card title="useUrlFilterValue — 简化版 URL 筛选初始化" size="small">
+        <Paragraph type="secondary">
+          基于 useUrlFilter 封装的简化版 Hook，使用 createUrlFilterReader 解析 filterParams[key] 格式，自动解析 label:value，支持单选和多选
+        </Paragraph>
+
+        <Title level={5}>1. 数组形式 — 默认单选</Title>
+        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
+{&#96;const [filter, setFilter] = useUrlFilterValue(['keyword', 'status']);
+
+// URL: ?filterParams[keyword]=前端开发&filterParams[status]=招聘中:active
+// → filter: [
+//     { name: 'keyword', value: { label: '前端开发', value: '前端开发' } },
+//     { name: 'status', value: { label: '招聘中', value: 'active' } }
+//   ]&#96;}
+        </pre>
+
+        <Divider />
+
+        <Title level={5}>2. 对象形式 — 多选 + 自定义转换</Title>
+        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
+{&#96;// { multi: true } 表示多选，value 为数组
+// 函数接收解析后的值，返回 filter 项或 null 跳过
+const [filter, setFilter] = useUrlFilterValue({
+  keyword: true,                   // 单选，默认转换
+  city: { multi: true },           // 多选
+  status: (parsed) => parsed       // 自定义：直接用解析值
+    ? { name: 'status', value: parsed }
+    : null
+});
+
+// URL: ?filterParams[city]=上海:010,北京:020
+// → city 的 value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]&#96;}
+        </pre>
+
+        <Divider />
+
+        <Title level={5}>对比 useUrlFilter</Title>
+        <pre style={{ background: '#fff3cd', padding: 8, borderRadius: 4, fontSize: 12 }}>
+{&#96;// useUrlFilter（完整控制，需手动解析）
+const [filter, setFilter] = useUrlFilter({
+  readUrlParams: (searchParams) => {
+    const { takeFilterEntry, getConsumedKeys } = createUrlFilterReader(searchParams);
+    const keyword = takeFilterEntry('keyword');
+    const city = takeFilterEntry('city', { multi: true });
+    return { consumedKeys: getConsumedKeys(), keyword, city };
+  },
+  buildFilter: ({ keyword, city }) => [
+    ...(keyword ? [{ name: 'keyword', value: keyword }] : []),
+    ...(city ? [{ name: 'city', value: city }] : []),
+  ]
+});
+
+// useUrlFilterValue（等价简化写法）
+const [filter, setFilter] = useUrlFilterValue({
+  keyword: true,
+  city: { multi: true }
+});&#96;}
         </pre>
       </Card>
     </Space>
@@ -1899,6 +1961,56 @@ const [filter, setFilter] = useUrlFilter({
     ...(orgId ? [{ name: 'tenantOrgId', value: { label: orgId, value: orgId } }] : [])
   ]
 });
+```
+
+#### useUrlFilterValue
+
+从 URL 参数初始化 Filter 状态的 Hook（简化版）。基于 `useUrlFilter` 封装，使用 `createUrlFilterReader` 解析 `filterParams[key]` 格式的 URL 参数，自动解析 `label:value` 格式，支持单选和多选。
+
+**函数签名：**
+```javascript
+useUrlFilterValue(mapping): [array, function]
+```
+
+**参数说明：**
+
+| 参数名 | 说明 | 类型 | 必填 |
+|--------|------|------|------|
+| mapping | URL 参数映射配置，支持数组或对象格式 | string[] \| object | 是 |
+
+**mapping 格式：**
+
+- **数组形式**：`['key1', 'key2']`，默认单选，自动创建 `{ name: key, value: { label, value } }` 格式的筛选项
+- **对象形式**：`{ key1: true, key2: { multi: true }, key3: fn }`
+  - 值为 `true`：单选，使用默认转换
+  - 值为 `{ multi: true }`：多选，value 为 `[{ label, value }, ...]` 数组
+  - 值为函数：自定义转换，接收解析后的值（单选为 `{ label, value }`，多选为数组），返回 filter 项或 `null`/falsy 跳过
+
+**返回值：**
+
+| 返回值 | 说明 | 类型 |
+|--------|------|------|
+| [0] | 初始筛选值数组 | array |
+| [1] | 设置筛选值的函数 | function |
+
+**示例：**
+```javascript
+// 数组形式（默认单选）
+const [filter, setFilter] = useUrlFilterValue(['keyword', 'status']);
+// URL: ?filterParams[keyword]=前端开发&filterParams[status]=招聘中:active
+// → filter: [
+//     { name: 'keyword', value: { label: '前端开发', value: '前端开发' } },
+//     { name: 'status', value: { label: '招聘中', value: 'active' } }
+//   ]
+
+// 对象形式（多选 + 自定义转换）
+const [filter, setFilter] = useUrlFilterValue({
+  keyword: true,
+  city: { multi: true },
+  status: (parsed) => parsed ? { name: 'status', value: parsed } : null
+});
+// URL: ?filterParams[city]=上海:010,北京:020
+// → city 的 value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
 ```
 
 #### createUrlParamsReader
