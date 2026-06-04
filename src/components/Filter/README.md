@@ -1,1956 +1,1362 @@
-# Filter
+# react-filter
+
+### 描述
+
+A React filter component library with multiple filter types, flexible layouts, and URL parameter synchronization.
+
+### 安装
+
+```shell
+npm i --save @kne/react-filter
+```
 
 ### 概述
 
-Filter 是一个功能强大的筛选组件库，用于构建灵活的筛选条件界面。该组件提供了多种预置的筛选字段类型，支持自定义筛选项，并提供了完整的筛选值管理和展示功能。
+### React Filter
 
-核心特性包括：丰富的预置筛选字段，涵盖文本输入、日期选择、城市选择、用户选择、行业选择、职能选择等多种类型；灵活的筛选值管理，支持受控和非受控模式；声明式筛选值映射（`createFilterValueMapper`），统一处理多选、单选、自定义转换等值提取逻辑；URL 参数序列化与初始化（`filterToUrlParams` / `createUrlFilterReader` / `useUrlFilter`），筛选值以 `filterParams[key]` 格式序列化到 URL（前缀可自定义），从 URL 参数构建初始筛选状态并自动清理已消费参数；值格式拦截器（`filterInterceptors`），自动处理 SuperSelect 组件 `{ id, name }` 与 Filter 上下文 `{ label, value }` 格式之间的转换；支持展开/收起筛选项，避免筛选条件过多导致界面混乱；提供高级筛选组件，适用于复杂筛选场景；支持自定义字段和组合使用，满足各种业务需求；内置搜索输入框和筛选值展示组件，提升用户体验。
+一个功能强大的 React 筛选组件库，支持多种筛选字段类型、灵活的布局方式，以及完善的 URL 参数双向同步能力。
 
-适用于数据列表、表格筛选、报表查询等需要多条件筛选的场景。组件采用 Context API 进行状态管理，支持嵌套使用和组合，能够满足企业级应用中各种复杂的筛选需求。
+### 主要特性
 
-### 示例(全屏)
+- **多种筛选字段类型**：支持输入框、数字区间、日期选择、日期范围、下拉选择等常用筛选类型，以及职能、行业、城市等业务选择器
+- **灵活布局**：支持普通筛选（横向布局）和高级筛选（垂直布局）两种模式
+- **展开收起**：筛选行支持展开收起功能，优化页面空间利用
+- **已选值展示**：自动展示已选筛选条件，支持单独删除和清空全部
+- **弹出层交互**：支持弹出层形式的筛选交互，确认后才生效
+- **URL 参数同步**：支持筛选值与 URL 参数的双向序列化/反序列化，自动清除已消费参数
+- **数据格式拦截器**：内置 `{id, name}` ↔ `{label, value}` 格式转换拦截器，适配 SuperSelect 场景
+- **声明式值映射**：提供 `createFilterValueMapper` 按字段声明转换规则，简化 `getFilterValue` 结果处理
+- **国际化支持**：内置中英文语言包，支持多语言切换
+- **高阶组件**：提供 `withFilterValue` 和 `withFieldItem` 高阶组件，便于扩展自定义字段
+
+### 适用场景
+
+- 数据列表页面的筛选功能
+- 复杂表单的筛选条件配置
+- 多条件组合查询场景
+- 需要展示已选筛选条件的场景
+- 需要筛选状态与 URL 参数同步保持的页面
+
+### 快速开始
+
+```javascript
+import Filter, { fields } from '@kne/react-filter';
+import '@kne/react-filter/dist/index.css';
+
+const { InputFilterItem, NumberRangeFilterItem, DatePickerFilterItem } = fields;
+
+function MyComponent() {
+  const [filterValue, setFilterValue] = useState([]);
+
+  const handleSearch = () => {
+    const params = Filter.getFilterValue(filterValue);
+    console.log('筛选参数:', params);
+  };
+
+  return (
+    <Filter
+      value={filterValue}
+      onChange={setFilterValue}
+      list={[
+        [
+          { type: InputFilterItem, props: { name: 'keyword', label: '关键词' } },
+          { type: NumberRangeFilterItem, props: { name: 'amount', label: '金额' } }
+        ],
+        [
+          { type: DatePickerFilterItem, props: { name: 'date', label: '日期' } }
+        ]
+      ]}
+      displayLine={1}
+      extra={<Button type="primary" onClick={handleSearch}>搜索</Button>}
+    />
+  );
+}
+```
+
+### 核心组件
+
+| 组件 | 说明 |
+|------|------|
+| `Filter` | 主筛选组件，横向布局，支持展开收起 |
+| `AdvancedFilter` | 高级筛选组件，垂直布局 |
+| `FilterValueDisplay` | 已选值展示组件 |
+| `PopoverItem` | 弹出层筛选项组件 |
+| `FilterItem` | 筛选项容器组件 |
+| `FilterLines` | 筛选行组件 |
+| `FilterProvider` | 状态管理组件 |
+
+### 筛选字段
+
+| 字段组件 | 说明 |
+|----------|------|
+| `InputFilterItem` | 输入框筛选 |
+| `NumberRangeFilterItem` | 数字区间筛选 |
+| `DatePickerFilterItem` | 日期选择筛选 |
+| `DateRangePickerFilterItem` | 日期范围筛选 |
+| `TypeDateRangePickerFilterItem` | 类型日期范围筛选（日/周/月切换） |
+| `SuperSelectFilterItem` | 通用选择器筛选（单选/多选/搜索/全选） |
+| `SelectFunctionFilterItem` | 职能筛选（多级数据、拼音搜索） |
+| `SelectIndustryFilterItem` | 行业筛选（多级数据、拼音搜索） |
+| `SelectAddressFilterItem` | 城市筛选（国内外城市搜索） |
+
+### URL 参数工具
+
+| 工具 | 说明 |
+|------|------|
+| `useUrlFilter` | 从 URL 参数初始化筛选状态的 hook |
+| `useUrlFilterValue` | 简化版 URL 筛选 hook，自动解析 filterParams[key] 格式 |
+| `filterToUrlParams` | 将筛选值序列化为 URL 参数 |
+| `parseFilterEntry` | 解析 URL 参数中的单个筛选值项 |
+| `takeFilterEntry` | 从 URL 参数中读取筛选值项 |
+| `createUrlFilterReader` | 创建 URL 筛选参数读取器 |
+| `createUrlParamsReader` | 创建通用 URL 参数读取器 |
+| `stripConsumedUrlParams` | 移除已消费的 URL 参数 |
+
+### 其他工具
+
+| 工具 | 说明 |
+|------|------|
+| `pickSelectValues` | 从筛选值中提取原始值数组 |
+| `createFilterValueMapper` | 声明式创建 mapFilterValue 函数 |
+| `filterInterceptors` | `{single, multi}` 拦截器集合 |
+| `singleSelectInterceptor` | 单选格式转换拦截器 |
+| `multiSelectInterceptor` | 多选格式转换拦截器 |
+
+
+### 示例
 
 #### 示例代码
 
-- 基础用法
-- 展示 Filter 组件的基本使用方式，包括各种常见的筛选字段类型
-- _Filter(@components/Filter)
+- 基础筛选
+- 使用 Filter 主组件，展示关键词、金额、日期、部门等多种筛选字段的组合使用
+- _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
 
 ```jsx
+const { default: Filter, fields } = _ReactFilter;
 const {
-  default: Filter,
-  InputFilterItem,
-  DatePickerFilterItem,
-  DateRangePickerFilterItem,
-  TypeDateRangePickerFilterItem,
-  CityFilterItem,
-  AdvancedSelectFilterItem,
-  SuperSelectFilterItem,
-  SuperSelectUserFilterItem,
-  UserFilterItem,
-  FunctionSelectFilterItem,
-  IndustrySelectFilterItem,
-  getFilterValue,
-  FilterItemContainer,
-} = _Filter;
+  InputFilterItem, NumberRangeFilterItem, DatePickerFilterItem,
+  DateRangePickerFilterItem, TypeDateRangePickerFilterItem,
+  SuperSelectFilterItem, SelectFunctionFilterItem,
+  SelectIndustryFilterItem, SelectAddressFilterItem
+} = fields;
+const { Flex, Button, message } = antd;
 const { useState } = React;
+
+const departmentOptions = [
+  { value: 'tech', label: '技术研发部' },
+  { value: 'product', label: '产品设计部' },
+  { value: 'operation', label: '运营管理部' },
+  { value: 'hr', label: '人力资源部' },
+  { value: 'finance', label: '财务部' },
+  { value: 'marketing', label: '市场营销部' }
+];
+
 const BaseExample = () => {
-  const [value, onChange] = useState([]);
+  const [filterValue, setFilterValue] = useState([]);
+
+  const handleSearch = () => {
+    const params = Filter.getFilterValue(filterValue);
+    message.info(&#96;搜索参数: ${JSON.stringify(params, null, 2)}&#96;);
+    console.log('筛选参数:', params);
+  };
+
   return (
-    <Filter
-      value={value}
-      onChange={(value) => {
-        console.log(getFilterValue(value));
-        onChange(value);
-      }}
-      extra={<Filter.SearchInput name="name" label="姓名" />}
-      list={[
-        [
-          <InputFilterItem label="文字" name="text" />,
-          <CityFilterItem label="城市" name="city" />,
-          <FilterItemContainer name="select" label="高级选择">
-            {(props) => (
-              <div>
-                <AdvancedSelectFilterItem
-                  {...props}
-                  api={{
-                    loader: () => {
-                      return {
-                        pageData: [
-                          { label: "第一项", value: 1 },
-                          {
-                            label: "第二项",
-                            value: 2,
-                            disabled: true,
-                          },
-                          {
-                            label: "第三项",
-                            value: 3,
-                          },
-                        ],
-                      };
-                    },
-                  }}
-                />
-              </div>
-            )}
-          </FilterItemContainer>,
-          <DatePickerFilterItem label="日期" name="date" picker="week" />,
-          <TypeDateRangePickerFilterItem
-            label="复杂日期范围"
-            name="type-data-range"
-            allowEmpty={[true, true]}
-          />,
-          <DateRangePickerFilterItem label="日期范围" name="date-range" />,
-          <SuperSelectFilterItem
-            label="选择信息"
-            name="select-value"
-            options={[
-              {
-                label: "用户一",
-                value: 1,
-                description: "我是用户描述",
-              },
-              {
-                label: "用户二",
-                value: 2,
-                description: "我是用户描述",
-              },
-            ]}
-          />,
-          <SuperSelectUserFilterItem
-            label="用户选择"
-            name="user"
-            api={{
-              loader: () => {
-                return {
-                  pageData: [
-                    {
-                      label: "用户一",
-                      value: 1,
-                      description: "我是用户描述",
-                    },
-                    {
-                      label: "用户二",
-                      value: 2,
-                      description: "我是用户描述",
-                    },
-                    {
-                      label: "用户三",
-                      value: 3,
-                      description: "我是用户描述",
-                    },
-                  ],
-                };
-              },
-            }}
-          />,
-          <FunctionSelectFilterItem
-            label="职能选择"
-            name="functionLast"
-            onlyAllowLastLevel
-          />,
-          <FunctionSelectFilterItem
-            label="职能选择"
-            name="function"
-            selectLevel={3}
-            maxLength={3}
-          />,
-          <FunctionSelectFilterItem
-            label="职能选择"
-            name="functionSingle"
-            single
-          />,
-          <IndustrySelectFilterItem
-            label="行业选择"
-            name="industryLast"
-            onlyAllowLastLevel
-          />,
-          <IndustrySelectFilterItem
-            label="行业选择"
-            name="industry"
-            selectLevel={2}
-            maxLength={3}
-          />,
-          <IndustrySelectFilterItem
-            label="行业选择"
-            name="industrySingle"
-            single
-          />,
-        ],
-      ]}
-    />
+    <Flex vertical gap={16}>
+      <Filter
+        value={filterValue}
+        onChange={setFilterValue}
+        list={[
+          [
+            {
+              type: InputFilterItem,
+              props: { name: 'keyword', label: '关键词', placeholder: '请输入关键词搜索' }
+            },
+            {
+              type: NumberRangeFilterItem,
+              props: { name: 'amount', label: '金额', unit: '元', min: 0, max: 999999 }
+            },
+            {
+              type: DatePickerFilterItem,
+              props: { name: 'createTime', label: '创建时间', format: 'YYYY-MM-DD' }
+            },
+            {
+              type: DateRangePickerFilterItem,
+              props: { name: 'dateRange', label: '日期范围', format: 'YYYY-MM-DD' }
+            },
+            {
+              type: TypeDateRangePickerFilterItem,
+              props: { name: 'typeDateRange', label: '快捷日期' }
+            }
+          ],
+          [
+            {
+              type: SuperSelectFilterItem,
+              props: { name: 'department', label: '部门', options: departmentOptions }
+            },
+            {
+              type: SelectFunctionFilterItem,
+              props: { name: 'function', label: '职能' }
+            },
+            {
+              type: SelectIndustryFilterItem,
+              props: { name: 'industry', label: '行业' }
+            },
+            {
+              type: SelectAddressFilterItem,
+              props: { name: 'city', label: '城市' }
+            }
+          ]
+        ]}
+        displayLine={1}
+      />
+      <Flex gap={8}>
+        <span>当前筛选值:</span>
+        <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4, flex: 1 }}>{JSON.stringify(filterValue, null, 2)}</pre>
+      </Flex>
+    </Flex>
   );
 };
 
 render(<BaseExample />);
-
-```
-
-- 展示和Enum一起使用
-- 
-- _Filter(@components/Filter),_Enum(@components/Enum)
-
-```jsx
-const {
-    default: Filter, SuperSelectFilterItem, getFilterValue
-} = _Filter;
-const {default: Enum} = _Enum;
-const {useState} = React;
-const BaseExample = () => {
-    const [value, onChange] = useState([]);
-    return (<Filter
-        value={value}
-        onChange={(value) => {
-            console.log(getFilterValue(value));
-            onChange(value);
-        }}
-        list={[[<SuperSelectFilterItem name="degree" label="学历" render={({children}) => {
-            return <Enum moduleName="degreeEnum" format="option">{(options) => children({options})}</Enum>
-        }}/>]]}
-    />);
-};
-
-render(<BaseExample/>);
 
 ```
 
 - 高级筛选
-- 展示 AdvancedFilter 组件的高级筛选功能，适用于复杂筛选场景
-- _Filter(@components/Filter)
+- 使用 AdvancedFilter 组件实现更复杂的筛选布局
+- _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
 
 ```jsx
-const {
-  default: Filter,
-  AdvancedFilter,
-  InputFilterItem,
-  DatePickerFilterItem,
-  DateRangePickerFilterItem,
-  TypeDateRangePickerFilterItem,
-  CityFilterItem,
-  AdvancedSelectFilterItem,
-  UserFilterItem,
-  FunctionSelectFilterItem,
-  IndustrySelectFilterItem,
-  NumberRangeFilterItem,
-  getFilterValue,
-  FilterItemContainer,
-} = _Filter;
+const { AdvancedFilter } = _ReactFilter;
+const { InputFilterItem, ListFilterItem, CityFilterItem } = AdvancedFilter.fields;
+const { Flex, Button, message } = antd;
 const { useState } = React;
 
-const {
-  CityFilterItem: CityAdvancedFilterItem,
-  ListFilterItem,
-  InputFilterItem: InputAdvancedFilterItem,
-} = AdvancedFilter.fields;
-const BaseExample = () => {
-  const [value, onChange] = useState([]);
+const AdvancedFilterExample = () => {
+  const [filterValue, setFilterValue] = useState([]);
+
+  const handleSearch = () => {
+    const params = {};
+    filterValue.forEach(item => {
+      params[item.name] = Array.isArray(item.value)
+        ? item.value.map(v => v.value)
+        : item.value?.value;
+    });
+    message.info(&#96;搜索参数: ${JSON.stringify(params, null, 2)}&#96;);
+    console.log('筛选参数:', params);
+  };
+
   return (
-    <AdvancedFilter
-      value={value}
-      onChange={(value) => {
-        console.log(getFilterValue(value));
-        onChange(value);
-      }}
-      list={[
-        [<CityAdvancedFilterItem name="currentCity" label="当前城市" single />],
-        [<CityAdvancedFilterItem name="expectCity" label="期望城市" />],
-        [
-          <ListFilterItem
-            name="experience"
-            label="工作经验"
-            single
-            items={[
-              {
-                value: [null, 1],
-                label: "1年以下",
-              },
-              {
-                value: [1, 5],
-                label: "1-5年",
-              },
-              { value: [5, null], label: "5年以上" },
-            ]}
-            custom={<NumberRangeFilterItem label="自定义" unit="年" />}
-          />,
-        ],
-        [<InputAdvancedFilterItem name="company" label="公司" />],
-      ]}
-      more={[
-        <InputFilterItem label="文字" name="text" />,
-        <CityFilterItem label="城市" name="city" />,
-        <FilterItemContainer name="select" label="高级选择">
-          {(props) => (
-            <div>
-              <AdvancedSelectFilterItem
-                {...props}
-                api={{
-                  loader: () => {
-                    return {
-                      pageData: [
-                        { label: "第一项", value: 1 },
-                        {
-                          label: "第二项",
-                          value: 2,
-                          disabled: true,
-                        },
-                        {
-                          label: "第三项",
-                          value: 3,
-                        },
-                      ],
-                    };
-                  },
-                }}
-              />
-            </div>
-          )}
-        </FilterItemContainer>,
-        <DatePickerFilterItem label="日期" name="date" picker="week" />,
-        <TypeDateRangePickerFilterItem
-          label="复杂日期范围"
-          name="type-data-range"
-          allowEmpty={[true, true]}
-        />,
-        <DateRangePickerFilterItem label="日期范围" name="date-range" />,
-        <UserFilterItem
-          label="用户选择"
-          name="user"
-          api={{
-            loader: () => {
-              return {
-                pageData: [
-                  {
-                    label: "用户一",
-                    value: 1,
-                    description: "我是用户描述",
-                  },
-                  {
-                    label: "用户二",
-                    value: 2,
-                    description: "我是用户描述",
-                  },
-                  {
-                    label: "用户三",
-                    value: 3,
-                    description: "我是用户描述",
-                  },
-                ],
-              };
+    <Flex vertical gap={16}>
+      <AdvancedFilter
+        value={filterValue}
+        onChange={setFilterValue}
+        list={[
+          [
+            {
+              type: InputFilterItem,
+              props: {
+                name: 'name',
+                label: '姓名'
+              }
             },
+            {
+              type: InputFilterItem,
+              props: {
+                name: 'phone',
+                label: '手机号'
+              }
+            }
+          ],
+          [
+            {
+              type: ListFilterItem,
+              props: {
+                name: 'status',
+                label: '状态',
+                single: true,
+                items: [
+                  { label: '待处理', value: 'pending' },
+                  { label: '处理中', value: 'processing' },
+                  { label: '已完成', value: 'completed' },
+                  { label: '已取消', value: 'cancelled' }
+                ]
+              }
+            }
+          ],
+          [
+            {
+              type: ListFilterItem,
+              props: {
+                name: 'tags',
+                label: '标签',
+                single: false,
+                maxLength: 3,
+                items: [
+                  { label: '前端', value: 'frontend' },
+                  { label: '后端', value: 'backend' },
+                  { label: '全栈', value: 'fullstack' },
+                  { label: 'UI设计', value: 'ui' },
+                  { label: '产品', value: 'product' }
+                ]
+              }
+            }
+          ],
+          [
+            {
+              type: CityFilterItem,
+              props: {
+                name: 'city',
+                label: '城市',
+                maxLength: 3
+              }
+            }
+          ]
+        ]}
+      />
+      <Flex justify="end">
+        <Button type="primary" onClick={handleSearch}>
+          查询
+        </Button>
+      </Flex>
+      <Flex gap={8}>
+        <span>当前筛选值:</span>
+        <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4, flex: 1 }}>
+          {JSON.stringify(filterValue, null, 2)}
+        </pre>
+      </Flex>
+    </Flex>
+  );
+};
+
+render(<AdvancedFilterExample />);
+
+```
+
+- 筛选字段组件
+- 展示所有筛选字段组件类型，包括输入筛选、数字区间、日期选择、下拉选择以及 SuperSelect 业务选择器（职能/行业/城市）
+- _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
+
+```jsx
+const { fields, PopoverItem } = _ReactFilter;
+const {
+  InputFilterItem, NumberRangeFilterItem, DatePickerFilterItem,
+  DateRangePickerFilterItem, TypeDateRangePickerFilterItem,
+  SuperSelectFilterItem, SelectFunctionFilterItem,
+  SelectIndustryFilterItem, SelectAddressFilterItem
+} = fields;
+const { Input, InputNumber, Space, Flex, Select, Divider, Tag } = antd;
+const { useState } = React;
+
+// 自定义下拉选择筛选项
+const SelectFilterItem = ({ label, value, onChange, options = [] }) => {
+  return (
+    <PopoverItem
+      label={label}
+      value={value}
+      onChange={onChange}
+    >
+      {({ value, onChange }) => (
+        <Select
+          style={{ width: 200 }}
+          placeholder={&#96;请选择${label}&#96;}
+          value={value?.value}
+          onChange={(val, option) => {
+            onChange({
+              value: val,
+              label: option?.label || val
+            });
           }}
-        />,
-        <FunctionSelectFilterItem
-          label="职能选择"
-          name="function"
-          onlyAllowLastLevel
-          single
-        />,
-        <IndustrySelectFilterItem
-          label="行业选择"
-          name="industry"
-          onlyAllowLastLevel
-        />,
-      ]}
-    />
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- 树形筛选
-- 展示 TreeFilterItem 树形选择组件的使用
-- _Filter(@components/Filter),antd(antd),_data(@components/Filter/doc/mock/tree-data.json)
-
-```jsx
-const { default: Filter, TreeFilterItem } = _Filter;
-const { default: treeData } = _data;
-const { useState } = React;
-const { Space } = antd;
-
-const BaseExample = () => {
-  const [filter, setFilter] = useState([]);
-  const [filter2, setFilter2] = useState([]);
-
-  return (
-    <Space direction="vertical">
-      <Filter
-        value={filter}
-        onChange={setFilter}
-        list={[
-          [
-            <TreeFilterItem
-              name="tree"
-              single
-              label="树组件"
-              fieldNames={{
-                title: "name",
-                key: "id",
-                children: "children",
-              }}
-              api={{
-                loader: () => {
-                  return treeData.children;
-                },
-              }}
-            />,
-          ],
-        ]}
-      />
-      <Filter
-        value={filter2}
-        onChange={setFilter2}
-        list={[
-          [
-            <TreeFilterItem
-              name="tree"
-              label="树组件"
-              fieldNames={{
-                title: "name",
-                key: "id",
-                children: "children",
-              }}
-              api={{
-                loader: () => {
-                  return treeData.children;
-                },
-              }}
-            />,
-          ],
-        ]}
-      />
-    </Space>
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- 筛选值展示
-- 展示 FilterValueDisplay、FilterItem、FilterLines、PopoverItem 等组件的独立使用
-- _Filter(@components/Filter),antd(antd)
-
-```jsx
-const {
-  FilterValueDisplay,
-  FilterItem,
-  FilterLines,
-  PopoverItem,
-  InputFilterItem,
-  CityFilterItem,
-  AdvancedSelectFilterItem,
-  UserFilterItem,
-  FunctionSelectFilterItem,
-  IndustrySelectFilterItem,
-} = _Filter;
-const { Space, Input } = antd;
-const { useState } = React;
-const BaseExample = () => {
-  const [value, setValue] = useState([
-    {
-      label: "城市",
-      name: "city",
-      value: [
-        { label: "上海", value: "010" },
-        { label: "北京", value: "020" },
-      ],
-    },
-    {
-      label: "职能",
-      name: "function",
-      value: [
-        { label: "产品经理", value: "010" },
-        { label: "销售", value: "020" },
-        {
-          label: "客户经理",
-          value: "030",
-        },
-      ],
-    },
-  ]);
-  return (
-    <Space direction="vertical">
-      <FilterValueDisplay value={value} onChange={setValue} />
-      <Space>
-        <FilterItem label="客户" />
-        <FilterItem label="客户" active />
-        <FilterItem label="客户" open />
-        <FilterItem label="超长超长超长超长超长超长超长超长" active open />
-      </Space>
-      <FilterLines
-        list={[
-          [
-            <FilterItem label="客户" />,
-            <FilterItem label="职位" />,
-            <FilterItem label="职位负责人" />,
-          ],
-          [
-            <FilterItem label="开始时间" />,
-            <FilterItem label="结束时间" />,
-            <FilterItem label="职位BD人" />,
-          ],
-          [
-            <FilterItem label="开始时间" />,
-            <FilterItem label="结束时间" />,
-            <FilterItem label="职位BD人" />,
-          ],
-          [
-            <FilterItem label="开始时间" />,
-            <FilterItem label="结束时间" />,
-            <FilterItem label="职位BD人" />,
-          ],
-        ]}
-      />
-      <PopoverItem label="客户">
-        {({ value, onChange }) => (
-          <Input value={value} onChange={(e) => onChange(e.target.value)} />
-        )}
-      </PopoverItem>
-      <FilterLines
-        list={[
-          [
-            <InputFilterItem label="文字" />,
-            <CityFilterItem label="城市" />,
-            <AdvancedSelectFilterItem
-              label="高级选择"
-              api={{
-                loader: () => {
-                  return {
-                    pageData: [
-                      { label: "第一项", value: 1 },
-                      { label: "第二项", value: 2, disabled: true },
-                      {
-                        label: "第三项",
-                        value: 3,
-                      },
-                    ],
-                  };
-                },
-              }}
-            />,
-            <UserFilterItem
-              label="用户选择"
-              api={{
-                loader: () => {
-                  return {
-                    pageData: [
-                      {
-                        label: "用户一",
-                        value: 1,
-                        description: "我是用户描述",
-                      },
-                      {
-                        label: "用户二",
-                        value: 2,
-                        description: "我是用户描述",
-                      },
-                      {
-                        label: "用户三",
-                        value: 3,
-                        description: "我是用户描述",
-                      },
-                    ],
-                  };
-                },
-              }}
-            />,
-            <FunctionSelectFilterItem label="职能选择" />,
-            <IndustrySelectFilterItem label="行业选择" />,
-          ],
-        ]}
-      />
-    </Space>
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- 数值范围筛选
-- 展示 NumberRangeFilterItem 数值范围筛选组件的使用
-- _Filter(@components/Filter)
-
-```jsx
-const {
-  default: Filter,
-  NumberRangeFilterItem,
-  getFilterValue,
-} = _Filter;
-const { useState } = React;
-
-const BaseExample = () => {
-  const [value, onChange] = useState([]);
-
-  return (
-    <Filter
-      value={value}
-      onChange={(value) => {
-        console.log('筛选值:', getFilterValue(value));
-        onChange(value);
-      }}
-      list={[
-        [
-          <NumberRangeFilterItem label="年龄" name="age" unit="岁" />,
-          <NumberRangeFilterItem label="薪资" name="salary" unit="万" />,
-          <NumberRangeFilterItem label="工作经验" name="experience" unit="年" />,
-        ],
-      ]}
-    />
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- 级联筛选
-- 展示 CascaderFilterItem 级联选择组件的使用
-- _Filter(@components/Filter)
-
-```jsx
-const {
-    default: Filter, CascaderFilterItem, getFilterValue,
-} = _Filter;
-const {useState} = React;
-
-const options = [{
-    label: '浙江', value: 'zhejiang', children: [{
-        label: '杭州',
-        value: 'hangzhou',
-        children: [{label: '西湖区', value: 'xihu'}, {label: '滨江区', value: 'binjiang'}, {
-            label: '余杭区', value: 'yuhang'
-        },],
-    }, {
-        label: '宁波',
-        value: 'ningbo',
-        children: [{label: '海曙区', value: 'haishu'}, {label: '江北区', value: 'jiangbei'},],
-    },],
-}, {
-    label: '江苏', value: 'jiangsu', children: [{
-        label: '南京',
-        value: 'nanjing',
-        children: [{label: '玄武区', value: 'xuanwu'}, {label: '秦淮区', value: 'qinhuai'},],
-    }, {
-        label: '苏州',
-        value: 'suzhou',
-        children: [{label: '姑苏区', value: 'gusu'}, {label: '吴中区', value: 'wuzhong'},],
-    },],
-},];
-
-const BaseExample = () => {
-    const [value, onChange] = useState([]);
-
-    return (<Filter
-        value={value}
-        onChange={(value) => {
-            console.log('筛选值:', getFilterValue(value));
-            onChange(value);
-        }}
-        list={[[<CascaderFilterItem
-            label="地区选择"
-            name="region"
-            options={options}
-            placeholder="请选择地区"
-        />,],]}
-    />);
-};
-
-render(<BaseExample/>);
-
-```
-
-- 自定义筛选字段
-- 展示如何使用 withFilterValue 将原生 Select 组件包装成筛选字段
-- _Filter(@components/Filter),antd(antd)
-
-```jsx
-const {
-  default: Filter,
-  InputFilterItem,
-  CityFilterItem,
-  withFilterValue,
-} = _Filter;
-const { Select } = antd;
-const { useState } = React;
-
-// 自定义下拉筛选组件 - 展示如何使用 withFilterValue 包装原生组件
-const CustomSelectFilter = withFilterValue(({ label, value, onChange, options }) => {
-  return (
-    <Select
-      placeholder={&#96;请选择${label}&#96;}
-      value={value?.value}
-      onChange={(val) => onChange({ label, value: val })}
-      allowClear
-      style={{ width: 200 }}
-      options={options}
-    />
-  );
-});
-
-const BaseExample = () => {
-  const [value, onChange] = useState([]);
-
-  return (
-    <Filter
-      value={value}
-      onChange={(value) => {
-        console.log('筛选值:', value);
-        onChange(value);
-      }}
-      list={[
-        [
-          <InputFilterItem label="部门" name="department" placeholder="请输入部门名称" />,
-          <CityFilterItem label="城市" name="city" />,
-          <CustomSelectFilter
-            label="项目状态"
-            name="status"
-            options={[
-              { label: '进行中', value: 'ongoing' },
-              { label: '已完成', value: 'completed' },
-              { label: '已暂停', value: 'paused' },
-              { label: '已取消', value: 'cancelled' },
-            ]}
-          />,
-          <CustomSelectFilter
-            label="优先级"
-            name="priority"
-            options={[
-              { label: '高', value: 'high' },
-              { label: '中', value: 'medium' },
-              { label: '低', value: 'low' },
-            ]}
-          />,
-        ],
-      ]}
-    />
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- FilterProvider 和 useFilter
-- 展示如何使用 FilterProvider 和 useFilter Hook 自定义筛选界面
-- _Filter(@components/Filter),antd(antd)
-
-```jsx
-const {
-  FilterProvider,
-  FilterLines,
-  FilterValueDisplay,
-  useFilter,
-  InputFilterItem,
-  CityFilterItem,
-  UserFilterItem,
-  FunctionSelectFilterItem,
-  IndustrySelectFilterItem,
-  DatePickerFilterItem,
-  NumberRangeFilterItem,
-} = _Filter;
-const { Space, Card, Button, Modal, Tag, Alert } = antd;
-const { useState } = React;
-
-// 演示 FilterProvider 和 useFilter 的使用
-const CustomFilterContent = () => {
-  const { value, onChange } = useFilter();
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const handleViewFilterValue = () => {
-    setModalVisible(true);
-  };
-
-  const renderFilterValue = () => {
-    if (!value) {
-      return <p>暂无筛选条件</p>;
-    }
-
-    // 处理 value 可能是 Map 的情况
-    const valueArray = value instanceof Map ? Array.from(value.values()) : (Array.isArray(value) ? value : []);
-
-    if (valueArray.length === 0) {
-      return <p>暂无筛选条件</p>;
-    }
-
-    return (
-      <Space direction="vertical" size={12}>
-        {valueArray.map((item, index) => (
-          <Tag key={index} color="blue" style={{ fontSize: 14 }}>
-            <strong>{item.label}</strong>: {Array.isArray(item.value)
-              ? item.value.map(v => v.label).join(', ')
-              : item.value?.label || item.value}
-          </Tag>
-        ))}
-      </Space>
-    );
-  };
-
-  return (
-    <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Alert
-        message="使用提示"
-        description="点击筛选项，输入值后点击「确定」按钮，然后点击下方按钮查看筛选条件"
-        type="info"
-        showIcon
-      />
-
-      <Card title="筛选器" size="small">
-        <FilterLines
-          list={[
-            [
-              <InputFilterItem label="姓名" name="name" />,
-              <CityFilterItem label="城市" name="city" />,
-              <UserFilterItem label="用户" name="user" />,
-              <FunctionSelectFilterItem label="职能" name="function" />,
-            ],
-            [
-              <IndustrySelectFilterItem label="行业" name="industry" />,
-              <DatePickerFilterItem label="创建时间" name="createTime" />,
-              <NumberRangeFilterItem label="年龄" name="age" />,
-            ],
-          ]}
+          options={options}
         />
-      </Card>
-
-      <Button type="primary" onClick={handleViewFilterValue}>
-        查看筛选值
-      </Button>
-
-      <Modal
-        title="当前筛选值"
-        open={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={[
-          <Button key="close" onClick={() => setModalVisible(false)}>
-            关闭
-          </Button>,
-        ]}
-        width={600}
-      >
-        {renderFilterValue()}
-        <div style={{ marginTop: 16 }}>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              navigator.clipboard.writeText(JSON.stringify(value, null, 2));
-            }}
-          >
-            复制 JSON 数据
-          </Button>
-        </div>
-      </Modal>
-    </Space>
-  );
-};
-
-const BaseExample = () => {
-  const [value, setValue] = useState([]);
-
-  return (
-    <FilterProvider value={value} onChange={setValue}>
-      <CustomFilterContent />
-      {value.length > 0 && (
-        <FilterValueDisplay value={value} onChange={setValue} />
       )}
-    </FilterProvider>
+    </PopoverItem>
   );
 };
 
-render(<BaseExample />);
+const FilterFieldsExample = () => {
+  const [values, setValues] = useState({});
 
-```
-
-- 筛选值映射与提取
-- 展示 createFilterValueMapper 声明式值映射和 pickSelectValues 值提取工具的用法
-- _Filter(@components/Filter),antd(antd)
-
-```jsx
-const {
-  default: Filter,
-  SuperSelectFilterItem,
-  CityFilterItem,
-  InputFilterItem,
-  getFilterValue,
-  pickSelectValues,
-  createFilterValueMapper,
-} = _Filter;
-const { useState } = React;
-const { Space, Card, Divider, Typography } = antd;
-
-const { Text, Title } = Typography;
-
-// 声明式创建 mapFilterValue 函数
-const mapFilterValue = createFilterValueMapper({
-  keyword: 'string',        // 确保字符串类型
-  city: 'multi',            // 多选 → string[]
-  status: 'single',         // 单选 → string
-});
-
-const BaseExample = () => {
-  const [value, onChange] = useState([
-    { name: 'keyword', label: '关键词', value: { label: '搜索词', value: '搜索词' } },
-    { name: 'city', label: '城市', value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }] },
-    { name: 'status', label: '状态', value: [{ label: '启用', value: 'active', id: 'active' }] },
-  ]);
-
-  const rawFilterValue = getFilterValue(value);
-  const mappedFilterValue = mapFilterValue(value, getFilterValue);
+  const fieldConfigs = [
+    {
+      name: 'input',
+      label: '输入筛选',
+      component: InputFilterItem,
+      props: {}
+    },
+    {
+      name: 'numberRange',
+      label: '数字区间',
+      component: NumberRangeFilterItem,
+      props: { unit: '万', min: 0 }
+    },
+    {
+      name: 'date',
+      label: '日期选择',
+      component: DatePickerFilterItem,
+      props: { picker: 'date' }
+    },
+    {
+      name: 'month',
+      label: '月份选择',
+      component: DatePickerFilterItem,
+      props: { picker: 'month' }
+    },
+    {
+      name: 'dateRange',
+      label: '日期范围',
+      component: DateRangePickerFilterItem,
+      props: {}
+    },
+    {
+      name: 'typeDateRange',
+      label: '类型日期范围',
+      component: TypeDateRangePickerFilterItem,
+      props: {}
+    },
+    {
+      name: 'select',
+      label: '下拉选择',
+      component: SelectFilterItem,
+      props: {
+        options: [
+          { value: 'pending', label: '待处理' },
+          { value: 'processing', label: '处理中' },
+          { value: 'completed', label: '已完成' },
+          { value: 'cancelled', label: '已取消' }
+        ]
+      }
+    }
+  ];
 
   return (
-    <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Filter
-        value={value}
-        onChange={onChange}
-        list={[
-          [
-            <InputFilterItem label="关键词" name="keyword" />,
-            <CityFilterItem label="城市" name="city" />,
-            <SuperSelectFilterItem
-              label="状态"
-              name="status"
-              options={[
-                { label: '启用', value: 'active' },
-                { label: '禁用', value: 'disabled' },
-              ]}
-            />,
-          ],
-        ]}
-      />
-
-      <Card title="pickSelectValues 用法" size="small">
-        <Text code>{&#96;pickSelectValues([{ value: 1 }, { id: 2 }, '3'])&#96;}</Text>
-        <br />
-        <Text>结果：{JSON.stringify(pickSelectValues([{ value: 1 }, { id: 2 }, '3']))}</Text>
-        <Divider />
-        <Text code>{&#96;pickSelectValues({ value: 'open' })&#96;}</Text>
-        <br />
-        <Text>结果：{JSON.stringify(pickSelectValues({ value: 'open' }))}</Text>
-      </Card>
-
-      <Card title="createFilterValueMapper 对比" size="small">
-        <Title level={5}>原始 getFilterValue 结果</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-          {JSON.stringify(rawFilterValue, null, 2)}
+    <Flex vertical gap={24}>
+      <h4>筛选字段组件展示</h4>
+      <Flex wrap gap={16}>
+        {fieldConfigs.map(({ name, label, component: Component, props }) => (
+          <Component
+            key={name}
+            label={label}
+            value={values[name]}
+            onChange={(val) => setValues(prev => ({ ...prev, [name]: val }))}
+            {...props}
+          />
+        ))}
+      </Flex>
+      <Flex gap={8}>
+        <span>当前值:</span>
+        <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4, flex: 1 }}>
+          {JSON.stringify(values, null, 2)}
         </pre>
-        <Title level={5}>createFilterValueMapper 映射后结果</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-          {JSON.stringify(mappedFilterValue, null, 2)}
-        </pre>
-      </Card>
-    </Space>
+      </Flex>
+    </Flex>
   );
 };
 
-render(<BaseExample />);
-
-```
-
-- URL 筛选参数
-- 展示 filterToUrlParams、parseFilterEntry、takeFilterEntry、createUrlFilterReader 等 URL 参数序列化与反序列化工具的用法
-- _Filter(@components/Filter),antd(antd)
-
-```jsx
-const {
-  default: Filter,
-  InputFilterItem,
-  CityFilterItem,
-  SuperSelectFilterItem,
-  filterToUrlParams,
-  parseFilterEntry,
-  takeFilterEntry,
-  createUrlFilterReader,
-  getFilterValue,
-  createFilterValueMapper,
-  pickSelectValues,
-  useUrlFilterValue,
-} = _Filter;
-const { useState, useMemo } = React;
-const { Space, Card, Divider, Typography, Button, Alert, Tag } = antd;
-
-const { Text, Title, Paragraph } = Typography;
-
-// ========== 示例数据 ==========
-const sampleFilterValue = [
-  { name: 'keyword', label: '关键词', value: { label: '前端开发', value: '前端开发' } },
-  { name: 'city', label: '城市', value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }] },
-  { name: 'status', label: '状态', value: { label: '招聘中', value: 'active', id: 'active' } },
+// SuperSelect 业务选择器示例
+const departmentOptions = [
+  { value: 'tech', label: '技术研发部' },
+  { value: 'product', label: '产品设计部' },
+  { value: 'operation', label: '运营管理部' },
+  { value: 'hr', label: '人力资源部' },
+  { value: 'finance', label: '财务部' },
+  { value: 'marketing', label: '市场营销部' }
 ];
 
-// 声明式创建 mapFilterValue，配合 URL 参数使用
-const mapFilterValue = createFilterValueMapper({
-  keyword: 'string',
-  city: 'multi',
-  status: 'single',
-});
-
-const BaseExample = () => {
-  const [value, onChange] = useState([]);
-
-  // ===== 1. filterToUrlParams：筛选值 → URL 参数 =====
-  const sampleUrlParams = useMemo(() => filterToUrlParams(sampleFilterValue), []);
-  const liveUrlParams = useMemo(() => filterToUrlParams(value), [value]);
-
-  // ===== 2. parseFilterEntry：解析单个值 =====
-  const parsedEntries = useMemo(() => [
-    { input: "'前端开发'", output: parseFilterEntry('前端开发') },
-    { input: "'招聘中:active'", output: parseFilterEntry('招聘中:active') },
-    { input: "'上海:010'", output: parseFilterEntry('上海:010') },
-  ], []);
-
-  // ===== 3. 从 URL 参数反序列化还原筛选状态 =====
-  const roundTripResult = useMemo(() => {
-    const urlStr = sampleUrlParams.toString();
-    const searchParams = new URLSearchParams(urlStr);
-
-    // 使用 createUrlFilterReader 读取
-    const reader = createUrlFilterReader(searchParams);
-    const keyword = reader.takeFilterEntry('keyword');
-    const city = reader.takeFilterEntry('city', { multi: true });
-    const status = reader.takeFilterEntry('status');
-    const consumedKeys = reader.getConsumedKeys();
-
-    // 还原为 filter 数组
-    const restored = [];
-    if (keyword) restored.push({ name: 'keyword', label: '关键词', value: keyword });
-    if (city) restored.push({ name: 'city', label: '城市', value: city });
-    if (status) restored.push({ name: 'status', label: '状态', value: status });
-
-    return { urlStr, keyword, city, status, consumedKeys, restored };
-  }, [sampleUrlParams]);
-
-  // ===== 4. takeFilterEntry 直接读取 =====
-  const takeResults = useMemo(() => {
-    const sp = sampleUrlParams;
-    return [
-      { input: "takeFilterEntry(params, 'keyword')", output: takeFilterEntry(sp, 'keyword') },
-      { input: "takeFilterEntry(params, 'city', { multi: true })", output: takeFilterEntry(sp, 'city', { multi: true }) },
-      { input: "takeFilterEntry(params, 'status')", output: takeFilterEntry(sp, 'status') },
-    ];
-  }, [sampleUrlParams]);
-
-  // ===== 5. 映射后筛选值 =====
-  const mappedSample = mapFilterValue(sampleFilterValue, getFilterValue);
+const SuperSelectExample = () => {
+  const [values, setValues] = useState({});
 
   return (
-    <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Alert
-        message="URL 筛选参数工具"
-        description="展示筛选值与 URL 参数之间的序列化/反序列化转换流程，以及 createFilterValueMapper 值映射工具"
-        type="info"
-        showIcon
-      />
-
-      {/* ===== 交互式 Filter ===== */}
-      <Card title="交互式筛选器" size="small">
-        <Paragraph type="secondary">选择筛选条件后，下方 URL 参数会实时更新</Paragraph>
-        <Filter
-          value={value}
-          onChange={onChange}
-          list={[
-            [
-              <InputFilterItem label="关键词" name="keyword" />,
-              <CityFilterItem label="城市" name="city" />,
-              <SuperSelectFilterItem
-                label="状态"
-                name="status"
-                options={[
-                  { label: '招聘中', value: 'active' },
-                  { label: '已暂停', value: 'paused' },
-                  { label: '已结束', value: 'closed' },
-                ]}
-              />,
-            ],
+    <Flex vertical gap={24}>
+      <Flex align="center" gap={8}>
+        <h4 style={{ margin: 0 }}>SuperSelect 业务选择器</h4>
+        <Tag color="blue">单选/多选</Tag>
+        <Tag color="blue">搜索</Tag>
+        <Tag color="blue">全选</Tag>
+      </Flex>
+      <p style={{ margin: 0, color: '#666', fontSize: 12 }}>
+        基于 @kne/super-select 的通用选择器筛选项，支持单选/多选、搜索、全选等功能
+      </p>
+      <Flex wrap gap={16}>
+        <SuperSelectFilterItem
+          label="部门（多选）"
+          value={values.dept}
+          onChange={(val) => setValues(prev => ({ ...prev, dept: val }))}
+          options={departmentOptions}
+        />
+        <SuperSelectFilterItem
+          label="状态（单选）"
+          single
+          value={values.status}
+          onChange={(val) => setValues(prev => ({ ...prev, status: val }))}
+          options={[
+            { value: 'active', label: '启用' },
+            { value: 'inactive', label: '停用' }
           ]}
         />
-        {value.length > 0 && (
-          <>
-            <Divider />
-            <Title level={5}>当前筛选值</Title>
-            <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-              {JSON.stringify(value, null, 2)}
-            </pre>
-            <Title level={5}>序列化后的 URL 参数</Title>
-            <pre style={{ background: '#fff3cd', padding: 8, borderRadius: 4, fontSize: 12, wordBreak: 'break-all' }}>
-              {liveUrlParams.toString() || '（无）'}
-            </pre>
-          </>
-        )}
-      </Card>
-
-      {/* ===== filterToUrlParams ===== */}
-      <Card title="filterToUrlParams — 筛选值 → URL 参数" size="small">
-        <Paragraph type="secondary">
-          将筛选值数组序列化为 URLSearchParams，保留 label 信息以便反序列化还原
-        </Paragraph>
-        <Title level={5}>输入：筛选值数组</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{JSON.stringify(sampleFilterValue, null, 2)}
-        </pre>
-        <Title level={5}>输出：URL 参数字符串</Title>
-        <pre style={{ background: '#d4edda', padding: 8, borderRadius: 4, fontSize: 12, wordBreak: 'break-all' }}>
-          {roundTripResult.urlStr}
-        </pre>
-      </Card>
-
-      {/* ===== parseFilterEntry ===== */}
-      <Card title="parseFilterEntry — 解析单个筛选值项" size="small">
-        <Paragraph type="secondary">
-          将 URL 参数中的字符串反序列化为 {&#96;{ label, value }&#96;} 对象
-        </Paragraph>
-        {parsedEntries.map(({ input, output }, i) => (
-          <div key={i} style={{ marginBottom: 8 }}>
-            <Text code>{&#96;parseFilterEntry(${input})&#96;}</Text>
-            {' → '}
-            <Tag color="green">{JSON.stringify(output)}</Tag>
-          </div>
-        ))}
-      </Card>
-
-      {/* ===== takeFilterEntry ===== */}
-      <Card title="takeFilterEntry — 从 URL 参数读取筛选值" size="small">
-        <Paragraph type="secondary">
-          直接从 URLSearchParams 中读取并反序列化指定 key 的筛选值
-        </Paragraph>
-        {takeResults.map(({ input, output }, i) => (
-          <div key={i} style={{ marginBottom: 8 }}>
-            <Text code>{input}</Text>
-            <br />
-            <Text>结果：</Text>
-            <Tag color="blue">{JSON.stringify(output)}</Tag>
-          </div>
-        ))}
-      </Card>
-
-      {/* ===== createUrlFilterReader + 完整还原流程 ===== */}
-      <Card title="createUrlFilterReader — 完整还原流程" size="small">
-        <Paragraph type="secondary">
-          使用 createUrlFilterReader 从 URL 参数读取并还原完整的筛选状态，同时追踪已消费的 key
-        </Paragraph>
-        <Title level={5}>步骤1：从 URL 参数读取各字段值</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;const reader = createUrlFilterReader(searchParams);
-const keyword = reader.takeFilterEntry('keyword');     // → ${JSON.stringify(roundTripResult.keyword)}
-const city    = reader.takeFilterEntry('city', { multi: true }); // → ${JSON.stringify(roundTripResult.city)}
-const status  = reader.takeFilterEntry('status');      // → ${JSON.stringify(roundTripResult.status)}
-reader.getConsumedKeys();                               // → ${JSON.stringify(roundTripResult.consumedKeys)}&#96;}
-        </pre>
-        <Title level={5}>步骤2：还原为筛选值数组</Title>
-        <pre style={{ background: '#d4edda', padding: 8, borderRadius: 4, fontSize: 12 }}>
-          {JSON.stringify(roundTripResult.restored, null, 2)}
-        </pre>
-        <Divider />
-        <Title level={5}>验证：还原后的数据与原始数据一致</Title>
-        <Space>
-          <Tag color="success">还原成功</Tag>
-          <Text type="secondary">
-            keyword: {roundTripResult.keyword?.value} | city: [{roundTripResult.city?.map(c => c.value).join(', ')}] | status: {roundTripResult.status?.value}
-          </Text>
-        </Space>
-      </Card>
-
-      {/* ===== createFilterValueMapper ===== */}
-      <Card title="createFilterValueMapper + filterToUrlParams 配合使用" size="small">
-        <Paragraph type="secondary">
-          实际业务中，先用 createFilterValueMapper 将筛选值映射为接口参数格式，再用 filterToUrlParams 序列化到 URL
-        </Paragraph>
-        <Title level={5}>映射后的筛选值（用于接口请求）</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;const mapFilterValue = createFilterValueMapper({
-  keyword: 'string',   // 确保字符串
-  city: 'multi',       // 多选 → string[]
-  status: 'single',    // 单选 → string
-});
-
-mapFilterValue(filterValue, getFilterValue);
-// →&#96;}
-{'  ' + JSON.stringify(mappedSample, null, 2)}
-        </pre>
-      </Card>
-
-      {/* ===== useUrlFilterValue ===== */}
-      <Card title="useUrlFilterValue — 简化版 URL 筛选初始化" size="small">
-        <Paragraph type="secondary">
-          基于 useUrlFilter 封装的简化版 Hook，使用 createUrlFilterReader 解析 filterParams[key] 格式，自动解析 label:value，支持单选和多选
-        </Paragraph>
-
-        <Title level={5}>1. 数组形式 — 默认单选</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;const [filter, setFilter] = useUrlFilterValue(['keyword', 'status']);
-
-// URL: ?filterParams[keyword]=前端开发&filterParams[status]=招聘中:active
-// → filter: [
-//     { name: 'keyword', value: { label: '前端开发', value: '前端开发' } },
-//     { name: 'status', value: { label: '招聘中', value: 'active' } }
-//   ]&#96;}
-        </pre>
-
-        <Divider />
-
-        <Title level={5}>2. 对象形式 — 多选 + 自定义转换</Title>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;// { multi: true } 表示多选，value 为数组
-// 函数接收解析后的值，返回 filter 项或 null 跳过
-const [filter, setFilter] = useUrlFilterValue({
-  keyword: true,                   // 单选，默认转换
-  city: { multi: true },           // 多选
-  status: (parsed) => parsed       // 自定义：直接用解析值
-    ? { name: 'status', value: parsed }
-    : null
-});
-
-// URL: ?filterParams[city]=上海:010,北京:020
-// → city 的 value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]&#96;}
-        </pre>
-
-        <Divider />
-
-        <Title level={5}>对比 useUrlFilter</Title>
-        <pre style={{ background: '#fff3cd', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;// useUrlFilter（完整控制，需手动解析）
-const [filter, setFilter] = useUrlFilter({
-  readUrlParams: (searchParams) => {
-    const { takeFilterEntry, getConsumedKeys } = createUrlFilterReader(searchParams);
-    const keyword = takeFilterEntry('keyword');
-    const city = takeFilterEntry('city', { multi: true });
-    return { consumedKeys: getConsumedKeys(), keyword, city };
-  },
-  buildFilter: ({ keyword, city }) => [
-    ...(keyword ? [{ name: 'keyword', value: keyword }] : []),
-    ...(city ? [{ name: 'city', value: city }] : []),
-  ]
-});
-
-// useUrlFilterValue（等价简化写法）
-const [filter, setFilter] = useUrlFilterValue({
-  keyword: true,
-  city: { multi: true }
-});&#96;}
-        </pre>
-      </Card>
-    </Space>
+        <SuperSelectFilterItem
+          label="角色（全选）"
+          value={values.role}
+          onChange={(val) => setValues(prev => ({ ...prev, role: val }))}
+          options={[
+            { value: 'admin', label: '管理员' },
+            { value: 'editor', label: '编辑者' },
+            { value: 'viewer', label: '查看者' }
+          ]}
+          allowSelectedAll
+        />
+      </Flex>
+      <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4 }}>
+        {JSON.stringify(values, null, 2)}
+      </pre>
+    </Flex>
   );
 };
 
-render(<BaseExample />);
+// 业务选择器示例（职能/行业/城市）
+const BusinessSelectExample = () => {
+  const [values, setValues] = useState({});
+
+  return (
+    <Flex vertical gap={24}>
+      <Flex align="center" gap={8}>
+        <h4 style={{ margin: 0 }}>业务选择器筛选项</h4>
+        <Tag color="blue">多级数据</Tag>
+        <Tag color="blue">拼音搜索</Tag>
+        <Tag color="blue">国际化</Tag>
+      </Flex>
+      <p style={{ margin: 0, color: '#666', fontSize: 12 }}>
+        基于 @kne/super-select-plus 的职能、行业、城市选择器，支持多级数据、拼音搜索、国际化
+      </p>
+      <Flex wrap gap={16}>
+        <SelectFunctionFilterItem
+          label="职能"
+          value={values.function}
+          onChange={(val) => setValues(prev => ({ ...prev, function: val }))}
+        />
+        <SelectIndustryFilterItem
+          label="行业"
+          value={values.industry}
+          onChange={(val) => setValues(prev => ({ ...prev, industry: val }))}
+        />
+        <SelectAddressFilterItem
+          label="城市（多选）"
+          value={values.city}
+          onChange={(val) => setValues(prev => ({ ...prev, city: val }))}
+        />
+        <SelectAddressFilterItem
+          label="城市（单选）"
+          single
+          value={values.singleCity}
+          onChange={(val) => setValues(prev => ({ ...prev, singleCity: val }))}
+        />
+      </Flex>
+    </Flex>
+  );
+};
+
+render(<FilterFieldsExample />);
+render(<Divider />);
+render(<SuperSelectExample />);
+render(<Divider />);
+render(<BusinessSelectExample />);
 
 ```
 
-- 筛选值拦截器
-- 展示 filterInterceptors、singleSelectInterceptor、multiSelectInterceptor 拦截器的用法，解决 SuperSelect 组件 { id, name } 与 Filter 上下文 { label, value } 格式不匹配的问题
-- _Filter(@components/Filter),antd(antd)
+- 已选值展示
+- 使用 FilterValueDisplay 组件展示已选择的筛选条件，支持单独删除和清空全部
+- _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
 
 ```jsx
-const {
-  default: Filter,
-  SuperSelectFilterItem,
-  filterInterceptors,
-  singleSelectInterceptor,
-  multiSelectInterceptor,
-  getFilterValue,
-  pickSelectValues,
-} = _Filter;
+const { FilterValueDisplay } = _ReactFilter;
+const { Flex } = antd;
 const { useState } = React;
-const { Space, Card, Divider, Typography, Alert } = antd;
 
-const { Text, Title, Paragraph } = Typography;
-
-// filterInterceptors 提供了 single 和 multi 两种预设拦截器
-// 适用于 SuperSelectFilterItem 等使用 { id, name } 格式的组件
-// interceptor.input：将 { label, value } 转为 { id, name }（传入组件的 value 格式）
-// interceptor.output：将 { id, name } 转回 { label, value }（筛选上下文的 value 格式）
-
-const BaseExample = () => {
-  const [value1, onChange1] = useState([]);
-  const [value2, onChange2] = useState([]);
+const FilterValueDisplayExample = () => {
+  const [filterValue, setFilterValue] = useState([
+    { name: 'keyword', label: '关键词', value: { label: 'React', value: 'React' } },
+    { name: 'status', label: '状态', value: { label: '已完成', value: 'completed' } },
+    { name: 'amount', label: '金额', value: { label: '100-500万', value: [100, 500] } },
+    {
+      name: 'tags',
+      label: '标签',
+      value: [
+        { label: '前端', value: 'frontend' },
+        { label: 'React', value: 'react' }
+      ]
+    }
+  ]);
 
   return (
-    <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Alert
-        message="拦截器（Interceptor）说明"
-        description="SuperSelect 等组件使用 { id, name } 格式，而 Filter 上下文使用 { label, value } 格式。filterInterceptors 提供了预设的格式转换拦截器，通过 withFieldItem 的 interceptor 属性自动转换。"
-        type="info"
-        showIcon
+    <Flex vertical gap={16}>
+      <h4>已选筛选条件展示</h4>
+      <FilterValueDisplay
+        value={filterValue}
+        onChange={setFilterValue}
+        extraExpand={
+          <span style={{ fontSize: 12, color: '#999' }}>
+            共 {filterValue.length} 项
+          </span>
+        }
       />
-
-      <Card title="singleSelectInterceptor — 单选拦截器" size="small">
-        <Paragraph type="secondary">
-          适用于 valueKey="id" labelKey="name" 的单选 SuperSelect 场景，自动在 {&#96;{label, value}&#96;} 和 {&#96;{id, name}&#96;} 之间转换
-        </Paragraph>
-        <Filter
-          value={value1}
-          onChange={(value) => {
-            console.log('筛选值:', getFilterValue(value));
-            onChange1(value);
-          }}
-          list={[
-            [
-              <SuperSelectFilterItem
-                label="项目负责人"
-                name="manager"
-                interceptor={singleSelectInterceptor}
-                options={[
-                  { label: '张明', value: 'zhangming', description: '技术部经理' },
-                  { label: '李娜', value: 'lina', description: '产品部总监' },
-                  { label: '王磊', value: 'wanglei', description: '设计部主管' },
-                ]}
-              />,
-              <SuperSelectFilterItem
-                label="项目状态"
-                name="status"
-                interceptor={singleSelectInterceptor}
-                options={[
-                  { label: '进行中', value: 'ongoing', description: '项目正在执行' },
-                  { label: '已完成', value: 'completed', description: '项目已交付' },
-                  { label: '已暂停', value: 'paused', description: '项目暂停中' },
-                ]}
-              />,
-            ],
-          ]}
-        />
-        {value1.length > 0 && (
-          <>
-            <Divider />
-            <Title level={5}>当前筛选值</Title>
-            <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-              {JSON.stringify(getFilterValue(value1), null, 2)}
-            </pre>
-            <Title level={5}>pickSelectValues 提取原始值</Title>
-            <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-              {JSON.stringify(Object.fromEntries(
-                value1.map(item => [item.name, pickSelectValues(item.value)])
-              ), null, 2)}
-            </pre>
-          </>
-        )}
-      </Card>
-
-      <Card title="multiSelectInterceptor — 多选拦截器" size="small">
-        <Paragraph type="secondary">
-          适用于 valueKey="id" labelKey="name" 的多选 SuperSelect 场景，自动在 {&#96;[{label, value}]&#96;} 和 {&#96;[{id, name}]&#96;} 之间转换
-        </Paragraph>
-        <Filter
-          value={value2}
-          onChange={(value) => {
-            console.log('筛选值:', getFilterValue(value));
-            onChange2(value);
-          }}
-          list={[
-            [
-              <SuperSelectFilterItem
-                label="团队成员"
-                name="members"
-                interceptor={multiSelectInterceptor}
-                options={[
-                  { label: '陈思远', value: 'chensiyuan', description: '高级前端工程师' },
-                  { label: '赵晓峰', value: 'zhaoxiaofeng', description: '后端架构师' },
-                  { label: '刘雨桐', value: 'liuyutong', description: 'UI设计师' },
-                  { label: '孙浩然', value: 'sunhaoran', description: '测试工程师' },
-                ]}
-              />,
-              <SuperSelectFilterItem
-                label="技术栈"
-                name="techStack"
-                interceptor={multiSelectInterceptor}
-                options={[
-                  { label: 'React', value: 'react', description: '前端框架' },
-                  { label: 'Vue', value: 'vue', description: '前端框架' },
-                  { label: 'Node.js', value: 'nodejs', description: '后端运行时' },
-                  { label: 'Python', value: 'python', description: '后端语言' },
-                ]}
-              />,
-            ],
-          ]}
-        />
-        {value2.length > 0 && (
-          <>
-            <Divider />
-            <Title level={5}>当前筛选值</Title>
-            <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-              {JSON.stringify(getFilterValue(value2), null, 2)}
-            </pre>
-            <Title level={5}>pickSelectValues 提取原始值</Title>
-            <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-              {JSON.stringify(Object.fromEntries(
-                value2.map(item => [item.name, pickSelectValues(item.value)])
-              ), null, 2)}
-            </pre>
-          </>
-        )}
-      </Card>
-
-      <Card title="filterInterceptors 快捷引用" size="small">
-        <Paragraph type="secondary">
-          filterInterceptors 对象同时提供了 single 和 multi 两种拦截器，可以直接解构使用：
-        </Paragraph>
-        <pre style={{ background: '#f5f5f5', padding: 8, borderRadius: 4, fontSize: 12 }}>
-{&#96;// 方式一：直接引用
-import { singleSelectInterceptor, multiSelectInterceptor } from '@components/Filter';
-
-// 方式二：从 filterInterceptors 解构
-const { single, multi } = filterInterceptors;
-
-// single 等价于 singleSelectInterceptor
-// multi 等价于 multiSelectInterceptor&#96;}
+      <Flex gap={8}>
+        <span>当前值:</span>
+        <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4, flex: 1 }}>
+          {JSON.stringify(filterValue, null, 2)}
         </pre>
-      </Card>
-    </Space>
+      </Flex>
+    </Flex>
   );
 };
 
-render(<BaseExample />);
+render(<FilterValueDisplayExample />);
+
+```
+
+- 弹出层筛选
+- 使用 PopoverItem 组件实现弹出层形式的筛选项，支持文本输入、数字输入、下拉选择和数值范围等多种交互形式
+- _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
+
+```jsx
+const { PopoverItem } = _ReactFilter;
+const { Input, InputNumber, Space, Select, Radio, Flex } = antd;
+const { useState } = React;
+
+const PopoverItemExample = () => {
+  const [inputValue, setInputValue] = useState(null);
+  const [numberValue, setNumberValue] = useState(null);
+  const [selectValue, setSelectValue] = useState(null);
+  const [rangeValue, setRangeValue] = useState(null);
+
+  return (
+    <Flex vertical gap={24}>
+      <h4>弹出层筛选组件示例</h4>
+      <Flex wrap gap={16}>
+        {/* 输入框筛选 */}
+        <PopoverItem
+          label="文本输入"
+          value={inputValue}
+          onChange={setInputValue}
+        >
+          {({ value, onChange }) => (
+            <Input
+              style={{ width: 240 }}
+              placeholder="请输入文本"
+              value={value?.value || ''}
+              onChange={(e) => onChange(
+                e.target.value ? { label: e.target.value, value: e.target.value } : null
+              )}
+            />
+          )}
+        </PopoverItem>
+
+        {/* 数字输入筛选 */}
+        <PopoverItem
+          label="数字输入"
+          value={numberValue}
+          onChange={setNumberValue}
+          onValidate={(val) => val?.value !== undefined}
+        >
+          {({ value, onChange }) => (
+            <InputNumber
+              style={{ width: 240 }}
+              placeholder="请输入数字"
+              value={value?.value}
+              onChange={(val) => onChange(
+                val !== null ? { label: String(val), value: val } : null
+              )}
+            />
+          )}
+        </PopoverItem>
+
+        {/* 下拉选择筛选 */}
+        <PopoverItem
+          label="状态选择"
+          value={selectValue}
+          onChange={setSelectValue}
+        >
+          {({ value, onChange }) => (
+            <Select
+              style={{ width: 240 }}
+              placeholder="请选择状态"
+              value={value?.value}
+              onChange={(val, option) => onChange({
+                value: val,
+                label: option?.label || val
+              })}
+              options={[
+                { value: 'active', label: '激活' },
+                { value: 'inactive', label: '未激活' },
+                { value: 'pending', label: '待处理' }
+              ]}
+            />
+          )}
+        </PopoverItem>
+
+        {/* 数字范围筛选 */}
+        <PopoverItem
+          label="数值范围"
+          value={rangeValue}
+          onChange={setRangeValue}
+          onValidate={(val) => {
+            const range = val?.value;
+            return !(range && range[0] !== undefined && range[1] !== undefined && range[1] < range[0]);
+          }}
+        >
+          {({ value, onChange }) => (
+            <Space.Compact>
+              <InputNumber
+                style={{ width: 100 }}
+                placeholder="最小值"
+                value={value?.value?.[0]}
+                onChange={(val) => onChange({
+                  label: &#96;${val || '?'}-${value?.value?.[1] || '?'}&#96;,
+                  value: [val, value?.value?.[1]]
+                })}
+              />
+              <Input
+                style={{ width: 30, textAlign: 'center', borderLeft: 0, borderRight: 0 }}
+                placeholder="~"
+                disabled
+              />
+              <InputNumber
+                style={{ width: 100 }}
+                placeholder="最大值"
+                value={value?.value?.[1]}
+                onChange={(val) => onChange({
+                  label: &#96;${value?.value?.[0] || '?'}-${val || '?'}&#96;,
+                  value: [value?.value?.[0], val]
+                })}
+              />
+            </Space.Compact>
+          )}
+        </PopoverItem>
+      </Flex>
+
+      <Flex vertical gap={8}>
+        <h5>当前值:</h5>
+        <pre style={{ margin: 0, background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+          {JSON.stringify({
+            文本输入: inputValue,
+            数字输入: numberValue,
+            状态选择: selectValue,
+            数值范围: rangeValue
+          }, null, 2)}
+        </pre>
+      </Flex>
+    </Flex>
+  );
+};
+
+render(<PopoverItemExample />);
 
 ```
 
 ### API
 
-### Filter 组件
+### Filter 主组件
 
-筛选组件的主入口，用于构建灵活的筛选条件界面。支持受控和非受控模式，自动管理筛选值状态。
+筛选组件，用于展示筛选项和处理筛选条件。
 
-#### 组件属性
+#### 属性
 
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| value | 筛选值数组，受控模式使用 | array | 否 | [] |
-| onChange | 筛选值变化回调函数 | function | 否 | - |
-| defaultValue | 默认筛选值 | array | 否 | [] |
-| list | 筛选项配置数组，支持多行布局 | array | 否 | - |
-| displayLine | 默认显示的行数，超过则支持展开/收起 | number | 否 | 1 |
-| label | 筛选标题，默认显示"筛选" | ReactNode | 否 | - |
-| extra | 额外内容，通常用于放置搜索输入框等 | ReactNode | 否 | - |
-| extraExpand | 额外展开内容，显示在已选筛选值右侧 | ReactNode | 否 | - |
-| className | 自定义类名 | string | 否 | - |
+| 属性           | 类型                                                   | 默认值    | 说明              |
+|--------------|------------------------------------------------------|--------|-----------------|
+| value        | `Array<{ name: string, label: string, value: any }>` | -      | 筛选值数组           |
+| defaultValue | `Array<{ name: string, label: string, value: any }>` | `[]`   | 默认筛选值           |
+| onChange     | `(value: Array) => void`                             | -      | 筛选值变化回调         |
+| list         | `Array<Array>`                                       | `[]`   | 筛选项配置数组，支持多行    |
+| displayLine  | `number`                                             | `1`    | 默认展示的行数，超出部分折叠  |
+| label        | `string`                                             | `'筛选'` | 筛选区域标题          |
+| extra        | `ReactNode`                                          | -      | 额外操作区域，通常放置搜索按钮 |
+| extraExpand  | `ReactNode`                                          | -      | 已选区域额外内容        |
+| className    | `string`                                             | -      | 自定义类名           |
 
-#### value 数据结构
+#### 静态方法
 
-筛选值数组中每个元素的结构：
+| 方法                                              | 说明                                                                    |
+|-------------------------------------------------|-----------------------------------------------------------------------|
+| `Filter.getFilterValue(filterValue)`            | 将筛选值数组转换为参数对象，如 `{ name: value }`                                     |
+| `Filter.useFilter()`                            | 获取 Filter Context，返回 `{ value, onChange }`                            |
+| `Filter.pickSelectValues(value)`                | 从筛选值中提取原始值数组，支持 `{ value }`、`{ id }` 格式                              |
+| `Filter.createFilterValueMapper(fieldMappers)`  | 声明式创建 mapFilterValue 函数，按字段映射转换规则                                   |
+| `Filter.filterToUrlParams(filterValue, options)`| 将筛选值数组序列化为 URLSearchParams，保留 label 信息                             |
+| `Filter.parseFilterEntry(str)`                  | 解析 URL 参数中的单个筛选值项为 `{ label, value }`                                |
+| `Filter.takeFilterEntry(searchParams, key, options)` | 从 URL 参数中读取筛选值项，支持单选/多选                                          |
+| `Filter.createUrlFilterReader(searchParams)`    | 创建 URL 筛选参数读取器，自动追踪已消费的参数 key                                       |
+| `Filter.useUrlFilter(options)`                  | 从 URL 参数初始化 Filter 状态的 hook（React Router 环境）                        |
+| `Filter.useUrlFilterValue(mapping)`             | useUrlFilter 的简化版，基于 filterParams[key] 格式自动解析 URL 参数                |
+| `Filter.createUrlParamsReader(searchParams)`    | 创建通用 URL 参数读取器，自动追踪已消费的参数 key                                       |
+| `Filter.stripConsumedUrlParams(searchParams, consumedKeys)` | 从 URL 参数中移除已消费的 key，返回新的 URLSearchParams 或 null |
+| `Filter.filterInterceptors.single`              | 单选拦截器：`{id, name}` ↔ `{label, value}` 数据格式转换                       |
+| `Filter.filterInterceptors.multi`              | 多选拦截器：`[{id, name}]` ↔ `[{label, value}]` 数据格式转换                    |
+
+#### 使用示例
 
 ```javascript
-{
-  name: 'city',      // 筛选字段名
-  label: '城市',     // 筛选项标签
-  value: [           // 筛选值，可以是单个值或数组
-    { label: '上海', value: '010' },
-    { label: '北京', value: '020' }
-  ]
-}
+import Filter, { fields } from '@kne/react-filter';
+
+const { InputFilterItem, NumberRangeFilterItem } = fields;
+
+<Filter
+  value={filterValue}
+  onChange={setFilterValue}
+  list={[
+    [
+      { type: InputFilterItem, props: { name: 'keyword', label: '关键词' } },
+      { type: NumberRangeFilterItem, props: { name: 'amount', label: '金额' } }
+    ]
+  ]}
+  displayLine={1}
+  extra={<Button type="primary">搜索</Button>}
+/>
 ```
 
-### AdvancedFilter 组件
+---
 
-高级筛选组件，适用于需要展示多个筛选条件且支持展开/收起的场景。相比普通 Filter 组件，提供更紧凑的布局。
+### AdvancedFilter 高级筛选组件
 
-#### 组件属性
+高级筛选组件，用于更复杂的筛选场景，采用垂直布局。
 
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| value | 筛选值数组 | array | 否 | [] |
-| onChange | 筛选值变化回调函数 | function | 否 | - |
-| defaultValue | 默认筛选值 | array | 否 | [] |
-| list | 筛选项配置数组 | array | 否 | - |
-| more | 更多筛选项，支持展开/收起 | ReactNode | 否 | - |
+#### 属性
 
-### FilterLines 组件
+| 属性           | 类型                                                   | 默认值  | 说明       |
+|--------------|------------------------------------------------------|------|----------|
+| value        | `Array<{ name: string, label: string, value: any }>` | -    | 筛选值数组    |
+| defaultValue | `Array<{ name: string, label: string, value: any }>` | `[]` | 默认筛选值    |
+| onChange     | `(value: Array) => void`                             | -    | 筛选值变化回调  |
+| list         | `Array<Array>`                                       | `[]` | 筛选项配置数组  |
+| more         | `Array`                                              | -    | 额外折叠的筛选项 |
+| className    | `string`                                             | -    | 自定义类名    |
 
-筛选项布局组件，用于按照行展示筛选项，支持展开/收起功能。
+#### 使用示例
 
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| list | 筛选项配置数组，支持多行布局 | array | 否 | - |
-| displayLine | 默认显示的行数 | number | 否 | 1 |
-| label | 筛选标题 | ReactNode | 否 | - |
-| extra | 额外内容 | ReactNode | 否 | - |
-| className | 自定义类名 | string | 否 | - |
-
-### FilterValueDisplay 组件
-
-筛选值展示组件，用于展示已选择的筛选条件，支持单个删除和清空全部。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| value | 筛选值数组 | array | 是 | - |
-| onChange | 筛选值变化回调函数 | function | 是 | - |
-| extraExpand | 额外展开内容，显示在清空按钮左侧 | ReactNode | 否 | - |
-
-### FilterItem 组件
-
-筛选项容器组件，提供统一的样式和交互效果。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 筛选项标签 | ReactNode | 否 | - |
-| open | 是否打开下拉 | boolean | 否 | - |
-| active | 是否激活状态（有选中值时自动激活） | boolean | 否 | - |
-| children | 筛选项内容 | ReactNode | 否 | - |
-
-### PopoverItem 组件
-
-弹出式筛选项组件，基于 Popover 实现。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 筛选项标签 | ReactNode | 否 | - |
-| name | 字段名 | string | 否 | - |
-| children | 渲染函数，接收 { value, onChange } 参数 | function | 是 | - |
-
-### SearchInput 组件
-
-搜索输入框组件，通常用于放置在筛选器右侧的搜索功能。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| placeholder | 输入框占位符 | string | 否 | - |
-| value | 输入框值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### FilterItemContainer 组件
-
-筛选项容器组件，用于包装需要传递额外属性的筛选项。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| name | 字段名 | string | 否 | - |
-| label | 字段标签 | string | 否 | - |
-| children | 渲染函数，接收筛选项 props | function | 是 | - |
-
-### InputFilterItem 组件
-
-文本输入筛选项组件，用于文本类型的筛选。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| placeholder | 输入框占位符 | string | 否 | 请输入{label} |
-| value | 输入框值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### DatePickerFilterItem 组件
-
-日期选择筛选项组件，支持多种日期选择模式。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| picker | 日期选择器类型，可选值：`date`、`week`、`month`、`quarter`、`year` | string | 否 | `date` |
-| value | 日期值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### DateRangePickerFilterItem 组件
-
-日期范围选择筛选项组件，用于选择日期范围。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| value | 日期范围值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### TypeDateRangePickerFilterItem 组件
-
-类型化日期范围选择筛选项组件，支持日期类型选择（如创建时间、更新时间等）。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| allowEmpty | 是否允许清空 [开始时间清空, 结束时间清空] | array | 否 | [false, false] |
-| value | 日期范围值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### CityFilterItem 组件
-
-城市选择筛选项组件，支持省市区三级联动选择。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| value | 城市值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-
-### NumberRangeFilterItem 组件
-
-数值范围筛选项组件，用于选择数值范围。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| unit | 数值单位 | string | 否 | - |
-| value | 数值范围值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### AdvancedSelectFilterItem 组件
-
-高级选择筛选项组件，支持远程数据加载、分页、搜索等功能。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| api | API 配置对象 | object | 否 | - |
-| api.loader | 数据加载函数 | function | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### SuperSelectFilterItem 组件
-
-超级选择筛选项组件，支持展示描述信息、图标等丰富的选项内容。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| options | 选项数据数组 | array | 否 | - |
-| interceptor | 值转换拦截器，用于在组件内部格式和筛选上下文格式之间转换 | object | 否 | - |
-| interceptor.input | 输入拦截器，将上下文值转为组件内部格式 | function | 否 | - |
-| interceptor.output | 输出拦截器，将组件内部值转为上下文格式 | function | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### SuperSelectTableListFilterItem 组件
-
-超级表格列表选择筛选项组件，以表格形式展示选项，支持展示多列信息。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| interceptor | 值转换拦截器 | object | 否 | - |
-| interceptor.input | 输入拦截器 | function | 否 | - |
-| interceptor.output | 输出拦截器 | function | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### UserFilterItem 组件
-
-用户选择筛选项组件，专门用于用户选择场景。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| api | API 配置对象 | object | 否 | - |
-| api.loader | 数据加载函数 | function | 否 | - |
-| value | 用户值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### SuperSelectUserFilterItem 组件
-
-超级用户选择筛选项组件，支持展示用户描述信息。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| api | API 配置对象 | object | 否 | - |
-| api.loader | 数据加载函数 | function | 否 | - |
-| value | 用户值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### FunctionSelectFilterItem 组件
-
-职能选择筛选项组件，用于选择职能信息。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| selectLevel | 选择层级 | number | 否 | - |
-| maxLength | 最大选择数量 | number | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-| onlyAllowLastLevel | 是否只允许选择最后一级 | boolean | 否 | false |
-| value | 职能值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### IndustrySelectFilterItem 组件
-
-行业选择筛选项组件，用于选择行业信息。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| selectLevel | 选择层级 | number | 否 | - |
-| maxLength | 最大选择数量 | number | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-| onlyAllowLastLevel | 是否只允许选择最后一级 | boolean | 否 | false |
-| value | 行业值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### CascaderFilterItem 组件
-
-级联选择筛选项组件，用于级联数据的选择。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| options | 选项数据数组 | array | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### TreeFilterItem 组件
-
-树形选择筛选项组件，用于树形结构数据的选择。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| api | API 配置对象 | object | 否 | - |
-| api.loader | 数据加载函数 | function | 否 | - |
-| fieldNames | 字段名映射 | object | 否 | - |
-| fieldNames.title | 标题字段名 | string | 否 | `title` |
-| fieldNames.key | 键字段名 | string | 否 | `key` |
-| fieldNames.children | 子节点字段名 | string | 否 | `children` |
-| single | 是否单选 | boolean | 否 | false |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### 高级字段组件
-
-#### ListFilterItem 组件（AdvancedFilter.fields）
-
-列表选择筛选项组件，以标签形式展示选项，支持单选和多选。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| items | 选项数据数组 | array | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-| maxLength | 最大选择数量 | number | 否 | 5 |
-| custom | 自定义筛选项 | object | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
-### 工具函数
-
-#### getFilterValue
-
-将筛选值数组转换为对象格式。
-
-**函数签名：**
 ```javascript
-getFilterValue(filterValue: array): object
+import { AdvancedFilter, fields } from '@kne/react-filter';
+
+<AdvancedFilter
+  value={filterValue}
+  onChange={setFilterValue}
+  list={[
+    [
+      { type: InputFilterItem, props: { name: 'name', label: '姓名' } }
+    ]
+  ]}
+/>
 ```
 
-**参数说明：**
+---
 
-| 参数名 | 说明 | 类型 |
-|--------|------|------|
-| filterValue | 筛选值数组 | array |
+### FilterValueDisplay 已选值展示
 
-**返回值：**
+展示已选择的筛选条件，支持单独删除和清空全部。
 
-转换后的对象，格式为 `{ name: value, ... }`，其中 value 是提取的值数组或单个值。
+#### 属性
 
-**示例：**
+| 属性          | 类型                                                   | 默认值 | 说明      |
+|-------------|------------------------------------------------------|-----|---------|
+| value       | `Array<{ name: string, label: string, value: any }>` | -   | 筛选值数组   |
+| onChange    | `(value: Array) => void`                             | -   | 筛选值变化回调 |
+| extraExpand | `ReactNode`                                          | -   | 额外展示内容  |
+
+---
+
+### PopoverItem 弹出层筛选项
+
+弹出层形式的筛选项，支持确认取消操作。
+
+#### 属性
+
+| 属性               | 类型                                          | 默认值            | 说明        |
+|------------------|---------------------------------------------|----------------|-----------|
+| label            | `string`                                    | -              | 筛选项标签     |
+| value            | `{ label: string, value: any }`             | -              | 当前值       |
+| onChange         | `(value: object) => void`                   | -              | 值变化回调     |
+| onValidate       | `(value: object) => boolean`                | -              | 确认按钮校验函数  |
+| onOpenChange     | `(open: boolean) => void`                   | -              | 弹出层状态变化回调 |
+| placement        | `string`                                    | `'bottomLeft'` | 弹出层位置     |
+| overlayClassName | `string`                                    | -              | 弹出层自定义类名  |
+| children         | `(props: { value, onChange }) => ReactNode` | -              | 内容渲染函数    |
+
+#### 使用示例
+
 ```javascript
-const filterValue = [
-  { name: 'city', value: [{ label: '上海', value: '010' }] },
-  { name: 'text', value: { label: '测试', value: 'test' } }
-];
-const result = getFilterValue(filterValue);
-// result: { city: ['010'], text: 'test' }
+import { PopoverItem } from '@kne/react-filter';
+
+<PopoverItem
+  label="文本输入"
+  value={inputValue}
+  onChange={setInputValue}
+>
+  {({ value, onChange }) => (
+    <Input
+      value={value?.value}
+      onChange={(e) => onChange({ label: e.target.value, value: e.target.value })}
+    />
+  )}
+</PopoverItem>
 ```
 
-#### useFilter
+---
 
-获取筛选上下文的 Hook。
+### FilterItem 筛选项容器
 
-**函数签名：**
-```javascript
-useFilter(): object
-```
+筛选项的基础容器组件。
 
-**返回值：**
+#### 属性
 
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| value | 筛选值 Map | Map |
-| onChange | 筛选值变化函数 | function |
+| 属性       | 类型          | 默认值 | 说明         |
+|----------|-------------|-----|------------|
+| label    | `string`    | -   | 筛选项标签      |
+| open     | `boolean`   | -   | 是否展开状态     |
+| active   | `boolean`   | -   | 是否激活状态（有值） |
+| children | `ReactNode` | -   | 子元素        |
+
+---
+
+### FilterLines 筛选行
+
+筛选行组件，支持多行展开收起。
+
+#### 属性
+
+| 属性          | 类型             | 默认值    | 说明      |
+|-------------|----------------|--------|---------|
+| list        | `Array<Array>` | `[]`   | 筛选项配置数组 |
+| displayLine | `number`       | `1`    | 默认展示行数  |
+| label       | `string`       | `'筛选'` | 标题      |
+| extra       | `ReactNode`    | -      | 额外操作区域  |
+| className   | `string`       | -      | 自定义类名   |
+
+---
+
+### FilterProvider 状态管理
+
+Filter 状态管理组件，用于自定义 Filter 结构。
+
+#### 属性
+
+| 属性           | 类型                                    | 默认值  | 说明       |
+|--------------|---------------------------------------|------|----------|
+| value        | `Array`                               | -    | 筛选值数组    |
+| defaultValue | `Array`                               | `[]` | 默认筛选值    |
+| onChange     | `(value: Array) => void`              | -    | 筛选值变化回调  |
+| children     | `ReactNode \| (context) => ReactNode` | -    | 子元素或渲染函数 |
+
+---
+
+### 高阶组件
 
 #### withFilterValue
 
-高阶组件，用于自动连接筛选上下文。
+为组件注入筛选值和变更函数。
 
-**函数签名：**
 ```javascript
-withFilterValue(WrappedComponent): ReactComponent
+import { withFilterValue } from '@kne/react-filter';
+
+const MyFilterItem = withFilterValue(({ name, label, value, onChange, ...props }) => {
+  return <Component value={value} onChange={onChange}/>;
+});
 ```
-
-**参数说明：**
-
-| 参数名 | 说明 | 类型 |
-|--------|------|------|
-| WrappedComponent | 被包装的组件 | ReactComponent |
-
-**新增 Props：**
-
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| name | 字段名 | string |
-| label | 字段标签 | string |
 
 #### withFieldItem
 
-高阶组件，用于将表单字段组件包装为筛选项组件。
+为组件包装 FilterItem 样式。
 
-**函数签名：**
 ```javascript
-withFieldItem(WrappedComponent): ReactComponent
+import { withFieldItem } from '@kne/react-filter';
+
+const MyFieldItem = withFieldItem(MyComponent);
 ```
 
-**参数说明：**
+---
 
-| 参数名 | 说明 | 类型 |
-|--------|------|------|
-| WrappedComponent | 被包装的组件 | ReactComponent |
+### 筛选字段组件
 
-**新增 Props：**
+#### InputFilterItem 输入筛选
 
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| name | 字段名 | string |
-| label | 字段标签 | string |
-| interceptor | 拦截器，用于值转换 | object |
-| interceptor.input | 输入拦截器 | function |
-| interceptor.output | 输出拦截器 | function |
+弹出层形式的输入框筛选组件。
 
-#### pickSelectValues
+| 属性          | 类型                   | 默认值 | 说明     |
+|-------------|----------------------|-----|--------|
+| name        | `string`             | -   | 字段名称   |
+| label       | `string`             | -   | 标签     |
+| placeholder | `string`             | -   | 占位符    |
+| onValidate  | `(value) => boolean` | -   | 确认校验函数 |
 
-从筛选值中提取原始值数组。支持 `null`/`undefined`、原始值、`{ value }` 对象、`{ id }` 对象、以及它们的数组。
+#### NumberRangeFilterItem 数字区间筛选
 
-**函数签名：**
+数字区间输入筛选组件。
+
+| 属性          | 类型       | 默认值 | 说明   |
+|-------------|----------|-----|------|
+| name        | `string` | -   | 字段名称 |
+| label       | `string` | -   | 标签   |
+| unit        | `string` | -   | 单位   |
+| min         | `number` | -   | 最小值  |
+| max         | `number` | -   | 最大值  |
+| placeholder | `string` | -   | 占位符  |
+
+#### DatePickerFilterItem 日期筛选
+
+日期选择筛选组件。
+
+| 属性     | 类型                                                   | 默认值            | 说明    |
+|--------|------------------------------------------------------|----------------|-------|
+| name   | `string`                                             | -              | 字段名称  |
+| label  | `string`                                             | -              | 标签    |
+| picker | `'date' \| 'week' \| 'month' \| 'quarter' \| 'year'` | `'date'`       | 选择器类型 |
+| format | `string`                                             | `'YYYY-MM-DD'` | 日期格式  |
+
+#### DateRangePickerFilterItem 日期范围筛选
+
+日期范围选择筛选组件。
+
+| 属性     | 类型                                  | 默认值            | 说明   |
+|--------|-------------------------------------|----------------|------|
+| name   | `string`                            | -              | 字段名称 |
+| label  | `string`                            | -              | 标签   |
+| format | `string`                            | `'YYYY-MM-DD'` | 日期格式 |
+| header | `ReactNode \| (props) => ReactNode` | -              | 头部内容 |
+
+#### TypeDateRangePickerFilterItem 类型日期范围筛选
+
+支持按日/周/月切换的日期范围选择筛选组件。
+
+| 属性     | 类型       | 默认值            | 说明   |
+|--------|----------|----------------|------|
+| name   | `string` | -              | 字段名称 |
+| label  | `string` | -              | 标签   |
+| format | `string` | `'YYYY-MM-DD'` | 日期格式 |
+
+#### SuperSelectFilterItem 通用选择器筛选
+
+基于 `@kne/super-select` 的通用选择器筛选项，支持单选/多选、搜索、全选等功能。
+
+| 属性               | 类型                          | 默认值     | 说明       |
+|------------------|-----------------------------|---------|----------|
+| name             | `string`                    | -       | 字段名称     |
+| label            | `string`                    | -       | 标签       |
+| options          | `Array<{ value, label }>`   | -       | 选项数据     |
+| single           | `boolean`                   | `false` | 是否单选     |
+| allowSelectedAll | `boolean`                   | `false` | 是否支持全选   |
+| maxLength        | `number`                    | -       | 最多可选数量   |
+
+**使用示例：**
+
 ```javascript
-pickSelectValues(value): string[]
+import { SuperSelectFilterItem } from '@kne/react-filter';
+
+// 多选
+<SuperSelectFilterItem
+  label="部门"
+  options={[
+    { value: 'tech', label: '技术研发部' },
+    { value: 'product', label: '产品设计部' }
+  ]}
+/>
+
+// 单选
+<SuperSelectFilterItem
+  label="状态"
+  single
+  options={[
+    { value: 'active', label: '启用' },
+    { value: 'inactive', label: '停用' }
+  ]}
+/>
 ```
 
-**参数说明：**
+> 注意：需要安装 `@kne/super-select` 依赖。
 
-| 参数名 | 说明 | 类型 |
-|--------|------|------|
-| value | 筛选值，支持多种格式 | any |
+#### SelectFunctionFilterItem 职能筛选
 
-**返回值：**
+基于 `@kne/super-select-plus` 的职能选择器筛选项，支持多级职能数据选择、拼音搜索。
 
-提取后的字符串值数组，空值会被过滤。
+| 属性        | 类型        | 默认值     | 说明       |
+|-----------|-----------|---------|----------|
+| name      | `string`  | -       | 字段名称     |
+| label     | `string`  | -       | 标签       |
+| single    | `boolean` | `false` | 是否单选     |
+| maxLength | `number`  | -       | 最多可选数量   |
 
-**示例：**
+> 注意：需要安装 `@kne/super-select-plus` 依赖。
+
+#### SelectIndustryFilterItem 行业筛选
+
+基于 `@kne/super-select-plus` 的行业选择器筛选项，支持多级行业数据选择、拼音搜索。
+
+| 属性        | 类型        | 默认值     | 说明       |
+|-----------|-----------|---------|----------|
+| name      | `string`  | -       | 字段名称     |
+| label     | `string`  | -       | 标签       |
+| single    | `boolean` | `false` | 是否单选     |
+| maxLength | `number`  | -       | 最多可选数量   |
+
+> 注意：需要安装 `@kne/super-select-plus` 依赖。
+
+#### SelectAddressFilterItem 城市筛选
+
+基于 `@kne/super-select-plus` 的城市选择器筛选项，支持国内外城市搜索选择。
+
+| 属性        | 类型        | 默认值     | 说明       |
+|-----------|-----------|---------|----------|
+| name      | `string`  | -       | 字段名称     |
+| label     | `string`  | -       | 标签       |
+| single    | `boolean` | `false` | 是否单选     |
+| maxLength | `number`  | -       | 最多可选数量   |
+
+> 注意：需要安装 `@kne/super-select-plus` 依赖。
+
+#### CityFilterItem（高级筛选）
+
+城市选择器的高级筛选版本，用于 `AdvancedFilter` 组件的 `list` 配置中。展示热门城市标签，支持搜索选择其他城市。
+
+| 属性        | 类型        | 默认值     | 说明         |
+|-----------|-----------|---------|------------|
+| single    | `boolean` | `false` | 是否单选       |
+| maxLength | `number`  | `5`     | 最多可选数量     |
+
+**在高级筛选中使用：**
+
 ```javascript
-pickSelectValues([{ value: 1 }, { id: 2 }, '3'])
-// => ['1', '2', '3']
+import { AdvancedFilter } from '@kne/react-filter';
+import { CityFilterItem } from './AdvancedFilter/fields';
 
-pickSelectValues({ value: 'open' })
-// => ['open']
-
-pickSelectValues(null)
-// => []
+<AdvancedFilter
+  list={[
+    [{ type: CityFilterItem, props: { label: '城市', single: true } }]
+  ]}
+/>
 ```
 
-#### createFilterValueMapper
+---
 
-声明式创建 `mapFilterValue` 函数。`Filter.getFilterValue` 默认只读取 `{ value }` 格式，而 SuperSelectFilterItem 等组件使用 `{ id, name }` 格式，需要额外处理。此工具通过声明字段映射规则，自动生成符合 `(filter, getFilterValue) => value` 签名的函数。
+### TypeDateRangePickerField 类型日期范围选择器
 
-**函数签名：**
-```javascript
-createFilterValueMapper(fieldMappers): function
+支持按日/周/月切换的日期范围选择器基础组件。
+
+| 属性              | 类型                                                         | 默认值                             | 说明       |
+|-----------------|------------------------------------------------------------|---------------------------------|----------|
+| value           | `{ type: string, value: [Date, Date] }`                    | -                               | 当前值      |
+| defaultValue    | `{ type: string, value: [Date, Date] }`                    | `{ type: 'date', value: null }` | 默认值      |
+| onChange        | `(value: object) => void`                                  | -                               | 值变化回调    |
+| shortcuts       | `boolean`                                                  | `true`                          | 是否显示快捷选项 |
+| shortcutOptions | `Array<{ label: string, getValue: () => [Dayjs, Dayjs] }>` | -                               | 自定义快捷选项  |
+
+**value 结构：**
+
+```typescript
+interface TypeDateRangeValue {
+  type: 'date' | 'week' | 'month';  // 日期类型
+  value: [Date, Date] | null;       // 日期范围 [开始时间, 结束时间]
+}
 ```
 
-**参数说明：**
+**默认快捷选项：**
 
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| fieldMappers | 字段名到映射规则的映射 | object | 是 |
-| fieldMappers[fieldName] | 映射规则，支持字符串或函数 | string \| function | 是 |
+- 近7天：`dayjs().subtract(7, 'day')` 至今天
+- 本月：本月第一天至最后一天
+- 近三个月：`dayjs().subtract(3, 'month')` 至今天
+- 当年：本年第一天至最后一天
 
-**映射规则类型：**
+**自定义快捷选项示例：**
 
-| 类型值 | 说明 | 输出格式 |
-|--------|------|----------|
-| `'string'` | 确保值为字符串类型 | `string` |
-| `'multi'` | 多选，从 filter entry 提取值数组 | `string[]` |
-| `'single'` | 单选，从 filter entry 提取第一个值 | `string` |
-| `function` | 自定义转换函数，接收 `(rawValue, { entry, filter, value })` 返回新值 | any |
-
-**返回值：**
-
-返回一个 `mapFilterValue` 函数，签名为 `(filter, getFilterValue) => object`，可直接传给 BizUnit 等组件的 `mapFilterValue` 选项。
-
-**示例：**
 ```javascript
-const mapFilterValue = createFilterValueMapper({
-  id: 'string',
-  roles: 'multi',
-  tenantOrgId: 'single',
-  status: (rawValue) => normalizeStatus(rawValue)
-});
-const filterValue = mapFilterValue(filter, Filter.getFilterValue);
+import { TypeDateRangePickerField } from '@kne/react-filter';
+
+<TypeDateRangePickerField
+  shortcuts={true}
+  shortcutOptions={[
+    {
+      label: '最近一周',
+      getValue: () => [dayjs().subtract(7, 'day').startOf('day'), dayjs().endOf('day')]
+    },
+    {
+      label: '最近一月',
+      getValue: () => [dayjs().subtract(1, 'month').startOf('day'), dayjs().endOf('day')]
+    }
+  ]}
+/>
 ```
+
+---
+
+### SearchInput 搜索输入
+
+搜索输入组件。
+
+| 属性          | 类型       | 默认值 | 说明   |
+|-------------|----------|-----|------|
+| name        | `string` | -   | 字段名称 |
+| label       | `string` | -   | 标签   |
+| placeholder | `string` | -   | 占位符  |
+
+---
+
+### 工具方法
+
+#### getFilterValue
+
+将筛选值数组转换为参数对象。
+
+```javascript
+import { getFilterValue } from '@kne/react-filter';
+
+const filterValue = [
+  { name: 'keyword', value: { label: 'test', value: 'test' } },
+  { name: 'status', value: [{ label: '已完成', value: 'done' }] }
+];
+
+const params = getFilterValue(filterValue);
+// { keyword: 'test', status: ['done'] }
+```
+
+---
+
+### 筛选值结构
+
+筛选值数组中的每一项结构：
+
+```typescript
+interface FilterValueItem {
+  name: string;      // 字段名称
+  label: string;     // 字段标签（用于展示）
+  value: {           // 单个值
+    label: string;   // 显示文本
+    value: any;      // 实际值
+  } | Array<{        // 或多个值
+    label: string;
+    value: any;
+  }> | null;         // 或空值
+}
+```
+
+---
+
+### URL 参数相关
+
+#### filterToUrlParams
+
+将筛选值数组序列化为 URLSearchParams，保留 label 信息以便反序列化还原完整筛选状态。
+
+| 参数             | 类型             | 默认值             | 说明                       |
+|----------------|----------------|-----------------|--------------------------|
+| filterValue    | `Array`        | -               | 筛选值数组                    |
+| options.prefix | `string`       | `'filterParams'` | URL 参数前缀，设为空字符串则不加前缀     |
+
+**序列化格式**：
+- 单值且 `label === value`：`prefix[name]=value`（如输入框）
+- 单值且 `label !== value`：`prefix[name]=label:value`
+- 多值：`prefix[name]=label1:value1,label2:value2`
+
+**使用示例：**
+
+```javascript
+import { filterToUrlParams } from '@kne/react-filter';
+
+const params = filterToUrlParams([
+  { name: 'keyword', label: '关键词', value: { label: '测试', value: '测试' } },
+  { name: 'city', label: '城市', value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }] },
+]);
+// params.toString() => 'filterParams[keyword]=测试&filterParams[city]=上海:010,北京:020'
+
+// 自定义前缀
+filterToUrlParams(filterValue, { prefix: 'f' });
+// => 'f[keyword]=测试'
+
+// 无前缀（直接平铺到 URL）
+filterToUrlParams(filterValue, { prefix: '' });
+// => 'keyword=测试'
+```
+
+---
+
+#### parseFilterEntry
+
+解析 URL 参数中的单个筛选值项，反序列化为 `{ label, value }` 对象。
+
+| 参数  | 类型       | 说明            |
+|-----|----------|---------------|
+| str | `string` | URL 参数中的原始字符串 |
+
+**解析规则**：
+- 无冒号：label 和 value 相同，如 `"测试"` → `{ label: '测试', value: '测试' }`
+- 有冒号：冒号前为 label，冒号后为 value，如 `"启用:active"` → `{ label: '启用', value: 'active' }`
+
+```javascript
+import { parseFilterEntry } from '@kne/react-filter';
+
+parseFilterEntry('测试');
+// => { label: '测试', value: '测试' }
+
+parseFilterEntry('启用:active');
+// => { label: '启用', value: 'active' }
+```
+
+---
+
+#### takeFilterEntry
+
+从 URL 参数中读取筛选值项，返回单选 `{ label, value }` 或多选数组。
+
+| 参数              | 类型                | 默认值             | 说明               |
+|-----------------|-------------------|-----------------|------------------|
+| searchParams    | `URLSearchParams` | -               | URL 参数对象         |
+| key             | `string`          | -               | 参数名（不含前缀）        |
+| options.multi   | `boolean`         | `false`         | 是否多选             |
+| options.prefix  | `string`          | `'filterParams'` | URL 参数前缀         |
+
+```javascript
+import { takeFilterEntry } from '@kne/react-filter';
+
+// URL: ?filterParams[city]=上海:010,北京:020
+takeFilterEntry(searchParams, 'city', { multi: true });
+// => [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
+
+takeFilterEntry(searchParams, 'keyword', { prefix: '' });
+// => { label: '测试', value: '测试' }
+```
+
+---
+
+#### createUrlFilterReader
+
+创建 URL 筛选参数读取器，自动追踪已消费的参数 key。配合 `useUrlFilter` 使用，readUrlParams 返回的 consumedKeys 可被自动清除。
+
+| 参数              | 类型                | 默认值             | 说明       |
+|-----------------|-------------------|-----------------|----------|
+| searchParams    | `URLSearchParams` | -               | URL 参数对象 |
+| options.prefix  | `string`          | `'filterParams'` | URL 参数前缀 |
+
+**返回值**：`{ takeFilterEntry, getConsumedKeys }`
+
+```javascript
+import { createUrlFilterReader } from '@kne/react-filter';
+
+const { takeFilterEntry, getConsumedKeys } = createUrlFilterReader(searchParams);
+const keyword = takeFilterEntry('keyword');
+const city = takeFilterEntry('city', { multi: true });
+// getConsumedKeys() => ['filterParams[keyword]', 'filterParams[city]']
+```
+
+---
 
 #### useUrlFilter
 
-从 URL 参数初始化 Filter 状态的 Hook。读取 URL 参数构建初始筛选值，并在挂载后自动清除已消费的 URL 参数。
+从 URL 参数初始化 Filter 状态的 hook，读取 URL 参数构建初始筛选值，并在挂载后自动清除已消费的 URL 参数。
 
-**函数签名：**
+> 需要 React Router 环境支持 `useSearchParams`。
+
+| 参数                  | 类型         | 说明                                           |
+|---------------------|------------|----------------------------------------------|
+| options.readUrlParams | `Function` | 读取 URL 参数并返回 `{ consumedKeys: string[], ...data }` |
+| options.buildFilter   | `Function` | 接收 readUrlParams 的返回值，构建初始 filter 数组          |
+
+**返回值**：`[filter, setFilter]`
+
 ```javascript
-useUrlFilter(options): [array, function]
-```
+import { useUrlFilter, createUrlParamsReader } from '@kne/react-filter';
 
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| options | 配置对象 | object | 是 |
-| options.readUrlParams | 读取 URL 参数的函数，返回包含 `consumedKeys` 的对象 | function | 是 |
-| options.buildFilter | 根据 readUrlParams 返回值构建初始 filter 数组 | function | 是 |
-
-**返回值：**
-
-| 返回值 | 说明 | 类型 |
-|--------|------|------|
-| [0] | 初始筛选值数组 | array |
-| [1] | 设置筛选值的函数 | function |
-
-**示例：**
-```javascript
 const [filter, setFilter] = useUrlFilter({
   readUrlParams: (searchParams) => {
     const { take, getConsumedKeys } = createUrlParamsReader(searchParams);
@@ -1958,278 +1364,200 @@ const [filter, setFilter] = useUrlFilter({
     return { consumedKeys: getConsumedKeys(), orgId };
   },
   buildFilter: ({ orgId }) => [
+    { name: 'status', value: { label: '开启', value: 'open' } },
     ...(orgId ? [{ name: 'tenantOrgId', value: { label: orgId, value: orgId } }] : [])
   ]
 });
 ```
 
+---
+
 #### useUrlFilterValue
 
-从 URL 参数初始化 Filter 状态的 Hook（简化版）。基于 `useUrlFilter` 封装，使用 `createUrlFilterReader` 解析 `filterParams[key]` 格式的 URL 参数，自动解析 `label:value` 格式，支持单选和多选。
+`useUrlFilter` 的简化版，基于 `filterParams[key]` 格式自动解析 URL 参数，支持单选和多选。
 
-**函数签名：**
+| 参数      | 类型                     | 说明                             |
+|---------|------------------------|--------------------------------|
+| mapping | `string[] \| Object`   | URL 参数映射，支持数组、对象两种格式           |
+
+**数组形式（默认单选）：**
 ```javascript
-useUrlFilterValue(mapping): [array, function]
-```
+import { useUrlFilterValue } from '@kne/react-filter';
 
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| mapping | URL 参数映射配置，支持数组或对象格式 | string[] \| object | 是 |
-
-**mapping 格式：**
-
-- **数组形式**：`['key1', 'key2']`，默认单选，自动创建 `{ name: key, value: { label, value } }` 格式的筛选项
-- **对象形式**：`{ key1: true, key2: { multi: true }, key3: fn }`
-  - 值为 `true`：单选，使用默认转换
-  - 值为 `{ multi: true }`：多选，value 为 `[{ label, value }, ...]` 数组
-  - 值为函数：自定义转换，接收解析后的值（单选为 `{ label, value }`，多选为数组），返回 filter 项或 `null`/falsy 跳过
-
-**返回值：**
-
-| 返回值 | 说明 | 类型 |
-|--------|------|------|
-| [0] | 初始筛选值数组 | array |
-| [1] | 设置筛选值的函数 | function |
-
-**示例：**
-```javascript
-// 数组形式（默认单选）
 const [filter, setFilter] = useUrlFilterValue(['keyword', 'status']);
 // URL: ?filterParams[keyword]=前端开发&filterParams[status]=招聘中:active
 // → filter: [
 //     { name: 'keyword', value: { label: '前端开发', value: '前端开发' } },
 //     { name: 'status', value: { label: '招聘中', value: 'active' } }
 //   ]
-
-// 对象形式（多选 + 自定义转换）
-const [filter, setFilter] = useUrlFilterValue({
-  keyword: true,
-  city: { multi: true },
-  status: (parsed) => parsed ? { name: 'status', value: parsed } : null
-});
-// URL: ?filterParams[city]=上海:010,北京:020
-// → city 的 value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
 ```
+
+**对象形式（多选 + 自定义）：**
+```javascript
+const [filter, setFilter] = useUrlFilterValue({
+  keyword: true,                        // 单选
+  city: { multi: true },               // 多选
+  status: (parsed) => {                // 自定义转换
+    return parsed ? { name: 'status', value: parsed } : null;
+  }
+});
+// URL: ?filterParams[keyword]=测试&filterParams[city]=上海:010,北京:020
+```
+
+---
 
 #### createUrlParamsReader
 
-创建 URL 参数读取器，自动追踪已消费的参数 key。
+创建通用 URL 参数读取器，自动追踪已消费的参数 key。
 
-**函数签名：**
+| 参数           | 类型                | 说明       |
+|--------------|-------------------|----------|
+| searchParams | `URLSearchParams` | URL 参数对象 |
+
+**返回值**：`{ take, getConsumedKeys }`
+- `take(key)` - 读取参数值，记录已消费
+- `getConsumedKeys()` - 返回已消费的 key 列表
+
 ```javascript
-createUrlParamsReader(searchParams): { take, getConsumedKeys }
+import { createUrlParamsReader } from '@kne/react-filter';
+
+const { take, getConsumedKeys } = createUrlParamsReader(searchParams);
+const orgId = take('tenantOrgId');
+const orgName = take('orgName');
+// getConsumedKeys() => ['tenantOrgId', 'orgName']
 ```
 
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| searchParams | React Router 的 searchParams 对象 | URLSearchParams | 是 |
-
-**返回值：**
-
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| take | 读取指定 key 的值并标记为已消费 | function |
-| getConsumedKeys | 获取所有已消费的 key 列表 | function |
+---
 
 #### stripConsumedUrlParams
 
-从 URL 参数中移除已消费的 key，返回新的 URLSearchParams。无变化时返回 `null`。
+从 URL 参数中移除已消费的 key，返回新的 URLSearchParams 或 null（无变化时）。
 
-**函数签名：**
+| 参数           | 类型                | 说明                |
+|--------------|-------------------|-------------------|
+| searchParams | `URLSearchParams` | 当前 URL 参数         |
+| consumedKeys | `string[]`        | 需要移除的 key 列表      |
+
+**返回值**：`URLSearchParams | null`
+
 ```javascript
-stripConsumedUrlParams(searchParams, consumedKeys): URLSearchParams | null
+import { stripConsumedUrlParams } from '@kne/react-filter';
+
+const nextParams = stripConsumedUrlParams(searchParams, ['tenantOrgId', 'orgName']);
+if (nextParams) {
+  setSearchParams(nextParams, { replace: true });
+}
 ```
 
-**参数说明：**
+---
 
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| searchParams | 当前 URL 参数 | URLSearchParams | 是 |
-| consumedKeys | 需要移除的 key 列表 | string[] | 是 |
+### 拦截器
 
-**返回值：**
+用于 SuperSelect 组件的 `{id, name}` 与 Filter 的 `{label, value}` 数据格式互转。
 
-移除后的新 URLSearchParams 对象，无变化返回 `null`。
+#### singleSelectInterceptor
 
-#### filterToUrlParams
+单选拦截器：`{id, name}` ↔ `{label, value}`。
 
-将筛选值数组序列化为 URLSearchParams，保留 label 信息以便反序列化还原完整筛选状态。参数以 `prefix[key]` 格式存入 URL，避免与其他查询参数冲突。
+| 属性      | 类型         | 说明                                    |
+|---------|------------|---------------------------------------|
+| input   | `Function` | `{id, name}` → `{label, value}` 的转换   |
+| output  | `Function` | `{label, value}` → `{id, name}` 的转换   |
 
-**序列化格式**（使用冒号分隔 label 和 value，逗号分隔多值）：
-- 单值且 label === value：`prefix[name]=value`（如输入框）
-- 单值且 label !== value：`prefix[name]=label:value`
-- 多值：`prefix[name]=label1:value1,label2:value2`
+#### multiSelectInterceptor
 
-**函数签名：**
-```javascript
-filterToUrlParams(filterValue, options?): URLSearchParams
-```
+多选拦截器：`[{id, name}]` ↔ `[{label, value}]`。
 
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| filterValue | 筛选值数组，格式为 `[{ name, label, value }, ...]` | array | 是 | - |
-| options.prefix | URL 参数前缀 | string | 否 | `'filterParams'` |
-
-**示例：**
-```javascript
-const params = filterToUrlParams([
-  { name: 'keyword', label: '关键词', value: { label: '测试', value: '测试' } },
-  { name: 'city', label: '城市', value: [{ label: '上海', value: '010' }, { label: '北京', value: '020' }] },
-  { name: 'status', label: '状态', value: { label: '启用', value: 'active' } },
-]);
-// params.toString() => 'filterParams[keyword]=测试&filterParams[city]=上海:010,北京:020&filterParams[status]=启用:active'
-```
-
-#### createUrlFilterReader
-
-创建 URL 筛选参数读取器，自动追踪已消费的参数 key。配合 `useUrlFilter` 使用，读取后返回的 `consumedKeys` 可被自动从 URL 中清除。
-
-**函数签名：**
-```javascript
-createUrlFilterReader(searchParams, options?): { takeFilterEntry, getConsumedKeys }
-```
-
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| searchParams | React Router 的 searchParams 对象 | URLSearchParams | 是 | - |
-| options.prefix | URL 参数前缀，需与 `filterToUrlParams` 使用的前缀一致 | string | 否 | `'filterParams'` |
-
-**返回值：**
-
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| takeFilterEntry | 读取指定 key 的筛选值并标记为已消费 | function |
-| getConsumedKeys | 获取所有已消费的 key 列表（含前缀） | function |
-
-**takeFilterEntry 签名：**
-```javascript
-takeFilterEntry(key, options?): { label: string, value: string } | { label: string, value: string }[] | null
-```
-
-| 参数名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| key | 参数名（不含前缀） | string | 是 | - |
-| options.multi | 是否多选，多选返回数组 | boolean | 否 | false |
-
-**示例：**
-```javascript
-const [filter, setFilter] = useUrlFilter({
-  readUrlParams: (searchParams) => {
-    const { takeFilterEntry, getConsumedKeys } = createUrlFilterReader(searchParams);
-    const keyword = takeFilterEntry('keyword');
-    const city = takeFilterEntry('city', { multi: true });
-    return { consumedKeys: getConsumedKeys(), keyword, city };
-  },
-  buildFilter: ({ keyword, city }) => [
-    ...(keyword ? [{ name: 'keyword', label: '关键词', value: keyword }] : []),
-    ...(city ? [{ name: 'city', label: '城市', value: city }] : []),
-  ],
-});
-```
-
-#### parseFilterEntry
-
-解析 URL 参数中的单个筛选值项，反序列化为 `{ label, value }` 对象。
-
-**解析规则：**
-- 无冒号：label 和 value 相同，如 `"测试"` → `{ label: '测试', value: '测试' }`
-- 有冒号：冒号前为 label，冒号后为 value，如 `"启用:active"` → `{ label: '启用', value: 'active' }`
-
-**函数签名：**
-```javascript
-parseFilterEntry(str): { label: string, value: string }
-```
-
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 |
-|--------|------|------|------|
-| str | URL 参数中的原始字符串 | string | 是 |
-
-**示例：**
-```javascript
-parseFilterEntry('测试')
-// => { label: '测试', value: '测试' }
-
-parseFilterEntry('启用:active')
-// => { label: '启用', value: 'active' }
-```
-
-#### takeFilterEntry
-
-从 URL 参数中读取筛选值项（低级 API）。推荐使用 `createUrlFilterReader` 代替，可自动追踪已消费的 key。
-
-**函数签名：**
-```javascript
-takeFilterEntry(searchParams, key, options?): { label: string, value: string } | { label: string, value: string }[] | null
-```
-
-**参数说明：**
-
-| 参数名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| searchParams | URL 参数对象 | URLSearchParams | 是 | - |
-| key | 参数名（不含前缀） | string | 是 | - |
-| options.multi | 是否多选，多选返回数组 | boolean | 否 | false |
-| options.prefix | URL 参数前缀 | string | 否 | `'filterParams'` |
-
-**示例：**
-```javascript
-// URL: ?filterParams[city]=上海:010,北京:020
-takeFilterEntry(searchParams, 'city', { multi: true })
-// => [{ label: '上海', value: '010' }, { label: '北京', value: '020' }]
-```
+| 属性      | 类型         | 说明                                        |
+|---------|------------|-------------------------------------------|
+| input   | `Function` | `[{id, name}]` → `[{label, value}]` 的转换    |
+| output  | `Function` | `[{label, value}]` → `[{id, name}]` 的转换    |
 
 #### filterInterceptors
 
-预设拦截器集合，提供用于 SuperSelect 系列组件的值格式转换拦截器。SuperSelect 等组件使用 `{ id, name }` 格式，而 Filter 上下文使用 `{ label, value }` 格式，需要通过拦截器进行自动转换。
-
-**导出成员：**
-
-|| 名称 | 说明 |
-||------|------|
-|| filterInterceptors | 拦截器集合对象，包含 `single` 和 `multi` 两个拦截器 |
-|| singleSelectInterceptor | 单选拦截器，用于 valueKey="id" labelKey="name" 的单选场景 |
-|| multiSelectInterceptor | 多选拦截器，用于 valueKey="id" labelKey="name" 的多选场景 |
-
-**filterInterceptors 结构：**
-
-|| 属性名 | 说明 | 类型 |
-||--------|------|------|
-|| single | 单选拦截器，等价于 singleSelectInterceptor | object |
-|| multi | 多选拦截器，等价于 multiSelectInterceptor | object |
-
-**拦截器结构：**
-
-每个拦截器包含 `input` 和 `output` 两个函数：
-
-|| 属性名 | 说明 | 转换方向 |
-||--------|------|----------|
-|| input | 输入拦截器 | 将上下文值 `{ label, value }` 转为组件内部格式 `{ id, name }` |
-|| output | 输出拦截器 | 将组件内部值 `{ id, name }` 转回上下文格式 `{ label, value }` |
-
-**使用方式：**
-
-配合 `SuperSelectFilterItem` 的 `interceptor` 属性使用：
+拦截器集合对象。
 
 ```javascript
-import { SuperSelectFilterItem, singleSelectInterceptor, multiSelectInterceptor } from '@components/Filter';
+import { filterInterceptors, singleSelectInterceptor, multiSelectInterceptor } from '@kne/react-filter';
 
-// 单选场景
-<SuperSelectFilterItem interceptor={singleSelectInterceptor} ... />
+// 两种引用方式等价
+filterInterceptors.single === singleSelectInterceptor; // true
+filterInterceptors.multi === multiSelectInterceptor;   // true
+```
 
-// 多选场景
-<SuperSelectFilterItem interceptor={multiSelectInterceptor} ... />
+**使用示例：**
 
-// 或通过 filterInterceptors 解构
-const { single, multi } = filterInterceptors;
-<SuperSelectFilterItem interceptor={single} ... />
+```javascript
+import { filterInterceptors } from '@kne/react-filter';
+
+// 在 SuperSelect 组件中使用单选拦截
+<SuperSelect
+  valueKey="id"
+  labelKey="name"
+  interceptor={filterInterceptors.single}
+  /* ... */
+/>
+
+// 多选拦截
+<SuperSelect
+  valueKey="id"
+  labelKey="name"
+  interceptor={filterInterceptors.multi}
+  /* ... */
+/>
+```
+
+---
+
+### 工具方法
+
+#### pickSelectValues
+
+从筛选值中提取原始值数组。支持原始值、`{ value }` 对象、`{ id }` 对象以及它们的数组。
+
+| 参数    | 类型    | 说明          |
+|-------|-------|-------------|
+| value | `any` | 筛选值，支持多种格式 |
+
+```javascript
+import { pickSelectValues } from '@kne/react-filter';
+
+pickSelectValues([{ value: 1 }, { id: 2 }, '3']);
+// => ['1', '2', '3']
+
+pickSelectValues({ value: 'open' });
+// => ['open']
+
+pickSelectValues(null);
+// => []
+```
+
+#### createFilterValueMapper
+
+声明式创建 mapFilterValue 函数。`Filter.getFilterValue` 默认只读取 `{ value }`，而 SuperSelectFilterItem 等组件使用 `{ id, name }` 格式，需要额外处理。此工具通过声明字段映射规则，自动生成转换函数。
+
+| 参数           | 类型       | 说明                |
+|--------------|----------|-------------------|
+| fieldMappers | `Object` | 字段名到映射规则的映射       |
+
+**映射规则类型：**
+
+| 规则        | 说明                                     |
+|-----------|----------------------------------------|
+| `'string'` | 确保值为字符串类型                              |
+| `'multi'`  | 多选，从 filter entry 提取值数组                 |
+| `'single'` | 单选，从 filter entry 提取第一个值                |
+| `Function` | 自定义转换，接收 `(rawValue, { entry, filter, value })` |
+
+```javascript
+import { createFilterValueMapper } from '@kne/react-filter';
+
+const mapFilterValue = createFilterValueMapper({
+  id: 'string',
+  roles: 'multi',
+  tenantOrgId: 'single',
+  status: (rawValue) => normalizeStatus(rawValue)
+});
+
+const filterValue = mapFilterValue(filter, Filter.getFilterValue);
 ```
