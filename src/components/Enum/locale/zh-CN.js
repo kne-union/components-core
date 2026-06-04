@@ -1,0 +1,33 @@
+const message = {
+    DegreeJuniorHigh: "初中",
+    DegreeSecondaryVocational: "中专",
+    DegreeSeniorHigh: "高中",
+    DegreeJuniorCollege: "大专",
+    DegreeBachelor: "本科",
+    DegreeMaster: "硕士研究生",
+    DegreeDoctor: "博士研究生",
+    DegreePostDoc: "博士后",
+    DegreeUnlimited: "学历不限",
+    PhoneStateEmpty: "空号",
+    PhoneStateValid: "实号",
+    PhoneStateSuspended: "停机",
+    PhoneStateNotFound: "库无",
+    PhoneStateSilent: "沉默号",
+    PhoneStateRisk: "风险号",
+    OpenStatusOpen: "开启",
+    OpenStatusClosed: "关闭",
+    CommonStatusOpen: "开启",
+    CommonStatusClose: "关闭",
+    GenderMale: "男",
+    GenderFemale: "女",
+    MaritalMarried: "已婚",
+    MaritalSingle: "未婚",
+    ConfirmYes: "是",
+    ConfirmNo: "否",
+    PoliticalPartyMember: "中共党员",
+    PoliticalLeagueMember: "共青团员",
+    PoliticalMasses: "群众",
+    PoliticalOther: "其他党派"
+};
+
+export default message;

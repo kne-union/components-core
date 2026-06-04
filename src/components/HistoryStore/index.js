@@ -9,18 +9,21 @@ import dropWhile from "lodash/dropWhile";
 import uniqBy from "lodash/uniqBy";
 import useClickOutside from "@kne/use-click-outside";
 import classnames from "classnames";
+import withLocale from './withLocale';
+import { useIntl } from '@kne/react-intl';
 
-const HistoryStore = ({
+const HistoryStore = withLocale(({
                           className,
                           overlayClassName,
                           storeName = 'HISTORY_STORE_KEY',
                           maxLength = 5,
-                          label = '最近搜索',
+                          label,
                           children,
                           onSelect,
                           zIndex,
                           getPopupContainer,
                       }) => {
+    const { formatMessage } = useIntl();
     const [list, setList] = useState(() => {
         return localStorage.getItem(storeName) || [];
     });
@@ -99,7 +102,7 @@ const HistoryStore = ({
                 ref={popoverContentRef}
             >
                 <Space direction="vertical">
-                    <div>{label}</div>
+                    <div>{label || formatMessage({ id: 'RecentSearch' })}</div>
                     <Space wrap>
                         {list.map((item) => (<StateTag
                                 className={style["state-tag"]}
@@ -122,6 +125,6 @@ const HistoryStore = ({
                 })}
             </div>
         </Popover>);
-};
+});
 
 export default HistoryStore;

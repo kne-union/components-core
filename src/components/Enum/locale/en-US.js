@@ -1,0 +1,33 @@
+const message = {
+    DegreeJuniorHigh: "Junior High School",
+    DegreeSecondaryVocational: "Secondary Vocational",
+    DegreeSeniorHigh: "Senior High School",
+    DegreeJuniorCollege: "Junior College",
+    DegreeBachelor: "Bachelor",
+    DegreeMaster: "Master",
+    DegreeDoctor: "Doctor",
+    DegreePostDoc: "Postdoctoral",
+    DegreeUnlimited: "No Limit",
+    PhoneStateEmpty: "Empty",
+    PhoneStateValid: "Valid",
+    PhoneStateSuspended: "Suspended",
+    PhoneStateNotFound: "Not Found",
+    PhoneStateSilent: "Silent",
+    PhoneStateRisk: "Risk",
+    OpenStatusOpen: "Open",
+    OpenStatusClosed: "Closed",
+    CommonStatusOpen: "Open",
+    CommonStatusClose: "Closed",
+    GenderMale: "Male",
+    GenderFemale: "Female",
+    MaritalMarried: "Married",
+    MaritalSingle: "Single",
+    ConfirmYes: "Yes",
+    ConfirmNo: "No",
+    PoliticalPartyMember: "CPC Member",
+    PoliticalLeagueMember: "CYLC Member",
+    PoliticalMasses: "Masses",
+    PoliticalOther: "Other Parties"
+};
+
+export default message;
