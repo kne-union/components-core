@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "files": [
     "build"
   ],
@@ -33,7 +33,7 @@
     "@kne/phone-number-input": "^0.1.5",
     "@kne/react-enum": "^0.1.14",
     "@kne/react-fetch": "^1.5.5",
-    "@kne/react-file": "^0.1.35",
+    "@kne/react-file": "^0.1.37",
     "@kne/react-file-type": "^1.0.5",
     "@kne/react-filter": "^1.0.5",
     "@kne/react-form-antd": "^4.1.0",
