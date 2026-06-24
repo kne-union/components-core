@@ -154,10 +154,10 @@ const formPreset = async (options, otherOptions) => {
         if (value[0]) {
             output.push(dayjs(value[0]));
         }
-        if (value[0] && value[1] && value[1] === "sofar") {
-            output.push("至今");
+        if (value[0] && value[1] && ['sofar', 'soFar', '至今'].indexOf(value[1]) > -1) {
+            output.push("sofar");
         }
-        if (value[0] && value[1] && value[1] !== "至今") {
+        if (value[0] && value[1] && ['sofar', 'soFar', '至今'].indexOf(value[1]) === -1) {
             output.push(dayjs(value[1]));
         }
 
@@ -174,10 +174,10 @@ const formPreset = async (options, otherOptions) => {
         if (value[0]) {
             output.push(new Date(value[0].valueOf()).toISOString());
         }
-        if (value[0] && value[1] && value[1] === "至今") {
+        if (value[0] && value[1] && ['sofar', 'soFar', '至今'].indexOf(value[1]) > -1) {
             output.push("sofar");
         }
-        if (value[0] && value[1] && value[1] !== "至今") {
+        if (value[0] && value[1] && ['sofar', 'soFar', '至今'].indexOf(value[1]) === -1) {
             output.push(new Date(value[1].valueOf()).toISOString());
         }
         return output;
