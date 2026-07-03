@@ -12,13 +12,13 @@ const getLabelForLocal = (item, locale) => {
   return get(item, "chName");
 };
 
-const defaultIndustryData = () => {
+export const defaultIndustryData = () => {
   return import("./industry.json").then((module) =>
     module["__esModule"] ? module.default : module
   );
 };
 
-const industryDefaultApi = {
+export const industryDefaultApi = {
   cache: "INDUSTRY_DATA",
   isLocal: true,
   ttl: 1000 * 60 * 60 * 24,

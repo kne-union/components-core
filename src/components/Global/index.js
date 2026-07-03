@@ -47,6 +47,10 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
     const colorPrimaryObject = useMemo(() => {
         return Color(colorPrimary)
     }, [colorPrimary]);
+    const mixPrimaryOnBg = useMemo(() => {
+        const primaryBgBase = "#ffffff";
+        return ratio => colorPrimaryObject.mix(Color(primaryBgBase), 1 - ratio).string();
+    }, [colorPrimaryObject]);
 
     const [statusColors, setStatusColors] = useState({});
 
@@ -73,12 +77,10 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
             "--primary-color-red": colorPrimaryObject.red(),
             "--primary-color-green": colorPrimaryObject.green(),
             "--primary-color-blue": colorPrimaryObject.blue(),
-            "--primary-color-06": colorPrimaryObject.alpha(0.06).string(),
+            "--primary-color-06": mixPrimaryOnBg(0.06),
         };
         range(0, 10).forEach((i) => {
-            themeProps[`--primary-color-${i + 1}`] = colorPrimaryObject
-                .alpha((i + 1) / 10)
-                .string();
+            themeProps[`--primary-color-${i + 1}`] = mixPrimaryOnBg((i + 1) / 10);
         });
         styleEl.textContent = `.${containerClassName}{${transform(themeProps, (result, value, key) => {
             result.push(`${key}:${value};`);
@@ -87,7 +89,7 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
         return () => {
             // uninstall();
         };
-    }, [colorPrimary, colorPrimaryObject]);
+    }, [colorPrimary, colorPrimaryObject, mixPrimaryOnBg]);
     //设置主题色成功再展示页面
     if (!isInit) {
         return null;
@@ -103,7 +105,7 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
             components, token: Object.assign({}, {
                 ...statusColors,
                 colorPrimary: colorPrimary,
-                colorPrimaryBg: colorPrimaryObject.alpha(0.1).string(),
+                colorPrimaryBg: mixPrimaryOnBg(0.1),
                 colorLink: colorPrimary,
                 colorTextBase: "#222222",
                 colorText: "#222222"

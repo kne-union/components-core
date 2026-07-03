@@ -11,11 +11,11 @@ const getLabelForLocal = (item, locale) => {
     return get(item, "chName");
 };
 
-const defaultFunctionData = () => {
+export const defaultFunctionData = () => {
     return import("./function.json").then((module) => module["__esModule"] ? module.default : module);
 };
 
-const functionDefaultApi = {
+export const functionDefaultApi = {
     cache: "FUNCTION_DATA", isLocal: true, ttl: 1000 * 60 * 60 * 24, loader: defaultFunctionData,
 };
 
