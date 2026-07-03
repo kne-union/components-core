@@ -1,157 +1,162 @@
-import {withFetch} from "@kne/react-fetch";
-import Table from "./Table";
-import classnames from "classnames";
-import Features from "@components/Features";
-import get from "lodash/get";
-import useRefCallback from "@kne/use-ref-callback";
-import {forwardRef, useMemo, useState} from "react";
-import style from "./style.module.scss";
-import localStorage from "@common/utils/localStorage";
-import {getScrollEl} from "@common/utils/importantContainer";
-import {useIntl} from '@kne/react-intl';
-import withLocale from './withLocale';
+import '@kne/table-page/dist/index.css';
+import initLegacyPreset from './initLegacyPreset';
+import BaseTablePage from '@kne/table-page';
+import Features from '@components/Features';
+import get from 'lodash/get';
+import classnames from 'classnames';
+import { forwardRef, useCallback, useMemo, useRef } from 'react';
+import { getScrollEl } from '@common/utils/importantContainer';
+import adaptColumns from './adaptColumns';
+import style from './style.module.scss';
 
-const FeaturesColumnsConfig = ({id, columns, children}) => {
-    if (id) {
-        return (<Features id={id}>
-            {({options}) => children({
-                columns: columns.filter((item) => {
-                    if (!item.name) {
-                        return true;
-                    }
-                    if (!Array.isArray(get(options, "hiddenColumns"))) {
-                        return true;
-                    }
-                    return options.hiddenColumns.indexOf(item.name) === -1;
-                }),
-            })}
-        </Features>);
+initLegacyPreset();
+
+const filterHiddenColumns = (columns, hiddenColumns) => {
+  if (!Array.isArray(columns)) {
+    return [];
+  }
+  if (!Array.isArray(hiddenColumns)) {
+    return columns;
+  }
+  return columns.filter(item => {
+    if (!item?.name) {
+      return true;
     }
-    return children({columns});
+    return hiddenColumns.indexOf(item.name) === -1;
+  });
 };
 
-const TablePageInnerContent = withLocale(({
-                                      data,
-                                      refresh,
-                                      reload,
-                                      requestParams,
-                                      fetchProps,
-                                      isComplete,
-                                      setData,
-                                      loadMore,
-                                      send,
-                                      dataFormat = (data) => {
-                                          return {
-                                              list: data.pageData, total: data.totalCount,data
-                                          };
-                                      },
-                                      className,
-                                      featureId,
-                                      columns,
-                                      getColumns,
-                                      pagination = {},
-                                      columnRenderProps = {},
-                                      summary,
-                                      sticky = true,
-                                      ...props
-                                  }) => {
-    const {formatMessage} = useIntl();
-    const handlerDataFormat = useRefCallback(dataFormat);
-    const formatData = useMemo(() => {
-        return handlerDataFormat(data);
-    }, [data, handlerDataFormat]);
+const resolveScrollTopInset = (scrollTopInset, stickyOffset) => scrollTopInset ?? stickyOffset;
 
-    const tableProps = {
-        dataSource: formatData.list, pagination: pagination.open ? {
-            total: formatData.total,
-            showTotal: (total) => (<>
-                {formatMessage({id: 'TotalText'})}&nbsp;
-                <span className={style["total_text"]}>{total}</span>
-                &nbsp;
-                {formatMessage({id: 'ItemText'})}
-            </>),
-            current: get(requestParams, [pagination.paramsType, pagination.currentName], 1),
-            pageSize: get(requestParams, [pagination.paramsType, pagination.pageSizeName], 20),
-            onChange: (page, size) => {
-                (() => {
-                    if (typeof pagination.onChange === 'function') {
-                        pagination.onChange(page, size);
-                        return;
-                    }
-                    if (page !== get(requestParams, [pagination.paramsType, pagination.currentName], 1)) {
-                        (pagination.requestType === "refresh" ? refresh : reload)({
-                            [pagination.paramsType]: {
-                                [pagination.currentName]: page, [pagination.pageSizeName]: size,
-                            },
-                        });
-                    } else {
-                        pagination.onShowSizeChange && pagination.onShowSizeChange(page, size);
-                    }
-                })();
-                getScrollEl().scrollTop = 0;
-            },
-            size: pagination.size,
-            hideOnSinglePage: pagination.hideOnSinglePage,
-            showSizeChanger: pagination.showSizeChanger,
-            showQuickJumper: pagination.showQuickJumper,
-            pageSizeOptions: pagination.pageSizeOptions,
-        } : false,
-    };
+const TablePageInner = forwardRef(
+  (
+    {
+      columns,
+      getColumns,
+      summary,
+      hiddenColumns,
+      columnsRef,
+      horizontalScroller = true,
+      getScrollContainer = getScrollEl,
+      className,
+      sticky = true,
+      scrollTopInset = 'var(--nav-height)',
+      stickyOffset,
+      ...props
+    },
+    ref
+  ) => {
+    const resolvedScrollTopInset = resolveScrollTopInset(scrollTopInset, stickyOffset);
+    const shellStyle = useMemo(
+      () => ({
+        '--scroll-top-inset': resolvedScrollTopInset,
+        '--sticky-offset': resolvedScrollTopInset
+      }),
+      [resolvedScrollTopInset]
+    );
 
-    return (<FeaturesColumnsConfig id={featureId} columns={typeof columns === 'function' ? columns(data) : columns}>
-        {({columns}) => (<Table
-            {...Object.assign({}, props, tableProps)}
-            sticky={sticky}
-            className={classnames(className, "loading-container", {
-                "is-loading": !isComplete,
-            })}
+    const resolveColumns = useCallback(
+      data => {
+        const raw = typeof getColumns === 'function' ? getColumns(data) : typeof columns === 'function' ? columns(data) : columns;
+        const filtered = filterHiddenColumns(raw, hiddenColumns);
+        const adapted = adaptColumns(filtered) || [];
+        columnsRef.current = adapted;
+        return adapted;
+      },
+      [columns, getColumns, hiddenColumns, columnsRef]
+    );
+
+    const adaptedSummary = useCallback(
+      ctx => {
+        if (typeof summary !== 'function') {
+          return null;
+        }
+        return summary(Object.assign({}, ctx, { columns: columnsRef.current }));
+      },
+      [summary, columnsRef]
+    );
+
+    return (
+      <div className={classnames(style['table-shell'], 'table-page-scroller', className)} style={shellStyle}>
+        <BaseTablePage
+          ref={ref}
+          {...props}
+          sticky={sticky}
+          scrollTopInset={resolvedScrollTopInset}
+          stickyOffset={resolvedScrollTopInset}
+          getColumns={resolveColumns}
+          summary={typeof summary === 'function' ? adaptedSummary : null}
+          horizontalScroller={horizontalScroller}
+          getScrollContainer={getScrollContainer}
+        />
+      </div>
+    );
+  }
+);
+
+const TablePage = forwardRef(
+  (
+    {
+      featureId,
+      columns,
+      getColumns,
+      summary,
+      pagination,
+      horizontalScroller = true,
+      getScrollContainer = getScrollEl,
+      sticky = true,
+      scrollTopInset = 'var(--nav-height)',
+      stickyOffset,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const columnsRef = useRef([]);
+
+    if (!featureId) {
+      return (
+        <TablePageInner
+          ref={ref}
+          columns={columns}
+          getColumns={getColumns}
+          summary={summary}
+          pagination={pagination}
+          columnsRef={columnsRef}
+          horizontalScroller={horizontalScroller}
+          getScrollContainer={getScrollContainer}
+          sticky={sticky}
+          scrollTopInset={scrollTopInset}
+          stickyOffset={stickyOffset}
+          className={className}
+          {...props}
+        />
+      );
+    }
+
+    return (
+      <Features id={featureId}>
+        {({ options }) => (
+          <TablePageInner
+            ref={ref}
             columns={columns}
-            columnRenderProps={{
-                ...columnRenderProps, requestParams, fetchProps, data,
-            }}
-            summary={typeof summary === "function" ? (...args) => {
-                return summary(Object.assign({}, {
-                    data, fetchProps, requestParams, refresh, reload, loadMore, send, dataFormat, pagination,
-                }, ...args));
-            } : null}
-        />)}
-    </FeaturesColumnsConfig>);
-});
-
-const TablePageInner = withFetch(TablePageInnerContent);
-
-const TablePage = forwardRef(({pagination, ...props}, ref) => {
-    pagination = Object.assign({}, {
-        showSizeChanger: true,
-        showQuickJumper: true,
-        hideOnSinglePage: false,
-        open: true,
-        paramsType: "data",
-        requestType: "reload",
-        currentName: "currentPage",
-        pageSizeName: "perPage"
-    }, pagination);
-    const pageSizeKey = `${(props.name || "common").toUpperCase()}_TABLE_PAGE_SIZE`;
-    const [pageSize, setPageSize] = useState(localStorage.getItem(pageSizeKey) || pagination.pageSize);
-    const params = props[pagination.paramsType];
-    const fetchParams = useMemo(() => {
-        return {
-            [pagination.paramsType]: Object.assign({}, params, {
-                [pagination.pageSizeName]: pageSize,
-            }),
-        };
-    }, [params, pagination.pageSizeName, pagination.paramsType, pageSize]);
-    return (<TablePageInner
-        {...props}
-        {...fetchParams}
-        pagination={Object.assign({}, pagination, {
-            pageSize, onShowSizeChange: (current, size) => {
-                localStorage.setItem(pageSizeKey, size);
-                setPageSize(size);
-            },
-        })}
-        ref={ref}
-    />);
-});
+            getColumns={getColumns}
+            summary={summary}
+            pagination={pagination}
+            hiddenColumns={get(options, 'hiddenColumns')}
+            columnsRef={columnsRef}
+            horizontalScroller={horizontalScroller}
+            getScrollContainer={getScrollContainer}
+            sticky={sticky}
+            scrollTopInset={scrollTopInset}
+            stickyOffset={stickyOffset}
+            className={className}
+            {...props}
+          />
+        )}
+      </Features>
+    );
+  }
+);
 
 export default TablePage;

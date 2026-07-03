@@ -107,7 +107,7 @@ body.container {
   --tag-other: "#6740C3";
 
   // @for $i from 1 through 10 {
-  //  --primary-color-#{$i}: #{rgba(#5cb8b2, $i / 10)};
+  //  --primary-color-#{$i}: 主题色与白色混合的不透明浅色，非 rgba 透明色
   // }
 
   /*--primary-color-red: 92;
@@ -402,22 +402,59 @@ body.container {
       //border-right: 1px solid var(--bg-color-grey-2) !important;
     }
 
-    :global(.ant-table-header),
-    :global(.ant-table-thead) {
-      &:global(.ant-table-sticky-holder) {
-        top: var(--sticky-offset) !important;
-        transform: translateY(-1px);
+    // @kne/table-page：避免旧版 .table-page 单元格样式覆盖 info-page-table
+    :global(.info-page-table) {
+      :global(.ant-table-header),
+      :global(.ant-table-thead) {
+        &:global(.ant-table-sticky-holder) {
+          transform: none !important;
+          top: var(--scroll-top-inset, var(--sticky-offset, var(--nav-height, 0px))) !important;
+        }
+
+        :global(.ant-table-cell) {
+          height: auto;
+          background: transparent;
+          padding-left: 0;
+          padding-right: 0;
+          font-weight: inherit;
+          border-bottom: none;
+        }
       }
 
-      :global(.ant-table-cell) {
-        height: var(--cell-height);
-        background: var(--bg-color-grey-3);
-        border-bottom: none;
-        font-size: var(--font-size-default);
-        font-weight: 500;
-        color: var(--font-color);
-        padding-left: 24px;
-        padding-right: 24px;
+      :global(.ant-table-tbody) {
+        :global(.ant-table-cell) {
+          height: auto;
+          background: transparent !important;
+          padding-left: 0;
+          padding-right: 0;
+          border-left: none !important;
+          border-right: none !important;
+        }
+
+        :global(.ant-table-cell-row-hover) {
+          background: transparent !important;
+        }
+      }
+    }
+
+    :global(.table-page:not(:has(.info-page-table))) {
+      :global(.ant-table-header),
+      :global(.ant-table-thead) {
+        &:global(.ant-table-sticky-holder) {
+          top: var(--sticky-offset) !important;
+          transform: translateY(-1px);
+        }
+
+        :global(.ant-table-cell) {
+          height: var(--cell-height);
+          background: var(--bg-color-grey-3);
+          border-bottom: none;
+          font-size: var(--font-size-default);
+          font-weight: 500;
+          color: var(--font-color);
+          padding-left: 24px;
+          padding-right: 24px;
+        }
       }
     }
 
