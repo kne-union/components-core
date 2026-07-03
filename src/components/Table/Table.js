@@ -1,138 +1,117 @@
-import style from "./style.module.scss";
-import {Table as AntdTable} from "antd";
-import {useEffect, useMemo, useRef, useState} from "react";
-import classnames from "classnames";
-import Scroller from "@common/components/Scroller";
-import {getScrollEl as getScrollElDefault} from "@common/utils/importantContainer";
-import useResize from "@common/hooks/useResize";
-import useTableConfig from "./useTableConfig";
-import useColumnTypeProps from "@components/Table/useColumnTypeProps";
-import useGroupHeader from "./useGroupHeader";
-import useSort from "./useSort";
-import useRefCallback from "@kne/use-ref-callback";
-import useSelectedRow from "./useSelectedRow";
+import '@kne/table-page/dist/index.css';
+import initLegacyPreset from './initLegacyPreset';
+import style from './style.module.scss';
+import { Table as AntdTable } from 'antd';
+import { Table as BaseTable } from '@kne/table-page';
+import { useEffect, useMemo, useRef } from 'react';
+import classnames from 'classnames';
+import { getScrollEl as getScrollElDefault } from '@common/utils/importantContainer';
+import { usePreset } from '@components/Global';
+import useRefCallback from '@kne/use-ref-callback';
+import adaptColumns from './adaptColumns';
+import adaptRowSelection from './adaptRowSelection';
+import useSelectedRow from './useSelectedRow';
+import useLegacyTableServerApis from './useLegacyTableServerApis';
 import TablePage from './TablePage';
 
+initLegacyPreset();
+
 const Table = ({
-                   columns,
-                   className,
-                   getScrollEl = getScrollElDefault,
-                   sticky = false,
-                   stickyOffset = "var(--nav-height)",
-                   pagination = false,
-                   columnRenderProps = {},
-                   rowKey = "id",
-                   dataSource,
-                   controllerOpen = true,
-                   name,
-                   summary,
-                   scroll,
-                   scroller,
-                   onTablePropsReady,
-                   ...props
-               }) => {
-    const [tableWidth, setTableWidth] = useState(0);
-    const [isLayout, setIsLayout] = useState(true);
+  columns,
+  className,
+  getScrollEl = getScrollElDefault,
+  sticky = false,
+  scrollTopInset = 'var(--nav-height)',
+  stickyOffset,
+  pagination = false,
+  columnRenderProps = {},
+  rowKey = 'id',
+  dataSource,
+  controllerOpen = true,
+  name,
+  summary,
+  scroll,
+  scroller: _scroller,
+  onTablePropsReady,
+  rowSelection,
+  sort,
+  defaultSort,
+  onSortChange,
+  ...props
+}) => {
+  const { tableServerApis: presetTableServerApis } = usePreset();
+  const tableServerApis = useLegacyTableServerApis(name, controllerOpen, presetTableServerApis);
+  const columnsRef = useRef([]);
+  const adaptedColumns = useMemo(() => {
+    const result = adaptColumns(columns) || [];
+    columnsRef.current = result;
+    return result;
+  }, [columns]);
 
-    useEffect(() => {
-        if (tableWidth) {
-            setTimeout(() => {
-                setIsLayout(false);
-            }, 0);
-        }
-    }, [tableWidth]);
-    const columnRenderPropsRef = useRef(columnRenderProps);
-    columnRenderPropsRef.current = columnRenderProps;
-    const ref = useResize((el) => {
-        setTableWidth(el.clientWidth);
-    }, {isDebounce: true});
-    const {expandInfo, computedColumnProps} = useColumnTypeProps({
-        rowKey, renderProps: columnRenderProps,
-    });
+  const { sortRender } = BaseTable.useSort({
+    sort,
+    defaultSort,
+    onSortChange
+  });
 
-    const {
-        columnsConfig,
-        visibleColumns,
-        computedColumnProps: computedColumnConfigProps,
-        currentMoveColumnIndex,
-        totalWidth,
-    } = useTableConfig({
-        columns, controllerOpen, name, computedColumnProps, tableWidth, rowKey,
-    });
+  const context = useMemo(() => Object.assign({}, columnRenderProps), [columnRenderProps]);
 
-    const sortRender = useSort(props);
+  const adaptedRowSelection = useMemo(
+    () => adaptRowSelection(rowSelection, { dataSource, rowKey, context }),
+    [rowSelection, dataSource, rowKey, context]
+  );
 
-    const targetColumns = useMemo(() => {
-        return visibleColumns.map((col, index) => {
-            let target = computedColumnProps(col, index, {
-                rowKey, expandInfo, columnsConfig,
-            });
+  const onTablePropsReadyCallback = useRefCallback(onTablePropsReady);
 
-            if (target.sort && col.type !== "options") {
-                target = Object.assign({}, target, {
-                    title: (<>
-                        {target.title}
-                        {sortRender({
-                            name: col.name, single: typeof target.sort === "object" ? target.sort.single : true,
-                        })}
-                    </>),
-                });
-            }
+  useEffect(() => {
+    onTablePropsReadyCallback &&
+      onTablePropsReadyCallback({
+        columns,
+        groupColumns: columnsRef.current,
+        dataSource,
+        visibleColumns: columnsRef.current
+      });
+  }, [onTablePropsReadyCallback, columns, dataSource]);
 
-            if (controllerOpen) {
-                target = computedColumnConfigProps(target, index, {
-                    tableWidth, columnsConfig,
-                });
-            }
+  const adaptedSummary = useMemo(
+    () =>
+      typeof summary === 'function'
+        ? (pageData, ...args) => summary(Object.assign({}, { pageData, columns: columnsRef.current }, ...args))
+        : null,
+    [summary]
+  );
 
-            return target;
-        });
-    }, [visibleColumns, tableWidth, columnsConfig, expandInfo, rowKey, controllerOpen, computedColumnProps, computedColumnConfigProps, sortRender,]);
+  const resolvedScrollTopInset = scrollTopInset ?? stickyOffset ?? 'var(--nav-height)';
 
-    const {columns: groupColumns, hasGroupHeader} = useGroupHeader(targetColumns);
-
-    const onTablePropsReadyCallback = useRefCallback(onTablePropsReady);
-
-    useEffect(() => {
-        onTablePropsReadyCallback && onTablePropsReadyCallback({
-            columns, groupColumns, dataSource, visibleColumns,
-        });
-    }, [onTablePropsReadyCallback, groupColumns, dataSource, columns, visibleColumns,]);
-
-    return (<div
-        className={classnames(className, style["table"], {
-            [style["is-resize"]]: currentMoveColumnIndex !== null,
-            [style["is-computed"]]: isLayout,
-            [style["has-group-header"]]: hasGroupHeader,
-        })}
-        ref={ref}
-        style={{
-            "--sticky-offset": stickyOffset,
-        }}
+  return (
+    <div
+      className={classnames(className, style['table-shell'], 'table-page-scroller')}
+      style={{
+        '--scroll-top-inset': resolvedScrollTopInset,
+        '--sticky-offset': resolvedScrollTopInset
+      }}
     >
-        {!isLayout && (<Scroller
-            className="table-page-scroller"
-            scroller={scroller !== void 0 ? scroller : {getContainer: getScrollEl}}
-            getScrollTarget={(el) => {
-                return (el.querySelector(".ant-table-body") || el.querySelector(".ant-table-content"));
-            }}
-        >
-            <AntdTable
-                {...props}
-                sticky={sticky ? {
-                    getContainer: getScrollEl,
-                } : false}
-                dataSource={dataSource}
-                rowKey={rowKey}
-                columns={groupColumns}
-                scroll={Object.assign({}, {x: Math.max(tableWidth, totalWidth)}, scroll)}
-                pagination={pagination}
-                summary={typeof summary === "function" ? (current, ...args) => {
-                    return summary(Object.assign({}, {pageData: current}, {columns: groupColumns}), ...args);
-                } : null}
-            />
-        </Scroller>)}
-    </div>);
+      <BaseTable
+        {...props}
+        sticky={sticky}
+        scrollTopInset={resolvedScrollTopInset}
+        stickyOffset={resolvedScrollTopInset}
+        getStickyContainer={getScrollEl}
+        dataSource={dataSource}
+        rowKey={rowKey}
+        columns={adaptedColumns}
+        context={context}
+        pagination={pagination}
+        controllerOpen={controllerOpen}
+        name={name}
+        scroll={scroll}
+        sortRender={sortRender}
+        rowSelection={adaptedRowSelection}
+        summary={adaptedSummary}
+        tableServerApis={tableServerApis}
+      />
+    </div>
+  );
 };
 
 Table.useSelectedRow = useSelectedRow;
