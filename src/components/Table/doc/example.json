@@ -83,7 +83,7 @@
     },
     {
       "title": "行选择与批量操作",
-      "description": "展示 useSelectedRow Hook 的使用方法，实现行选择（checkbox）功能，包括 selectedRowKeys、setSelectedRowKeys、onSelectAll、onSelect 等 API。演示批量审批、批量拒绝、批量导出等常见批量操作场景。业务场景：请假审批系统。",
+      "description": "展示 useSelectedRow Hook 配合 getRowSelection、clearSelectedRows 实现多选与批量操作（批量审批、批量拒绝、批量导出、清空选择）。业务场景：请假审批系统。",
       "code": "./row-selection.js",
       "scope": [
         {

@@ -1,0 +1,13 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "reference": "@kne/info-page",
+      "path": "list[1]"
+    },
+    {
+      "reference": "@kne/info-page",
+      "path": "list[2]"
+    }
+  ]
+}

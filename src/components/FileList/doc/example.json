@@ -2,61 +2,16 @@
   "isFull": true,
   "list": [
     {
-      "title": "完整示例",
-      "description": "展示完整的文件列表功能，包含文件展示、预览、上传、编辑、删除等操作，员工简历、合同、政策文档场景",
-      "code": "./base.js",
-      "scope": [
-        {
-          "name": "_FileList",
-          "packageName": "@components/FileList"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[4]"
     },
     {
-      "title": "文件上传",
-      "description": "展示受控和非受控模式的文件上传功能，支持设置文件大小和数量限制",
-      "code": "./file-upload.js",
-      "scope": [
-        {
-          "name": "_FileList",
-          "packageName": "@components/FileList"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[5]"
     },
     {
-      "title": "拖拽上传",
-      "description": "展示拖拽上传功能，支持自定义上传提示，项目文档和员工资料上传场景",
-      "code": "./drag-area.js",
-      "scope": [
-        {
-          "name": "_FileList",
-          "packageName": "@components/FileList"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[9]"
     }
   ]
 }

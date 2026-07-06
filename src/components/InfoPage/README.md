@@ -849,7 +849,7 @@ const dataSource = [
 
 const columns = [
   { name: 'id', title: '订单编号' },
-  { name: 'customerName', title: '客户名称', span: 10 },
+  { name: 'customerName', title: '客户名称', span: 4 },
   { name: 'contact', title: '联系人' },
   { name: 'phone', title: '联系电话', render: (value) => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') },
   { name: 'amount', title: '订单金额(元)', render: (value) => <strong style={{ color: '#f5222d' }}>¥{value.toLocaleString()}</strong> },

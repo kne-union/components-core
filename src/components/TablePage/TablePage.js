@@ -1,12 +1,9 @@
-import initLegacyPreset from './initLegacyPreset';
-import initPreset from '@components/TablePage/initPreset';
+import '@kne/table-page/dist/index.css';
 import BaseTablePage from '@kne/table-page';
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
-import { getScrollEl } from '@common/utils/importantContainer';
-import adaptColumns from './adaptColumns';
-import { withFeatureTablePage } from '@components/TablePage/featureGate';
+import initPreset from './initPreset';
+import { withFeatureTablePage } from './featureGate';
 
-initLegacyPreset();
 initPreset();
 
 const filterHiddenColumns = (columns, hiddenColumns) => {
@@ -28,23 +25,7 @@ const isDynamicColumns = (columns, getColumns) =>
   typeof getColumns === 'function' || typeof columns === 'function';
 
 const TablePageInner = forwardRef(
-  (
-    {
-      columns,
-      getColumns,
-      summary,
-      hiddenColumns,
-      columnsRef,
-      horizontalScroller = true,
-      getScrollContainer = getScrollEl,
-      scrollTopInset,
-      stickyOffset,
-      ...props
-    },
-    ref
-  ) => {
-    const resolvedScrollTopInset = scrollTopInset ?? stickyOffset;
-
+  ({ columns, getColumns, summary, hiddenColumns, columnsRef, ...props }, ref) => {
     const resolveColumns = useCallback(
       data => {
         const raw =
@@ -54,21 +35,19 @@ const TablePageInner = forwardRef(
               ? columns(data)
               : columns;
         const filtered = filterHiddenColumns(raw, hiddenColumns);
-        const adapted = adaptColumns(filtered) || [];
-        columnsRef.current = adapted;
-        return adapted;
+        columnsRef.current = filtered;
+        return filtered;
       },
       [columns, getColumns, hiddenColumns, columnsRef]
     );
 
-    const staticResolvedColumns = useMemo(() => {
+    const staticFilteredColumns = useMemo(() => {
       if (isDynamicColumns(columns, getColumns)) {
         return null;
       }
       const filtered = filterHiddenColumns(columns, hiddenColumns);
-      const adapted = adaptColumns(filtered) || [];
-      columnsRef.current = adapted;
-      return adapted;
+      columnsRef.current = filtered;
+      return filtered;
     }, [columns, getColumns, hiddenColumns, columnsRef]);
 
     const adaptedSummary = useCallback(
@@ -85,13 +64,9 @@ const TablePageInner = forwardRef(
       <BaseTablePage
         ref={ref}
         {...props}
-        scrollTopInset={resolvedScrollTopInset}
-        stickyOffset={resolvedScrollTopInset}
-        columns={staticResolvedColumns !== null ? staticResolvedColumns : columns}
-        getColumns={staticResolvedColumns !== null ? undefined : resolveColumns}
+        columns={staticFilteredColumns !== null ? staticFilteredColumns : columns}
+        getColumns={staticFilteredColumns !== null ? undefined : resolveColumns}
         summary={typeof summary === 'function' ? adaptedSummary : null}
-        horizontalScroller={horizontalScroller}
-        getScrollContainer={getScrollContainer}
       />
     );
   }

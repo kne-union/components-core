@@ -37,6 +37,18 @@ const MenuReady = ({onReady}) => {
     return null;
 };
 
+const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const getModuleSegment = (pathname, basePath = "") => {
+    if (!pathname) {
+        return "";
+    }
+    const suffix = basePath
+        ? pathname.replace(new RegExp(`^${escapeRegExp(basePath)}`), "")
+        : pathname;
+    return suffix.split("/").filter(Boolean)[0] || "";
+};
+
 const Navigation = withLocale(({
                                    permissions = [],
                                    list = [],
@@ -76,12 +88,10 @@ const Navigation = withLocale(({
         }
     }
     const windowResizeRef = useResize(callback);
-    const pathModuleName = location.pathname
-        .replace(new RegExp(`^${base}`), "")
-        .split("/")[1];
+    const pathModuleName = getModuleSegment(location.pathname, base);
     const name = pathModuleName ? get(Array.from(mapping.entries()).find(([name, {path, permission}]) => {
         const _path = typeof path === "function" ? path(permission, permissions) : path;
-        return _path.indexOf("/" + pathModuleName) !== -1;
+        return getModuleSegment(_path, base) === pathModuleName;
     }), "[0]") : "home";
 
     // 是否为移动端（优先使用强制指定的值，否则使用自动检测的值）

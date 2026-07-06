@@ -1,0 +1,9 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "reference": "@kne/button-group",
+      "path": "list[2]"
+    }
+  ]
+}

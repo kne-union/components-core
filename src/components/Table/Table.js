@@ -1,20 +1,19 @@
 import '@kne/table-page/dist/index.css';
 import initLegacyPreset from './initLegacyPreset';
-import style from './style.module.scss';
+import initPreset from '@components/TablePage/initPreset';
 import { Table as AntdTable } from 'antd';
 import { Table as BaseTable } from '@kne/table-page';
 import { useEffect, useMemo, useRef } from 'react';
-import classnames from 'classnames';
 import { getScrollEl as getScrollElDefault } from '@common/utils/importantContainer';
 import { usePreset } from '@components/Global';
 import useRefCallback from '@kne/use-ref-callback';
 import adaptColumns from './adaptColumns';
 import adaptRowSelection from './adaptRowSelection';
-import useSelectedRow from './useSelectedRow';
 import useLegacyTableServerApis from './useLegacyTableServerApis';
 import TablePage from './TablePage';
 
 initLegacyPreset();
+initPreset();
 
 const Table = ({
   columns,
@@ -81,40 +80,33 @@ const Table = ({
     [summary]
   );
 
-  const resolvedScrollTopInset = scrollTopInset ?? stickyOffset ?? 'var(--nav-height)';
+  const resolvedScrollTopInset = scrollTopInset ?? stickyOffset;
 
   return (
-    <div
-      className={classnames(className, style['table-shell'], 'table-page-scroller')}
-      style={{
-        '--scroll-top-inset': resolvedScrollTopInset,
-        '--sticky-offset': resolvedScrollTopInset
-      }}
-    >
-      <BaseTable
-        {...props}
-        sticky={sticky}
-        scrollTopInset={resolvedScrollTopInset}
-        stickyOffset={resolvedScrollTopInset}
-        getStickyContainer={getScrollEl}
-        dataSource={dataSource}
-        rowKey={rowKey}
-        columns={adaptedColumns}
-        context={context}
-        pagination={pagination}
-        controllerOpen={controllerOpen}
-        name={name}
-        scroll={scroll}
-        sortRender={sortRender}
-        rowSelection={adaptedRowSelection}
-        summary={adaptedSummary}
-        tableServerApis={tableServerApis}
-      />
-    </div>
+    <BaseTable
+      {...props}
+      className={className}
+      sticky={sticky}
+      scrollTopInset={resolvedScrollTopInset}
+      stickyOffset={resolvedScrollTopInset}
+      getStickyContainer={getScrollEl}
+      dataSource={dataSource}
+      rowKey={rowKey}
+      columns={adaptedColumns}
+      context={context}
+      pagination={pagination}
+      controllerOpen={controllerOpen}
+      name={name}
+      scroll={scroll}
+      sortRender={sortRender}
+      rowSelection={adaptedRowSelection}
+      summary={adaptedSummary}
+      tableServerApis={tableServerApis}
+    />
   );
 };
 
-Table.useSelectedRow = useSelectedRow;
+Table.useSelectedRow = BaseTable.useSelectedRow;
 Table.TablePage = TablePage;
 Table.Summary = AntdTable.Summary;
 Table.Summary.Row = AntdTable.Summary.Row;

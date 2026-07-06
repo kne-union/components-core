@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import { usePreset } from "@components/Global";
 import get from "lodash/get";
-import memoize from "lodash/memoize";
 import omit from "lodash/omit";
 
 const treeTraverse = (data, func, pId) => {
@@ -18,7 +17,7 @@ const treeTraverse = (data, func, pId) => {
   treeTraverse(data.children, func, pId ? pId + ":" + data.id : data.id);
 };
 
-const parseProfile = memoize((profile) => {
+const parseProfile = profile => {
   const profileMap = (() => {
     const output = new Map();
     treeTraverse(profile, (item) => {
@@ -34,14 +33,14 @@ const parseProfile = memoize((profile) => {
         Array.isArray(item.dependencies) &&
         item.dependencies.length > 0 &&
         item.dependencies.some((depId) => {
-          return !profileMap.get(id);
+          return !profileMap.get(depId);
         })
       );
     });
   })(profileMap);
 
   return { profile, features, profileMap };
-});
+};
 
 const useFeatures = () => {
   const preset = usePreset();
@@ -57,9 +56,9 @@ const computedIsPaas = (currentId, { profileMap, features }) => {
   return (
     features.indexOf(currentId) !== -1 &&
     target.close !== true &&
-    get(target, "dependencies", []).every((id) => {
-      const dependenciesTarget = profileMap.get(currentId);
-      return features.indexOf(id) > -1 && dependenciesTarget.close !== true;
+    get(target, "dependencies", []).every((depId) => {
+      const dependenciesTarget = profileMap.get(depId);
+      return features.indexOf(depId) > -1 && dependenciesTarget?.close !== true;
     })
   );
 };
