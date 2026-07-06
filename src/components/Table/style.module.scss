@@ -1,25 +1,3 @@
-// 与旧版 Table .table 一致：顶部占位由 table-shell 上的 --scroll-top-inset 控制
-.table-shell {
-  :global(.ant-table-sticky-scroll) {
-    display: none;
-  }
-
-  :global(.is-sticky-scroll-y) {
-    :global(.ant-table-header.ant-table-sticky-holder),
-    :global(.ant-table-thead.ant-table-sticky-holder) {
-      top: 0 !important;
-    }
-  }
-
-  :global(.info-page-table) {
-    :global(.ant-table-header.ant-table-sticky-holder),
-    :global(.ant-table-thead.ant-table-sticky-holder) {
-      top: var(--scroll-top-inset, var(--sticky-offset, var(--nav-height, 0px))) !important;
-      transform: none !important;
-    }
-  }
-}
-
 // legacy 列类型渲染（options / ellipsis）
 .options-column {
   width: 100% !important;

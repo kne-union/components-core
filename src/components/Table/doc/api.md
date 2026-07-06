@@ -33,13 +33,25 @@
 | getColumns | 获取列配置的函数 | function | - |
 
 ### useSelectedRow Hook
+
+与 `@kne/table-page` 保持一致，推荐通过 `getRowSelection(dataSource)` 生成 `rowSelection` 配置。
+
+**参数**
+
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| options.rowKey | 行key | string/function | 'id' |
-| selectedRowKeys | 选中行的keys | array | [] |
-| onSelectAll | 全选回调 | function | - |
-| onSelect | 单选回调 | function | - |
-| setSelectedRowKeys | 设置选中行 | function | - |
+| rowKey | 行唯一标识 | string/function | `'id'` |
+| type | 选择类型 | `'checkbox'` / `'radio'` | `'checkbox'` |
+
+**返回值**
+
+| 属性名 | 说明 | 类型 |
+| ------ | ---- | ---- |
+| selectedRowKeys | 已选行 key 列表 | array |
+| selectedRows | 已选行数据 | array |
+| getRowSelection | 生成 `rowSelection` 配置 | `(dataSource, extra?) => object` |
+| clearSelectedRows | 清空选择 | function |
+| setSelectedRowKeys | 按 key 设置选中行 | `(keys, dataSource) => void` |
 
 ### 列配置（Column）
 | 属性名 | 说明 | 类型 | 默认值 |
