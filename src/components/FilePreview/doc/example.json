@@ -2,136 +2,16 @@
   "isFull": true,
   "list": [
     {
-      "title": "HtmlPreview",
-      "description": "这里填写示例说明",
-      "code": "./html.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[6]"
     },
     {
-      "title": "PdfPreview",
-      "description": "这里填写示例说明",
-      "code": "./pdf.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[7]"
     },
     {
-      "title": "TextPreview",
-      "description": "这里填写示例说明",
-      "code": "./text.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        }
-      ]
-    },
-    {
-      "title": "ImagePreview",
-      "description": "这里填写示例说明",
-      "code": "./img.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        }
-      ]
-    },
-    {
-      "title": "unknown",
-      "description": "这里填写示例说明",
-      "code": "./unknown.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        }
-      ]
-    },
-    {
-      "title": "office",
-      "description": "这里填写示例说明",
-      "code": "./office.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        },
-        {
-          "name": "_Global",
-          "packageName": "@components/Global"
-        }
-      ]
-    },
-    {
-      "title": "audio",
-      "description": "这里填写示例说明",
-      "code": "./audio.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        },
-        {
-          "name": "_Global",
-          "packageName": "@components/Global"
-        }
-      ]
-    },
-    {
-      "title": "video",
-      "description": "这里填写示例说明",
-      "code": "./video.js",
-      "scope": [
-        {
-          "name": "_FilePreview",
-          "packageName": "@components/FilePreview"
-        },
-        {
-          "name": "remoteLoader",
-          "packageName": "@kne/remote-loader"
-        },
-        {
-          "name": "_Global",
-          "packageName": "@components/Global"
-        }
-      ]
+      "reference": "@kne/react-file",
+      "path": "list[8]"
     }
   ]
 }

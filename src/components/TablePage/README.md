@@ -474,6 +474,7 @@ const BaseExample = () => {
 
 render(<BaseExample />);
 
+
 ```
 
 - TablePage sticky scroll
@@ -719,6 +720,7 @@ const BaseExample = () => {
 
 render(<BaseExample />);
 
+
 ```
 
 - TableView
@@ -890,6 +892,7 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
 
 ```
 
@@ -1064,6 +1067,7 @@ const BaseExample = () => {
 
 render(<BaseExample />);
 
+
 ```
 
 - useSelectedRow
@@ -1215,7 +1219,7 @@ const RadioExample = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: 8, color: '#666' }}>单选模式 type: &apos;radio&apos;</div>
+      <div style={{ marginBottom: 8, color: '#666' }}>单选模式 type: 'radio'</div>
       <div style={{ marginBottom: 12 }}>
         当前选中：{selectedOrder ? &#96;${selectedOrder.id}（${selectedOrder.customerName}）&#96; : '无'}
       </div>
@@ -1235,6 +1239,7 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
 
 ```
 
@@ -1344,6 +1349,7 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
 
 ```
 
@@ -1472,6 +1478,7 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
 
 ```
 
@@ -1626,6 +1633,7 @@ const BaseExample = () => {
 
 render(<BaseExample />);
 
+
 ```
 
 - column config
@@ -1755,6 +1763,7 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
 
 ```
 
@@ -1959,6 +1968,508 @@ const BaseExample = () => {
       <Tips />
       <Table dataSource={sortedData} columns={columns} sortRender={sortRender} scroll={{ x: 1600 }} />
     </Flex>
+  );
+};
+
+render(<BaseExample />);
+
+
+```
+
+- 扩展 renderType
+- 展示 TablePage 通过 preset 扩展的列渲染类型：enum / enumList（Enum 组件）、avatar / avatarList（Image.Avatar、Avatar.Group）、file / fileList（FileLink）。配合 getValueOf 与 moduleName 声明式配置列展示。
+- _TablePage(@components/TablePage),_Global(@components/Global),antd(antd)
+
+```jsx
+const { PureGlobal } = _Global;
+const { default: TablePage } = _TablePage;
+const { Flex, Typography, Divider } = antd;
+
+const avatar = seed => &#96;https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&#96;;
+
+const dataSource = [
+  {
+    id: 'PRJ-001',
+    name: '客户门户改版',
+    status: 'active',
+    tagIds: ['urgent', 'design', 'frontend'],
+    ownerName: '张明',
+    ownerAvatar: avatar('ZhangMing'),
+    members: [
+      { name: '张明', avatar: avatar('ZhangMing') },
+      { name: '李婷', avatar: avatar('LiTing') },
+      { name: '王强', avatar: avatar('WangQiang') },
+      { name: '赵敏', avatar: avatar('ZhaoMin') },
+      { name: '孙杰', avatar: avatar('SunJie') }
+    ],
+    contractName: '服务合同-2024.pdf',
+    contractUrl: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+    attachments: [
+      {
+        id: 'file-001',
+        filename: '需求说明.docx',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-01-10',
+        userName: '张明'
+      },
+      {
+        id: 'file-002',
+        filename: '原型稿.fig',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-01-12',
+        userName: '李婷'
+      }
+    ]
+  },
+  {
+    id: 'PRJ-002',
+    name: '移动端性能优化',
+    status: 'draft',
+    tagIds: ['backend', 'performance'],
+    ownerName: '李婷',
+    ownerAvatar: avatar('LiTing'),
+    members: [
+      { name: '李婷', avatar: avatar('LiTing') },
+      { name: '王强', avatar: avatar('WangQiang') }
+    ],
+    contractName: '技术优化协议.pdf',
+    contractUrl: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+    attachments: [
+      {
+        id: 'file-003',
+        filename: '性能报告.xlsx',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-02-01',
+        userName: '王强'
+      }
+    ]
+  },
+  {
+    id: 'PRJ-003',
+    name: '数据中台建设',
+    status: 'done',
+    tagIds: ['backend', 'data'],
+    ownerName: '王强',
+    ownerAvatar: avatar('WangQiang'),
+    members: [
+      { name: '王强', avatar: avatar('WangQiang') },
+      { name: '赵敏', avatar: avatar('ZhaoMin') },
+      { name: '孙杰', avatar: avatar('SunJie') }
+    ],
+    contractName: '数据平台合同.pdf',
+    contractUrl: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+    attachments: [
+      {
+        id: 'file-004',
+        filename: '架构设计.pdf',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-03-05',
+        userName: '王强'
+      },
+      {
+        id: 'file-005',
+        filename: '接口清单.csv',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-03-08',
+        userName: '赵敏'
+      },
+      {
+        id: 'file-006',
+        filename: '验收标准.docx',
+        url: &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;,
+        date: '2024-03-10',
+        userName: '孙杰'
+      }
+    ]
+  }
+];
+
+const columns = [
+  { name: 'id', title: '项目编号', width: 120, renderType: 'small', fixed: 'left' },
+  { name: 'name', title: '项目名称', width: 200, renderType: 'main' },
+  {
+    name: 'status',
+    title: '状态',
+    width: 100,
+    renderType: 'enum',
+    moduleName: 'projectStatus',
+    getValueOf: item => item.status
+  },
+  {
+    name: 'tagIds',
+    title: '标签',
+    width: 220,
+    renderType: 'enumList',
+    moduleName: 'projectTags',
+    getValueOf: item => item.tagIds
+  },
+  {
+    name: 'owner',
+    title: '负责人',
+    width: 80,
+    renderType: 'avatar',
+    avatarSize: 32,
+    getValueOf: item => ({
+      src: item.ownerAvatar,
+      alt: item.ownerName
+    })
+  },
+  {
+    name: 'members',
+    title: '成员',
+    width: 160,
+    renderType: 'avatarList',
+    avatarSize: 28,
+    getValueOf: item => ({
+      list: item.members.map(member => ({
+        src: member.avatar,
+        alt: member.name
+      })),
+      maxCount: 4
+    })
+  },
+  {
+    name: 'contract',
+    title: '合同',
+    width: 180,
+    renderType: 'file',
+    getValueOf: item => ({
+      url: item.contractUrl,
+      filename: item.contractName
+    })
+  },
+  {
+    name: 'attachments',
+    title: '附件',
+    width: 320,
+    renderType: 'fileList',
+    getValueOf: item => item.attachments
+  }
+];
+
+const BaseExample = () => (
+  <PureGlobal
+    preset={{
+      locale: 'zh-CN',
+      enums: {
+        projectStatus: [
+          { value: 'draft', description: '草稿', type: 'default' },
+          { value: 'active', description: '进行中', type: 'processing' },
+          { value: 'done', description: '已完成', type: 'success' }
+        ],
+        projectTags: [
+          { value: 'urgent', description: '紧急', type: 'error' },
+          { value: 'design', description: '设计', type: 'processing' },
+          { value: 'frontend', description: '前端', type: 'success' },
+          { value: 'backend', description: '后端', type: 'warning' },
+          { value: 'performance', description: '性能', type: 'default' },
+          { value: 'data', description: '数据', type: 'processing' }
+        ]
+      },
+      apis: {
+        file: {
+          staticUrl: window.PUBLIC_URL || '/',
+          getUrl: {
+            loader: async ({ params }) => {
+              return &#96;${window.PUBLIC_URL || ''}/logo192.png&#96;;
+            }
+          }
+        }
+      }
+    }}
+  >
+    <Flex vertical gap={16}>
+      <div style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
+        <Typography.Title level={5} style={{ marginTop: 0 }}>
+          TablePage 扩展 renderType
+        </Typography.Title>
+        <p>
+          通过 <code>preset</code> 扩展列渲染类型，结合 <code>getValueOf</code> 声明数据结构即可渲染，无需手写{' '}
+          <code>render</code>：
+        </p>
+        <ul style={{ margin: '8px 0', paddingLeft: 20 }}>
+          <li>
+            <code>enum</code> — 使用 <code>Enum</code> + <code>StateTag</code>，列配置 <code>moduleName</code>
+          </li>
+          <li>
+            <code>enumList</code> — 多个枚举标签列表
+          </li>
+          <li>
+            <code>avatar</code> — 使用 <code>Image.Avatar</code>
+          </li>
+          <li>
+            <code>avatarList</code> — 使用 <code>Avatar.Group</code> + <code>Image.Avatar</code>
+          </li>
+          <li>
+            <code>file</code> — 使用 <code>FileLink</code> 展示单个文件
+          </li>
+          <li>
+            <code>fileList</code> — 使用多个 <code>FileLink</code> 展示附件列表
+          </li>
+        </ul>
+      </div>
+      <Divider style={{ margin: 0 }} />
+      <TablePage
+        name="demo-table-page-render-types"
+        controllerOpen={false}
+        scroll={{ x: 1500 }}
+        pagination={false}
+        dataFormat={data => ({
+          list: data.pageData,
+          total: data.totalCount,
+          data
+        })}
+        loader={() =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                pageData: dataSource,
+                totalCount: dataSource.length
+              });
+            }, 200);
+          })
+        }
+        columns={columns}
+      />
+    </Flex>
+  </PureGlobal>
+);
+
+render(<BaseExample />);
+
+```
+
+- Features 权限控制
+- 展示 TablePage 的 featureId 与 Features 配合：通过配置面板切换功能开关、调整 options/rejectedOptions.hiddenColumns，表格列会实时响应变化。业务场景：员工管理系统中不同角色看到不同字段。
+- _TablePage(@components/TablePage),_Global(@components/Global),_Features(@components/Features),antd(antd)
+
+```jsx
+const { PureGlobal } = _Global;
+const { useFeatureCall } = _Features;
+const { default: TablePage } = _TablePage;
+const { Flex, Tag, Alert, Card, Switch, Checkbox, Space, Typography, Divider } = antd;
+const { useMemo, useState } = React;
+
+const TOTAL = 80;
+
+const range = (start, end) => Array.from({ length: end - start }, (_, i) => start + i);
+
+const surnames = ['张', '李', '王', '刘', '陈'];
+const givenNames = ['伟', '强', '敏', '磊', '杰', '婷', '娜', '静', '丽', '娟'];
+const departments = ['技术研发部', '产品设计部', '市场营销部', '人力资源部', '财务部'];
+const positions = ['工程师', '高级工程师', '经理', '总监', '专员'];
+const educations = ['本科', '硕士', '博士', '大专'];
+
+const statusMap = {
+  active: { type: 'success', text: '在职' },
+  vacation: { type: 'warning', text: '休假' },
+  resigned: { type: 'default', text: '离职' },
+  probation: { type: 'processing', text: '试用期' }
+};
+
+const COLUMN_OPTIONS = [
+  { label: '入职日期', value: 'joinDate' },
+  { label: '工龄', value: 'workYears' },
+  { label: '学历', value: 'education' },
+  { label: '薪资范围', value: 'salary' }
+];
+
+const buildEmployee = index => {
+  const statusKeys = ['active', 'vacation', 'resigned', 'probation'];
+  return {
+    id: &#96;EMP${String(index + 1).padStart(4, '0')}&#96;,
+    employeeNo: &#96;EMP-2024-${String(index + 1).padStart(4, '0')}&#96;,
+    name: &#96;${surnames[index % surnames.length]}${givenNames[index % givenNames.length]}&#96;,
+    department: departments[index % departments.length],
+    position: positions[index % positions.length],
+    status: statusKeys[index % statusKeys.length],
+    joinDate: &#96;2023-${String((index % 12) + 1).padStart(2, '0')}-${String((index % 28) + 1).padStart(2, '0')}&#96;,
+    workYears: Math.floor(index / 12) + 1,
+    salary: &#96;${15 + (index % 20)}K-${20 + (index % 20)}K&#96;,
+    education: educations[index % educations.length]
+  };
+};
+
+const allEmployees = range(0, TOTAL).map(buildEmployee);
+
+const columns = [
+  { name: 'employeeNo', title: '工号', width: 160, min: 120, max: 220, fixed: 'left', renderType: 'small' },
+  { name: 'name', title: '姓名', width: 100, renderType: 'main' },
+  { name: 'department', title: '部门', width: 150 },
+  { name: 'position', title: '职位', width: 120 },
+  {
+    name: 'status',
+    title: '状态',
+    width: 100,
+    renderType: 'status',
+    getValueOf: item => statusMap[item.status] || { type: 'default', text: item.status }
+  },
+  { name: 'joinDate', title: '入职日期', width: 120, format: 'date' },
+  { name: 'workYears', title: '工龄', width: 90, render: value => &#96;${value}年&#96; },
+  { name: 'education', title: '学历', width: 90 },
+  { name: 'salary', title: '薪资范围', width: 120 }
+];
+
+const columnTitleMap = columns.reduce((result, column) => {
+  result[column.name] = column.title;
+  return result;
+}, {});
+
+const FeatureRuntimeStatus = () => {
+  const { isPass, feature, currentId } = useFeatureCall('employee-list');
+  const runtimeOptions = isPass ? feature?.options : feature?.rejectedOptions;
+  const runtimeHiddenColumns = runtimeOptions?.hiddenColumns || [];
+
+  return (
+    <Alert
+      type={isPass ? 'success' : 'warning'}
+      showIcon
+      message={&#96;Features 运行时：${isPass ? '功能已开启，展示 TablePage' : '功能已关闭，TablePage 显示 403'}&#96;}
+      description={
+        <Space direction="vertical" size={8} style={{ width: '100%' }}>
+          <div>
+            <Typography.Text type="secondary">currentId：</Typography.Text>
+            <Typography.Text code style={{ marginLeft: 8 }}>
+              {currentId}
+            </Typography.Text>
+          </div>
+          <div>
+            <Typography.Text type="secondary">hiddenColumns：</Typography.Text>
+            {runtimeHiddenColumns.length ? (
+              runtimeHiddenColumns.map(name => (
+                <Tag key={name} color="orange" style={{ marginLeft: 8 }}>
+                  {columnTitleMap[name] || name}
+                </Tag>
+              ))
+            ) : (
+              <Tag color="green" style={{ marginLeft: 8 }}>
+                无
+              </Tag>
+            )}
+          </div>
+        </Space>
+      }
+    />
+  );
+};
+
+const FeatureControls = ({
+  featureEnabled,
+  onFeatureEnabledChange,
+  hiddenColumns,
+  onHiddenColumnsChange
+}) => (
+  <Card title="Features 配置面板" size="small">
+    <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Flex align="center" gap={12}>
+        <Switch checked={featureEnabled} onChange={onFeatureEnabledChange} />
+        <span>
+          员工列表功能：
+          <Tag color={featureEnabled ? 'success' : 'error'} style={{ marginLeft: 8 }}>
+            {featureEnabled ? '开启' : '关闭（TablePage 不可见）'}
+          </Tag>
+        </span>
+      </Flex>
+
+      <div>
+        <Typography.Text type="secondary" style={{ display: 'block', marginBottom: 8 }}>
+          options.hiddenColumns — 功能开启时隐藏无权限列：
+        </Typography.Text>
+        <Checkbox.Group
+          options={COLUMN_OPTIONS}
+          value={hiddenColumns}
+          disabled={!featureEnabled}
+          onChange={onHiddenColumnsChange}
+        />
+      </div>
+
+      <Divider style={{ margin: 0 }} />
+
+      <Typography.Text type="secondary" style={{ fontSize: 13 }}>
+        关闭功能开关后，下方 TablePage 区域将显示 403；开启后按 hiddenColumns 隐藏对应列（默认隐藏工龄、学历）。
+      </Typography.Text>
+    </Space>
+  </Card>
+);
+
+const BaseExample = () => {
+  const [featureEnabled, setFeatureEnabled] = useState(true);
+  const [hiddenColumns, setHiddenColumns] = useState(['workYears', 'education']);
+
+  const preset = useMemo(
+    () => ({
+      features: {
+        debug: true,
+        profile: {
+          id: 'employee-management',
+          type: 'system',
+          name: '员工管理系统',
+          children: [
+            {
+              id: 'employee-list',
+              type: 'feature',
+              name: '员工列表',
+              close: !featureEnabled,
+              options: {
+                hiddenColumns: [...hiddenColumns]
+              },
+              rejectedOptions: {
+                hiddenColumns: ['joinDate', 'workYears', 'education', 'salary']
+              }
+            }
+          ]
+        }
+      }
+    }),
+    [featureEnabled, hiddenColumns]
+  );
+
+  return (
+    <PureGlobal preset={preset}>
+      <Flex vertical gap={16}>
+        <FeatureControls
+          featureEnabled={featureEnabled}
+          onFeatureEnabledChange={setFeatureEnabled}
+          hiddenColumns={hiddenColumns}
+          onHiddenColumnsChange={setHiddenColumns}
+        />
+        <FeatureRuntimeStatus />
+        <TablePage
+          featureId="employee-list"
+          featureRejectedText="暂无员工列表访问权限"
+          name="demo-table-page-features"
+          controllerOpen={false}
+          scroll={{ x: 1000 }}
+          pagination={{
+            open: true,
+            pageSize: 10,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            pageSizeOptions: ['10', '20', '50']
+          }}
+          dataFormat={data => ({
+            list: data.pageData,
+            total: data.totalCount,
+            data
+          })}
+          loader={({ data }) => {
+            const currentPage = Number(data?.currentPage) || 1;
+            const perPage = Number(data?.perPage) || 10;
+            const startIndex = (currentPage - 1) * perPage;
+
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({
+                  pageData: allEmployees.slice(startIndex, startIndex + perPage),
+                  totalCount: allEmployees.length
+                });
+              }, 300);
+            });
+          }}
+          columns={columns}
+        />
+      </Flex>
+    </PureGlobal>
   );
 };
 

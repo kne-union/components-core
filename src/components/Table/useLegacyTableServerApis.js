@@ -8,8 +8,7 @@ const useLegacyTableServerApis = (name, controllerOpen, presetTableServerApis) =
   const presetRef = useRef(presetTableServerApis);
   presetRef.current = presetTableServerApis;
 
-  const remoteConfigRef = useRef({});
-  const [version, setVersion] = useState(0);
+  const [remoteConfig, setRemoteConfig] = useState({});
 
   const isLegacyApi = Boolean(
     presetTableServerApis &&
@@ -25,8 +24,7 @@ const useLegacyTableServerApis = (name, controllerOpen, presetTableServerApis) =
   }, [isLegacyApi, name, controllerOpen]);
 
   const onRequestSuccess = useRefCallback(data => {
-    remoteConfigRef.current = toConfigObject(data);
-    setVersion(value => value + 1);
+    setRemoteConfig(toConfigObject(data));
   });
 
   const fetchConfig = useMemo(
@@ -78,15 +76,14 @@ const useLegacyTableServerApis = (name, controllerOpen, presetTableServerApis) =
     }
 
     return {
-      getData: () => remoteConfigRef.current,
+      getData: () => remoteConfig,
       setData: (tableName, data) => {
         const target = toConfigObject(data);
-        remoteConfigRef.current = target;
-        setVersion(value => value + 1);
+        setRemoteConfig(target);
         return preset.setDataFunc?.(tableName, target);
       }
     };
-  }, [isLegacyApi, version]);
+  }, [isLegacyApi, remoteConfig]);
 };
 
 export default useLegacyTableServerApis;

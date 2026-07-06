@@ -161,6 +161,25 @@
       ]
     },
     {
+      "title": "TablePage isNext 新版表格",
+      "description": "展示 Layout.TablePage 的 isNext 参数：启用后使用 @components/TablePage（@kne/table-page 新 API，如 renderType、getValueOf），默认则使用 @components/Table 内置 legacy TablePage（兼容 type 列配置）。",
+      "code": "./table-page-next.js",
+      "scope": [
+        {
+          "name": "_Layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "StateBarPage 状态栏页面",
       "description": "展示 StateBarPage 组件创建带状态栏的页面",
       "code": "./state-bar-page.js",

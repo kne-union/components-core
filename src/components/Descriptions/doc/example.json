@@ -1,0 +1,9 @@
+{
+  "isFull": false,
+  "list": [
+    {
+      "reference": "@kne/info-page",
+      "path": "list[3]"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
-import { TablePage as Table } from "@components/Table";
+import { TablePage as LegacyTablePage } from "@components/Table";
+import NextTablePage from "@components/TablePage";
 import PermissionsPage from "./PermissionsPage";
 import { forwardRef, useState } from "react";
 import style from "./style.module.scss";
@@ -14,11 +15,14 @@ const TablePage = forwardRef(
       openFeatures,
       name,
       topArea,
+      isNext,
       ...props
     },
     ref
   ) => {
     const [tableData, setTableData] = useState(null);
+    const Table = isNext ? NextTablePage : LegacyTablePage;
+
     return (
       <PermissionsPage
         name={name}

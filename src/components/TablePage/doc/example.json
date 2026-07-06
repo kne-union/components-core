@@ -1,3 +1,47 @@
 {
-  "reference": "@kne/table-page"
+  "reference": "@kne/table-page",
+  "list": [
+    {
+      "title": "扩展 renderType",
+      "description": "展示 TablePage 通过 preset 扩展的列渲染类型：enum / enumList（Enum 组件）、avatar / avatarList（Image.Avatar、Avatar.Group）、file / fileList（FileLink）。配合 getValueOf 与 moduleName 声明式配置列展示。",
+      "code": "./render-types.js",
+      "scope": [
+        {
+          "name": "_TablePage",
+          "packageName": "@components/TablePage"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Features 权限控制",
+      "description": "展示 TablePage 的 featureId 与 Features 配合：通过配置面板切换功能开关、调整 options/rejectedOptions.hiddenColumns，表格列会实时响应变化。业务场景：员工管理系统中不同角色看到不同字段。",
+      "code": "./features.js",
+      "scope": [
+        {
+          "name": "_TablePage",
+          "packageName": "@components/TablePage"
+        },
+        {
+          "name": "_Global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "_Features",
+          "packageName": "@components/Features"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
 }

@@ -20,391 +20,199 @@ File 组件提供了一套完整的文件管理解决方案，包括文件展示
 
 #### 示例代码
 
-- 获取文件地址
-- 通过 OSS ID 获取文件访问地址，展示员工头像和公司 Logo 地址获取
-- _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader),antd(antd)
+- File
+- 从oss获取文件地址
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { default: File } = _File;
-const { PureGlobal } = global;
-const { getPublicPath } = remoteLoader;
-const { Typography, Card, Space, Alert } = antd;
+const { default: File } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
 
-const { Paragraph, Text } = Typography;
-
-const BaseExample = () => {
-  return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Alert
-        message="文件地址获取示例"
-        description="演示如何通过 OSS ID 获取文件访问地址"
-        type="info"
-        showIcon
-      />
-
-      <Card title="员工头像地址">
-        <File id="employee-avatar-001">
-          {({ url, isLoading }) => (
-            <Space direction="vertical">
-              <Text strong>访问地址：</Text>
-              <Paragraph copyable>
-                {isLoading ? '加载中...' : url}
-              </Paragraph>
-            </Space>
-          )}
-        </File>
-      </Card>
-
-      <Card title="公司 Logo 地址">
-        <File id="company-logo-main">
-          {({ url, isLoading }) => (
-            <Space direction="vertical">
-              <Text strong>访问地址：</Text>
-              <Paragraph copyable>
-                {isLoading ? '加载中...' : url}
-              </Paragraph>
-            </Space>
-          )}
-        </File>
-      </Card>
-    </Space>
-  );
-};
-
-render(
-  <PureGlobal
-    preset={{
-      apis: {
-        file: {
-          getUrl: {
-            loader: async ({ params }) => {
-              const mapping = {
-                "employee-avatar-001": "/avatar.png",
-                "company-logo-main": "/mock/resume.pdf"
-              };
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(getPublicPath("components-core") + mapping[params.id] || "");
-                }, 500);
-              });
-            },
-          },
-        },
-      },
-    }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
-
-```
-
-- 文件下载
-- 展示不同类型文件的下载功能，包括成功和失败回调，人力资源相关文档下载
-- _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader),antd(antd)
-
-```jsx
-const { Download } = _File;
-const { PureGlobal } = global;
-const { getPublicPath } = remoteLoader;
-const { Space, Card, Alert, Typography, message } = antd;
-
-const { Title, Text } = Typography;
-
-const BaseExample = () => {
-  return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Alert
-        message="文件下载示例"
-        description="演示不同类型文件的下载功能，包括成功和失败回调"
-        type="info"
-        showIcon
-      />
-
-      <Card title="人力资源相关文档下载">
-        <Space direction="vertical">
-          <div>
-            <Text type="secondary">员工入职手册：</Text>
-            <br />
-            <Download
-              id="doc-employee-handbook"
-              filename="员工入职手册.pdf"
-              onSuccess={() => message.success('员工入职手册下载成功')}
-              onError={() => message.error('文件下载失败')}
-            >
-              点击下载
-            </Download>
-          </div>
-
-          <div>
-            <Text type="secondary">公司规章制度：</Text>
-            <br />
-            <Download
-              id="doc-company-rules"
-              filename="公司规章制度.docx"
-              onSuccess={() => message.success('公司规章制度下载成功')}
-            >
-              点击下载
-            </Download>
-          </div>
-
-          <div>
-            <Text type="secondary">薪酬福利政策：</Text>
-            <br />
-            <Download
-              id="doc-salary-policy"
-              filename="薪酬福利政策.pdf"
-              onSuccess={() => message.success('薪酬福利政策下载成功')}
-            >
-              点击下载
-            </Download>
-          </div>
-        </Space>
-      </Card>
-    </Space>
-  );
-};
-
-render(
-  <PureGlobal
-    preset={{
-      apis: {
-        file: {
-          getUrl: {
-            loader: async ({ params }) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(getPublicPath("components-core") + "/avatar.png");
-                }, 800);
-              });
-            },
-          },
-        },
-      },
-    }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
-
-```
-
-- 文件列表
-- 展示文件列表组件，支持上传状态、文件信息展示、编辑、预览、删除等操作，项目文档库和员工简历场景
-- _File(@components/File),global(@components/Global),remoteLoader(@kne/remote-loader),antd(antd)
-
-```jsx
-const { List } = _FileList;
-const { Space, Card, Alert, Typography } = antd;
-const { PureGlobal } = global;
-const { getPublicPath } = remoteLoader;
-
-const { Title } = Typography;
-
-const BaseExample = () => {
-  return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Alert
-        message="文件列表示例"
-        description="展示文件上传状态、文件信息及操作功能"
-        type="info"
-        showIcon
-      />
-
-      <Card title="项目文档库">
-        <List
-          dataSource={[
-            {
-              uuid: "upload-001",
-              type: "uploading",
-              filename: "项目需求规格说明书.docx",
-            },
-            {
-              id: "doc-project-plan",
-              filename: "项目执行计划.pdf",
-              date: "2024-01-15T10:30:00.000+08:00",
-              userName: "张三",
-            },
-            {
-              id: "doc-technical-design",
-              filename: "技术架构设计文档.pdf",
-              date: "2024-01-16T14:20:00.000+08:00",
-              userName: "李四",
-            },
-            {
-              id: "doc-api-interface",
-              filename: "API 接口文档.md",
-              date: "2024-01-17T09:15:00.000+08:00",
-              userName: "王五",
-            },
-          ]}
-          apis={{
-            onEdit: async (formData, itemData) => {
-              console.log('编辑文件:', formData, itemData);
-            },
-            onDelete: async (itemData) => {
-              console.log('删除文件:', itemData);
-            },
-            onPreview: async (itemData) => {
-              console.log('预览文件:', itemData);
-            },
-          }}
-        />
-      </Card>
-
-      <Card title="员工简历上传">
-        <List
-          dataSource={[
-            {
-              id: "resume-zhangsan",
-              filename: "张三-高级前端工程师-简历.pdf",
-              date: "2024-01-18T16:45:00.000+08:00",
-              userName: "张三",
-            },
-            {
-              id: "resume-lisi",
-              filename: "李四-产品经理-简历.doc",
-              date: "2024-01-19T11:20:00.000+08:00",
-              userName: "李四",
-            },
-          ]}
-          apis={{
-            onEdit: async (formData, itemData) => {
-              console.log('编辑简历:', formData, itemData);
-            },
-            onDelete: async (itemData) => {
-              console.log('删除简历:', itemData);
-            },
-            onPreview: async (itemData) => {
-              console.log('预览简历:', itemData);
-            },
-          }}
-        />
-      </Card>
-    </Space>
-  );
-};
-
-render(
-  <PureGlobal
-    preset={{
-      apis: {
-        file: {
-          getUrl: {
-            loader: async ({ params }) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(getPublicPath("components-core") + "/mock/resume.pdf");
-                }, 600);
-              });
-            },
-          },
-        },
-      },
-    }}
-  >
-    <BaseExample />
-  </PureGlobal>
-);
-
-```
-
-- 文件链接
-- 展示 FileLink 和 useFileModal 的使用，合同文档、财务发票、政策文档预览
-- _File(@components/File),remoteLoader(@kne/remote-loader),global(@components/Global),antd(antd)
-
-```jsx
-const { FileLink, useFileModal } = _File;
-const { getPublicPath } = remoteLoader;
-const { PureGlobal } = global;
-const { Space, Card, Alert, Typography, Button, Descriptions } = antd;
-
-const { Title, Text } = Typography;
-
-const CustomPreviewButton = ({ children, ...props }) => {
-  const modal = useFileModal(props);
-  return (
-    <Button type="primary" onClick={() => modal()}>
-      {props.originName || children}
-    </Button>
-  );
-};
-
-const BaseExample = () => {
-  return (
-    <PureGlobal
-      preset={{
-        apis: {
-          file: {
-            getUrl: {
-              loader: async ({ params }) => {
-                const mapping = {
-                  "contract-001": "/avatar.png",
-                  "contract-002": "/mock/resume.pdf",
-                  "invoice-001": "/avatar.png",
-                  "policy-001": "/mock/resume.pdf",
-                };
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve(getPublicPath("components-core") + (mapping[params.id] || ""));
-                  }, 500);
-                });
-              },
-            },
-          },
-        },
-      }}
-    >
-      <Space direction="vertical" style={{ width: '100%' }}>
-        <Alert
-          message="文件链接示例"
-          description="展示 FileLink 和 useFileModal 的使用方式"
-          type="info"
-          showIcon
-        />
-
-        <Card title="合同文档（FileLink）">
-          <Space direction="vertical">
-            <FileLink
-              id="contract-001"
-              originName="员工劳动合同.pdf"
-            />
-            <FileLink
-              id="contract-002"
-              originName="保密协议.docx"
-            />
-          </Space>
-        </Card>
-
-        <Card title="财务发票（使用 useFileModal 自定义按钮）">
-          <Descriptions column={1} size="small">
-            <Descriptions.Item label="发票编号">INV-2024-0001</Descriptions.Item>
-            <Descriptions.Item label="开票日期">2024-01-20</Descriptions.Item>
-            <Descriptions.Item label="发票类型">增值税专用发票</Descriptions.Item>
-          </Descriptions>
-          <div style={{ marginTop: 16 }}>
-            <CustomPreviewButton
-              id="invoice-001"
-              originName="查看发票详情"
-            />
-          </div>
-        </Card>
-
-        <Card title="政策文档">
-          <Space direction="vertical">
-            <Text type="secondary">点击下方链接预览公司政策文档：</Text>
-            <FileLink
-              id="policy-001"
-              originName="2024年度绩效考核管理办法.pdf"
-            />
-          </Space>
-        </Card>
-      </Space>
-    </PureGlobal>
-  );
-};
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve('/logo192.png');
+              }, 1000);
+            });
+          }
+        }
+      }
+    }
+  }}>
+    <File id="123">{({ url }) => {
+      return url;
+    }}</File>
+  </PureGlobal>;
+});
 
 render(<BaseExample />);
+
+
+```
+
+- Image
+- 显示图片
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { Image } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { Divider } = antd;
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
+})(({ remoteModules }) => {
+  const [PureGlobal, InfoPage] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve('/mock/avatar.png');
+              }, 2000);
+            });
+          }
+        }
+      }
+    }
+  }}>
+    <InfoPage>
+      <InfoPage.Part title="图片">
+        <Image src="xxxxxx" />
+        <Image id="xxxxxx" style={{ width: 200, height: 200 }} />
+      </InfoPage.Part>
+      <InfoPage.Part title="头像">
+        <Image.Avatar gender="F" />
+        <Image.Avatar gender="M" />
+        <Image.Avatar />
+        <Image.Avatar gender="F" id="xxxxxx" />
+        <Divider />
+        <Image.Avatar gender="F" shape="square" />
+        <Image.Avatar gender="M" shape="square" />
+        <Image.Avatar shape="square" />
+        <Image.Avatar gender="F" id="xxxxxx" shape="square" />
+        <Divider />
+        <Image.Avatar gender="F" size={30} />
+        <Image.Avatar gender="M" size={50} />
+        <Image.Avatar size={80} />
+        <Image.Avatar gender="F" id="xxxxxx" size={100} />
+      </InfoPage.Part>
+    </InfoPage>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+
+```
+
+- Download
+- 文件下载
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { Download } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { Flex } = antd;
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve('/logo192.png');
+              }, 1000);
+            });
+          }
+        }
+      }
+    }
+  }}>
+    <Flex gap={8}>
+      <Download id="123">下载文件</Download>
+      <Download id="123" filename="图片">下载文件并设置名称</Download>
+      <Download src="/logo192.png" filename="图片">直接通过src链接下载</Download>
+    </Flex>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+
+```
+
+- FileButton
+- 预览文件按钮
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { FileButton } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            const urlMap = {
+              1: '/mock/resume.png',
+              2: '/mock/resume.pdf',
+              3: '/mock/resume.html',
+              4: '/mock/resume.txt',
+              5: '/mock/audio.wav',
+              6: '/mock/resume.docx'
+            };
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(urlMap[params.id]);
+              }, 1000);
+            });
+          }
+        }
+      }
+    }
+  }}>
+    <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>预览demo.jpg</FileButton>
+    <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>预览demo2.pdf</FileButton>
+    <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>预览demo2.html</FileButton>
+    <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
 
 ```
 
