@@ -95,6 +95,9 @@ function MyComponent() {
 | `DateRangePickerFilterItem` | 日期范围筛选 |
 | `TypeDateRangePickerFilterItem` | 类型日期范围筛选（日/周/月切换） |
 | `SuperSelectFilterItem` | 通用选择器筛选（单选/多选/搜索/全选） |
+| `SelectTableListFilterItem` | 表格选择器筛选（多列数据展示） |
+| `SelectTreeFilterItem` | 树形选择器筛选（层级数据） |
+| `SelectCascaderFilterItem` | 级联选择器筛选（父子关联、搜索过滤） |
 | `SelectFunctionFilterItem` | 职能筛选（多级数据、拼音搜索） |
 | `SelectIndustryFilterItem` | 行业筛选（多级数据、拼音搜索） |
 | `SelectAddressFilterItem` | 城市筛选（国内外城市搜索） |
@@ -140,7 +143,7 @@ const {
   SelectIndustryFilterItem, SelectAddressFilterItem
 } = fields;
 const { Flex, Button, message } = antd;
-const { useState } = React;
+const { useState, useRef, useEffect } = React;
 
 const departmentOptions = [
   { value: 'tech', label: '技术研发部' },
@@ -151,8 +154,70 @@ const departmentOptions = [
   { value: 'marketing', label: '市场营销部' }
 ];
 
+const filterList = [
+  {
+    type: InputFilterItem,
+    props: { name: 'keyword', label: '关键词', placeholder: '请输入关键词搜索' }
+  },
+  {
+    type: NumberRangeFilterItem,
+    props: { name: 'amount', label: '金额', unit: '元', min: 0, max: 999999 }
+  },
+  {
+    type: DatePickerFilterItem,
+    props: { name: 'createTime', label: '创建时间', format: 'YYYY-MM-DD' }
+  },
+  {
+    type: DateRangePickerFilterItem,
+    props: { name: 'dateRange', label: '日期范围', format: 'YYYY-MM-DD' }
+  },
+  {
+    type: TypeDateRangePickerFilterItem,
+    props: { name: 'typeDateRange', label: '快捷日期' }
+  },
+  {
+    type: SuperSelectFilterItem,
+    props: { name: 'department', label: '部门', options: departmentOptions }
+  },
+  {
+    type: SelectFunctionFilterItem,
+    props: { name: 'function', label: '职能' }
+  },
+  {
+    type: SelectIndustryFilterItem,
+    props: { name: 'industry', label: '行业' }
+  },
+  {
+    type: SelectAddressFilterItem,
+    props: { name: 'city', label: '城市' }
+  }
+];
+
+const ContainerWidthIndicator = ({ containerRef }) => {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return undefined;
+
+    const update = () => setWidth(Math.round(el.clientWidth));
+    update();
+
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [containerRef]);
+
+  return (
+    <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>
+      中间容器宽度: {width}px（观察收起/更多时是否持续增大或跳动）
+    </div>
+  );
+};
+
 const BaseExample = () => {
   const [filterValue, setFilterValue] = useState([]);
+  const filterContainerRef = useRef(null);
 
   const handleSearch = () => {
     const params = Filter.getFilterValue(filterValue);
@@ -161,54 +226,35 @@ const BaseExample = () => {
   };
 
   return (
-    <Flex vertical gap={16}>
-      <Filter
-        value={filterValue}
-        onChange={setFilterValue}
-        list={[
-          [
-            {
-              type: InputFilterItem,
-              props: { name: 'keyword', label: '关键词', placeholder: '请输入关键词搜索' }
-            },
-            {
-              type: NumberRangeFilterItem,
-              props: { name: 'amount', label: '金额', unit: '元', min: 0, max: 999999 }
-            },
-            {
-              type: DatePickerFilterItem,
-              props: { name: 'createTime', label: '创建时间', format: 'YYYY-MM-DD' }
-            },
-            {
-              type: DateRangePickerFilterItem,
-              props: { name: 'dateRange', label: '日期范围', format: 'YYYY-MM-DD' }
-            },
-            {
-              type: TypeDateRangePickerFilterItem,
-              props: { name: 'typeDateRange', label: '快捷日期' }
-            }
-          ],
-          [
-            {
-              type: SuperSelectFilterItem,
-              props: { name: 'department', label: '部门', options: departmentOptions }
-            },
-            {
-              type: SelectFunctionFilterItem,
-              props: { name: 'function', label: '职能' }
-            },
-            {
-              type: SelectIndustryFilterItem,
-              props: { name: 'industry', label: '行业' }
-            },
-            {
-              type: SelectAddressFilterItem,
-              props: { name: 'city', label: '城市' }
-            }
-          ]
-        ]}
-        displayLine={1}
-      />
+    <Flex vertical gap={16} style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
+        <ContainerWidthIndicator containerRef={filterContainerRef} />
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 8
+          }}
+        >
+          <Button>左侧操作</Button>
+          <div
+            ref={filterContainerRef}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              overflow: 'hidden',
+              border: '1px dashed #d9d9d9',
+              borderRadius: 4
+            }}
+          >
+            <Filter value={filterValue} onChange={setFilterValue} list={filterList} />
+          </div>
+          <Button type="primary" onClick={handleSearch}>
+            搜索
+          </Button>
+        </div>
+      </div>
       <Flex gap={8}>
         <span>当前筛选值:</span>
         <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4, flex: 1 }}>{JSON.stringify(filterValue, null, 2)}</pre>
@@ -333,7 +379,7 @@ render(<AdvancedFilterExample />);
 ```
 
 - 筛选字段组件
-- 展示所有筛选字段组件类型，包括输入筛选、数字区间、日期选择、下拉选择以及 SuperSelect 业务选择器（职能/行业/城市）
+- 展示所有筛选字段组件类型，包括输入筛选、数字区间、日期选择、下拉选择以及 SuperSelect 选择器（列表/表格/树形/级联）和业务选择器（职能/行业/城市）
 - _ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),antd(antd)
 
 ```jsx
@@ -341,8 +387,8 @@ const { fields, PopoverItem } = _ReactFilter;
 const {
   InputFilterItem, NumberRangeFilterItem, DatePickerFilterItem,
   DateRangePickerFilterItem, TypeDateRangePickerFilterItem,
-  SuperSelectFilterItem, SelectFunctionFilterItem,
-  SelectIndustryFilterItem, SelectAddressFilterItem
+  SuperSelectFilterItem, SelectTableListFilterItem, SelectTreeFilterItem, SelectCascaderFilterItem,
+  SelectFunctionFilterItem, SelectIndustryFilterItem, SelectAddressFilterItem
 } = fields;
 const { Input, InputNumber, Space, Flex, Select, Divider, Tag } = antd;
 const { useState } = React;
@@ -512,6 +558,120 @@ const SuperSelectExample = () => {
   );
 };
 
+// SuperSelect 其他选择组件示例（表格/树形/级联）
+const employeeOptions = [
+  { id: 'emp_1', name: '张三', department: '技术研发部', position: '工程师' },
+  { id: 'emp_2', name: '李四', department: '产品设计部', position: '设计师' },
+  { id: 'emp_3', name: '王五', department: '运营部', position: '经理' },
+  { id: 'emp_4', name: '赵六', department: '市场部', position: '专员' },
+  { id: 'emp_5', name: '钱七', department: '技术研发部', position: '工程师' }
+];
+
+const employeeColumns = [
+  { name: 'name', title: '姓名', span: 8 },
+  { name: 'department', title: '部门', span: 8 },
+  { name: 'position', title: '职位', span: 8 }
+];
+
+const organizationTree = [
+  { id: 'root', parentId: null, name: '集团总部' },
+  { id: 'tech', parentId: 'root', name: '技术中心' },
+  { id: 'tech-fe', parentId: 'tech', name: '前端开发组' },
+  { id: 'tech-be', parentId: 'tech', name: '后端开发组' },
+  { id: 'product', parentId: 'root', name: '产品中心' },
+  { id: 'product-design', parentId: 'product', name: '产品设计组' }
+];
+
+const regionData = [
+  {
+    id: 'beijing',
+    name: '北京市',
+    children: [
+      { id: 'haidian', name: '海淀区' },
+      { id: 'chaoyang', name: '朝阳区' }
+    ]
+  },
+  {
+    id: 'guangdong',
+    name: '广东省',
+    children: [
+      {
+        id: 'guangzhou',
+        name: '广州市',
+        children: [
+          { id: 'tianhe', name: '天河区' },
+          { id: 'yuexiu', name: '越秀区' }
+        ]
+      },
+      {
+        id: 'shenzhen',
+        name: '深圳市',
+        children: [
+          { id: 'nanshan', name: '南山区' },
+          { id: 'futian', name: '福田区' }
+        ]
+      }
+    ]
+  }
+];
+
+const SuperSelectVariantsExample = () => {
+  const [values, setValues] = useState({});
+
+  return (
+    <Flex vertical gap={24}>
+      <Flex align="center" gap={8}>
+        <h4 style={{ margin: 0 }}>SuperSelect 其他选择组件</h4>
+        <Tag color="blue">表格</Tag>
+        <Tag color="blue">树形</Tag>
+        <Tag color="blue">级联</Tag>
+      </Flex>
+      <p style={{ margin: 0, color: '#666', fontSize: 12 }}>
+        基于 @kne/super-select 的表格、树形、级联选择器筛选项，适用于多列数据、层级结构、级联数据等场景
+      </p>
+      <Flex wrap gap={16}>
+        <SelectTableListFilterItem
+          label="员工（表格多选）"
+          value={values.employee}
+          onChange={(val) => setValues(prev => ({ ...prev, employee: val }))}
+          options={employeeOptions}
+          columns={employeeColumns}
+          valueKey="id"
+          labelKey="name"
+        />
+        <SelectTreeFilterItem
+          label="部门（树形多选）"
+          value={values.department}
+          onChange={(val) => setValues(prev => ({ ...prev, department: val }))}
+          options={organizationTree}
+          valueKey="id"
+          labelKey="name"
+        />
+        <SelectCascaderFilterItem
+          label="地区（级联多选）"
+          value={values.region}
+          onChange={(val) => setValues(prev => ({ ...prev, region: val }))}
+          options={regionData}
+          valueKey="id"
+          labelKey="name"
+        />
+        <SelectCascaderFilterItem
+          label="地区（级联单选）"
+          single
+          value={values.singleRegion}
+          onChange={(val) => setValues(prev => ({ ...prev, singleRegion: val }))}
+          options={regionData}
+          valueKey="id"
+          labelKey="name"
+        />
+      </Flex>
+      <pre style={{ margin: 0, background: '#f5f5f5', padding: 8, borderRadius: 4 }}>
+        {JSON.stringify(values, null, 2)}
+      </pre>
+    </Flex>
+  );
+};
+
 // 业务选择器示例（职能/行业/城市）
 const BusinessSelectExample = () => {
   const [values, setValues] = useState({});
@@ -554,11 +714,19 @@ const BusinessSelectExample = () => {
   );
 };
 
-render(<FilterFieldsExample />);
-render(<Divider />);
-render(<SuperSelectExample />);
-render(<Divider />);
-render(<BusinessSelectExample />);
+const FilterFieldsDemo = () => (
+  <Flex vertical>
+    <FilterFieldsExample />
+    <Divider />
+    <SuperSelectExample />
+    <Divider />
+    <SuperSelectVariantsExample />
+    <Divider />
+    <BusinessSelectExample />
+  </Flex>
+);
+
+render(<FilterFieldsDemo />);
 
 ```
 
@@ -948,11 +1116,12 @@ import { PopoverItem } from '@kne/react-filter';
 
 | 属性        | 类型           | 默认值   | 说明           |
 | ----------- | -------------- | -------- | -------------- |
-| list        | `Array<Array>` | `[]`     | 筛选项配置数组 |
-| displayLine | `number`       | `1`      | 默认展示行数   |
-| label       | `string`       | `'筛选'` | 标题           |
-| extra       | `ReactNode`    | -        | 额外操作区域   |
-| className   | `string`       | -        | 自定义类名     |
+| list                 | `Array`                  | `[]`      | 筛选项配置数组，默认支持单层数组，也兼容双层数组 |
+| displayLine          | `number`                 | `1`       | 双层数组模式下默认展示行数 |
+| visibleCountStrategy | `'asc' \| 'desc'`        | `'asc'`   | 单层数组模式下可见项计算策略，`asc` 从少往多累加，`desc` 从多往少递减 |
+| label                | `string`                 | `'筛选'`  | 标题 |
+| extra                | `ReactNode`              | -         | 额外操作区域 |
+| className            | `string`                 | -         | 自定义类名 |
 
 ---
 
@@ -1092,6 +1261,55 @@ import { SuperSelectFilterItem } from '@kne/react-filter';
   ]}
 />
 ```
+
+> 注意：需要安装 `@kne/super-select` 依赖。
+
+#### SelectTableListFilterItem 表格选择器筛选
+
+基于 `@kne/super-select` 的 `SelectTableList` 组件，适用于需要展示多列数据的筛选场景。
+
+| 属性      | 类型       | 默认值  | 说明         |
+| --------- | ---------- | ------- | ------------ |
+| name      | `string`   | -       | 字段名称     |
+| label     | `string`   | -       | 标签         |
+| options   | `Array`    | -       | 选项数据     |
+| columns   | `Array`    | -       | 表格列配置   |
+| valueKey  | `string`   | `'id'`  | 值字段名     |
+| labelKey  | `string`   | `'name'`| 标签字段名   |
+| single    | `boolean`  | `false` | 是否单选     |
+| maxLength | `number`   | -       | 最多可选数量 |
+
+> 注意：需要安装 `@kne/super-select` 依赖。
+
+#### SelectTreeFilterItem 树形选择器筛选
+
+基于 `@kne/super-select` 的 `SelectTree` 组件，适用于组织架构、分类等层级数据筛选。
+
+| 属性      | 类型       | 默认值  | 说明         |
+| --------- | ---------- | ------- | ------------ |
+| name      | `string`   | -       | 字段名称     |
+| label     | `string`   | -       | 标签         |
+| options   | `Array`    | -       | 树形数据（含 `parentId`） |
+| valueKey  | `string`   | `'id'`  | 值字段名     |
+| labelKey  | `string`   | `'name'`| 标签字段名   |
+| single    | `boolean`  | `false` | 是否单选     |
+| maxLength | `number`   | -       | 最多可选数量 |
+
+> 注意：需要安装 `@kne/super-select` 依赖。
+
+#### SelectCascaderFilterItem 级联选择器筛选
+
+基于 `@kne/super-select` 的 `SelectCascader` 组件，支持多列菜单展示、父子关联选择、搜索过滤。
+
+| 属性      | 类型       | 默认值  | 说明         |
+| --------- | ---------- | ------- | ------------ |
+| name      | `string`   | -       | 字段名称     |
+| label     | `string`   | -       | 标签         |
+| options   | `Array`    | -       | 级联数据（含 `children`） |
+| valueKey  | `string`   | `'id'`  | 值字段名     |
+| labelKey  | `string`   | `'name'`| 标签字段名   |
+| single    | `boolean`  | `false` | 是否单选     |
+| maxLength | `number`   | -       | 最多可选数量 |
 
 > 注意：需要安装 `@kne/super-select` 依赖。
 
