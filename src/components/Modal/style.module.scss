@@ -7,6 +7,20 @@
     }
   }
 
+  &.is-mobile {
+    &.large {
+      .modal-body-inner {
+        min-width: 0;
+      }
+    }
+
+    :global {
+      .ant-modal {
+        max-width: calc(var(--kne-viewport-width, 100vw) - 32px);
+      }
+    }
+  }
+
   :global {
     .ant-modal-confirm-btns,
     .ant-modal-footer,
@@ -132,7 +146,7 @@
 }
 
 .modal-body {
-  --modal-height: calc(100vh - 120px);
+  --modal-height: calc(var(--kne-viewport-height, 100vh) - 120px);
   max-height: var(--modal-height);
   min-height: var(--min-modal-height);
 
@@ -198,6 +212,30 @@
   transition: color 0.2s, background-color 0.2s;
 }
 
+.modal-wrap-centered:global(.ant-modal-wrap) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+  min-height: var(--kne-viewport-height, 100vh);
+  max-height: var(--kne-viewport-height, 100vh);
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: auto;
+
+  &::before {
+    display: none !important;
+  }
+
+  :global(.ant-modal) {
+    top: auto !important;
+    display: block;
+    padding-bottom: 0 !important;
+    margin: 0 auto;
+    vertical-align: initial;
+    flex-shrink: 0;
+  }
+}
+
 .confirm-modal-wrap {
   :global {
     .title-icon {
@@ -248,6 +286,15 @@
       justify-content: flex-end;
       align-items: flex-end;
       flex: 1;
+    }
+  }
+
+  &.is-mobile {
+    :global {
+      .ant-modal-content {
+        max-width: calc(var(--kne-viewport-width, 100vw) - 32px);
+        width: calc(var(--kne-viewport-width, 100vw) - 32px);
+      }
     }
   }
 

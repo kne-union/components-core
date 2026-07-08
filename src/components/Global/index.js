@@ -5,11 +5,11 @@ import {
     Global as GlobalContext, useGlobalContext as useContext, usePreset, GlobalValue, useGlobalValue, GlobalSetting
 } from "@kne/global-context";
 import {App, ConfigProvider as AntdConfigProvider, Result} from "antd";
-import {useEffect, useState, useRef, useMemo} from "react";
+import {useEffect, useState, useRef, useMemo, useCallback} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import {getScrollEl} from "@common/utils/importantContainer";
-import isMobile from "@common/utils/isMobile";
+import getPopupContainer from "@common/utils/getPopupContainer";
 import Fetch, {withFetch} from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
@@ -22,17 +22,42 @@ import range from "lodash/range";
 import Color from "color";
 import {createWithRemoteLoader} from "@kne/remote-loader";
 import isEqual from './isEqual';
+import {
+    ResponsiveProvider,
+    useScrollElement,
+    usePopupContainer,
+    useResponsiveContext,
+    defaultResponsiveContextValue,
+    RESPONSIVE_BOUNDARY_CLASS,
+    RESPONSIVE_SCROLL_CLASS,
+    IS_MOBILE_QUERY
+} from "@kne/responsive-utils";
+
+const hasParentResponsiveProvider = (parent) => {
+    return parent.getBoundaryElement !== defaultResponsiveContextValue.getBoundaryElement
+        || parent.getScrollElement !== defaultResponsiveContextValue.getScrollElement;
+};
+
+const isViewportMobile = () => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+        return false;
+    }
+    return window.matchMedia(IS_MOBILE_QUERY).matches;
+};
 
 (() => {
     if (window.__COMPONENTS_CORE_IN_SDK) {
         return;
     }
     document.body.classList.add(style["container"]);
-    if (!isMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
+    if (!isViewportMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
         new SimpleBar(document.body);
-        getScrollEl().classList.add(style["container"]);
+        const scrollEl = getScrollEl();
+        if (scrollEl) {
+            scrollEl.classList.add(RESPONSIVE_SCROLL_CLASS, style["container"]);
+        }
     } else {
-        document.body.classList.add("simplebar-content-wrapper");
+        document.body.classList.add("simplebar-content-wrapper", RESPONSIVE_SCROLL_CLASS);
     }
 })();
 
@@ -42,6 +67,20 @@ export const containerClassName = style["container"]
     .replace(/\//g, "\\/");
 
 const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
+    const getScrollElement = useScrollElement();
+    const getPopupContainerFromContext = usePopupContainer();
+    const resolvePopupContainer = useCallback((triggerNode) => {
+        const contextContainer = getPopupContainerFromContext();
+        if (!triggerNode) {
+            return contextContainer;
+        }
+        const walked = getPopupContainer(triggerNode);
+        const pageScroll = getScrollEl();
+        if (contextContainer && walked === pageScroll) {
+            return contextContainer;
+        }
+        return walked || contextContainer;
+    }, [getPopupContainerFromContext]);
     const [isInit, setIsInit] = useState(false);
     const {colorPrimary, components, ...otherToken} = Object.assign({}, {colorPrimary: "#4096ff"}, themeToken);
     const colorPrimaryObject = useMemo(() => {
@@ -95,8 +134,8 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
         return null;
     }
     return (<AntdConfigProvider
-        getTargetContainer={getScrollEl}
-        getPopupContainer={getScrollEl}
+        getTargetContainer={getScrollElement}
+        getPopupContainer={resolvePopupContainer}
         locale={message}
         wave={{disabled: true}}
         autoInsertSpace={false}
@@ -127,6 +166,20 @@ const GlobalFontLoader = createWithRemoteLoader({
     </>;
 });
 
+const GlobalResponsiveScope = ({children}) => {
+    const parent = useResponsiveContext();
+    if (hasParentResponsiveProvider(parent)) {
+        return children;
+    }
+    return (
+        <ResponsiveProvider
+            getScrollElement={() => getScrollEl() || document.documentElement}
+        >
+            {children}
+        </ResponsiveProvider>
+    );
+};
+
 export const GlobalProvider = ({
                                    preset = {locale: "zh-CN", apis: {}}, children, themeToken, init, ...props
                                }) => {
@@ -138,7 +191,8 @@ export const GlobalProvider = ({
     return (<GlobalContext preset={preset} initValue={Object.assign({}, props, {
         themeToken, localMessageRef, enumsRef, locale,
     }, get(preset, "global"))}>
-        <GlobalValue globalKey="locale">{({value: locale}) => {
+        <GlobalResponsiveScope>
+            <GlobalValue globalKey="locale">{({value: locale}) => {
             return <ConfigProvider
                 loader={loadAntdLocale}
                 params={{locale}}
@@ -155,6 +209,7 @@ export const GlobalProvider = ({
                 <GlobalFontLoader/>
             </ConfigProvider>;
         }}</GlobalValue>
+        </GlobalResponsiveScope>
     </GlobalContext>);
 };
 
@@ -163,7 +218,7 @@ export const PureGlobal = ({children, ...props}) => {
     return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
         <div
             data-testid="components-core-pure-global"
-            className={classnames(style["container"], "core-container-body")}
+            className={classnames(style["container"], RESPONSIVE_BOUNDARY_CLASS, "core-container-body")}
         >
             {children}
         </div>
@@ -171,6 +226,18 @@ export const PureGlobal = ({children, ...props}) => {
 };
 
 export {usePreset, useGlobalValue, GlobalSetting, GlobalValue};
+
+export {
+    ResponsiveProvider,
+    useIsMobile,
+    useBreakpoint,
+    useMediaQuery,
+    usePopupContainer,
+    useScrollElement,
+    useResponsiveContext,
+    defaultResponsiveContextValue,
+    MOBILE_BREAKPOINT
+} from "@kne/responsive-utils";
 
 export const useGlobalContext = (globalKey) => {
     const contextValue = useContext();
@@ -234,7 +301,7 @@ const Global = ({children, className, ...props}) => {
         <GlobalProvider {...props}>
             <div
                 data-testid="components-core-global"
-                className={classnames(style["container"], "container-body", className)}
+                className={classnames(style["container"], RESPONSIVE_BOUNDARY_CLASS, "container-body", className)}
             >
                 {children}
             </div>

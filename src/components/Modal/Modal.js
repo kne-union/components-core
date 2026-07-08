@@ -8,6 +8,7 @@ import Icon from "@components/Icon";
 import renderWithOptions from "./renderWithOptions";
 import LoadingButton from "@components/LoadingButton";
 import SimpleBar from "@common/components/SimpleBar";
+import {useIsMobile, usePopupContainer} from "@kne/responsive-utils";
 
 const localeModuleName = "Modal";
 
@@ -29,7 +30,19 @@ const calcHeight = (height, footer) => {
     return `${height - 48 - (footer ? 58 : 0)}px`;
 };
 
-const sizeMap = (type, footer) => {
+const VIEWPORT_WIDTH = 'var(--kne-viewport-width, 100vw)';
+const VIEWPORT_HEIGHT = 'var(--kne-viewport-height, 100vh)';
+
+const sizeMap = (type, footer, isMobile) => {
+    if (isMobile) {
+        return {
+            width: `calc(${VIEWPORT_WIDTH} - 32px)`,
+            style: {
+                "--min-modal-height": calcHeight(type === "small" ? 300 : 500, footer),
+                maxWidth: `calc(${VIEWPORT_WIDTH} - 32px)`,
+            },
+        };
+    }
     if (type === "large") {
         return {
             width: `${Math.min(window.innerWidth - 64, 1500)}px`,
@@ -226,12 +239,15 @@ const computedCommonProps = ({
                                  disabledScroller,
                                  withDecorator,
                                  childrenRef,
+                                 isMobile,
+                                 wrapClassName,
                                  ...props
                              }) => {
     return {
         ...props,
         icon: null,
         centered: true,
+        wrapClassName: classnames(wrapClassName, isMobile && style["modal-wrap-centered"]),
         title: null,
         maskClosable: props.hasOwnProperty("maskClosable") ? props.maskClosable : false,
         destroyOnHidden: true,
@@ -240,7 +256,8 @@ const computedCommonProps = ({
         onCancel: onClose,
         className: classnames(className, style["modal"], style[size], {
             [style["right-options-modal"]]: rightOptions,
-        }), ...sizeMap(size, !(footer === null && !footerButtons)),
+            [style["is-mobile"]]: isMobile,
+        }), ...sizeMap(size, !(footer === null && !footerButtons), isMobile),
         children: (<IntlProvider importMessages={importMessages} moduleName="Modal">
             {runWithDecorator({
                 withDecorator,
@@ -263,23 +280,30 @@ const computedCommonProps = ({
     };
 };
 
-const Modal = ({size = 'default', ...props}) => {
+const Modal = ({size = 'default', getContainer, ...props}) => {
     const childrenRef = useRef(null);
+    const isMobile = useIsMobile();
+    const getPopupContainer = usePopupContainer();
     return (<AntdModal
-        {...computedCommonProps(Object.assign({}, props, {size, childrenRef}))}
+        {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile}))}
+        getContainer={getContainer ?? getPopupContainer}
     />);
 };
 
 export const useModal = () => {
     const {modal} = App.useApp();
     const childrenRef = useRef(null);
+    const isMobile = useIsMobile();
+    const getPopupContainer = usePopupContainer();
     return (props) => {
         const api = {};
-        const {children, ...otherProps} = computedCommonProps({
-            onClose: () => api.close(), childrenRef, ...props,
+        const {children, getContainer, ...otherProps} = computedCommonProps({
+            onClose: () => api.close(), childrenRef, isMobile, ...props,
         });
         const {destroy} = modal.info({
-            ...otherProps, content: children,
+            ...otherProps,
+            content: children,
+            getContainer: getContainer ?? getPopupContainer,
         });
         api.close = destroy;
 
@@ -289,6 +313,8 @@ export const useModal = () => {
 
 export const useConfirmModal = () => {
     const {modal} = App.useApp();
+    const getPopupContainer = usePopupContainer();
+    const isMobile = useIsMobile();
     return (props) => {
         const api = {};
         const {
@@ -305,8 +331,13 @@ export const useConfirmModal = () => {
         }, iconSetting);
         if (modal[type]) {
             const {destroy} = modal[type]({
-                ...otherProps, icon: null, wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
+                ...otherProps,
+                getContainer: otherProps.getContainer ?? getPopupContainer,
+                centered: true,
+                icon: null, wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
                     [style["is-danger"]]: danger,
+                    [style["is-mobile"]]: isMobile,
+                    [style["modal-wrap-centered"]]: isMobile,
                 }), title: (<Space
                     orientation="vertical"
                     onClick={(e) => {

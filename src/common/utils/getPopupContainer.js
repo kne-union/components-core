@@ -1,10 +1,15 @@
 import { getScrollEl } from "@common/utils/importantContainer";
+import { findResponsiveBoundary } from "@kne/responsive-utils";
 
 const getPopupContainer = (triggerNode) => {
+  if (!triggerNode) {
+    return null;
+  }
   const findAntdPopupContainer = (el) => {
     const currentBody = getScrollEl();
     if (!el || el === currentBody || !el.parentElement) {
-      return currentBody;
+      const boundary = findResponsiveBoundary(triggerNode);
+      return boundary || null;
     }
     const targetEl = [].slice
       .call(el.classList, 0)
