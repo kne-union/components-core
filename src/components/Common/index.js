@@ -37,6 +37,22 @@ export {default as TypeDateRangePickerField} from "@common/components/TypeDateRa
 
 export {default as useResize} from "@common/hooks/useResize";
 
+export {
+    MOBILE_BREAKPOINT,
+    BREAKPOINTS,
+    IS_MOBILE_QUERY,
+    ResponsiveProvider,
+    useIsMobile,
+    useBreakpoint,
+    useMediaQuery,
+    usePopupContainer,
+    useScrollElement,
+    useResponsiveContext,
+    RESPONSIVE_CONTAINER_CLASS,
+    RESPONSIVE_BOUNDARY_CLASS,
+    RESPONSIVE_SCROLL_CLASS
+} from "@kne/responsive-utils";
+
 export {default as accept} from "@common/utils/accept";
 export {default as createDeferred} from "@common/utils/createDeferred";
 export {default as isNotEmpty} from "@common/utils/isNotEmpty";

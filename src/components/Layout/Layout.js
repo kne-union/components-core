@@ -1,5 +1,5 @@
 import {Alert, Button, Col, Layout as AntdLayout, Row} from "antd";
-import {useCallback, useEffect, useState, useMemo} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {defaultProps, Provider} from "./context";
 import Navigation, {navigationHeight} from "@components/Navigation";
 import {getScrollEl} from "@common/utils/importantContainer";
@@ -9,23 +9,7 @@ import classnames from "classnames";
 import style from "./style.module.scss";
 import HelperGuide from "@components/HelperGuide";
 import {usePermissions} from "../Permissions";
-
-const useIsMobile = (isMobileProp) => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-    
-    return useMemo(() => {
-        if (typeof isMobileProp === 'boolean') {
-            return isMobileProp;
-        }
-        return windowWidth < 768;
-    }, [isMobileProp, windowWidth]);
-};
+import {useIsMobile as useResponsiveIsMobile} from "@kne/responsive-utils";
 
 const {Content} = AntdLayout;
 
@@ -52,7 +36,8 @@ const Layout = ({className, children, theme, navigation = {}, isMobile: isMobile
     const [scrollLeft, setScrollLeft] = useState(0);
     const [pageProps, _setPageProps] = useState(Object.assign({}, defaultProps));
     const {permissions} = usePermissions();
-    const isMobile = useIsMobile(isMobileProp);
+    const responsiveIsMobile = useResponsiveIsMobile();
+    const isMobile = typeof isMobileProp === "boolean" ? isMobileProp : responsiveIsMobile;
     
     const setPageProps = useCallback((value) => {
         return _setPageProps((pageProps) => {
@@ -89,6 +74,7 @@ const Layout = ({className, children, theme, navigation = {}, isMobile: isMobile
                     <Navigation
                         permissions={permissions}
                         {...navigation}
+                        isMobile={isMobile}
                         onChange={(path) => {
                             navigation?.onChange && navigation.onChange(path);
                         }}
