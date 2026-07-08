@@ -9,14 +9,14 @@ import Image from "@components/Image";
 import withLocale from './withLocale';
 import {useIntl} from "@kne/react-intl";
 import useRefCallback from "@kne/use-ref-callback";
-import useResize from "@kne/use-resize";
 import Icon from "@components/Icon";
 import style from "./style.module.scss";
+import {MOBILE_BREAKPOINT, useIsMobile as useResponsiveIsMobile} from "@kne/responsive-utils";
 
 const {Header} = Layout;
 
 export const navigationHeight = 48;
-export const mobileBreakpoint = 768;
+export const mobileBreakpoint = MOBILE_BREAKPOINT;
 
 const SetTitle = ({name, mapping, defaultTitle}) => {
     const propsRef = useRef({
@@ -76,26 +76,20 @@ const Navigation = withLocale(({
     const resizeObserverRef = useRef(null);
     const [nameLabel, setNameLabel] = useState("更多");
     const [ready, setReady] = useState(false);
-    const [autoIsMobile, setAutoIsMobile] = useState(false);
     const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
-    const callback = (el) => {
-        const width = el ? el.getBoundingClientRect().width : window.innerWidth;
-        if (forceMobile === undefined) {
-            setAutoIsMobile(width < mobileBreakpoint);
-            if (!autoIsMobile && width < mobileBreakpoint) {
-                setMobileMenuVisible(false);
-            }
-        }
-    }
-    const windowResizeRef = useResize(callback);
+    const responsiveIsMobile = useResponsiveIsMobile();
+    const isMobile = forceMobile !== undefined ? forceMobile : responsiveIsMobile;
     const pathModuleName = getModuleSegment(location.pathname, base);
     const name = pathModuleName ? get(Array.from(mapping.entries()).find(([name, {path, permission}]) => {
         const _path = typeof path === "function" ? path(permission, permissions) : path;
         return getModuleSegment(_path, base) === pathModuleName;
     }), "[0]") : "home";
 
-    // 是否为移动端（优先使用强制指定的值，否则使用自动检测的值）
-    const isMobile = forceMobile !== undefined ? forceMobile : autoIsMobile;
+    useEffect(() => {
+        if (!isMobile) {
+            setMobileMenuVisible(false);
+        }
+    }, [isMobile]);
 
     // 处理移动端菜单项点击
     const handleMobileMenuClick = (path) => {
@@ -157,7 +151,7 @@ const Navigation = withLocale(({
         <div className={classnames(style["navigation-wrap"], className, {
             [style["is-mobile"]]: isMobile,
         })}>
-            <div ref={windowResizeRef} className={classnames("navigation", style["navigation"], {
+            <div className={classnames("navigation", style["navigation"], {
                 [style["is-fixed"]]: isFixed,
             })}>
                 <Header>

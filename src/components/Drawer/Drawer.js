@@ -8,6 +8,7 @@ import LoadingButton from "@components/LoadingButton";
 import React, {useEffect, useRef} from "react";
 import SimpleBar from "simplebar";
 import Icon from "@components/Icon";
+import {useIsMobile, usePopupContainer} from "@kne/responsive-utils";
 
 const renderWithOptions = (footer, options) => {
     if (typeof footer === "function") {
@@ -16,7 +17,12 @@ const renderWithOptions = (footer, options) => {
     return footer;
 };
 
-const sizeMap = (type) => {
+const VIEWPORT_WIDTH = 'var(--kne-viewport-width, 100vw)';
+
+const sizeMap = (type, isMobile) => {
+    if (isMobile) {
+        return {width: VIEWPORT_WIDTH};
+    }
     if (type === "large") {
         return {width: "calc(100vw - 64px)"};
     }
@@ -151,6 +157,10 @@ export const computedCommonProps = ({
                                         closable,
                                         disabledScroller,
                                         withDecorator,
+                                        isMobile,
+                                        classNames: customClassNames,
+                                        styles: customStyles,
+                                        rootClassName,
                                         ...props
                                     }) => {
     return {
@@ -162,7 +172,23 @@ export const computedCommonProps = ({
         footer: null,
         closable: false,
         onCancel: onClose,
-        className: classnames(className, style["drawer"]), ...sizeMap(size),
+        className: classnames(className, style["drawer"], style[size], {
+            [style["is-mobile"]]: isMobile,
+        }),
+        rootClassName: classnames(rootClassName, isMobile && style["drawer-root-mobile"]),
+        classNames: {
+            ...customClassNames,
+            wrapper: classnames(customClassNames?.wrapper, isMobile && style["drawer-wrapper-mobile"]),
+        },
+        styles: isMobile ? {
+            ...customStyles,
+            wrapper: {
+                ...customStyles?.wrapper,
+                width: VIEWPORT_WIDTH,
+                maxWidth: "100%",
+            },
+        } : customStyles,
+        ...sizeMap(size, isMobile),
         children: (<IntlProvider importMessages={importMessages} moduleName="Drawer">
             {runWithDecorator({
                 withDecorator,
@@ -180,19 +206,29 @@ export const computedCommonProps = ({
     };
 };
 
-const Drawer = ({size = "small", ...props}) => {
-    return <AntdDrawer {...computedCommonProps({size, ...props})} />;
+const Drawer = ({size = "small", getContainer, ...props}) => {
+    const isMobile = useIsMobile();
+    const getPopupContainer = usePopupContainer();
+    return (
+        <AntdDrawer
+            {...computedCommonProps({size, isMobile, ...props})}
+            getContainer={getContainer ?? getPopupContainer}
+        />
+    );
 };
 
 export const useDrawer = () => {
     const {drawer} = AppDrawer.useAppDrawer();
+    const isMobile = useIsMobile();
+    const getPopupContainer = usePopupContainer();
     return (props) => {
         const api = {};
-        const {...otherProps} = computedCommonProps({
-            onClose: () => api.close(), ...props,
+        const {getContainer, ...otherProps} = computedCommonProps({
+            onClose: () => api.close(), isMobile, ...props,
         });
         const {destroy} = drawer({
             ...otherProps,
+            getContainer: getContainer ?? getPopupContainer,
         });
         api.close = destroy;
         return api;
