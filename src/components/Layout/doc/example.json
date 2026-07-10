@@ -18,7 +18,7 @@
     },
     {
       "title": "带有左侧菜单布局",
-      "description": "展示带有左侧菜单布局",
+      "description": "展示带有左侧菜单布局；默认 menuFixed=true，滚动内容区时左侧菜单保持固定",
       "code": "./left-menu.js",
       "scope": [
         {
@@ -113,7 +113,7 @@
     },
     {
       "title": "PageHeader",
-      "description": "页面头",
+      "description": "页面头基础用法：标题、编号、标签与操作按钮",
       "code": "./page-header.js",
       "scope": [
         {
@@ -123,6 +123,25 @@
         {
           "name": "antd",
           "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "PageHeader 超长内容",
+      "description": "覆盖超长中英文标题、超长编号、超多标签与多操作按钮等场景，便于验证桌面端与移动端换行/堆叠",
+      "code": "./page-header-long.js",
+      "scope": [
+        {
+          "name": "layout",
+          "packageName": "@components/Layout"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
         }
       ]
     },

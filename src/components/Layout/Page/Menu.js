@@ -10,6 +10,7 @@ import get from "lodash/get";
 import isNotEmpty from "@utils/isNotEmpty";
 import localStorage from "@utils/localStorage";
 import {useMemo, useState} from "react";
+import {usePopupContainer} from "@kne/responsive-utils";
 
 const pageMenuOpenKey = "CORE_PAGE_MENU_OPEN_KEY";
 
@@ -28,41 +29,46 @@ const Menu = ({isMobile}) => {
     const {pageProps, setPageProps} = useContext();
     const {menu, menuOpen, menuWidth, menuCloseWidth, menuFixed, menuCloseButton} = pageProps;
     const [drawerVisible, setDrawerVisible] = useState(false);
+    const getPopupContainer = usePopupContainer();
 
     const location = useLocation();
     const pathModuleName = location.pathname.split("/")[1];
+    const menuCssVars = {
+        "--menu-width": menuWidth,
+        "--menu-close-width": menuCloseWidth,
+    };
 
     // 移动端渲染
     if (isMobile && menu) {
         return (
             <>
-                <FixedContainer
-                    className={classnames(style["page-menu-btn-outer"], 'core-page-menu-btn-outer', {
-                        [style["is-fixed"]]: menuFixed,
-                    })}
-                    isFixed={menuFixed}
-                >
-                    <Button
-                        className={classnames(style["page-menu-btn"], {
-                            [style["closed"]]: true,
-                        })}
-                        icon={<Icon type="icon-arrow-bold-right"/>}
-                        onClick={() => setDrawerVisible(true)}
-                    />
-                </FixedContainer>
+                {!drawerVisible ? (
+                    <div className={style["mobile-menu-trigger"]} style={menuCssVars}>
+                        <Button
+                            className={style["mobile-menu-edge-btn"]}
+                            icon={<Icon type="icon-arrow-bold-right"/>}
+                            onClick={() => setDrawerVisible(true)}
+                        />
+                    </div>
+                ) : null}
                 <Drawer
                     placement="left"
                     open={drawerVisible}
                     onClose={() => setDrawerVisible(false)}
                     width={menuWidth}
+                    getContainer={getPopupContainer}
+                    rootClassName={style["mobile-menu-drawer"]}
                     className={style["mobile-menu-drawer"]}
+                    style={menuCssVars}
                     closable={false}
                     styles={{
-                        body: {padding: 0, position: 'relative', height: '100vh'}
+                        wrapper: {overflow: "visible"},
+                        section: {overflow: "visible"},
+                        body: {padding: 0, position: "relative", height: "100%", overflow: "visible"},
                     }}
                 >
                     <Button
-                        className={classnames(style["page-menu-btn"])}
+                        className={classnames(style["mobile-menu-edge-btn"], style["mobile-menu-close-btn"])}
                         icon={<Icon type="icon-arrow-bold-left"/>}
                         onClick={() => setDrawerVisible(false)}
                     />
@@ -79,10 +85,10 @@ const Menu = ({isMobile}) => {
     // 桌面端渲染
     return menu ? (
         <Col
-            className={classnames(style["page-menu"],'core-page-menu', {
+            className={classnames(style["page-menu"], 'core-page-menu', {
                 [style["closed"]]: !menuOpen,
             })}
-            style={{"--menu-width": menuWidth, "--menu-close-width": menuCloseWidth}}
+            style={menuCssVars}
         >
             <FixedContainer className={style["page-menu-inner"]} isFixed={menuFixed}>
                 <div className={style["page-menu-main-outer"]}>
