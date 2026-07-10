@@ -5,6 +5,7 @@ import Icon from "@components/Icon";
 import {isValidElement} from 'react';
 import ButtonGroup from "@components/ButtonGroup";
 import {IntlProvider} from "@components/Intl";
+import {useIsMobile} from "@kne/responsive-utils";
 import style from "./style.module.scss";
 
 export const PageHeaderInner = ({
@@ -22,27 +23,33 @@ export const PageHeaderInner = ({
                                     addonAfter,
                                     children
                                 }) => {
+    const isMobile = useIsMobile();
+
     return (<Row
-        className={classnames(className, style["page-header"])}
-        wrap={false}
-        gutter={10}
+        className={classnames(className, style["page-header"], {
+            [style["is-mobile"]]: isMobile
+        })}
+        wrap={isMobile}
+        gutter={isMobile ? [0, 12] : 10}
     >
         {addonBefore && <Col>{addonBefore}</Col>}
-        <Col flex={1}>
-            <Space direction="vertical">
-                <Row wrap={false}>
-                    <Col flex={1} className={style["main"]}>
-                        <Space align="start">
+        <Col flex={1} className={style["content"]}>
+            <Space direction="vertical" size={isMobile ? 12 : 8} style={{width: '100%'}}>
+                <Row wrap={isMobile} gutter={isMobile ? [0, 12] : 0}>
+                    <Col flex={isMobile ? '100%' : 1} className={style["main"]}>
+                        <div className={style["title-area"]}>
                             {icon && <div className={style["icon-outer"]}>{icon}</div>}
                             {!icon && iconType && (<div className={style["icon-outer"]}>
-                                <Icon colorful type={iconType} size={24}/>
+                                <Icon colorful type={iconType} size={isMobile ? 20 : 24}/>
                             </div>)}
-                            <div className={style["title"]}>{title}</div>
-                            {info && <div className={style["info"]}>{info}</div>}
-                        </Space>
+                            <div className={style["title-content"]}>
+                                <div className={style["title"]}>{title}</div>
+                                {info && <div className={style["info"]}>{info}</div>}
+                            </div>
+                        </div>
                     </Col>
                     {buttonOptions && (<Col
-                        flex={1}
+                        flex={isMobile ? '100%' : 1}
                         className={style["button-options"]}
                         style={{"--max-width": buttonOptionsMaxWidth}}
                     >
@@ -51,7 +58,12 @@ export const PageHeaderInner = ({
                             <ButtonGroup {...buttonOptions} />}
                     </Col>)}
                 </Row>
-                {tags && (<Space className={tagClassName} split={tagSplit} size={[16, 8]}>
+                {tags && (<Space
+                    className={classnames(style["tags-row"], tagClassName)}
+                    split={isMobile ? null : tagSplit}
+                    size={isMobile ? [8, 8] : [16, 8]}
+                    wrap
+                >
                     {tags.map((item, index) => {
                         return (<div key={index} className={style["tags"]}>
                             {item}

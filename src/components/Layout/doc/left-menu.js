@@ -7,7 +7,6 @@ const Example = () => {
     <Layout navigation={{ isFixed: false }}>
       <Page
         name="left-menu"
-        menuFixed={false}
         menu={
           <Menu
             items={[
@@ -62,7 +61,11 @@ const Example = () => {
         backUrl={"/"}
         title="标题"
       >
-        <div className="layout-content with-title-layout-content">内容区</div>
+        <div className="layout-content with-title-layout-content">
+          {Array.from({length: 40}).map((_, index) => (
+            <p key={index}>滚动内容区第 {index + 1} 行 —— 左侧菜单默认 menuFixed=true，应保持固定</p>
+          ))}
+        </div>
       </Page>
     </Layout>
   );
