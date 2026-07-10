@@ -21,68 +21,67 @@ const MobileExample = () => {
         >
             <Page
                 name="mobile-example"
-                menuFixed={false}
                 menu={
-                    <Menu
-                        items={[
-                            {
-                                label: "组织架构",
-                                key: "org",
-                                iconType: "icon-zhanghaodenglu",
-                                children: [
-                                    {
-                                        label: "部门管理",
-                                        key: "dept",
-                                        path: "/dept",
-                                    },
-                                    {
-                                        label: "员工管理",
-                                        key: "employee",
-                                        path: "/employee",
-                                    },
-                                ],
-                            },
-                            {
-                                label: "业务管理",
-                                key: "business",
-                                iconType: "icon-zhanghaodenglu",
-                                children: [
-                                    {
-                                        label: "订单管理",
-                                        key: "order",
-                                        path: "/order",
-                                    },
-                                    {
-                                        label: "客户管理",
-                                        key: "customer",
-                                        path: "/customer",
-                                    },
-                                    {
-                                        label: "产品管理",
-                                        key: "product",
-                                        path: "/product",
-                                    },
-                                ],
-                            },
-                            {
-                                label: "数据报表",
-                                key: "report",
-                                iconType: "icon-zhanghaodenglu",
-                                children: [
-                                    {
-                                        label: "销售报表",
-                                        key: "sales-report",
-                                        path: "/sales-report",
-                                    },
-                                    {
-                                        label: "财务报表",
-                                        key: "finance-report",
-                                        path: "/finance-report",
-                                    },
-                                ],
-                            },
-                        ]}
-                    />
+                  <Menu
+                    items={[
+                      {
+                        label: "组织架构",
+                        key: "org",
+                        iconType: "icon-zhanghaodenglu",
+                        children: [
+                          {
+                            label: "部门管理",
+                            key: "dept",
+                            path: "/dept",
+                          },
+                          {
+                            label: "员工管理",
+                            key: "employee",
+                            path: "/employee",
+                          },
+                        ],
+                      },
+                      {
+                        label: "业务管理",
+                        key: "business",
+                        iconType: "icon-zhanghaodenglu",
+                        children: [
+                          {
+                            label: "订单管理",
+                            key: "order",
+                            path: "/order",
+                          },
+                          {
+                            label: "客户管理",
+                            key: "customer",
+                            path: "/customer",
+                          },
+                          {
+                            label: "产品管理",
+                            key: "product",
+                            path: "/product",
+                          },
+                        ],
+                      },
+                      {
+                        label: "数据报表",
+                        key: "report",
+                        iconType: "icon-zhanghaodenglu",
+                        children: [
+                          {
+                            label: "销售报表",
+                            key: "sales-report",
+                            path: "/sales-report",
+                          },
+                          {
+                            label: "财务报表",
+                            key: "finance-report",
+                            path: "/finance-report",
+                          },
+                        ],
+                      },
+                    ]}
+                  />
                 }
                 title="组织管理"
                 titleExtra={

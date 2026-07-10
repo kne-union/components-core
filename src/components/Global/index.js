@@ -28,7 +28,6 @@ import {
     usePopupContainer,
     useResponsiveContext,
     defaultResponsiveContextValue,
-    RESPONSIVE_BOUNDARY_CLASS,
     RESPONSIVE_SCROLL_CLASS,
     IS_MOBILE_QUERY
 } from "@kne/responsive-utils";
@@ -218,7 +217,7 @@ export const PureGlobal = ({children, ...props}) => {
     return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
         <div
             data-testid="components-core-pure-global"
-            className={classnames(style["container"], RESPONSIVE_BOUNDARY_CLASS, "core-container-body")}
+            className={classnames(style["container"], "core-container-body")}
         >
             {children}
         </div>
@@ -301,7 +300,7 @@ const Global = ({children, className, ...props}) => {
         <GlobalProvider {...props}>
             <div
                 data-testid="components-core-global"
-                className={classnames(style["container"], RESPONSIVE_BOUNDARY_CLASS, "container-body", className)}
+                className={classnames(style["container"], "container-body", className)}
             >
                 {children}
             </div>

@@ -1,4 +1,5 @@
-const { default: Layout, Page, Menu, PageHeader } = layout;
+const { default: Layout, Page, PageHeader } = layout;
+const { Button, Space } = antd;
 
 const Example = () => {
   return (
@@ -14,24 +15,14 @@ const Example = () => {
             iconType="icon-color-shenpi-biaoti"
             title="详情页名称"
             info="编号:85767"
-            options={[
-              {
-                children: "新建",
-              },
-              {
-                children: "操作1",
-              },
-              {
-                children: "操作2",
-              },
-              {
-                children: "操作3",
-              },
-              {
-                children: "操作4",
-              },
-            ]}
-            tags={["辅助信息", "辅助信息", "辅助信息", "辅助信息"]}
+            buttonOptions={
+              <Space wrap>
+                <Button type="primary">新建</Button>
+                <Button>操作1</Button>
+                <Button>操作2</Button>
+              </Space>
+            }
+            tags={['辅助信息', '辅助信息', '辅助信息', '辅助信息']}
           />
         }
         headerFixed={false}

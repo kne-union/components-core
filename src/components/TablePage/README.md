@@ -167,11 +167,25 @@ npm i --save @kne/table-page
 
 ### 示例
 
+#### 示例样式
+
+```scss
+@use '~@kne/responsive-utils/scss' as resp;
+
+// 手机预览下给示例内容左右留白，便于观察表格/卡片边框
+@include resp.mobile-container {
+  .example-driver-runner {
+    padding-inline: 16px;
+    box-sizing: border-box;
+  }
+}
+```
+
 #### 示例代码
 
 - TablePage
 - 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、tab 分类切换、列配置、总结栏等
-- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),_ResponsiveUtils(@kne/responsive-utils)[import * as _ResponsiveUtils from "@kne/responsive-utils"]
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
 
 ```jsx
 const { default: TablePage, Table } = _TablePage;
@@ -179,7 +193,6 @@ const { fields } = _ReactFilter;
 const { SuperSelectFilterItem } = fields;
 const { Table: AntTable, Flex, Tag, Button, Space, message } = antd;
 const { useMemo } = React;
-const { useIsMobile } = _ResponsiveUtils;
 
 const TOTAL = 156;
 
@@ -405,11 +418,8 @@ const Tips = () => (
   </div>
 );
 
-const MOBILE_PREVIEW_PADDING = '0 16px';
-
 const BaseExample = () => {
   const tableRef = React.useRef();
-  const isMobile = useIsMobile();
   const allEmployees = useMemo(() => range(0, TOTAL).map(buildEmployee), []);
   const { selectedRows, getRowSelection } = Table.useSelectedRow({ rowKey: 'id' });
   const { sort, sortRender, mobileSortToolbar } = Table.useSort({
@@ -443,112 +453,110 @@ const BaseExample = () => {
           刷新当前页
         </Button>
       </Space>
-      <div style={isMobile ? { padding: MOBILE_PREVIEW_PADDING } : undefined}>
-        <TablePage
-          ref={tableRef}
-          name="demo-employee-table"
-          sticky
-          scroll={{ x: 1600, y: 400 }}
-          size="large"
-          renderMobile
-          sortRender={sortRender}
-          mobileSortToolbar={mobileSortToolbar}
-          rowSelection={getRowSelection(allEmployees)}
-          selectedRows={selectedRows}
-          search={{ name: 'keyword', label: '关键词', placeholder: '搜索工号/姓名', style: { width: 220 } }}
-          tab={{
-            name: 'position',
-            label: '职位',
-            list: positionOptions
-          }}
-          tabProps={{
-            tabBarExtraContent: (
-              <Button type="link" size="small" onClick={() => message.info('新增职位')}>
-                新增职位
-              </Button>
-            )
-          }}
-          filter={{
-            list: [
-              [
-                {
-                  type: SuperSelectFilterItem,
-                  props: { name: 'department', label: '部门', single: true, options: departmentOptions }
-                },
-                {
-                  type: SuperSelectFilterItem,
-                  props: { name: 'status', label: '状态', single: true, options: statusOptions }
-                }
-              ]
-            ],
-            displayLine: 1
-          }}
-          batchActions={[
-            {
-              key: 'export',
-              label: '批量导出',
-              onClick: ({ selectedRowKeys }) => {
-                message.info(&#96;正在导出 ${selectedRowKeys.length} 名员工&#96;);
+      <TablePage
+        ref={tableRef}
+        name="demo-employee-table"
+        sticky
+        scroll={{ x: 1600, y: 400 }}
+        size="large"
+        renderMobile
+        sortRender={sortRender}
+        mobileSortToolbar={mobileSortToolbar}
+        rowSelection={getRowSelection(allEmployees)}
+        selectedRows={selectedRows}
+        search={{ name: 'keyword', label: '关键词', placeholder: '搜索工号/姓名', style: { width: 220 } }}
+        tab={{
+          name: 'position',
+          label: '职位',
+          list: positionOptions
+        }}
+        tabProps={{
+          tabBarExtraContent: (
+            <Button type="link" size="small" onClick={() => message.info('新增职位')}>
+              新增职位
+            </Button>
+          )
+        }}
+        filter={{
+          list: [
+            [
+              {
+                type: SuperSelectFilterItem,
+                props: { name: 'department', label: '部门', single: true, options: departmentOptions }
+              },
+              {
+                type: SuperSelectFilterItem,
+                props: { name: 'status', label: '状态', single: true, options: statusOptions }
               }
-            },
-            {
-              key: 'notify',
-              label: '批量通知',
-              onClick: ({ selectedRowKeys }) => {
-                message.success(&#96;已通知 ${selectedRowKeys.length} 名员工&#96;);
-              }
+            ]
+          ],
+          displayLine: 1
+        }}
+        batchActions={[
+          {
+            key: 'export',
+            label: '批量导出',
+            onClick: ({ selectedRowKeys }) => {
+              message.info(&#96;正在导出 ${selectedRowKeys.length} 名员工&#96;);
             }
-          ]}
-          pagination={{
-            open: true,
-            pageSize: 10,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            pageSizeOptions: ['10', '20', '50', '100']
-          }}
-          dataFormat={data => ({
-            list: data.pageData,
-            total: data.totalCount,
-            data
-          })}
-          loader={({ data, requestParams }) => {
-            const currentPage = Number(data?.currentPage ?? requestParams?.data?.currentPage) || 1;
-            const perPage = Number(data?.perPage ?? requestParams?.data?.perPage) || 20;
-            const sortParams = data?.sort ?? requestParams?.data?.sort ?? [{ name: 'joinDate', sort: 'DESC' }];
-            const filteredEmployees = applyFilters(allEmployees, data, requestParams);
-            const sortedEmployees = sortParams.length ? Table.sortDataSource(filteredEmployees, sortParams, columns) : filteredEmployees;
-            const startIndex = (currentPage - 1) * perPage;
+          },
+          {
+            key: 'notify',
+            label: '批量通知',
+            onClick: ({ selectedRowKeys }) => {
+              message.success(&#96;已通知 ${selectedRowKeys.length} 名员工&#96;);
+            }
+          }
+        ]}
+        pagination={{
+          open: true,
+          pageSize: 10,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSizeOptions: ['10', '20', '50', '100']
+        }}
+        dataFormat={data => ({
+          list: data.pageData,
+          total: data.totalCount,
+          data
+        })}
+        loader={({ data, requestParams }) => {
+          const currentPage = Number(data?.currentPage ?? requestParams?.data?.currentPage) || 1;
+          const perPage = Number(data?.perPage ?? requestParams?.data?.perPage) || 20;
+          const sortParams = data?.sort ?? requestParams?.data?.sort ?? [{ name: 'joinDate', sort: 'DESC' }];
+          const filteredEmployees = applyFilters(allEmployees, data, requestParams);
+          const sortedEmployees = sortParams.length ? Table.sortDataSource(filteredEmployees, sortParams, columns) : filteredEmployees;
+          const startIndex = (currentPage - 1) * perPage;
 
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve({
-                  pageData: sortedEmployees.slice(startIndex, startIndex + perPage),
-                  totalCount: filteredEmployees.length
-                });
-              }, 400);
-            });
-          }}
-          columns={columns}
-          summary={({ pageData, data }) => {
-            const totalCount = data?.totalCount || 0;
-            return (
-              <AntTable.Summary fixed>
-                <AntTable.Summary.Row>
-                  <AntTable.Summary.Cell index={0} colSpan={5}>
-                    <strong>当前页统计</strong>
-                  </AntTable.Summary.Cell>
-                  <AntTable.Summary.Cell index={5}>
-                    <strong>{pageData.length} 人</strong>
-                  </AntTable.Summary.Cell>
-                  <AntTable.Summary.Cell index={6} colSpan={7}>
-                    <strong>总员工数: {totalCount} 人</strong>
-                  </AntTable.Summary.Cell>
-                </AntTable.Summary.Row>
-              </AntTable.Summary>
-            );
-          }}
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                pageData: sortedEmployees.slice(startIndex, startIndex + perPage),
+                totalCount: filteredEmployees.length
+              });
+            }, 400);
+          });
+        }}
+        columns={columns}
+        summary={({ pageData, data }) => {
+          const totalCount = data?.totalCount || 0;
+          return (
+            <AntTable.Summary fixed>
+              <AntTable.Summary.Row>
+                <AntTable.Summary.Cell index={0} colSpan={5}>
+                  <strong>当前页统计</strong>
+                </AntTable.Summary.Cell>
+                <AntTable.Summary.Cell index={5}>
+                  <strong>{pageData.length} 人</strong>
+                </AntTable.Summary.Cell>
+                <AntTable.Summary.Cell index={6} colSpan={7}>
+                  <strong>总员工数: {totalCount} 人</strong>
+                </AntTable.Summary.Cell>
+              </AntTable.Summary.Row>
+            </AntTable.Summary>
+          );
+        }}
         />
-      </div>
     </Flex>
   );
 };
@@ -3491,7 +3499,7 @@ render(<BaseExample />);
 | headerStyle | object | - | 表头自定义样式，仅在 `render` 自定义渲染时作用于 `header` |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，可获取 `header` 和 `renderBody` |
-| renderMobile | boolean \| function \| string | - | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| renderMobile | boolean \| function \| string | `true` | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
 | sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
 | mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
 | size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖 |
@@ -3638,7 +3646,7 @@ const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns)
 | headerStyle | object | - | 表头自定义样式 |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，`header` 为 `null`，`renderBody` 返回 antd Table |
-| renderMobile | boolean \| function \| string | - | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| renderMobile | boolean \| function \| string | `true` | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
 | sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
 | mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
 | pagination | boolean \| object | `false` | 分页配置，默认不显示；传入对象时使用 antd 分页 |
