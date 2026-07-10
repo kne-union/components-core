@@ -21,14 +21,15 @@ npm i --save @kne/table-page
 表格页面主组件，基于 `@kne/react-fetch` 封装数据请求与分页逻辑。内置两种渲染模式：
 
 - **`Table` 模式**（默认）：基于 antd `Table`，支持列宽拖动、字段显示/隐藏、分组表头、粘性表头等
-- **`TableView` 模式**：基于 antd Row/Col 栅格布局，适合移动端或卡片式表格场景
+- **`TableView` 模式**：基于 `@kne/table-view` CSS Grid，适合移动端或卡片式表格场景
 
 通过 `loader` 或 `url` 配置数据源，通过 `dataFormat` 适配不同的接口数据结构。分页器渲染在表格外侧，翻页默认采用 `reload` 方式（不显示全屏 loading）。
 
-同时内置了顶部工具栏（`TableToolbar`），整合筛选、搜索、批量操作三大能力：
+同时内置了顶部工具栏（`TableToolbar`），整合筛选、搜索、Tab 分类、批量操作等能力：
 
 - **筛选（filter）**：基于 `@kne/react-filter` 的 `FilterLines`，支持多行多字段组合筛选，筛选值变化时自动 `reload` 并回到第 1 页
 - **搜索（search）**：基于 `@kne/react-filter` 的 `SearchInput`，支持关键词搜索与防抖自动提交，与筛选器共享筛选值状态
+- **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 并显示在已选标签；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
 - **批量操作（batchActions）**：配合 `rowSelection` 和 `useSelectedRow`，提供下拉菜单形式的批量操作（如批量导出、批量通知），未选中时自动禁用
 - **已选筛选值展示**：工具栏下方展示当前生效的筛选条件标签，支持快速清除
 
@@ -44,7 +45,7 @@ npm i --save @kne/table-page
 
 #### TableView
 
-基于 CSS Grid 的表格视图组件，以 antd Row/Col 布局为基础。相比于 `Table`，它更轻量灵活，适合需要自定义渲染的场景。支持：
+基于 `@kne/table-view` 的 CSS Grid 表格视图组件。相比于 `Table`，它更轻量灵活，适合需要自定义渲染、移动端卡片展示的场景。支持：
 
 - 基于 24 栅格的列宽分配（`span` 属性）
 - CSS Grid 自动布局，内容超出时自动撑开
@@ -73,6 +74,51 @@ npm i --save @kne/table-page
 - **多列排序**（`sort: { single: false }`）：允许多列同时排序
 - 排序状态循环切换：DESC → ASC → 取消
 - `sortDataSource(dataSource, sort, columns)` 工具函数，支持本地排序（包含中文排序）
+
+### 渲染逻辑
+
+#### 双模式：Table / TableView
+
+`TablePage` 通过 `type` 切换底层表格实现：
+
+| 模式 | 底层 | 适用场景 |
+|------|------|----------|
+| `Table`（默认） | antd `Table` | 桌面端完整表格能力：列宽拖动、列配置、分组表头、粘性表头、总结栏 |
+| `TableView` | `@kne/table-view` CSS Grid | 轻量栅格表格、移动端、卡片式展示 |
+
+两种模式共享 `columns`、`rowSelection`、`sortRender`、`renderType` 等 API，列渲染管线统一来自 `@kne/table-view`。
+
+#### 列单元格渲染管线
+
+无论 `Table` 还是 `TableView`，单元格内容均走同一套流程（`Table` 在 antd `columns[].render` 内调用）：
+
+1. **`resolveColumns`**：解析 `renderType`，注入内置 `render` 与 `width` / `min` / `max` / `ellipsis`
+2. **`computeColumnsValue`**：`getValueOf` 取值 → `format` 格式化 → 按 `display` / 空值规则过滤
+3. **`computeDisplay`**：空值占位；非空调用列 `render`
+4. **`renderCellContent`**：按 `ellipsis` / `cellFullWidth` 输出最终节点
+
+列渲染优先级：`column.render`（最高）> `renderType` 内置渲染 > 原始格式化值。`render` 与 `renderType` 共存时，后者仅提供列宽等布局维度。
+
+#### 桌面端：antd Table
+
+`Table` 将解析后的列映射为 antd `columns`，在 `render` 回调中复用上述管线。额外能力：
+
+- `useTableConfig` 管理列宽拖动、显示/隐藏、localStorage 持久化
+- `useGroupHeader` 生成分组表头
+- `rowSelection` 映射为 antd 行选择（含 `allowSelectedAll` 全选）
+- `render={({ header, renderBody }) => ...}` 可自定义表格外层，`renderBody()` 返回完整 antd Table
+
+#### 移动端：`renderMobile`
+
+`Table` 与 `TableView` 均支持 `renderMobile`，移动端判断使用 `useIsMobile()`（768px）。激活后 `Table` **不再渲染 antd Table**，委托 `TableView` 处理：
+
+| `renderMobile` 值 | 行为 |
+|-------------------|------|
+| `true` | 默认卡片 List：每行一张卡片，字段列「标题 + 内容」纵向排列，`options` 操作列靠右（紧凑「⋯」入口） |
+| `function` | 完全接管移动端渲染，签名 `({ header, renderBody, ...props }) => ReactNode`；可调用 `renderBody()` 复用默认卡片 |
+| `string` | 从 `preset({ renderMobile: { [name]: fn } })` 查找；未注册则视为未开启，回退普通表格 |
+
+桌面端不受 `renderMobile` 影响：`Table` 仍走 antd Table，`TableView` 仍走 CSS Grid 或 `render`。
 
 ### 列渲染类型系统
 
@@ -116,7 +162,7 @@ npm i --save @kne/table-page
 - **后台管理系统**：订单管理、用户列表、商品管理等 CRUD 页面
 - **数据报表**：配合排序、分页、总结栏展示统计数据
 - **列表配置页**：需要用户自定义列宽、显示字段的表格场景
-- **移动端适配**：使用 `TableView` 模式实现栅格式数据展示
+- **移动端适配**：`renderMobile` 启用卡片 List，或 `TableView` 模式做栅格式展示
 
 
 ### 示例
@@ -124,8 +170,8 @@ npm i --save @kne/table-page
 #### 示例代码
 
 - TablePage
-- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、列配置、总结栏等
-- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
+- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、tab 分类切换、列配置、总结栏等
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css),_ResponsiveUtils(@kne/responsive-utils)[import * as _ResponsiveUtils from "@kne/responsive-utils"]
 
 ```jsx
 const { default: TablePage, Table } = _TablePage;
@@ -133,6 +179,7 @@ const { fields } = _ReactFilter;
 const { SuperSelectFilterItem } = fields;
 const { Table: AntTable, Flex, Tag, Button, Space, message } = antd;
 const { useMemo } = React;
+const { useIsMobile } = _ResponsiveUtils;
 
 const TOTAL = 156;
 
@@ -161,6 +208,7 @@ const perfMap = {
 
 const departmentOptions = departments.map(item => ({ value: item, label: item }));
 const statusOptions = Object.entries(statusMap).map(([value, { text }]) => ({ value, label: text }));
+const positionOptions = positions.map(item => ({ value: item, label: item }));
 
 const buildEmployee = index => {
   const statusKeys = ['active', 'vacation', 'resigned', 'probation'];
@@ -287,6 +335,11 @@ const applyFilters = (employees, data, requestParams) => {
     result = result.filter(item => item.status === status);
   }
 
+  const position = normalizeFilterValue(params.position);
+  if (position) {
+    result = result.filter(item => item.position === position);
+  }
+
   return result;
 };
 
@@ -322,12 +375,20 @@ const Tips = () => (
       顶部工具栏集成 <code>filter</code>、<code>search</code>、<code>batchActions</code>；筛选变化自动 <code>reload</code> 并回到第 1 页。
     </div>
     <div>
+      <Tag style={TIP_TAG_STYLE} color="lime">Tab</Tag>
+      通过 <code>tab</code> 配置顶部分类切换（默认「全部」），选中值写入 filter value 并显示在已选标签；桌面端在表格边框外，移动端在 SearchInput 下方；可用 <code>tabProps</code> 透传 Tabs 属性（如 <code>tabBarExtraContent</code>）。
+    </div>
+    <div>
       <Tag style={TIP_TAG_STYLE} color="orange">列配置</Tag>
       设置 <code>name</code> 开启列宽拖动与显示/隐藏，「薪资范围」「学历」默认隐藏；状态列使用 <code>renderType="status"</code>，绩效列使用 <code>renderType="tag"</code>，操作列使用 <code>renderType="options"</code> 且 <code>fixed="right"</code>。
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="cyan">排序</Tag>
-      配合 <code>Table.useSort</code> 与 <code>sortRender</code>，在 <code>onSortChange</code> 中调用 <code>reload</code> 传排序参数，与翻页一样不闪烁。
+      配合 <code>Table.useSort</code> 与 <code>sortRender</code>、<code>mobileSortToolbar</code>，在 <code>onSortChange</code> 中调用 <code>reload</code> 传排序参数，与翻页一样不闪烁。
+    </div>
+    <div>
+      <Tag style={TIP_TAG_STYLE} color="volcano">移动端</Tag>
+      设置 <code>renderMobile</code> 后，手机预览下启用卡片 List（含全选、排序工具栏）；桌面端仍为 antd Table。
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="geekblue">固定表头</Tag>
@@ -344,11 +405,14 @@ const Tips = () => (
   </div>
 );
 
+const MOBILE_PREVIEW_PADDING = '0 16px';
+
 const BaseExample = () => {
   const tableRef = React.useRef();
+  const isMobile = useIsMobile();
   const allEmployees = useMemo(() => range(0, TOTAL).map(buildEmployee), []);
   const { selectedRows, getRowSelection } = Table.useSelectedRow({ rowKey: 'id' });
-  const { sort, sortRender } = Table.useSort({
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({
     defaultSort: [{ name: 'joinDate', sort: 'DESC' }],
     onSortChange: newSort => {
       tableRef.current?.reload({
@@ -379,95 +443,112 @@ const BaseExample = () => {
           刷新当前页
         </Button>
       </Space>
-      <TablePage
-        ref={tableRef}
-        name="demo-employee-table"
-        sticky
-        scroll={{ x: 1600, y: 400 }}
-        sortRender={sortRender}
-        rowSelection={getRowSelection(allEmployees)}
-        selectedRows={selectedRows}
-        search={{ name: 'keyword', label: '关键词', placeholder: '搜索工号/姓名', style: { width: 220 } }}
-        filter={{
-          list: [
-            [
-              {
-                type: SuperSelectFilterItem,
-                props: { name: 'department', label: '部门', single: true, options: departmentOptions }
-              },
-              {
-                type: SuperSelectFilterItem,
-                props: { name: 'status', label: '状态', single: true, options: statusOptions }
+      <div style={isMobile ? { padding: MOBILE_PREVIEW_PADDING } : undefined}>
+        <TablePage
+          ref={tableRef}
+          name="demo-employee-table"
+          sticky
+          scroll={{ x: 1600, y: 400 }}
+          size="large"
+          renderMobile
+          sortRender={sortRender}
+          mobileSortToolbar={mobileSortToolbar}
+          rowSelection={getRowSelection(allEmployees)}
+          selectedRows={selectedRows}
+          search={{ name: 'keyword', label: '关键词', placeholder: '搜索工号/姓名', style: { width: 220 } }}
+          tab={{
+            name: 'position',
+            label: '职位',
+            list: positionOptions
+          }}
+          tabProps={{
+            tabBarExtraContent: (
+              <Button type="link" size="small" onClick={() => message.info('新增职位')}>
+                新增职位
+              </Button>
+            )
+          }}
+          filter={{
+            list: [
+              [
+                {
+                  type: SuperSelectFilterItem,
+                  props: { name: 'department', label: '部门', single: true, options: departmentOptions }
+                },
+                {
+                  type: SuperSelectFilterItem,
+                  props: { name: 'status', label: '状态', single: true, options: statusOptions }
+                }
+              ]
+            ],
+            displayLine: 1
+          }}
+          batchActions={[
+            {
+              key: 'export',
+              label: '批量导出',
+              onClick: ({ selectedRowKeys }) => {
+                message.info(&#96;正在导出 ${selectedRowKeys.length} 名员工&#96;);
               }
-            ]
-          ],
-          displayLine: 1
-        }}
-        batchActions={[
-          {
-            key: 'export',
-            label: '批量导出',
-            onClick: ({ selectedRowKeys }) => {
-              message.info(&#96;正在导出 ${selectedRowKeys.length} 名员工&#96;);
+            },
+            {
+              key: 'notify',
+              label: '批量通知',
+              onClick: ({ selectedRowKeys }) => {
+                message.success(&#96;已通知 ${selectedRowKeys.length} 名员工&#96;);
+              }
             }
-          },
-          {
-            key: 'notify',
-            label: '批量通知',
-            onClick: ({ selectedRowKeys }) => {
-              message.success(&#96;已通知 ${selectedRowKeys.length} 名员工&#96;);
-            }
-          }
-        ]}
-        pagination={{
-          open: true,
-          pageSize: 10,
-          showSizeChanger: true,
-          showQuickJumper: true,
-          pageSizeOptions: ['10', '20', '50', '100']
-        }}
-        dataFormat={data => ({
-          list: data.pageData,
-          total: data.totalCount,
-          data
-        })}
-        loader={({ data, requestParams }) => {
-          const currentPage = Number(data?.currentPage ?? requestParams?.data?.currentPage) || 1;
-          const perPage = Number(data?.perPage ?? requestParams?.data?.perPage) || 20;
-          const sortParams = data?.sort ?? requestParams?.data?.sort ?? [{ name: 'joinDate', sort: 'DESC' }];
-          const filteredEmployees = applyFilters(allEmployees, data, requestParams);
-          const sortedEmployees = sortParams.length ? Table.sortDataSource(filteredEmployees, sortParams, columns) : filteredEmployees;
-          const startIndex = (currentPage - 1) * perPage;
+          ]}
+          pagination={{
+            open: true,
+            pageSize: 10,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            pageSizeOptions: ['10', '20', '50', '100']
+          }}
+          dataFormat={data => ({
+            list: data.pageData,
+            total: data.totalCount,
+            data
+          })}
+          loader={({ data, requestParams }) => {
+            const currentPage = Number(data?.currentPage ?? requestParams?.data?.currentPage) || 1;
+            const perPage = Number(data?.perPage ?? requestParams?.data?.perPage) || 20;
+            const sortParams = data?.sort ?? requestParams?.data?.sort ?? [{ name: 'joinDate', sort: 'DESC' }];
+            const filteredEmployees = applyFilters(allEmployees, data, requestParams);
+            const sortedEmployees = sortParams.length ? Table.sortDataSource(filteredEmployees, sortParams, columns) : filteredEmployees;
+            const startIndex = (currentPage - 1) * perPage;
 
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve({
-                pageData: sortedEmployees.slice(startIndex, startIndex + perPage),
-                totalCount: filteredEmployees.length
-              });
-            }, 400);
-          });
-        }}
-        columns={columns}
-        summary={({ pageData, data }) => {
-          const totalCount = data?.totalCount || 0;
-          return (
-            <AntTable.Summary fixed>
-              <AntTable.Summary.Row>
-                <AntTable.Summary.Cell index={0} colSpan={5}>
-                  <strong>当前页统计</strong>
-                </AntTable.Summary.Cell>
-                <AntTable.Summary.Cell index={5}>
-                  <strong>{pageData.length} 人</strong>
-                </AntTable.Summary.Cell>
-                <AntTable.Summary.Cell index={6} colSpan={7}>
-                  <strong>总员工数: {totalCount} 人</strong>
-                </AntTable.Summary.Cell>
-              </AntTable.Summary.Row>
-            </AntTable.Summary>
-          );
-        }}
-      />
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve({
+                  pageData: sortedEmployees.slice(startIndex, startIndex + perPage),
+                  totalCount: filteredEmployees.length
+                });
+              }, 400);
+            });
+          }}
+          columns={columns}
+          summary={({ pageData, data }) => {
+            const totalCount = data?.totalCount || 0;
+            return (
+              <AntTable.Summary fixed>
+                <AntTable.Summary.Row>
+                  <AntTable.Summary.Cell index={0} colSpan={5}>
+                    <strong>当前页统计</strong>
+                  </AntTable.Summary.Cell>
+                  <AntTable.Summary.Cell index={5}>
+                    <strong>{pageData.length} 人</strong>
+                  </AntTable.Summary.Cell>
+                  <AntTable.Summary.Cell index={6} colSpan={7}>
+                    <strong>总员工数: {totalCount} 人</strong>
+                  </AntTable.Summary.Cell>
+                </AntTable.Summary.Row>
+              </AntTable.Summary>
+            );
+          }}
+        />
+      </div>
     </Flex>
   );
 };
@@ -1636,6 +1717,611 @@ render(<BaseExample />);
 
 ```
 
+- column render
+- 列同时配置 render 与 renderType 时，render 优先级最高，覆盖内置 renderType 的单元格渲染（Table / TableView 一致）
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd)
+
+```jsx
+const { Table, TableView } = _TablePage;
+const { Flex, Tag } = antd;
+
+const statusMap = {
+  待发货: { type: 'warning', text: '待发货' },
+  处理中: { type: 'processing', text: '处理中' },
+  已完成: { type: 'success', text: '已完成' }
+};
+
+const dataSource = [
+  {
+    id: 'ORD001',
+    customerName: '深圳市腾讯计算机系统有限公司',
+    amount: 42500,
+    status: '待发货'
+  },
+  {
+    id: 'ORD002',
+    customerName: '华为技术有限公司',
+    amount: 85000,
+    status: '处理中'
+  },
+  {
+    id: 'ORD003',
+    customerName: '阿里巴巴集团控股有限公司',
+    amount: 120000,
+    status: '已完成'
+  }
+];
+
+const columns = [
+  { name: 'id', title: '编号', renderType: 'small' },
+  { name: 'customerName', title: '客户名称', renderType: 'main' },
+  {
+    name: 'amount',
+    title: '金额',
+    renderType: 'amount',
+    format: 'number-style:decimal-maximumFractionDigits:0-useGrouping:true-suffix:元'
+  },
+  {
+    name: 'status',
+    title: '状态（仅 renderType）',
+    renderType: 'status',
+    getValueOf: item => statusMap[item.status]
+  },
+  {
+    name: 'statusRender',
+    title: '状态（render 优先）',
+    renderType: 'status',
+    getValueOf: item => statusMap[item.status],
+    render: (value, { dataSource }) => (
+      <span style={{ color: '#1677ff' }}>
+        自定义渲染：{dataSource.status}（未走 status Badge）
+      </span>
+    )
+  }
+];
+
+const BaseExample = () => {
+  return (
+    <Flex vertical gap={24}>
+      <div style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
+        <p>
+          列同时配置 <code>render</code> 与 <code>renderType</code> 时，
+          <Tag color="blue" style={{ margin: '0 4px' }}>render 优先级最高</Tag>
+          ，会直接使用自定义 <code>render</code>，不再走内置 renderType。
+        </p>
+        <ul style={{ margin: '8px 0', paddingLeft: 20 }}>
+          <li>「状态（仅 renderType）」列：走内置 <code>status</code>，渲染 Badge</li>
+          <li>「状态（render 优先）」列：同样写了 <code>renderType: 'status'</code>，但因存在 <code>render</code>，最终显示自定义内容</li>
+          <li>renderType 仍可提供列宽等维度（width / min / max），仅单元格内容渲染被 <code>render</code> 覆盖</li>
+        </ul>
+      </div>
+      <div>
+        <div style={{ marginBottom: 8, color: '#666' }}>Table</div>
+        <Table dataSource={dataSource} columns={columns} scroll={{ x: 1200 }} />
+      </div>
+      <div>
+        <div style={{ marginBottom: 8, color: '#666' }}>TableView</div>
+        <TableView dataSource={dataSource} columns={columns} />
+      </div>
+    </Flex>
+  );
+};
+
+render(<BaseExample />);
+
+
+```
+
+- renderMobile
+- 移动端专用渲染：true 为默认卡片 List；function 完全接管；string 从 preset 按名称查找；支持 mobileSortToolbar 排序工具栏
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd)
+
+```jsx
+const { Table, TableView, preset } = _TablePage;
+const { Flex, Tag, Card, Button, Dropdown, Tabs, Checkbox } = antd;
+const { useState, useMemo } = React;
+
+const statusMap = {
+  已完成: { color: 'success', text: '已完成' },
+  处理中: { color: 'processing', text: '处理中' },
+  待发货: { color: 'warning', text: '待发货' }
+};
+
+const dataSource = [
+  {
+    id: 'ORD001',
+    customerName: '深圳市腾讯计算机系统有限公司',
+    contact: '张三',
+    phone: '13800138000',
+    amount: 42500,
+    status: '已完成'
+  },
+  {
+    id: 'ORD002',
+    customerName: '华为技术有限公司',
+    contact: '李四',
+    phone: '13900149000',
+    amount: 85000,
+    status: '处理中'
+  },
+  {
+    id: 'ORD003',
+    customerName: '阿里巴巴集团控股有限公司',
+    contact: '王五',
+    phone: '13700157000',
+    amount: 120000,
+    status: '待发货'
+  }
+];
+
+const columns = [
+  { name: 'id', title: '订单编号', width: 120, renderType: 'small' },
+  { name: 'customerName', title: '客户名称', width: 220, renderType: 'main', sort: true },
+  { name: 'contact', title: '联系人', width: 80 },
+  { name: 'phone', title: '联系电话', width: 130, render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') },
+  {
+    name: 'amount',
+    title: '订单金额',
+    width: 120,
+    sort: true,
+    renderType: 'amount',
+    format: 'number-style:decimal-maximumFractionDigits:0-useGrouping:true-suffix:元'
+  },
+  {
+    name: 'status',
+    title: '状态',
+    width: 100,
+    renderType: 'status',
+    getValueOf: item => ({ type: statusMap[item.status]?.color || 'default', text: item.status })
+  },
+  {
+    name: 'options',
+    title: '操作',
+    width: 140,
+    renderType: 'options',
+    getValueOf: item => [
+      { children: '查看', onClick: () => console.log('查看', item.id) },
+      { children: '编辑', onClick: () => console.log('编辑', item.id) },
+      { children: '删除', isDelete: true, message: &#96;确定删除 ${item.id} 吗？&#96;, onClick: () => console.log('删除', item.id) }
+    ]
+  }
+];
+
+preset({
+  renderMobile: {
+    orderCard: ({ renderBody }) => {
+      const totalAmount = dataSource.reduce((sum, item) => sum + item.amount, 0);
+      return (
+        <div
+          className="preset-order-card-example"
+          style={{
+            borderRadius: 12,
+            background: '#f5f7fa',
+            padding: 16
+          }}
+        >
+          <style>{&#96;
+            .preset-order-card-example .info-page-table-mobile-card:not(.is-mobile-card-selected):not(.is-mobile-card-selected-all) {
+              background: linear-gradient(135deg, #ffffff 0%, #f9f0ff 52%, #eef2ff 100%) !important;
+              border-color: #e8dfff !important;
+            }
+            .preset-order-card-example .info-page-table-mobile-card:not(.is-mobile-card-selected):not(.is-mobile-card-selected-all):hover {
+              background: linear-gradient(135deg, #fafafa 0%, #f3ebff 52%, #e8eeff 100%) !important;
+            }
+          &#96;}</style>
+          <div style={{ marginBottom: 16 }}>
+            <Flex justify="space-between" align="center" gap={8} style={{ marginBottom: 4 }}>
+              <div style={{ fontSize: 17, fontWeight: 600, color: 'rgba(0,0,0,0.88)' }}>近期订单</div>
+              <Tag color="purple" style={{ margin: 0, flexShrink: 0 }}>
+                preset: orderCard
+              </Tag>
+            </Flex>
+            <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
+              {dataSource.length} 笔 · 合计 ¥{totalAmount.toLocaleString()}
+            </div>
+          </div>
+          <div
+            className="info-page-table"
+            style={{
+              '--kne-table-cell-padding': '14px 8px'
+            }}
+          >
+            {renderBody()}
+          </div>
+        </div>
+      );
+    }
+  }
+});
+
+const formatPhone = phone => phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+
+const getOrderActions = item => [
+  { key: 'view', label: '查看', onClick: () => console.log('查看', item.id) },
+  { key: 'edit', label: '编辑', onClick: () => console.log('编辑', item.id) },
+  { key: 'delete', label: '删除', danger: true, onClick: () => console.log('删除', item.id) }
+];
+
+const OrderMobileCard = ({ item, checked, disabled, onCheckChange }) => {
+  const status = statusMap[item.status] || { color: 'default', text: item.status };
+  const actionItems = getOrderActions(item);
+  const isSelected = checked;
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 12,
+        background: isSelected ? 'var(--primary-color-1, #e6f4ff)' : '#fff',
+        borderRadius: 12,
+        padding: 16,
+        border: &#96;1px solid ${isSelected ? 'var(--primary-color-2, var(--primary-color, #1677ff))' : 'transparent'}&#96;,
+        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.04)',
+        color: isSelected ? 'var(--primary-color, #1677ff)' : undefined,
+        boxSizing: 'border-box'
+      }}
+    >
+      <Checkbox checked={checked} disabled={disabled} onChange={onCheckChange} style={{ marginTop: 2, flexShrink: 0 }} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <Flex justify="space-between" align="center" gap={8} style={{ marginBottom: 10 }}>
+          <Flex align="center" gap={8} wrap="wrap" style={{ flex: 1, minWidth: 0 }}>
+            <Tag color={status.color} style={{ margin: 0 }}>
+              {status.text}
+            </Tag>
+            <span style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>{item.id}</span>
+          </Flex>
+          <Dropdown
+            trigger={['click']}
+            menu={{
+              items: actionItems.map(({ key, label, danger, onClick }) => ({
+                key,
+                label,
+                danger,
+                onClick: ({ domEvent }) => {
+                  domEvent.stopPropagation();
+                  onClick();
+                }
+              }))
+            }}
+          >
+            <Button type="text" size="small" style={{ padding: '0 4px' }} onClick={e => e.stopPropagation()}>
+              ···
+            </Button>
+          </Dropdown>
+        </Flex>
+        <div
+          style={{
+            fontSize: 16,
+            fontWeight: 600,
+            color: 'rgba(0,0,0,0.88)',
+            lineHeight: 1.5,
+            marginBottom: 6
+          }}
+        >
+          {item.customerName}
+        </div>
+        <div style={{ fontSize: 13, color: 'rgba(0,0,0,0.45)', lineHeight: 1.6 }}>
+          {item.contact} · {formatPhone(item.phone)}
+        </div>
+        <Flex
+          justify="space-between"
+          align="center"
+          gap={12}
+          style={{
+            marginTop: 14,
+            paddingTop: 12,
+            borderTop: '1px solid #f0f0f0'
+          }}
+        >
+          <Flex align="baseline" gap={6} style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)', flexShrink: 0 }}>订单金额</span>
+            <span style={{ fontSize: 16, fontWeight: 600, color: '#1677ff' }}>¥{item.amount.toLocaleString()}</span>
+          </Flex>
+          <Flex gap={4} align="center" style={{ flexShrink: 0 }}>
+            {actionItems.slice(0, 2).map(({ key, label, onClick }) => (
+              <Button
+                key={key}
+                type="link"
+                size="small"
+                style={{ padding: '0 4px', height: 'auto' }}
+                onClick={e => {
+                  e.stopPropagation();
+                  onClick();
+                }}
+              >
+                {label}
+              </Button>
+            ))}
+          </Flex>
+        </Flex>
+      </div>
+    </div>
+  );
+};
+
+const DefaultMobileCards = ({ Component }) => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  const totalAmount = selectKeys.reduce((sum, id) => sum + (dataSource.find(d => d.id === id)?.amount || 0), 0);
+  return (
+    <div>
+      <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+        <code>renderMobile={'{true}'}</code>：移动端启用默认卡片 List，不再渲染 antd Table；
+        开启 <code>allowSelectedAll</code> 后顶部工具栏左侧显示全选。请用示例预览的手机模式查看效果。
+      </div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
+        <span>
+          已选 <strong>{selectKeys.length}</strong> 个订单，总金额 <strong style={{ color: '#52c41a' }}>¥{totalAmount.toLocaleString()}</strong>
+        </span>
+      </Flex>
+      <Component
+        dataSource={dataSource}
+        columns={columns}
+        size="large"
+        controllerOpen={false}
+        renderMobile
+        rowSelection={{
+          type: 'checkbox',
+          allowSelectedAll: true,
+          selectedRowKeys: selectKeys,
+          onChange: keys => setSelectKeys(keys)
+        }}
+      />
+    </div>
+  );
+};
+
+const SortState = ({ sort }) => (
+  <div style={{ marginBottom: 12, padding: '10px 12px', background: '#f5f5f5', borderRadius: 8, fontSize: 13 }}>
+    当前排序：
+    {sort.length ? (
+      <span>
+        {sort.map(item => (
+          <Tag key={item.name} color="blue" style={{ marginLeft: 8 }}>
+            {item.name} {item.sort}
+          </Tag>
+        ))}
+      </span>
+    ) : (
+      <span style={{ marginLeft: 8, color: '#999' }}>无</span>
+    )}
+  </div>
+);
+
+const MobileSortWithSelectAll = ({ Component }) => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({});
+  const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort]);
+
+  return (
+    <Component
+      dataSource={sortedData}
+      columns={columns}
+      size="large"
+      controllerOpen={false}
+      renderMobile
+      sortRender={sortRender}
+      mobileSortToolbar={mobileSortToolbar}
+      rowSelection={{
+        type: 'checkbox',
+        allowSelectedAll: true,
+        selectedRowKeys: selectKeys,
+        onChange: keys => setSelectKeys(keys)
+      }}
+    />
+  );
+};
+
+const MobileSortExample = ({ Component }) => {
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({
+    defaultSort: [{ name: 'amount', sort: 'DESC' }],
+    onSortChange: value => console.log('移动端排序变更:', value)
+  });
+  const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort]);
+
+  return (
+    <Flex vertical gap={24}>
+      <div>
+        <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+          移动端排序：列配置 <code>sort: true</code>，配合 <code>Table.useSort</code> 传入 <code>mobileSortToolbar</code>。
+          工具栏居右，可选择排序列并切换升序 / 降序；再次点击当前方向或下拉选「取消排序」可清除。数据需自行用 <code>sortDataSource</code> 排序。
+        </div>
+        <SortState sort={sort} />
+        <Component
+          dataSource={sortedData}
+          columns={columns}
+          size="large"
+          controllerOpen={false}
+          renderMobile
+          sortRender={sortRender}
+          mobileSortToolbar={mobileSortToolbar}
+        />
+      </div>
+      <div>
+        <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+          排序与全选同时开启：工具栏左侧全选、右侧排序。
+        </div>
+        <MobileSortWithSelectAll Component={Component} />
+      </div>
+    </Flex>
+  );
+};
+
+const CustomMobileRender = ({ Component }) => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  const [isSelectedAll, setIsSelectedAll] = useState(false);
+  const totalAmount = dataSource.reduce((sum, item) => sum + item.amount, 0);
+  const selectedAmount = selectKeys.reduce((sum, id) => sum + (dataSource.find(d => d.id === id)?.amount || 0), 0);
+  const checkedAll = isSelectedAll || (dataSource.length > 0 && selectKeys.length === dataSource.length);
+  const indeterminate = selectKeys.length > 0 && !checkedAll;
+
+  const handleSelectAllChange = e => {
+    const checked = e.target.checked;
+    if (!checked) {
+      setIsSelectedAll(false);
+      setSelectKeys([]);
+      return;
+    }
+    setIsSelectedAll(true);
+    setSelectKeys(dataSource.map(item => item.id));
+  };
+
+  const handleCardCheckChange = (id, checked) => {
+    setIsSelectedAll(false);
+    setSelectKeys(keys => (checked ? keys.filter(key => key !== id) : [...keys, id]));
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+        <code>renderMobile</code> 为 function 时完全接管渲染，可自定义主次关系卡片：客户名称作主信息，状态/编号/联系人作次要信息。
+        桌面端仍走 <code>render</code>，样式与普通 Table 一致。
+      </div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
+        <span>
+          已选 <strong>{selectKeys.length}</strong> 个订单，金额 <strong style={{ color: '#52c41a' }}>¥{selectedAmount.toLocaleString()}</strong>
+        </span>
+      </Flex>
+      <Card size="small" title="近期订单" extra={<Tag>桌面 render</Tag>} styles={{ body: { padding: 0 } }}>
+        <Flex
+          justify="space-between"
+          align="center"
+          style={{ padding: '12px 16px', background: '#fafafa', borderBottom: '1px solid #f0f0f0' }}
+        >
+          <Flex gap={8} align="center">
+            <Tag color="blue">{dataSource.length} 笔</Tag>
+            <span style={{ color: 'rgba(0,0,0,0.65)', fontSize: 13 }}>
+              合计 <strong style={{ color: '#52c41a' }}>¥{totalAmount.toLocaleString()}</strong>
+            </span>
+          </Flex>
+          <span style={{ color: 'rgba(0,0,0,0.45)', fontSize: 12 }}>桌面端 render 自定义外层</span>
+        </Flex>
+        <Component
+          dataSource={dataSource}
+          columns={columns}
+          controllerOpen={false}
+          render={({ renderBody }) => <div style={{ overflowX: 'auto' }}>{renderBody()}</div>}
+          renderMobile={() => (
+            <div
+              style={{
+                borderRadius: 12,
+                background: '#f5f7fa',
+                padding: 16
+              }}
+            >
+              <div style={{ marginBottom: 16 }}>
+                <Flex justify="space-between" align="center" gap={8} style={{ marginBottom: 4 }}>
+                  <div style={{ fontSize: 17, fontWeight: 600, color: 'rgba(0,0,0,0.88)' }}>近期订单</div>
+                  <Tag color="processing" style={{ margin: 0, flexShrink: 0 }}>
+                    renderMobile
+                  </Tag>
+                </Flex>
+                <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
+                  {dataSource.length} 笔 · 合计 ¥{totalAmount.toLocaleString()}
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  marginBottom: 12,
+                  padding: '4px 8px',
+                  background: 'var(--bg-color-grey-1, #fafafa)',
+                  borderRadius: 8,
+                  fontSize: 12
+                }}
+              >
+                <Checkbox checked={checkedAll} indeterminate={indeterminate} onChange={handleSelectAllChange} />
+                <span>全选</span>
+              </div>
+              <Flex vertical gap={12}>
+                {dataSource.map(item => {
+                  const isChecked = selectKeys.indexOf(item.id) > -1;
+                  return (
+                    <OrderMobileCard
+                      key={item.id}
+                      item={item}
+                      checked={(isSelectedAll && !item.disabled) || isChecked}
+                      disabled={isSelectedAll}
+                      onCheckChange={() => handleCardCheckChange(item.id, isChecked)}
+                    />
+                  );
+                })}
+              </Flex>
+            </div>
+          )}
+        />
+      </Card>
+    </div>
+  );
+};
+
+const PresetStringRender = ({ Component }) => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({
+    defaultSort: [{ name: 'amount', sort: 'DESC' }]
+  });
+  const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort]);
+
+  return (
+    <Flex vertical gap={24}>
+      <div>
+        <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+          <code>renderMobile="orderCard"</code>：通过 <code>preset({'{ renderMobile }'})</code> 注册名称对应的渲染函数；
+          仅移动端生效，支持全选与选中样式。可配合 <code>mobileSortToolbar</code> 开启排序。
+        </div>
+        <Component
+          dataSource={sortedData}
+          columns={columns}
+          controllerOpen={false}
+          size="large"
+          renderMobile="orderCard"
+          sortRender={sortRender}
+          mobileSortToolbar={mobileSortToolbar}
+          rowSelection={{
+            type: 'checkbox',
+            allowSelectedAll: true,
+            selectedRowKeys: selectKeys,
+            onChange: keys => setSelectKeys(keys)
+          }}
+        />
+      </div>
+      <div>
+        <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+          <code>renderMobile="notRegistered"</code>：preset 中未注册时视为未开启，移动端仍显示普通表格。
+        </div>
+        <Component dataSource={dataSource} columns={columns} controllerOpen={false} renderMobile="notRegistered" />
+      </div>
+    </Flex>
+  );
+};
+
+const Examples = ({ Component }) => (
+  <Flex vertical gap={32}>
+    <DefaultMobileCards Component={Component} />
+    <MobileSortExample Component={Component} />
+    <CustomMobileRender Component={Component} />
+    <PresetStringRender Component={Component} />
+  </Flex>
+);
+
+const BaseExample = () => {
+  return (
+    <Tabs
+      items={[
+        { key: 'table', label: 'Table', children: <Examples Component={Table} /> },
+        { key: 'table-view', label: 'TableView', children: <Examples Component={TableView} /> }
+      ]}
+    />
+  );
+};
+
+render(<BaseExample />);
+
+
+```
+
 - column config
 - 列宽拖动调整、显示/隐藏字段、列排序与 localStorage 持久化（仅 Table）
 - _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd)
@@ -1967,6 +2653,145 @@ const BaseExample = () => {
     <Flex vertical gap={24}>
       <Tips />
       <Table dataSource={sortedData} columns={columns} sortRender={sortRender} scroll={{ x: 1600 }} />
+    </Flex>
+  );
+};
+
+render(<BaseExample />);
+
+
+```
+
+- size
+- 单元格 padding 尺寸：默认 8px，small 为 4px，large 为 14px 8px；Table / TableView 均支持，可用 CSS 变量 --kne-table-cell-padding-* 覆盖
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd)
+
+```jsx
+const { Table, TableView } = _TablePage;
+const { Flex, Radio, Tabs } = antd;
+const { useState } = React;
+
+const dataSource = [
+  {
+    id: 'ORD001',
+    customerName: '深圳市腾讯计算机系统有限公司',
+    contact: '张三',
+    amount: 42500,
+    status: '已完成'
+  },
+  {
+    id: 'ORD002',
+    customerName: '华为技术有限公司',
+    contact: '李四',
+    amount: 85000,
+    status: '处理中'
+  },
+  {
+    id: 'ORD003',
+    customerName: '阿里巴巴集团控股有限公司',
+    contact: '王五',
+    amount: 120000,
+    status: '待发货'
+  }
+];
+
+const columns = [
+  { name: 'id', title: '订单编号', width: 120, renderType: 'small' },
+  { name: 'customerName', title: '客户名称', width: 220, renderType: 'main' },
+  { name: 'contact', title: '联系人', width: 80 },
+  {
+    name: 'amount',
+    title: '订单金额',
+    width: 120,
+    renderType: 'amount',
+    format: 'number-style:decimal-maximumFractionDigits:0-useGrouping:true-suffix:元'
+  },
+  { name: 'status', title: '状态', width: 100 }
+];
+
+const SizeDemo = ({ Component, title, description, size }) => (
+  <div>
+    <div style={{ marginBottom: 8 }}>
+      <strong>{title}</strong>
+      <span style={{ marginLeft: 8, color: '#666', fontSize: 13 }}>{description}</span>
+    </div>
+    <Component dataSource={dataSource} columns={columns} size={size} controllerOpen={false} />
+  </div>
+);
+
+const InteractiveSize = ({ Component }) => {
+  const [size, setSize] = useState('default');
+  return (
+    <div>
+      <Flex align="center" gap={12} style={{ marginBottom: 12 }}>
+        <strong>切换 size</strong>
+        <Radio.Group
+          optionType="button"
+          value={size}
+          onChange={e => setSize(e.target.value)}
+          options={[
+            { label: 'default (8px)', value: 'default' },
+            { label: 'small (4px)', value: 'small' },
+            { label: 'large (14px 8px)', value: 'large' }
+          ]}
+        />
+      </Flex>
+      <Component dataSource={dataSource} columns={columns} size={size === 'default' ? undefined : size} controllerOpen={false} />
+    </div>
+  );
+};
+
+const SizeExamples = ({ Component }) => (
+  <Flex vertical gap={24}>
+    <InteractiveSize Component={Component} />
+    <SizeDemo Component={Component} title="default" description="padding: 8px" />
+    <SizeDemo Component={Component} title='size="small"' description="padding: 4px" size="small" />
+    <SizeDemo Component={Component} title='size="large"' description="padding: 14px 8px" size="large" />
+    <div>
+      <div style={{ marginBottom: 8 }}>
+        <strong>CSS 变量覆盖</strong>
+        <span style={{ marginLeft: 8, color: '#666', fontSize: 13 }}>
+          --kne-table-cell-padding-default: 12px 16px
+        </span>
+      </div>
+      <div style={{ '--kne-table-cell-padding-default': '12px 16px' }}>
+        <Component dataSource={dataSource} columns={columns} controllerOpen={false} />
+      </div>
+    </div>
+  </Flex>
+);
+
+const BaseExample = () => {
+  return (
+    <Flex vertical gap={16}>
+      <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: 8, fontSize: 13 }}>
+        <div>
+          <code>size</code> 控制单元格 padding：默认 <code>8px</code>，<code>small</code> 为 <code>4px</code>，
+          <code>large</code> 为 <code>14px 8px</code>
+        </div>
+        <div style={{ marginTop: 4, color: '#666' }}>
+          可通过 CSS 变量覆盖：
+          <code>--kne-table-cell-padding-default</code> /
+          <code>--kne-table-cell-padding-small</code> /
+          <code>--kne-table-cell-padding-large</code>，或直接设
+          <code>--kne-table-cell-padding</code>
+        </div>
+      </div>
+
+      <Tabs
+        items={[
+          {
+            key: 'table',
+            label: 'Table',
+            children: <SizeExamples Component={Table} />
+          },
+          {
+            key: 'tableView',
+            label: 'TableView',
+            children: <SizeExamples Component={TableView} />
+          }
+        ]}
+      />
     </Flex>
   );
 };
@@ -2504,11 +3329,13 @@ render(<BaseExample />);
 | columnRenderProps | object | `{}` | 列渲染扩展属性，会合并进列 `render` 的 context |
 | filter | object | - | 顶部筛选器配置，基于 `@kne/react-filter` 的 `FilterLines`，见下方 |
 | search | object | - | 顶部搜索框配置，基于 `@kne/react-filter` 的 `SearchInput`，见下方 |
+| tab | object | - | 顶部 Tab 分类切换，选中值写入 filter value，见下方 |
+| tabProps | object | - | 透传给 antd `Tabs` 的额外属性（如 `tabBarExtraContent`） |
 | batchActions | array | - | 批量操作下拉菜单项，需配合 `rowSelection` 使用，见下方 |
 | selectedRows | array | - | 已选行数据，传给 `batchActions` 的 `onClick` 上下文 |
 | className | string | - | 自定义类名 |
 | ...fetchProps | - | - | 其余属性透传给 `@kne/react-fetch`（如 `url`、`params`、`auto` 等） |
-| ...tableProps | - | - | 其余属性透传给内部 `Table`（如 `rowKey`、`rowSelection`、`scroll`） |
+| ...tableProps | - | - | 其余属性透传给内部 `Table` / `TableView`（如 `rowKey`、`rowSelection`、`scroll`、`size`、`renderMobile`、`sortRender`、`mobileSortToolbar`） |
 
 #### pagination
 
@@ -2551,6 +3378,39 @@ render(<BaseExample />);
 | label | string | - | 已选展示标签 |
 | placeholder | string | - | 占位符 |
 | searchDelay | number | `500` | 自动提交防抖时间（毫秒） |
+
+#### tab
+
+顶部 Tab 分类切换。默认选中「全部」（不写入筛选值）；切换到具体项时，将 `{ name, label, value: { value, label } }` 写入 filter value，并触发 `reload` 回到第 1 页。桌面端显示在表格边框外侧上方；移动端（含 `renderMobile`）显示在 `SearchInput` 下方。选中值会出现在已选筛选标签中，清除标签会回到「全部」。
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| name | string | - | 必填，写入筛选值的字段名 |
+| label | string | - | 筛选字段标签 |
+| list | `Array<{ label, value }>` | - | Tab 选项列表 |
+
+#### tabProps
+
+透传给 antd `Tabs` 的额外属性。内部会覆盖 `activeKey`、`onChange`、`items`，其余如 `tabBarExtraContent`、`type` 等可自由传入。
+
+```jsx
+<TablePage
+  tab={{
+    name: 'position',
+    label: '职位',
+    list: [
+      { label: '工程师', value: '工程师' },
+      { label: '经理', value: '经理' }
+    ]
+  }}
+  tabProps={{
+    tabBarExtraContent: <Button type="link">新增职位</Button>
+  }}
+  search={{ name: 'keyword', label: '关键词' }}
+  loader={...}
+  columns={...}
+/>
+```
 
 #### batchActions
 
@@ -2631,7 +3491,21 @@ render(<BaseExample />);
 | headerStyle | object | - | 表头自定义样式，仅在 `render` 自定义渲染时作用于 `header` |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，可获取 `header` 和 `renderBody` |
-| sortRender | function | - | 排序按钮渲染，由 `useSort` 提供 |
+| renderMobile | boolean \| function \| string | - | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
+| mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
+| size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖 |
+
+单元格 padding 由 CSS 变量控制，可在外层覆盖：
+
+```css
+.info-page-table {
+  --kne-table-cell-padding-default: 8px;
+  --kne-table-cell-padding-small: 4px;
+  --kne-table-cell-padding-large: 14px 8px;
+  /* 或直接覆盖当前生效值：--kne-table-cell-padding: 10px; */
+}
+```
 
 #### columns
 
@@ -2644,7 +3518,8 @@ render(<BaseExample />);
 | align | string | `'top'` | 垂直对齐方式 |
 | justify | string | `'flex-start'` | 水平对齐方式 |
 | format | string \| function | - | 值格式化 |
-| render | function | - | 自定义单元格渲染 `(value, { column, dataSource, context }) => ReactNode` |
+| render | function | - | 自定义单元格渲染 `(value, { column, dataSource, context }) => ReactNode`；与 `renderType` 同时存在时优先级最高 |
+| renderType | string | - | 声明式列渲染类型；存在 `render` 时仅保留列宽等维度，不参与单元格渲染 |
 | sort | boolean \| object | - | 是否支持排序，`{ single: true }` 为单列排序 |
 | ellipsis | boolean \| object | `false` | 超出省略，基于 antd Typography；`true` 开启省略与 tooltip，`{ showTitle: false }` 关闭 tooltip |
 | display | boolean \| function | - | 是否显示该列 |
@@ -2717,7 +3592,8 @@ const { selectedRowKeys, getRowSelection, clearSelectedRows } = Table.useSelecte
 |------|------|------|
 | sort | array | 当前排序配置 |
 | setSort | function | 设置排序 |
-| sortRender | function | `({ name, single }) => ReactNode`，传给 Table / TableView |
+| sortRender | function | `({ name, single }) => ReactNode`，传给 Table / TableView 表头 |
+| mobileSortToolbar | function | `({ columns }) => ReactNode`，传给 Table / TableView 移动端工具栏右侧 |
 
 #### columns.sort
 
@@ -2734,15 +3610,15 @@ const { selectedRowKeys, getRowSelection, clearSelectedRows } = Table.useSelecte
 #### 示例
 
 ```jsx
-const { sort, sortRender } = Table.useSort({ onSortChange: console.log });
+const { sort, sortRender, mobileSortToolbar } = Table.useSort({ onSortChange: console.log });
 const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort, dataSource]);
 
-<Table dataSource={sortedData} columns={columns} sortRender={sortRender} />;
+<Table dataSource={sortedData} columns={columns} sortRender={sortRender} mobileSortToolbar={mobileSortToolbar} />;
 ```
 
 ### Table
 
-表格组件，以 antd `Table` 作为展示层，外层 API 与 `TableView` 保持一致，可直接复用相同的 `columns`、`rowSelection` 等配置。此外支持透传 antd Table 的原生属性（如 `scroll`、`pagination`、`size` 等）。
+表格组件，以 antd `Table` 作为展示层，外层 API 与 `TableView` 保持一致，可直接复用相同的 `columns`、`rowSelection` 等配置。此外支持透传 antd Table 的原生属性（如 `scroll`、`pagination`、`bordered` 等）。
 
 #### 属性
 
@@ -2762,11 +3638,14 @@ const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns)
 | headerStyle | object | - | 表头自定义样式 |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，`header` 为 `null`，`renderBody` 返回 antd Table |
-| sortRender | function | - | 排序按钮渲染，由 `useSort` 提供 |
+| renderMobile | boolean \| function \| string | - | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
+| mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
 | pagination | boolean \| object | `false` | 分页配置，默认不显示；传入对象时使用 antd 分页 |
 | name | string | - | 表格唯一标识，用于持久化列配置 |
 | controllerOpen | boolean | `true` | 是否开启列宽拖动与列配置面板 |
 | tableServerApis | object | - | 自定义列配置存储 API，默认使用 `localStorage` |
+| size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖（同 TableView） |
 | ...antdTableProps | - | - | 其余属性透传给 antd `Table`（如 `scroll`、`bordered`） |
 
 #### 与 TableView 的差异
