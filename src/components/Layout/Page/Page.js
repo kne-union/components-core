@@ -12,6 +12,9 @@ const PageInner = ({children, isPass, ...props}) => {
     const localMenuOpenRef = useRef(localMenuOpen);
     localMenuOpenRef.current = localMenuOpen;
     useEffect(() => {
+        if (typeof setPageProps !== "function") {
+            return;
+        }
         if (!isEqual(propsRef.current, props)) {
             propsRef.current = props;
             /**

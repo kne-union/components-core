@@ -3,6 +3,8 @@ import initPreset from '@components/TablePage/initPreset';
 import BaseTablePage from '@kne/table-page';
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import { getScrollEl } from '@common/utils/importantContainer';
+import { useScrollElement } from '@components/Global';
+import useRefCallback from '@kne/use-ref-callback';
 import adaptColumns from './adaptColumns';
 import { withFeatureTablePage } from '@components/TablePage/featureGate';
 
@@ -36,7 +38,7 @@ const TablePageInner = forwardRef(
       hiddenColumns,
       columnsRef,
       horizontalScroller = true,
-      getScrollContainer = getScrollEl,
+      getScrollContainer,
       scrollTopInset,
       stickyOffset,
       ...props
@@ -44,6 +46,13 @@ const TablePageInner = forwardRef(
     ref
   ) => {
     const resolvedScrollTopInset = scrollTopInset ?? stickyOffset;
+    const getScrollElement = useScrollElement();
+    const resolvedGetScrollContainer = useRefCallback(() => {
+      if (typeof getScrollContainer === 'function') {
+        return getScrollContainer();
+      }
+      return getScrollElement() || getScrollEl();
+    });
 
     const resolveColumns = useCallback(
       data => {
@@ -91,7 +100,7 @@ const TablePageInner = forwardRef(
         getColumns={staticResolvedColumns !== null ? undefined : resolveColumns}
         summary={typeof summary === 'function' ? adaptedSummary : null}
         horizontalScroller={horizontalScroller}
-        getScrollContainer={getScrollContainer}
+        getScrollContainer={resolvedGetScrollContainer}
       />
     );
   }

@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.12",
+  "version": "0.5.13",
   "files": [
     "build"
   ],
@@ -46,7 +46,7 @@
     "@kne/responsive-utils": "^0.1.5",
     "@kne/scroll-loader": "^0.1.13",
     "@kne/super-select": "^0.1.32",
-    "@kne/table-page": "^0.1.8",
+    "@kne/table-page": "^0.1.11",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
