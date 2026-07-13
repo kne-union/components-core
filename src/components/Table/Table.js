@@ -5,7 +5,7 @@ import { Table as AntdTable } from 'antd';
 import { Table as BaseTable } from '@kne/table-page';
 import { useEffect, useMemo, useRef } from 'react';
 import { getScrollEl as getScrollElDefault } from '@common/utils/importantContainer';
-import { usePreset } from '@components/Global';
+import { usePreset, useScrollElement } from '@components/Global';
 import useRefCallback from '@kne/use-ref-callback';
 import adaptColumns from './adaptColumns';
 import adaptRowSelection from './adaptRowSelection';
@@ -18,7 +18,7 @@ initPreset();
 const Table = ({
   columns,
   className,
-  getScrollEl = getScrollElDefault,
+  getScrollEl,
   sticky = false,
   scrollTopInset = 'var(--nav-height)',
   stickyOffset,
@@ -40,6 +40,13 @@ const Table = ({
 }) => {
   const { tableServerApis: presetTableServerApis } = usePreset();
   const tableServerApis = useLegacyTableServerApis(name, controllerOpen, presetTableServerApis);
+  const getScrollElement = useScrollElement();
+  const resolvedGetScrollEl = useRefCallback(() => {
+    if (typeof getScrollEl === 'function') {
+      return getScrollEl();
+    }
+    return getScrollElement() || getScrollElDefault();
+  });
   const columnsRef = useRef([]);
   const adaptedColumns = useMemo(() => {
     const result = adaptColumns(columns) || [];
@@ -89,7 +96,7 @@ const Table = ({
       sticky={sticky}
       scrollTopInset={resolvedScrollTopInset}
       stickyOffset={resolvedScrollTopInset}
-      getStickyContainer={getScrollEl}
+      getStickyContainer={resolvedGetScrollEl}
       dataSource={dataSource}
       rowKey={rowKey}
       columns={adaptedColumns}

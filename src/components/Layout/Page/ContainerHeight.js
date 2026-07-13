@@ -5,6 +5,9 @@ const useContainerHeight = ({ targetKey }) => {
   const { setPageProps } = useContext();
   const ref = useRef(null);
   useLayoutEffect(() => {
+    if (typeof setPageProps !== "function" || !ref.current) {
+      return;
+    }
     const callback = () => {
       setPageProps({
         [targetKey]: ref.current.offsetHeight,
