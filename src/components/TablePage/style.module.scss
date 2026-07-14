@@ -1,0 +1,38 @@
+.id {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: bottom;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover,
+.primary,
+.clickable {
+  cursor: pointer;
+  border-radius: var(--radius-default, 2px);
+}
+
+.hover {
+  padding: 0 8px;
+  margin: 0 -8px;
+
+  &:hover {
+    color: var(--primary-color, #1677ff);
+    background: var(--primary-color-1);
+  }
+}
+
+.primary {
+  color: var(--primary-color, #1677ff);
+}
+
+.loading {
+  opacity: 0.5;
+  cursor: wait;
+}

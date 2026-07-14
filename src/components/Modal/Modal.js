@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {App, Button, Col, Modal as AntdModal, Row, Space} from "antd";
 import classnames from "classnames";
 import style from "./style.module.scss";
@@ -8,13 +8,65 @@ import Icon from "@components/Icon";
 import renderWithOptions from "./renderWithOptions";
 import LoadingButton from "@components/LoadingButton";
 import SimpleBar from "@common/components/SimpleBar";
-import {useIsMobile, usePopupContainer} from "@kne/responsive-utils";
+import {useIsMobile, usePopupContainer, useScrollElement} from "@kne/responsive-utils";
 
 const localeModuleName = "Modal";
 
-export const RightOptions = ({options, rightSpan = 6, children}) => {
+let parentScrollLockCount = 0;
+let parentScrollLocked = [];
+
+const lockParentScroll = (getScrollElement) => {
+    parentScrollLockCount += 1;
+    if (parentScrollLockCount === 1) {
+        const targets = [document.body];
+        const scrollEl = typeof getScrollElement === "function" ? getScrollElement() : null;
+        if (scrollEl && scrollEl !== document.body && !targets.includes(scrollEl)) {
+            targets.push(scrollEl);
+        }
+        parentScrollLocked = targets.map((el) => {
+            const prev = {
+                overflow: el.style.overflow,
+                overscrollBehavior: el.style.overscrollBehavior,
+            };
+            el.style.overflow = "hidden";
+            el.style.overscrollBehavior = "none";
+            return {el, prev};
+        });
+    }
+    return () => {
+        parentScrollLockCount = Math.max(0, parentScrollLockCount - 1);
+        if (parentScrollLockCount === 0) {
+            parentScrollLocked.forEach(({el, prev}) => {
+                el.style.overflow = prev.overflow;
+                el.style.overscrollBehavior = prev.overscrollBehavior;
+            });
+            parentScrollLocked = [];
+        }
+    };
+};
+
+const useLockParentScroll = (enabled, getScrollElement) => {
+    useEffect(() => {
+        if (!enabled) {
+            return undefined;
+        }
+        return lockParentScroll(getScrollElement);
+    }, [enabled, getScrollElement]);
+};
+
+export const RightOptions = ({options, rightSpan = 6, children, isMobile}) => {
     if (!options) {
         return children;
+    }
+    if (isMobile) {
+        return (<div className={classnames(style["right-options-row"], style["is-mobile"])}>
+            <div className={classnames(style["right-options-col"], style["right-options-main"])}>
+                {children}
+            </div>
+            <div className={classnames(style["right-options-col"], style["right-options-side"])}>
+                {options}
+            </div>
+        </div>);
     }
     return (<Row wrap={false} className={style["right-options-row"]}>
         <Col span={24 - rightSpan} className={style["right-options-col"]}>
@@ -36,10 +88,31 @@ const VIEWPORT_HEIGHT = 'var(--kne-viewport-height, 100vh)';
 const sizeMap = (type, footer, isMobile) => {
     if (isMobile) {
         return {
-            width: `calc(${VIEWPORT_WIDTH} - 32px)`,
+            width: VIEWPORT_WIDTH,
             style: {
-                "--min-modal-height": calcHeight(type === "small" ? 300 : 500, footer),
-                maxWidth: `calc(${VIEWPORT_WIDTH} - 32px)`,
+                "--min-modal-height": 0,
+                maxWidth: "100%",
+                width: "100%",
+                height: VIEWPORT_HEIGHT,
+                maxHeight: VIEWPORT_HEIGHT,
+                top: 0,
+                margin: 0,
+                paddingBottom: 0,
+            },
+            styles: {
+                container: {
+                    borderRadius: 0,
+                    height: "100%",
+                    maxHeight: "100%",
+                    overflow: "hidden",
+                    padding: 0,
+                },
+                body: {
+                    height: "100%",
+                    maxHeight: "100%",
+                    overflow: "hidden",
+                    padding: 0,
+                },
             },
         };
     }
@@ -60,10 +133,10 @@ const sizeMap = (type, footer, isMobile) => {
 };
 
 const Footer = ({
-                    footer, footerButtons, onConfirm, onCancel, cancelText, onClose, targetProps,
+                    footer, footerButtons, onConfirm, onCancel, cancelText, onClose, targetProps, isMobile,
                 }) => {
-    return (<Row gutter={10} wrap={false}>
-        <Col flex={1}>{footer}</Col>
+    return (<Row gutter={10} wrap={false} justify={isMobile ? "center" : undefined}>
+        {(!isMobile || footer) ? <Col flex={isMobile ? undefined : 1}>{footer}</Col> : null}
         {Array.isArray(footerButtons) && footerButtons.length === 0 ? null : (<Col>
             <Space>
                 {(footerButtons || [{
@@ -125,9 +198,20 @@ const ModalOuter = ({
                         targetProps,
                         cancelText,
                         confirmText,
+                        isMobile,
                     }) => {
     const modalBodyRef = useRef(null);
-    return (<div className={classnames(style["modal-outer"], 'modal-container')} data-testid="components-core-modal">
+    const bodyClassName = classnames(style["modal-body"], {
+        [style["is-disabled-scroller"]]: disabledScroller,
+    }, "modal-body");
+    const bodyInner = (
+        <div className={classnames(style["modal-body-inner"], "modal-body-inner")}>
+            {children}
+        </div>
+    );
+    return (<div className={classnames(style["modal-outer"], 'modal-container', {
+        [style["is-mobile"]]: isMobile,
+    })} data-testid="components-core-modal">
         {closable === false ? null : (<Button
             data-testid="components-core-modal-close-btn"
             className={classnames(style["modal-close"], "modal-close")}
@@ -138,19 +222,16 @@ const ModalOuter = ({
                 onClose && onClose();
             }}
         />)}
-        {title && <div className={style["modal-title"]}>{title}</div>}
-        <SimpleBar
-            className={classnames(style["modal-body"], {
-                [style["is-disabled-scroller"]]: disabledScroller,
-            }, "modal-body")}
-            ref={modalBodyRef}
-        >
-            <div
-                className={classnames(style["modal-body-inner"], "modal-body-inner")}
-            >
-                {children}
+        {title && <div className={classnames(style["modal-title"], "modal-title")}>{title}</div>}
+        {isMobile ? (
+            <div className={bodyClassName} ref={modalBodyRef}>
+                {bodyInner}
             </div>
-        </SimpleBar>
+        ) : (
+            <SimpleBar className={bodyClassName} ref={modalBodyRef}>
+                {bodyInner}
+            </SimpleBar>
+        )}
         {footer === null && !footerButtons ? null : (<div className={classnames(style["modal-footer"], "modal-footer")}>
             <Footer
                 footer={footer}
@@ -161,6 +242,7 @@ const ModalOuter = ({
                 cancelText={cancelText}
                 onClose={onClose}
                 targetProps={targetProps}
+                isMobile={isMobile}
             />
         </div>)}
     </div>);
@@ -182,6 +264,7 @@ const runWithDecorator = ({
                               disabledScroller,
                               childrenRef,
                               children,
+                              isMobile,
                           }) => {
     const getInner = (props) => {
         props = Object.assign({}, {title}, props);
@@ -203,9 +286,11 @@ const runWithDecorator = ({
                 ...props, childrenRef, close: onClose,
             })}
             targetProps={Object.assign({}, props, {childrenRef, close: onClose})}
+            isMobile={isMobile}
         >
             <RightOptions
                 rightSpan={rightSpan}
+                isMobile={isMobile}
                 options={renderWithOptions(rightOptions, {
                     ...props, childrenRef, close: onClose,
                 })}
@@ -241,13 +326,15 @@ const computedCommonProps = ({
                                  childrenRef,
                                  isMobile,
                                  wrapClassName,
+                                 styles: propsStyles,
                                  ...props
                              }) => {
+    const sizeProps = sizeMap(size, !(footer === null && !footerButtons), isMobile);
     return {
         ...props,
         icon: null,
-        centered: true,
-        wrapClassName: classnames(wrapClassName, isMobile && style["modal-wrap-centered"]),
+        centered: !isMobile,
+        wrapClassName: classnames(wrapClassName, isMobile && style["modal-wrap-fullscreen"]),
         title: null,
         maskClosable: props.hasOwnProperty("maskClosable") ? props.maskClosable : false,
         destroyOnHidden: true,
@@ -257,7 +344,20 @@ const computedCommonProps = ({
         className: classnames(className, style["modal"], style[size], {
             [style["right-options-modal"]]: rightOptions,
             [style["is-mobile"]]: isMobile,
-        }), ...sizeMap(size, !(footer === null && !footerButtons), isMobile),
+        }),
+        ...sizeProps,
+        styles: {
+            ...propsStyles,
+            ...sizeProps.styles,
+            container: {
+                ...propsStyles?.container,
+                ...sizeProps.styles?.container,
+            },
+            body: {
+                ...propsStyles?.body,
+                ...sizeProps.styles?.body,
+            },
+        },
         children: (<IntlProvider importMessages={importMessages} moduleName="Modal">
             {runWithDecorator({
                 withDecorator,
@@ -275,17 +375,21 @@ const computedCommonProps = ({
                 disabledScroller,
                 children,
                 childrenRef,
+                isMobile,
             })}
         </IntlProvider>),
     };
 };
 
-const Modal = ({size = 'default', getContainer, ...props}) => {
+const Modal = ({size = 'default', getContainer, open, ...props}) => {
     const childrenRef = useRef(null);
     const isMobile = useIsMobile();
     const getPopupContainer = usePopupContainer();
+    const getScrollElement = useScrollElement();
+    useLockParentScroll(!!open, getScrollElement);
     return (<AntdModal
-        {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile}))}
+        {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile, open}))}
+        open={open}
         getContainer={getContainer ?? getPopupContainer}
     />);
 };
@@ -295,13 +399,24 @@ export const useModal = () => {
     const childrenRef = useRef(null);
     const isMobile = useIsMobile();
     const getPopupContainer = usePopupContainer();
+    const getScrollElement = useScrollElement();
     return (props) => {
+        const unlock = lockParentScroll(getScrollElement);
         const api = {};
-        const {children, getContainer, ...otherProps} = computedCommonProps({
-            onClose: () => api.close(), childrenRef, isMobile, ...props,
+        const {afterClose: userAfterClose, ...restProps} = props;
+        const {children, getContainer, afterClose, ...otherProps} = computedCommonProps({
+            onClose: () => api.close(),
+            childrenRef,
+            isMobile,
+            afterClose: (...args) => {
+                unlock();
+                userAfterClose && userAfterClose(...args);
+            },
+            ...restProps,
         });
         const {destroy} = modal.info({
             ...otherProps,
+            afterClose,
             content: children,
             getContainer: getContainer ?? getPopupContainer,
         });
@@ -314,11 +429,13 @@ export const useModal = () => {
 export const useConfirmModal = () => {
     const {modal} = App.useApp();
     const getPopupContainer = usePopupContainer();
+    const getScrollElement = useScrollElement();
     const isMobile = useIsMobile();
     return (props) => {
+        const unlock = lockParentScroll(getScrollElement);
         const api = {};
         const {
-            type, icon, title, danger, wrapClassName, message, iconSetting = {}, confirmType = "info", ...otherProps
+            type, icon, title, danger, wrapClassName, message, iconSetting = {}, confirmType = "info", afterClose: userAfterClose, ...otherProps
         } = {
             onClose: () => api.close(), maskClosable: false, ...props,
         };
@@ -334,6 +451,10 @@ export const useConfirmModal = () => {
                 ...otherProps,
                 getContainer: otherProps.getContainer ?? getPopupContainer,
                 centered: true,
+                afterClose: (...args) => {
+                    unlock();
+                    userAfterClose && userAfterClose(...args);
+                },
                 icon: null, wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
                     [style["is-danger"]]: danger,
                     [style["is-mobile"]]: isMobile,
@@ -366,6 +487,8 @@ export const useConfirmModal = () => {
                 </Space>),
             });
             api.close = destroy;
+        } else {
+            unlock();
         }
         return api;
     };

@@ -6,7 +6,7 @@ const avatar = seed => `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`
 
 const dataSource = [
   {
-    id: 'PRJ-001',
+    id: '333930522600276992',
     name: '客户门户改版',
     status: 'active',
     tagIds: ['urgent', 'design', 'frontend'],
@@ -39,7 +39,7 @@ const dataSource = [
     ]
   },
   {
-    id: 'PRJ-002',
+    id: '333930522600276993',
     name: '移动端性能优化',
     status: 'draft',
     tagIds: ['backend', 'performance'],
@@ -62,7 +62,7 @@ const dataSource = [
     ]
   },
   {
-    id: 'PRJ-003',
+    id: '333930522600276994',
     name: '数据中台建设',
     status: 'done',
     tagIds: ['backend', 'data'],
@@ -102,8 +102,16 @@ const dataSource = [
 ];
 
 const columns = [
-  { name: 'id', title: '项目编号', width: 120, renderType: 'small', fixed: 'left' },
-  { name: 'name', title: '项目名称', width: 200, renderType: 'main' },
+  { name: 'id', title: '项目编号', renderType: 'id', fixed: 'left' },
+  {
+    name: 'name',
+    title: '项目名称',
+    width: 200,
+    renderType: 'main',
+    onClick: ({ colItem }) => {
+      console.log('open project', colItem.id);
+    }
+  },
   {
     name: 'status',
     title: '状态',

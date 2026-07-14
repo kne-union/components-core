@@ -1,9 +1,12 @@
-import { Avatar, Space } from 'antd';
+import { useState } from 'react';
+import { Avatar, Space, Tooltip } from 'antd';
+import classnames from 'classnames';
 import { renderTagItem } from '@kne/table-page';
 import Enum from '@components/Enum';
 import StateTag from '@components/StateTag';
 import Image from '@components/Image';
 import { FileLink } from '@components/File';
+import style from '../style.module.scss';
 
 const resolveModuleName = (value, column) => {
   if (value && typeof value === 'object' && value.moduleName) {
@@ -128,7 +131,7 @@ const fileRender = (value, { column } = {}) => {
   if (!props) {
     return null;
   }
-  const { id, url, filename, originName, ...rest } = props;
+  const { id, url, filename, originName, children, ...rest } = props;
   if (!id && !url) {
     return null;
   }
@@ -140,7 +143,9 @@ const fileRender = (value, { column } = {}) => {
       originName={originName}
       apis={rest.apis ?? column?.fileApis}
       {...rest}
-    />
+    >
+      {children ?? '查看'}
+    </FileLink>
   );
 };
 
@@ -164,7 +169,65 @@ const fileListRender = (value, ctx = {}) => {
   );
 };
 
+const IdCell = ({ value, column, dataSource }) => {
+  const { onClick } = column || {};
+  const hasClick = typeof onClick === 'function';
+  // 有 onClick 时默认与 main 一致：可点、主色、hover
+  const primary = column?.primary ?? hasClick;
+  const hover = column?.hover ?? hasClick;
+  const ellipsis = column?.ellipsis ?? true;
+  const [loading, setLoading] = useState(false);
+  const isClickable = Boolean(hover || primary || hasClick);
+
+  if (!isClickable) {
+    return <span className={classnames(style.id, ellipsis && style.ellipsis)}>{value}</span>;
+  }
+
+  const ellipsisConfig = typeof ellipsis === 'object' ? ellipsis : {};
+  const showTooltip = ellipsis && ellipsisConfig.showTitle !== false;
+
+  const handleClick = hasClick
+    ? e => {
+        if (loading) {
+          return;
+        }
+        setLoading(true);
+        Promise.resolve(onClick({ item: value, colItem: dataSource, event: e })).finally(() => {
+          setLoading(false);
+        });
+      }
+    : undefined;
+
+  const text = (
+    <span
+      className={classnames(style.id, ellipsis && style.ellipsis, {
+        [style.hover]: hover,
+        [style.primary]: primary,
+        [style.clickable]: hasClick,
+        [style.loading]: loading
+      })}
+      onClick={handleClick}
+    >
+      {value}
+    </span>
+  );
+
+  if (!showTooltip) {
+    return text;
+  }
+
+  return <Tooltip title={value}>{text}</Tooltip>;
+};
+
+const idRender = (value, { column, dataSource } = {}) => {
+  if (value == null || value === '') {
+    return null;
+  }
+  return <IdCell value={value} column={column} dataSource={dataSource} />;
+};
+
 export const renderTypes = {
+  id: idRender,
   enum: enumRender,
   enumList: enumListRender,
   avatar: avatarRender,

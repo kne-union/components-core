@@ -21,6 +21,44 @@ const filterHiddenColumns = (columns, hiddenColumns) => {
   });
 };
 
+const parseRenderTypeParts = renderType =>
+  typeof renderType === 'string' ? renderType.split('-').filter(Boolean) : [];
+
+const MAIN_COLUMN_NAME_HINT = /name|nickname|title|姓名|名称/i;
+
+/** ID 列自行处理省略；未配置 onClick 时继承主列（main，优先名称/姓名等）点击行为 */
+const normalizeIdColumns = columns => {
+  if (!Array.isArray(columns) || columns.length === 0) {
+    return columns;
+  }
+  const mainColumns = columns.filter(column => {
+    const parts = parseRenderTypeParts(column?.renderType);
+    return parts.includes('main') && typeof column.onClick === 'function';
+  });
+  const mainColumn =
+    mainColumns.find(column => MAIN_COLUMN_NAME_HINT.test(column.name || column.title || '')) ||
+    mainColumns[0];
+
+  return columns.map(column => {
+    const parts = parseRenderTypeParts(column?.renderType);
+    if (!parts.includes('id')) {
+      return column;
+    }
+    const next = Object.assign({ ellipsisHandledByRender: true }, column);
+    if (!mainColumn || typeof column.onClick === 'function') {
+      return next;
+    }
+    return Object.assign(next, {
+      onClick: mainColumn.onClick,
+      primary: column.primary ?? true,
+      hover: column.hover ?? true
+    });
+  });
+};
+
+const prepareColumns = (columns, hiddenColumns) =>
+  normalizeIdColumns(filterHiddenColumns(columns, hiddenColumns));
+
 const isDynamicColumns = (columns, getColumns) =>
   typeof getColumns === 'function' || typeof columns === 'function';
 
@@ -34,7 +72,7 @@ const TablePageInner = forwardRef(
             : typeof columns === 'function'
               ? columns(data)
               : columns;
-        const filtered = filterHiddenColumns(raw, hiddenColumns);
+        const filtered = prepareColumns(raw, hiddenColumns);
         columnsRef.current = filtered;
         return filtered;
       },
@@ -45,7 +83,7 @@ const TablePageInner = forwardRef(
       if (isDynamicColumns(columns, getColumns)) {
         return null;
       }
-      const filtered = filterHiddenColumns(columns, hiddenColumns);
+      const filtered = prepareColumns(columns, hiddenColumns);
       columnsRef.current = filtered;
       return filtered;
     }, [columns, getColumns, hiddenColumns, columnsRef]);

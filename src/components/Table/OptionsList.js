@@ -4,7 +4,7 @@ import {cloneElement, isValidElement} from 'react';
 import ButtonGroup from "@components/ButtonGroup";
 import style from "./style.module.scss";
 
-const OptionsList = ({className, list = [], children, width}) => {
+const OptionsList = ({className, list = [], children}) => {
     const buttonProps = {
         className: classnames(className, style["options-btn"]), type: "link",
     };
@@ -13,9 +13,6 @@ const OptionsList = ({className, list = [], children, width}) => {
         .map(({className, ...props}) => Object.assign({}, props, buttonProps));
     return (<div
         className={classnames(className, style["options-column"])}
-        style={{
-            "--max-width": width + "px",
-        }}
     >
         {typeof children === "function" ? children({
             list: buttonList, itemClassName: "btn-no-padding", moreType: 'link', buttonProps
