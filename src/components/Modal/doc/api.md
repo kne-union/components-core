@@ -11,6 +11,7 @@
 | withDecorator | 弹窗修饰器，会接收到弹窗children的render方法，可以在其外部添加修饰内容后执行render方法，给render方法传入的值可以在children,footer,rightOptions类型为function时接收到对应的参数                  | function     | -     |
 | rightOptions  | 弹窗右侧区域，和children类似可以为jsx或者function类型                                                                                                    | jsx,function | -     |
 | maskClosable  | 点击蒙层是否允许关闭                                                                                                  | boolean      | false |
+| noPadding     | 是否去掉 Modal Content（modal-body-inner）默认 padding，为 true 时可在内容区内部自行控制内边距                            | boolean      | false |
 
 其他参数参考antd Modal组件
 

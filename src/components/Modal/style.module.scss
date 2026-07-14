@@ -294,6 +294,7 @@
     .modal-footer {
       flex: none;
       margin-top: auto;
+      border-top: 1px solid var(--font-color-grey-4, #f0f0f0);
     }
 
     .modal-body-inner {
@@ -343,9 +344,21 @@
   min-height: 100%;
   box-sizing: border-box;
 
+  &.no-padding {
+    padding: 0;
+  }
+
   .content {
     height: 100%;
   }
+}
+
+.modal-host {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .modal-footer {
@@ -375,6 +388,7 @@
   outline: 0;
   cursor: pointer;
   transition: color 0.2s, background-color 0.2s;
+  flex-shrink: 0;
 }
 
 .modal-wrap-centered:global(.ant-modal-wrap) {
@@ -397,7 +411,21 @@
     padding-bottom: 0 !important;
     margin: 0 auto;
     vertical-align: initial;
-    flex-shrink: 0;
+  }
+
+  // container / boundary 挂载：absolute 铺满边界
+  &:global(.kne-is-boundary) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+  }
+
+  // viewport 挂载：相对视口 fixed
+  &:global(.kne-is-viewport) {
+    position: fixed !important;
   }
 }
 
@@ -447,6 +475,33 @@
     overflow: hidden !important;
     padding: 0 !important;
     overscroll-behavior: none;
+  }
+
+  // container / boundary：absolute 铺满挂载边界
+  &:global(.kne-is-boundary) {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+  }
+
+  // viewport：相对视口 fixed
+  &:global(.kne-is-viewport) {
+    position: fixed !important;
+  }
+}
+
+.modal-mask-fullscreen {
+  &:global(.ant-modal-mask.kne-is-boundary) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  &:global(.ant-modal-mask.kne-is-viewport) {
+    position: fixed !important;
+    inset: 0 !important;
   }
 }
 

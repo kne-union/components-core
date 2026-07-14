@@ -1749,6 +1749,52 @@ render(<BaseExample />);
 
 ```
 
+- 去掉内容区内边距
+- 通过 noPadding 去掉 Modal Content 默认 padding，由内容区自行控制内边距
+- _Modal(@components/Modal),antd(antd)
+
+```jsx
+const { default: Modal } = _Modal;
+const { useState } = React;
+const { Button, Space, message } = antd;
+
+const NoPaddingModalExample = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Space direction="vertical" style={{ width: "100%" }}>
+      <Button type="primary" onClick={() => setOpen(true)}>
+        打开无内边距弹窗
+      </Button>
+
+      <Modal
+        title="自定义内容区内边距"
+        open={open}
+        noPadding
+        onClose={() => setOpen(false)}
+        onConfirm={() => {
+          message.success("操作成功");
+          setOpen(false);
+        }}
+      >
+        <div
+          style={{
+            padding: "16px 32px",
+            background: "linear-gradient(180deg, #f5f7fa 0%, #ffffff 120px)",
+          }}
+        >
+          <p>已通过 noPadding 去掉默认 Content 内边距。</p>
+          <p>可在内容区内部自行控制 padding、背景和布局。</p>
+        </div>
+      </Modal>
+    </Space>
+  );
+};
+
+render(<NoPaddingModalExample />);
+
+```
+
 ### API
 
 ## Modal
@@ -1764,6 +1810,7 @@ render(<BaseExample />);
 | withDecorator | 弹窗修饰器，会接收到弹窗children的render方法，可以在其外部添加修饰内容后执行render方法，给render方法传入的值可以在children,footer,rightOptions类型为function时接收到对应的参数                  | function     | -     |
 | rightOptions  | 弹窗右侧区域，和children类似可以为jsx或者function类型                                                                                                    | jsx,function | -     |
 | maskClosable  | 点击蒙层是否允许关闭                                                                                                  | boolean      | false |
+| noPadding     | 是否去掉 Modal Content（modal-body-inner）默认 padding，为 true 时可在内容区内部自行控制内边距                            | boolean      | false |
 
 其他参数参考antd Modal组件
 

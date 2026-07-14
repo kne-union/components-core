@@ -6,9 +6,7 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const themeToken = {
-    colorPrimary: "#4F185A",
-};
+const themeToken = {};
 
 root.render(<React.StrictMode>
     <App preset={{ajax}} themeToken={themeToken}/>
