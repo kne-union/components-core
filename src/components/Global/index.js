@@ -27,6 +27,7 @@ import {
     useScrollElement,
     usePopupContainer,
     useResponsiveContext,
+    useIsMobile,
     defaultResponsiveContextValue,
     RESPONSIVE_SCROLL_CLASS,
     IS_MOBILE_QUERY
@@ -44,11 +45,24 @@ const isViewportMobile = () => {
     return window.matchMedia(IS_MOBILE_QUERY).matches;
 };
 
+const syncBodyMobileClass = () => {
+    document.body.classList.toggle(style["is-mobile"], isViewportMobile());
+};
+
 (() => {
     if (window.__COMPONENTS_CORE_IN_SDK) {
         return;
     }
     document.body.classList.add(style["container"]);
+    syncBodyMobileClass();
+    if (typeof window.matchMedia === "function") {
+        const mediaQuery = window.matchMedia(IS_MOBILE_QUERY);
+        if (typeof mediaQuery.addEventListener === "function") {
+            mediaQuery.addEventListener("change", syncBodyMobileClass);
+        } else if (typeof mediaQuery.addListener === "function") {
+            mediaQuery.addListener(syncBodyMobileClass);
+        }
+    }
     if (!isViewportMobile() && !window.__COMPONENTS_CORE_SIMPLE_BAR_DISABLED) {
         new SimpleBar(document.body);
         const scrollEl = getScrollEl();
@@ -212,15 +226,26 @@ export const GlobalProvider = ({
     </GlobalContext>);
 };
 
-export const PureGlobal = ({children, ...props}) => {
-    const themeToken = useGlobalValue("themeToken");
-    return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
+const GlobalContainer = ({children, className, "data-testid": dataTestId}) => {
+    const isMobile = useIsMobile();
+    return (
         <div
-            data-testid="components-core-pure-global"
-            className={classnames(style["container"], "core-container-body")}
+            data-testid={dataTestId}
+            className={classnames(style["container"], className, {
+                [style["is-mobile"]]: isMobile,
+            })}
         >
             {children}
         </div>
+    );
+};
+
+export const PureGlobal = ({children, ...props}) => {
+    const themeToken = useGlobalValue("themeToken");
+    return (<GlobalProvider {...props} themeToken={props.themeToken || themeToken}>
+        <GlobalContainer data-testid="components-core-pure-global" className="core-container-body">
+            {children}
+        </GlobalContainer>
     </GlobalProvider>);
 };
 
@@ -298,12 +323,12 @@ const Global = ({children, className, ...props}) => {
         }}
     >
         <GlobalProvider {...props}>
-            <div
+            <GlobalContainer
                 data-testid="components-core-global"
-                className={classnames(style["container"], "container-body", className)}
+                className={classnames("container-body", className)}
             >
                 {children}
-            </div>
+            </GlobalContainer>
         </GlobalProvider>
     </ErrorBoundary>);
 };

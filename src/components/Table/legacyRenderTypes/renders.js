@@ -124,8 +124,8 @@ const description = (item, { hover, primary, ellipsis, emptyRender, isEmpty, ...
   </ColItem>
 );
 
-const options = (item, { width }) => (
-  <OptionsList className={classnames(columnsStyle['col-item'], columnsStyle['options'])} list={item} width={width} />
+const options = (item) => (
+  <OptionsList className={classnames(columnsStyle['col-item'], columnsStyle['options'])} list={item} />
 );
 
 const other = (item, { hover, primary, ellipsis, emptyRender, isEmpty, ...props }) => (

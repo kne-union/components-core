@@ -6,6 +6,10 @@ body.container {
   margin: 0;
   height: 100vh;
 
+  &.is-mobile {
+    overflow-x: hidden !important;
+  }
+
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
@@ -19,6 +23,10 @@ body.container {
 
 .container {
   box-sizing: border-box;
+
+  &.is-mobile {
+    overflow-x: hidden !important;
+  }
 
   :global {
     .simplebar-scrollbar:before {
