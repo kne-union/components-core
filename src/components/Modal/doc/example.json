@@ -203,6 +203,21 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "去掉内容区内边距",
+      "description": "通过 noPadding 去掉 Modal Content 默认 padding，由内容区自行控制内边距",
+      "code": "./no-padding.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

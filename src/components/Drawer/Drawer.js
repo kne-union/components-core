@@ -8,7 +8,7 @@ import LoadingButton from "@components/LoadingButton";
 import React, {useEffect, useRef} from "react";
 import SimpleBar from "simplebar";
 import Icon from "@components/Icon";
-import {useIsMobile, usePopupContainer} from "@kne/responsive-utils";
+import {useMobilePopupMount} from "@kne/responsive-utils";
 
 const renderWithOptions = (footer, options) => {
     if (typeof footer === "function") {
@@ -18,6 +18,16 @@ const renderWithOptions = (footer, options) => {
 };
 
 const VIEWPORT_WIDTH = 'var(--kne-viewport-width, 100vw)';
+
+const wrapCustomGetContainer = (customGetContainer) => {
+    if (!customGetContainer) {
+        return undefined;
+    }
+    if (typeof customGetContainer === "function") {
+        return (triggerNode) => customGetContainer(triggerNode) || null;
+    }
+    return () => customGetContainer;
+};
 
 const sizeMap = (type, isMobile) => {
     if (isMobile) {
@@ -32,9 +42,9 @@ const sizeMap = (type, isMobile) => {
     return {width: "1000px"};
 };
 
-const Footer = ({footer, footerButtons, onConfirm, onCancel, onClose}) => {
-    return (<Row gutter={10} wrap={false}>
-        <Col flex={1}>{footer}</Col>
+const Footer = ({footer, footerButtons, onConfirm, onCancel, onClose, isMobile}) => {
+    return (<Row gutter={10} wrap={false} justify={isMobile ? "center" : undefined}>
+        {(!isMobile || footer) ? <Col flex={isMobile ? undefined : 1}>{footer}</Col> : null}
         {Array.isArray(footerButtons) && footerButtons.length === 0 ? null : (<Col>
             <Space>
                 {(footerButtons || [{children: "取消", onClick: onCancel}, {
@@ -65,6 +75,7 @@ const DrawerOuter = ({
                          closable,
                          onConfirm,
                          onCancel,
+                         isMobile,
                          children,
                      }) => {
     const modalBodyRef = useRef(null);
@@ -105,6 +116,7 @@ const DrawerOuter = ({
                     onConfirm={onConfirm}
                     onCancel={onCancel}
                     onClose={onClose}
+                    isMobile={isMobile}
                 />
             </div>)}
     </div>);
@@ -120,6 +132,7 @@ const runWithDecorator = ({
                               onCancel,
                               footer,
                               disabledScroller,
+                              isMobile,
                               children,
                           }) => {
     const getInner = (props) => {
@@ -135,6 +148,7 @@ const runWithDecorator = ({
             })}
             disabledScroller={disabledScroller}
             footer={renderWithOptions(footer, {...props, close: onClose})}
+            isMobile={isMobile}
         >
             {renderWithOptions(children, {
                 ...props, close: onClose,
@@ -158,6 +172,7 @@ export const computedCommonProps = ({
                                         disabledScroller,
                                         withDecorator,
                                         isMobile,
+                                        fixedModeClass,
                                         classNames: customClassNames,
                                         styles: customStyles,
                                         rootClassName,
@@ -175,10 +190,11 @@ export const computedCommonProps = ({
         className: classnames(className, style["drawer"], style[size], {
             [style["is-mobile"]]: isMobile,
         }),
-        rootClassName: classnames(rootClassName, isMobile && style["drawer-root-mobile"]),
+        rootClassName: classnames(rootClassName, isMobile && style["drawer-root-mobile"], isMobile && fixedModeClass),
         classNames: {
             ...customClassNames,
             wrapper: classnames(customClassNames?.wrapper, isMobile && style["drawer-wrapper-mobile"]),
+            mask: classnames(customClassNames?.mask, isMobile && fixedModeClass),
         },
         styles: isMobile ? {
             ...customStyles,
@@ -200,6 +216,7 @@ export const computedCommonProps = ({
                 footer,
                 footerButtons,
                 disabledScroller,
+                isMobile,
                 children,
             })}
         </IntlProvider>),
@@ -207,28 +224,41 @@ export const computedCommonProps = ({
 };
 
 const Drawer = ({size = "small", getContainer, ...props}) => {
-    const isMobile = useIsMobile();
-    const getPopupContainer = usePopupContainer();
+    const {
+        isMobile,
+        fixedModeClass,
+        getPopupContainer,
+        anchorRef,
+    } = useMobilePopupMount({
+        cover: 'boundary',
+        getPopupContainer: wrapCustomGetContainer(getContainer),
+    });
     return (
-        <AntdDrawer
-            {...computedCommonProps({size, isMobile, ...props})}
-            getContainer={getContainer ?? getPopupContainer}
-        />
+        <>
+            <span ref={anchorRef} className={style["drawer-host"]} aria-hidden="true" />
+            <AntdDrawer
+                {...computedCommonProps({size, isMobile, fixedModeClass, ...props})}
+                getContainer={getPopupContainer}
+            />
+        </>
     );
 };
 
 export const useDrawer = () => {
     const {drawer} = AppDrawer.useAppDrawer();
-    const isMobile = useIsMobile();
-    const getPopupContainer = usePopupContainer();
+    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'boundary'});
     return (props) => {
+        const anchor = typeof document !== "undefined" ? document.activeElement : null;
+        const {isMobile, fixedModeClass} = resolveMount(anchor);
         const api = {};
+        const {getContainer: customGetContainer, ...restProps} = props;
         const {getContainer, ...otherProps} = computedCommonProps({
-            onClose: () => api.close(), isMobile, ...props,
+            onClose: () => api.close(), isMobile, fixedModeClass, ...restProps,
         });
+        const resolveContainer = wrapCustomGetContainer(customGetContainer ?? getContainer);
         const {destroy} = drawer({
             ...otherProps,
-            getContainer: getContainer ?? getPopupContainer,
+            getContainer: () => (resolveContainer ? resolveContainer(anchor) : null) || getPopupContainer(anchor),
         });
         api.close = destroy;
         return api;

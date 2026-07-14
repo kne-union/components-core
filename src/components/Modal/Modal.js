@@ -8,9 +8,19 @@ import Icon from "@components/Icon";
 import renderWithOptions from "./renderWithOptions";
 import LoadingButton from "@components/LoadingButton";
 import SimpleBar from "@common/components/SimpleBar";
-import {useIsMobile, usePopupContainer, useScrollElement} from "@kne/responsive-utils";
+import {useMobilePopupMount, useScrollElement} from "@kne/responsive-utils";
 
 const localeModuleName = "Modal";
+
+const wrapCustomGetContainer = (customGetContainer) => {
+    if (!customGetContainer) {
+        return undefined;
+    }
+    if (typeof customGetContainer === "function") {
+        return (triggerNode) => customGetContainer(triggerNode) || null;
+    }
+    return () => customGetContainer;
+};
 
 let parentScrollLockCount = 0;
 let parentScrollLocked = [];
@@ -189,6 +199,7 @@ const ModalOuter = ({
                         title,
                         footer,
                         disabledScroller,
+                        noPadding,
                         footerButtons,
                         onClose,
                         closable,
@@ -205,7 +216,9 @@ const ModalOuter = ({
         [style["is-disabled-scroller"]]: disabledScroller,
     }, "modal-body");
     const bodyInner = (
-        <div className={classnames(style["modal-body-inner"], "modal-body-inner")}>
+        <div className={classnames(style["modal-body-inner"], "modal-body-inner", {
+            [style["no-padding"]]: noPadding,
+        })}>
             {children}
         </div>
     );
@@ -262,6 +275,7 @@ const runWithDecorator = ({
                               rightOptions,
                               rightSpan,
                               disabledScroller,
+                              noPadding,
                               childrenRef,
                               children,
                               isMobile,
@@ -282,6 +296,7 @@ const runWithDecorator = ({
                 ...props, close: onClose,
             })}
             disabledScroller={disabledScroller}
+            noPadding={noPadding}
             footer={renderWithOptions(footer, {
                 ...props, childrenRef, close: onClose,
             })}
@@ -322,10 +337,13 @@ const computedCommonProps = ({
                                  cancelText,
                                  closable,
                                  disabledScroller,
+                                 noPadding,
                                  withDecorator,
                                  childrenRef,
                                  isMobile,
+                                 fixedModeClass,
                                  wrapClassName,
+                                 classNames: propsClassNames,
                                  styles: propsStyles,
                                  ...props
                              }) => {
@@ -334,7 +352,18 @@ const computedCommonProps = ({
         ...props,
         icon: null,
         centered: !isMobile,
-        wrapClassName: classnames(wrapClassName, isMobile && style["modal-wrap-fullscreen"]),
+        wrapClassName: classnames(
+            wrapClassName,
+            isMobile && style["modal-wrap-fullscreen"],
+            isMobile && fixedModeClass
+        ),
+        classNames: Object.assign({}, propsClassNames, {
+            mask: classnames(
+                propsClassNames?.mask,
+                isMobile && style["modal-mask-fullscreen"],
+                isMobile && fixedModeClass
+            ),
+        }),
         title: null,
         maskClosable: props.hasOwnProperty("maskClosable") ? props.maskClosable : false,
         destroyOnHidden: true,
@@ -373,6 +402,7 @@ const computedCommonProps = ({
                 rightOptions,
                 rightSpan,
                 disabledScroller,
+                noPadding,
                 children,
                 childrenRef,
                 isMobile,
@@ -383,42 +413,56 @@ const computedCommonProps = ({
 
 const Modal = ({size = 'default', getContainer, open, ...props}) => {
     const childrenRef = useRef(null);
-    const isMobile = useIsMobile();
-    const getPopupContainer = usePopupContainer();
+    const {
+        isMobile,
+        fixedModeClass,
+        getPopupContainer,
+        anchorRef,
+    } = useMobilePopupMount({
+        cover: 'boundary',
+        getPopupContainer: wrapCustomGetContainer(getContainer),
+    });
     const getScrollElement = useScrollElement();
     useLockParentScroll(!!open, getScrollElement);
-    return (<AntdModal
-        {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile, open}))}
-        open={open}
-        getContainer={getContainer ?? getPopupContainer}
-    />);
+
+    return (<>
+        <span ref={anchorRef} className={style["modal-host"]} aria-hidden="true" />
+        <AntdModal
+            {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile, open, fixedModeClass}))}
+            open={open}
+            getContainer={getPopupContainer}
+        />
+    </>);
 };
 
 export const useModal = () => {
     const {modal} = App.useApp();
     const childrenRef = useRef(null);
-    const isMobile = useIsMobile();
-    const getPopupContainer = usePopupContainer();
+    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'boundary'});
     const getScrollElement = useScrollElement();
     return (props) => {
+        const anchor = typeof document !== "undefined" ? document.activeElement : null;
+        const {isMobile, fixedModeClass} = resolveMount(anchor);
         const unlock = lockParentScroll(getScrollElement);
         const api = {};
-        const {afterClose: userAfterClose, ...restProps} = props;
+        const {afterClose: userAfterClose, getContainer: customGetContainer, ...restProps} = props;
         const {children, getContainer, afterClose, ...otherProps} = computedCommonProps({
             onClose: () => api.close(),
             childrenRef,
             isMobile,
+            fixedModeClass,
             afterClose: (...args) => {
                 unlock();
                 userAfterClose && userAfterClose(...args);
             },
             ...restProps,
         });
+        const resolveContainer = wrapCustomGetContainer(customGetContainer ?? getContainer);
         const {destroy} = modal.info({
             ...otherProps,
             afterClose,
             content: children,
-            getContainer: getContainer ?? getPopupContainer,
+            getContainer: () => (resolveContainer ? resolveContainer(anchor) : null) || getPopupContainer(anchor),
         });
         api.close = destroy;
 
@@ -428,14 +472,15 @@ export const useModal = () => {
 
 export const useConfirmModal = () => {
     const {modal} = App.useApp();
-    const getPopupContainer = usePopupContainer();
+    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'boundary'});
     const getScrollElement = useScrollElement();
-    const isMobile = useIsMobile();
     return (props) => {
+        const anchor = typeof document !== "undefined" ? document.activeElement : null;
+        const {isMobile, fixedModeClass} = resolveMount(anchor);
         const unlock = lockParentScroll(getScrollElement);
         const api = {};
         const {
-            type, icon, title, danger, wrapClassName, message, iconSetting = {}, confirmType = "info", afterClose: userAfterClose, ...otherProps
+            type, icon, title, danger, wrapClassName, message, iconSetting = {}, confirmType = "info", afterClose: userAfterClose, getContainer: customGetContainer, ...otherProps
         } = {
             onClose: () => api.close(), maskClosable: false, ...props,
         };
@@ -447,18 +492,24 @@ export const useConfirmModal = () => {
             success: "icon-chenggong",
         }, iconSetting);
         if (modal[type]) {
+            const resolveContainer = wrapCustomGetContainer(customGetContainer);
             const {destroy} = modal[type]({
                 ...otherProps,
-                getContainer: otherProps.getContainer ?? getPopupContainer,
+                getContainer: () => (resolveContainer ? resolveContainer(anchor) : null) || getPopupContainer(anchor),
                 centered: true,
                 afterClose: (...args) => {
                     unlock();
                     userAfterClose && userAfterClose(...args);
                 },
-                icon: null, wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
+                icon: null,
+                classNames: {
+                    mask: classnames(isMobile && style["modal-mask-fullscreen"], isMobile && fixedModeClass),
+                },
+                wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
                     [style["is-danger"]]: danger,
                     [style["is-mobile"]]: isMobile,
                     [style["modal-wrap-centered"]]: isMobile,
+                    [fixedModeClass]: isMobile,
                 }), title: (<Space
                     orientation="vertical"
                     onClick={(e) => {

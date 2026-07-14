@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "files": [
     "build"
   ],
@@ -43,9 +43,10 @@
     "@kne/react-pdf-sign": "^1.1.6",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.2.2",
-    "@kne/responsive-utils": "^0.1.5",
+    "@kne/responsive-utils": "^0.1.13",
     "@kne/scroll-loader": "^0.1.13",
     "@kne/super-select": "^0.1.39",
+    "@kne/super-select-plus": "^0.1.2",
     "@kne/table-page": "^0.1.11",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
