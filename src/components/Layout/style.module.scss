@@ -504,6 +504,14 @@
   z-index: 1001;
 }
 
+.mobile-menu-anchor {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .mobile-menu-drawer {
   overflow: visible !important;
 
@@ -515,6 +523,21 @@
       overflow: visible !important;
     }
   }
+
+  // container / boundary：相对挂载边界 absolute，避免罩住整个页面
+  &:global(.kne-is-boundary) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+:global(.ant-drawer-mask.kne-is-boundary) {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .mobile-menu-wrapper {

@@ -147,6 +147,20 @@
     display: flex;
     height: var(--nav-height);
   }
+
+  &.is-mobile {
+    display: flex !important;
+    align-items: center;
+    margin-left: auto;
+    max-width: 48%;
+
+    :global(.ant-space),
+    :global(.ant-flex) {
+      height: auto;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+  }
 }
 
 .menu-overlay {
@@ -196,9 +210,6 @@
         white-space: nowrap;
       }
 
-      .navigation-options {
-        display: none;
-      }
     }
   }
 }
@@ -303,10 +314,6 @@
 // 响应式断点
 @media (max-width: 767px) {
   .navigation-list {
-    display: none;
-  }
-
-  .navigation-options {
     display: none;
   }
 
