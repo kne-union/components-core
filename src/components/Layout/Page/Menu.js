@@ -10,7 +10,7 @@ import get from "lodash/get";
 import isNotEmpty from "@utils/isNotEmpty";
 import localStorage from "@utils/localStorage";
 import {useMemo, useState} from "react";
-import {usePopupContainer} from "@kne/responsive-utils";
+import {useMobilePopupMount} from "@kne/responsive-utils";
 
 const pageMenuOpenKey = "CORE_PAGE_MENU_OPEN_KEY";
 
@@ -29,7 +29,7 @@ const Menu = ({isMobile}) => {
     const {pageProps, setPageProps} = useContext();
     const {menu, menuOpen, menuWidth, menuCloseWidth, menuFixed, menuCloseButton} = pageProps;
     const [drawerVisible, setDrawerVisible] = useState(false);
-    const getPopupContainer = usePopupContainer();
+    const {fixedModeClass, getPopupContainer, anchorRef} = useMobilePopupMount({cover: "boundary"});
 
     const location = useLocation();
     const pathModuleName = location.pathname.split("/")[1];
@@ -42,6 +42,7 @@ const Menu = ({isMobile}) => {
     if (isMobile && menu) {
         return (
             <>
+                <span ref={anchorRef} className={style["mobile-menu-anchor"]} aria-hidden="true"/>
                 {!drawerVisible ? (
                     <div className={style["mobile-menu-trigger"]} style={menuCssVars}>
                         <Button
@@ -57,10 +58,11 @@ const Menu = ({isMobile}) => {
                     onClose={() => setDrawerVisible(false)}
                     width={menuWidth}
                     getContainer={getPopupContainer}
-                    rootClassName={style["mobile-menu-drawer"]}
+                    rootClassName={classnames(style["mobile-menu-drawer"], fixedModeClass)}
                     className={style["mobile-menu-drawer"]}
                     style={menuCssVars}
                     closable={false}
+                    classNames={{mask: fixedModeClass}}
                     styles={{
                         wrapper: {overflow: "visible"},
                         section: {overflow: "visible"},

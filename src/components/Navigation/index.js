@@ -166,10 +166,6 @@ const Navigation = withLocale(({
                                     dropdownRender={(menu) => (<div
                                         className={classnames(style["mobile-dropdown-content"], 'navigation-mobile-dropdown-content')}>
                                         {menu}
-                                        {rightOptions && (<div
-                                            className={classnames(style["mobile-dropdown-options"], 'navigation-mobile-dropdown-options')}>
-                                            {rightOptions}
-                                        </div>)}
                                     </div>)}
                                     menu={{
                                         selectedKeys: [name], items: [indexNav, ...Array.from(mapping.entries())
@@ -277,8 +273,10 @@ const Navigation = withLocale(({
                             <Col className={classnames(style["navigation-mobile-title"], 'navigation-mobile-title')}>
                                 {defaultTitle || formatMessage({id: 'defaultTitle'})}
                             </Col>)}
-                        {!isMobile && <Col
-                            className={classnames(style["navigation-options"], "navigation-options")}>{rightOptions}</Col>}
+                        {rightOptions && (<Col
+                            className={classnames(style["navigation-options"], "navigation-options", {
+                                [style["is-mobile"]]: isMobile,
+                            })}>{rightOptions}</Col>)}
                     </Row>
                 </Header>
             </div>

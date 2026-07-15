@@ -28,7 +28,7 @@ npm i --save @kne/table-page
 同时内置了顶部工具栏（`TableToolbar`），整合筛选、搜索、Tab 分类、批量操作等能力：
 
 - **筛选（filter）**：基于 `@kne/react-filter` 的 `FilterLines`，支持多行多字段组合筛选，筛选值变化时自动 `reload` 并回到第 1 页
-- **搜索（search）**：基于 `@kne/react-filter` 的 `SearchInput`，支持关键词搜索与防抖自动提交，与筛选器共享筛选值状态
+- **搜索（search）**：基于 `@kne/react-filter` 的 `SearchInput`，支持关键词搜索与防抖自动提交，与筛选器共享筛选值状态；移动端开启 `renderMobile` 时，SearchInput 与下方卡片列表之间保留间距
 - **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 并显示在已选标签；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
 - **批量操作（batchActions）**：配合 `rowSelection` 和 `useSelectedRow`，提供下拉菜单形式的批量操作（如批量导出、批量通知），未选中时自动禁用
 - **已选筛选值展示**：工具栏下方展示当前生效的筛选条件标签，支持快速清除
@@ -115,7 +115,7 @@ npm i --save @kne/table-page
 | `renderMobile` 值 | 行为 |
 |-------------------|------|
 | `true` | 默认卡片 List：每行一张卡片，字段列「标题 + 内容」纵向排列，`options` 操作列靠右（紧凑「⋯」入口） |
-| `function` | 完全接管移动端渲染，签名 `({ header, renderBody, ...props }) => ReactNode`；可调用 `renderBody()` 复用默认卡片 |
+| `function` | 完全接管移动端渲染；回调含 `renderToolbar` / `getSelectionProps` / `getRowKey` 等，见 TableView API |
 | `string` | 从 `preset({ renderMobile: { [name]: fn } })` 查找；未注册则视为未开启，回退普通表格 |
 
 桌面端不受 `renderMobile` 影响：`Table` 仍走 antd Table，`TableView` 仍走 CSS Grid 或 `render`。
@@ -184,7 +184,7 @@ npm i --save @kne/table-page
 #### 示例代码
 
 - TablePage
-- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、tab 分类切换、列配置、总结栏；空数据（total 为 0）时不显示分页器
+- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、tab 分类切换、列配置、总结栏；空数据（total 为 0）时不显示分页器。文末含仅 SearchInput + renderMobile 自定义卡片示例（验证工具栏与卡片间距）
 - _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
 
 ```jsx
@@ -401,7 +401,7 @@ const Tips = () => (
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="volcano">移动端</Tag>
-      设置 <code>renderMobile</code> 后，手机预览下启用卡片 List（含全选、排序工具栏）；桌面端仍为 antd Table。
+      设置 <code>renderMobile</code> 后，手机预览下启用卡片 List（含全选、排序工具栏）；桌面端仍为 antd Table。下方另有「仅 SearchInput + 自定义卡片」示例，用于确认 SearchInput 与卡片列表间距。
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="geekblue">固定表头</Tag>
@@ -579,8 +579,129 @@ const BaseExample = () => {
   );
 };
 
-render(<BaseExample />);
+const sharedGroups = [
+  {
+    id: 1,
+    name: '华北销售共享组',
+    description: '覆盖华北区销售线索与客户跟进数据，成员可按只读或读写权限访问。',
+    members: [{ id: 'u1' }, { id: 'u2' }, { id: 'u3' }],
+    dataSources: [{ id: 'd1' }, { id: 'd2' }],
+    sharedModules: [{ id: 'm1' }]
+  },
+  {
+    id: 2,
+    name: '产品研发协作组',
+    description: '产品与研发跨部门协作，共享需求池与缺陷跟踪模块。',
+    members: [{ id: 'u4' }, { id: 'u5' }],
+    dataSources: [{ id: 'd3' }],
+    sharedModules: [{ id: 'm2' }, { id: 'm3' }]
+  },
+  {
+    id: 3,
+    name: '财务审计只读组',
+    description: '审计人员只读访问财务相关模块与导出记录。',
+    members: [{ id: 'u6' }],
+    dataSources: [{ id: 'd4' }, { id: 'd5' }, { id: 'd6' }],
+    sharedModules: [{ id: 'm4' }]
+  }
+];
 
+const sharedGroupColumns = [
+  { name: 'id', title: 'ID', width: 80, renderType: 'small' },
+  { name: 'name', title: '共享组名称', width: 180, renderType: 'main' },
+  { name: 'description', title: '描述', width: 320, renderType: 'description', ellipsis: true },
+  {
+    name: 'options',
+    title: '操作',
+    width: 140,
+    renderType: 'options',
+    getValueOf: item => [
+      { children: '编辑', type: 'link', onClick: () => console.log('edit', item.id) },
+      { children: '删除', type: 'link', isDelete: true, message: &#96;确定删除 ${item.name} 吗？&#96;, onClick: () => console.log('remove', item.id) }
+    ]
+  }
+];
+
+const SharedGroupMobileCard = ({ item }) => (
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12,
+      padding: '14px 16px',
+      background: '#fff',
+      border: '1px solid #f0f0f0',
+      borderRadius: 12,
+      boxSizing: 'border-box'
+    }}
+  >
+    <div>
+      <div style={{ marginBottom: 8, fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: 'rgba(0,0,0,0.88)' }}>
+        {item.name}
+      </div>
+      <Flex align="center" gap={8} wrap="wrap" style={{ marginBottom: 6, fontSize: 13, color: 'rgba(0,0,0,0.65)' }}>
+        <span>成员 {item.members.length}</span>
+        <span style={{ color: 'rgba(0,0,0,0.25)' }}>·</span>
+        <span>数据来源 {item.dataSources.length}</span>
+        <span style={{ color: 'rgba(0,0,0,0.25)' }}>·</span>
+        <span>模块 {item.sharedModules.length}</span>
+        <span style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>#{item.id}</span>
+      </Flex>
+      <div
+        style={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 2,
+          overflow: 'hidden',
+          fontSize: 13,
+          lineHeight: 1.5,
+          color: 'rgba(0,0,0,0.45)'
+        }}
+      >
+        {item.description}
+      </div>
+    </div>
+  </div>
+);
+
+/** 仅 SearchInput + renderMobile：确认工具栏与卡片列表有间距、不紧贴 */
+const SearchMobileExample = () => (
+  <Flex vertical gap={12}>
+    <div style={{ color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+      <Tag color="blue" style={{ marginRight: 8 }}>
+        search only
+      </Tag>
+      仅配置 <code>search</code>（无 filter / batch / tab），移动端开启 <code>renderMobile</code> 自定义卡片时，
+      SearchInput 与下方卡片列表应有间距，不可紧挨。请切换手机预览查看。
+    </div>
+    <TablePage
+      name="demo-search-mobile-gap"
+      pagination={{ open: false }}
+      search={{ name: 'keyword', label: '关键词', placeholder: '搜索共享组名称' }}
+      columns={sharedGroupColumns}
+      loader={() =>
+        Promise.resolve({
+          pageData: sharedGroups,
+          totalCount: sharedGroups.length
+        })
+      }
+      renderMobile={({ dataSource }) => (
+        <Flex vertical gap={12} className="info-page-table-mobile-card-list">
+          {(dataSource || []).map(item => (
+            <SharedGroupMobileCard key={item.id} item={item} />
+          ))}
+        </Flex>
+      )}
+    />
+  </Flex>
+);
+
+render(
+  <Flex vertical gap={32}>
+    <BaseExample />
+    <SearchMobileExample />
+  </Flex>
+);
 
 ```
 
@@ -1844,7 +1965,7 @@ render(<BaseExample />);
 
 ```jsx
 const { Table, TableView, preset } = _TablePage;
-const { Flex, Tag, Card, Button, Dropdown, Tabs, Checkbox } = antd;
+const { Flex, Tag, Card, Button, Dropdown, Tabs, Checkbox, Radio } = antd;
 const { useState, useMemo } = React;
 
 const statusMap = {
@@ -1915,7 +2036,7 @@ const columns = [
 
 preset({
   renderMobile: {
-    orderCard: ({ renderBody }) => {
+    orderCard: ({ renderBody, dataSource = [] }) => {
       const totalAmount = dataSource.reduce((sum, item) => sum + item.amount, 0);
       return (
         <div
@@ -1968,10 +2089,11 @@ const getOrderActions = item => [
   { key: 'delete', label: '删除', danger: true, onClick: () => console.log('删除', item.id) }
 ];
 
-const OrderMobileCard = ({ item, checked, disabled, onCheckChange }) => {
+const OrderMobileCard = ({ item, checked, disabled, onCheckChange, selectionType = 'checkbox' }) => {
   const status = statusMap[item.status] || { color: 'default', text: item.status };
   const actionItems = getOrderActions(item);
   const isSelected = checked;
+  const SelectionControl = selectionType === 'radio' ? Radio : Checkbox;
 
   return (
     <div
@@ -1988,7 +2110,7 @@ const OrderMobileCard = ({ item, checked, disabled, onCheckChange }) => {
         boxSizing: 'border-box'
       }}
     >
-      <Checkbox checked={checked} disabled={disabled} onChange={onCheckChange} style={{ marginTop: 2, flexShrink: 0 }} />
+      <SelectionControl checked={checked} disabled={disabled} onChange={onCheckChange} style={{ marginTop: 2, flexShrink: 0 }} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <Flex justify="space-between" align="center" gap={8} style={{ marginBottom: 10 }}>
           <Flex align="center" gap={8} wrap="wrap" style={{ flex: 1, minWidth: 0 }}>
@@ -2175,33 +2297,18 @@ const MobileSortExample = ({ Component }) => {
 
 const CustomMobileRender = ({ Component }) => {
   const [selectKeys, setSelectKeys] = useState([]);
-  const [isSelectedAll, setIsSelectedAll] = useState(false);
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({});
+  const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort]);
   const totalAmount = dataSource.reduce((sum, item) => sum + item.amount, 0);
   const selectedAmount = selectKeys.reduce((sum, id) => sum + (dataSource.find(d => d.id === id)?.amount || 0), 0);
-  const checkedAll = isSelectedAll || (dataSource.length > 0 && selectKeys.length === dataSource.length);
-  const indeterminate = selectKeys.length > 0 && !checkedAll;
-
-  const handleSelectAllChange = e => {
-    const checked = e.target.checked;
-    if (!checked) {
-      setIsSelectedAll(false);
-      setSelectKeys([]);
-      return;
-    }
-    setIsSelectedAll(true);
-    setSelectKeys(dataSource.map(item => item.id));
-  };
-
-  const handleCardCheckChange = (id, checked) => {
-    setIsSelectedAll(false);
-    setSelectKeys(keys => (checked ? keys.filter(key => key !== id) : [...keys, id]));
-  };
 
   return (
     <div>
       <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
-        <code>renderMobile</code> 为 function 时完全接管渲染，可自定义主次关系卡片：客户名称作主信息，状态/编号/联系人作次要信息。
-        桌面端仍走 <code>render</code>，样式与普通 Table 一致。
+        <code>renderMobile</code> 为 function 时完全接管渲染，可自定义卡片内容；
+        全选 / 排序请用回调里的 <code>renderToolbar()</code>（与默认 MobileCard 同一套实现），
+        行勾选用 <code>getSelectionProps(item)</code>，不必自己维护全选状态或排序 UI。
+        桌面端仍走 <code>render</code>。
       </div>
       <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
         <span>
@@ -2223,11 +2330,19 @@ const CustomMobileRender = ({ Component }) => {
           <span style={{ color: 'rgba(0,0,0,0.45)', fontSize: 12 }}>桌面端 render 自定义外层</span>
         </Flex>
         <Component
-          dataSource={dataSource}
+          dataSource={sortedData}
           columns={columns}
           controllerOpen={false}
+          sortRender={sortRender}
+          mobileSortToolbar={mobileSortToolbar}
+          rowSelection={{
+            type: 'checkbox',
+            allowSelectedAll: true,
+            selectedRowKeys: selectKeys,
+            onChange: keys => setSelectKeys(keys)
+          }}
           render={({ renderBody }) => <div style={{ overflowX: 'auto' }}>{renderBody()}</div>}
-          renderMobile={() => (
+          renderMobile={({ dataSource: mobileList = [], renderToolbar, getSelectionProps, getRowKey }) => (
             <div
               style={{
                 borderRadius: 12,
@@ -2243,34 +2358,20 @@ const CustomMobileRender = ({ Component }) => {
                   </Tag>
                 </Flex>
                 <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
-                  {dataSource.length} 笔 · 合计 ¥{totalAmount.toLocaleString()}
+                  {mobileList.length} 笔 · 合计 ¥{mobileList.reduce((sum, item) => sum + item.amount, 0).toLocaleString()}
                 </div>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  marginBottom: 12,
-                  padding: '4px 8px',
-                  background: 'var(--bg-color-grey-1, #fafafa)',
-                  borderRadius: 8,
-                  fontSize: 12
-                }}
-              >
-                <Checkbox checked={checkedAll} indeterminate={indeterminate} onChange={handleSelectAllChange} />
-                <span>全选</span>
-              </div>
-              <Flex vertical gap={12}>
-                {dataSource.map(item => {
-                  const isChecked = selectKeys.indexOf(item.id) > -1;
+              {renderToolbar()}
+              <Flex vertical gap={12} style={{ marginTop: 12 }}>
+                {mobileList.map(item => {
+                  const selection = getSelectionProps(item);
                   return (
                     <OrderMobileCard
-                      key={item.id}
+                      key={getRowKey(item)}
                       item={item}
-                      checked={(isSelectedAll && !item.disabled) || isChecked}
-                      disabled={isSelectedAll}
-                      onCheckChange={() => handleCardCheckChange(item.id, isChecked)}
+                      checked={selection.checked}
+                      disabled={selection.disabled}
+                      onCheckChange={selection.onChange}
                     />
                   );
                 })}
@@ -2279,6 +2380,73 @@ const CustomMobileRender = ({ Component }) => {
           )}
         />
       </Card>
+    </div>
+  );
+};
+
+const CustomMobileRadioRender = ({ Component }) => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  const { sort, sortRender, mobileSortToolbar } = Table.useSort({});
+  const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns), [sort]);
+  const selectedOrder = dataSource.find(item => item.id === selectKeys[0]);
+
+  return (
+    <div>
+      <div style={{ marginBottom: 12, color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+        自定义 <code>renderMobile</code> 单选：<code>rowSelection.type</code> 设为 <code>radio</code>，
+        卡片上的 Radio 直接绑 <code>getSelectionProps(item)</code>，选中态与切换逻辑由 TableView 管理；
+        工具栏 <code>renderToolbar()</code> 此时仅显示排序（单选无全选）。
+      </div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
+        <span>
+          当前选中：
+          {selectedOrder ? (
+            <strong>
+              {selectedOrder.id} · ¥{selectedOrder.amount.toLocaleString()}
+            </strong>
+          ) : (
+            <span style={{ color: '#999' }}>未选择</span>
+          )}
+        </span>
+      </Flex>
+      <Component
+        dataSource={sortedData}
+        columns={columns}
+        controllerOpen={false}
+        sortRender={sortRender}
+        mobileSortToolbar={mobileSortToolbar}
+        rowSelection={{
+          type: 'radio',
+          selectedRowKeys: selectKeys,
+          onChange: keys => setSelectKeys(keys)
+        }}
+        renderMobile={({ dataSource: mobileList = [], renderToolbar, getSelectionProps, getRowKey }) => (
+          <div
+            style={{
+              borderRadius: 12,
+              background: '#f5f7fa',
+              padding: 16
+            }}
+          >
+            {renderToolbar()}
+            <Flex vertical gap={12} style={{ marginTop: 12 }}>
+              {mobileList.map(item => {
+                const selection = getSelectionProps(item);
+                return (
+                  <OrderMobileCard
+                    key={getRowKey(item)}
+                    item={item}
+                    selectionType="radio"
+                    checked={selection.checked}
+                    disabled={selection.disabled}
+                    onCheckChange={selection.onChange}
+                  />
+                );
+              })}
+            </Flex>
+          </div>
+        )}
+      />
     </div>
   );
 };
@@ -2328,6 +2496,7 @@ const Examples = ({ Component }) => (
     <DefaultMobileCards Component={Component} />
     <MobileSortExample Component={Component} />
     <CustomMobileRender Component={Component} />
+    <CustomMobileRadioRender Component={Component} />
     <PresetStringRender Component={Component} />
   </Flex>
 );
@@ -3362,7 +3531,7 @@ render(<BaseExample />);
 | summary | function | - | 总结栏，回调参数包含 `data`、`requestParams`、`refresh`、`reload` 等 fetch 上下文 |
 | columnRenderProps | object | `{}` | 列渲染扩展属性，会合并进列 `render` 的 context |
 | filter | object | - | 顶部筛选器配置，基于 `@kne/react-filter` 的 `FilterLines`，见下方 |
-| search | object | - | 顶部搜索框配置，基于 `@kne/react-filter` 的 `SearchInput`，见下方 |
+| search | object | - | 顶部搜索框配置，基于 `@kne/react-filter` 的 `SearchInput`，见下方；移动端 `renderMobile` 激活时，工具栏与下方卡片列表保留间距（勿紧贴） |
 | tab | object | - | 顶部 Tab 分类切换，选中值写入 filter value，见下方 |
 | tabProps | object | - | 透传给 antd `Tabs` 的额外属性（如 `tabBarExtraContent`） |
 | batchActions | array | - | 批量操作下拉菜单项，需配合 `rowSelection` 使用，见下方 |
@@ -3525,10 +3694,35 @@ render(<BaseExample />);
 | headerStyle | object | - | 表头自定义样式，仅在 `render` 自定义渲染时作用于 `header` |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，可获取 `header` 和 `renderBody` |
-| renderMobile | boolean \| function \| string | `true` | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| renderMobile | boolean \| function \| string | `true` | 仅移动端生效。`true` 使用默认卡片 List；为 function 时完全接管渲染（见下方回调参数）；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
 | sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
-| mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
+| mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供；传入 TableView 后由 `renderToolbar` / 默认卡片复用 |
 | size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖 |
+
+`renderMobile` 为 function 时，TableView 会传入已接好 `rowSelection` / `mobileSortToolbar` 的能力，自定义布局只需选用：
+
+| 回调参数 | 说明 |
+|------|------|
+| `dataSource` | 当前页数据 |
+| `columns` | 布局后的列配置 |
+| `rowKey` / `rowSelection` / `context` / `empty` | 与 TableView 一致 |
+| `renderBody` | 渲染默认移动端卡片 List（含顶部工具栏） |
+| `renderToolbar` | 渲染组件级工具栏（全选居左、排序居右）；可自由决定摆放位置 |
+| `getRowKey(item)` | 按 `rowKey` 取行 key |
+| `getSelectionProps(item)` | 返回 `{ checked, disabled, onChange }`，可直接绑到卡片上的 Checkbox / Radio |
+| `onSelectionChange` | 行选择切换，签名与内部逻辑一致 |
+
+```jsx
+renderMobile={({ dataSource, renderToolbar, getSelectionProps, getRowKey }) => (
+  <>
+    {renderToolbar()}
+    {dataSource.map(item => {
+      const selection = getSelectionProps(item);
+      return <MyCard key={getRowKey(item)} item={item} {...selection} />;
+    })}
+  </>
+)}
+```
 
 单元格 padding 由 CSS 变量控制，可在外层覆盖：
 
@@ -3672,7 +3866,7 @@ const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns)
 | headerStyle | object | - | 表头自定义样式 |
 | onRowSelect | function | - | 行点击回调 `(item, { columns, dataSource }) => void` |
 | render | function | - | 自定义渲染 `(props) => ReactNode`，`header` 为 `null`，`renderBody` 返回 antd Table |
-| renderMobile | boolean \| function \| string | `true` | 仅移动端生效。`true` 使用默认卡片 List（不再渲染 antd Table）；为 function 时签名与 `render` 一致，且优先级高于 `render`，完全接管渲染；为 string 时从 `preset({ renderMobile })` 按名称取渲染函数，未注册则视为未开启 |
+| renderMobile | boolean \| function \| string | `true` | 仅移动端生效，委托 `@kne/table-view` 处理；`true` 为默认卡片 List；为 function 时回调参数同 TableView（见 TableView 文档 `renderMobile` 回调参数）；为 string 时从 preset 按名称查找 |
 | sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
 | mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供 |
 | pagination | boolean \| object | `false` | 分页配置，默认不显示；传入对象时使用 antd 分页 |

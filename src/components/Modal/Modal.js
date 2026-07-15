@@ -419,7 +419,8 @@ const Modal = ({size = 'default', getContainer, open, ...props}) => {
         getPopupContainer,
         anchorRef,
     } = useMobilePopupMount({
-        cover: 'boundary',
+        // 真实移动端用 fixed 罩可视区；example/container 仍会自动走 boundary+absolute
+        cover: 'viewport',
         getPopupContainer: wrapCustomGetContainer(getContainer),
     });
     const getScrollElement = useScrollElement();
@@ -438,7 +439,7 @@ const Modal = ({size = 'default', getContainer, open, ...props}) => {
 export const useModal = () => {
     const {modal} = App.useApp();
     const childrenRef = useRef(null);
-    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'boundary'});
+    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'viewport'});
     const getScrollElement = useScrollElement();
     return (props) => {
         const anchor = typeof document !== "undefined" ? document.activeElement : null;
@@ -472,7 +473,7 @@ export const useModal = () => {
 
 export const useConfirmModal = () => {
     const {modal} = App.useApp();
-    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'boundary'});
+    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'viewport'});
     const getScrollElement = useScrollElement();
     return (props) => {
         const anchor = typeof document !== "undefined" ? document.activeElement : null;
