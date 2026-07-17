@@ -29,9 +29,10 @@ npm i --save @kne/table-page
 
 - **筛选（filter）**：基于 `@kne/react-filter` 的 `FilterLines`，支持多行多字段组合筛选，筛选值变化时自动 `reload` 并回到第 1 页
 - **搜索（search）**：基于 `@kne/react-filter` 的 `SearchInput`，支持关键词搜索与防抖自动提交，与筛选器共享筛选值状态；移动端开启 `renderMobile` 时，SearchInput 与下方卡片列表之间保留间距
-- **操作按钮（buttonGroup）**：透传 `@kne/button-group` 参数；桌面端显示在 SearchInput 右侧（small、至少 1 个外露），移动端通过 `ButtonFooter` 居中固定在列表底部（正常尺寸、至少 2 个外露）
-- **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 并显示在已选标签；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
+- **操作按钮（buttonGroup）**：透传 `@kne/button-group` 参数；桌面端显示在 SearchInput 右侧（small、至少 1 个外露），移动端与筛选同行两端对齐（筛选靠左、按钮组靠右，small、外露 1 个），批量操作显示在「全选/排序」行的排序后面
+- **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 参与请求但不在已选标签中重复展示；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
 - **批量操作（batchActions）**：配合 `rowSelection` 和 `useSelectedRow`，提供下拉菜单形式的批量操作（如批量导出、批量通知），未选中时自动禁用
+- **PC 卡片视图（renderCard）**：取值同 `renderMobile`（true / function / preset 字符串），生效后 PC 端可切换表格/卡片（状态按 `name` 存 localStorage）；`forceCard` 强制卡片并不显示切换按钮；卡片模式下外框透明、默认触底下拉加载；移动端忽略
 - **已选筛选值展示**：工具栏下方展示当前生效的筛选条件标签，支持快速清除
 
 #### Table
@@ -185,14 +186,14 @@ npm i --save @kne/table-page
 #### 示例代码
 
 - TablePage
-- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、tab 分类切换、列配置、总结栏；空数据（total 为 0）时不显示分页器。文末含仅 SearchInput + renderMobile 自定义卡片示例（验证工具栏与卡片间距）
+- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、renderCard PC 卡片视图切换、tab 分类切换、列配置、总结栏；空数据（total 为 0）时不显示分页器。文末含仅 SearchInput + renderMobile 自定义卡片示例（验证工具栏与卡片间距）
 - _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
 
 ```jsx
 const { default: TablePage, Table } = _TablePage;
 const { fields } = _ReactFilter;
 const { SuperSelectFilterItem } = fields;
-const { Table: AntTable, Flex, Tag, Button, Space, Switch, message } = antd;
+const { Table: AntTable, Col, Flex, Row, Tag, Button, Space, Switch, message } = antd;
 const { useMemo, useState } = React;
 
 const TOTAL = 156;
@@ -386,11 +387,11 @@ const Tips = () => (
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="gold">筛选</Tag>
-      顶部工具栏集成 <code>filter</code>、<code>search</code>、<code>batchActions</code>、<code>buttonGroup</code>；筛选变化自动 <code>reload</code> 并回到第 1 页；<code>buttonGroup</code> 桌面在 SearchInput 右侧，移动端经 ButtonFooter 固定在列表底部。
+      顶部工具栏集成 <code>filter</code>、<code>search</code>、<code>batchActions</code>、<code>buttonGroup</code>；筛选变化自动 <code>reload</code> 并回到第 1 页；移动端 <code>buttonGroup</code> 与筛选同行两端对齐（筛选靠左、按钮组靠右），批量操作显示在「全选/排序」行的排序后面。
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="lime">Tab</Tag>
-      通过 <code>tab</code> 配置顶部分类切换（默认「全部」），选中值写入 filter value 并显示在已选标签；桌面端在表格边框外，移动端在 SearchInput 下方；可用 <code>tabProps</code> 透传 Tabs 属性（如 <code>tabBarExtraContent</code>）。
+      通过 <code>tab</code> 配置顶部分类切换（默认「全部」），选中值写入 filter value 参与请求，但不在已选筛选标签中重复展示；桌面端在表格边框外，移动端在 SearchInput 下方；可用 <code>tabProps</code> 透传 Tabs 属性（如 <code>tabBarExtraContent</code>）。
     </div>
     <div>
       <Tag style={TIP_TAG_STYLE} color="orange">列配置</Tag>
@@ -416,12 +417,65 @@ const Tips = () => (
       <Tag style={TIP_TAG_STYLE} color="purple">总结栏</Tag>
       <code>summary</code> 回调可拿到 <code>data</code>、<code>requestParams</code> 等 fetch 上下文。
     </div>
+    <div>
+      <Tag style={TIP_TAG_STYLE} color="red">PC 卡片</Tag>
+      传入 <code>renderCard</code>（签名同 <code>renderMobile</code>）后，工具栏 <code>buttonGroup</code> 前出现表格/卡片切换按钮，状态按 <code>name</code> 持久化到 localStorage；卡片模式下外框透明、默认触底下拉加载（<code>pagination.forcePagination</code> 可改回分页）；<code>forceCard</code> 强制卡片并隐藏切换按钮；移动端忽略。
+    </div>
   </div>
+);
+
+const EmployeeCard = ({ item }) => (
+  <div
+    style={{
+      boxSizing: 'border-box',
+      border: '1px solid #f0f0f0',
+      borderRadius: 8,
+      padding: 16,
+      background: '#fff'
+    }}
+  >
+    <Flex justify="space-between" align="center" style={{ marginBottom: 8 }}>
+      <strong>{item.name}</strong>
+      <Tag color={statusMap[item.status]?.type}>{statusMap[item.status]?.text || item.status}</Tag>
+    </Flex>
+    <Flex align="center" gap={8} wrap style={{ marginBottom: 4, fontSize: 13, color: 'rgba(0,0,0,0.65)' }}>
+      <span>{item.department}</span>
+      <span style={{ color: 'rgba(0,0,0,0.25)' }}>·</span>
+      <span>{item.position}</span>
+    </Flex>
+    <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
+      {item.employeeNo} · 入职 {item.joinDate} · 薪资 {item.salary}
+    </div>
+    <Flex justify="flex-end" gap={4} style={{ marginTop: 12, paddingTop: 8, borderTop: '1px solid #f0f0f0' }}>
+      <Button type="link" size="small" onClick={() => message.info(&#96;查看 ${item.name}&#96;)}>
+        查看
+      </Button>
+      <Button type="link" size="small" onClick={() => message.info(&#96;编辑 ${item.name}&#96;)}>
+        编辑
+      </Button>
+      {item.status !== 'resigned' && (
+        <Button type="link" size="small" danger onClick={() => message.warning(&#96;办理离职 ${item.name}&#96;)}>
+          离职办理
+        </Button>
+      )}
+    </Flex>
+  </div>
+);
+
+const renderEmployeeCard = ({ dataSource = [] }) => (
+  <Row gutter={[12, 12]}>
+    {dataSource.map(item => (
+      <Col span={12} key={item.id}>
+        <EmployeeCard item={item} />
+      </Col>
+    ))}
+  </Row>
 );
 
 const BaseExample = () => {
   const tableRef = React.useRef();
   const [empty, setEmpty] = useState(false);
+  const [cardForcePagination, setCardForcePagination] = useState(false);
   const emptyRef = React.useRef(false);
   const allEmployees = useMemo(() => range(0, TOTAL).map(buildEmployee), []);
   const { selectedRows, getRowSelection } = Table.useSelectedRow({ rowKey: 'id' });
@@ -466,6 +520,10 @@ const BaseExample = () => {
         >
           刷新当前页
         </Button>
+        <Flex align="center" gap={8}>
+          <span>卡片模式数据加载：</span>
+          <Switch checkedChildren="分页" unCheckedChildren="下拉加载" checked={cardForcePagination} onChange={setCardForcePagination} />
+        </Flex>
       </Space>
       <TablePage
         ref={tableRef}
@@ -474,6 +532,7 @@ const BaseExample = () => {
         scroll={{ x: 1600, y: 400 }}
         size="large"
         renderMobile
+        renderCard={renderEmployeeCard}
         sortRender={sortRender}
         mobileSortToolbar={mobileSortToolbar}
         rowSelection={getRowSelection(allEmployees)}
@@ -540,7 +599,8 @@ const BaseExample = () => {
           pageSize: 10,
           showSizeChanger: true,
           showQuickJumper: true,
-          pageSizeOptions: ['10', '20', '50', '100']
+          pageSizeOptions: ['10', '20', '50', '100'],
+          forcePagination: cardForcePagination
         }}
         dataFormat={data => ({
           list: data.pageData,
@@ -3549,7 +3609,9 @@ render(<BaseExample />);
 | tab | object | - | 顶部 Tab 分类切换，选中值写入 filter value，见下方 |
 | tabProps | object | - | 透传给 antd `Tabs` 的额外属性（如 `tabBarExtraContent`） |
 | batchActions | array | - | 批量操作下拉菜单项，需配合 `rowSelection` 使用，见下方 |
-| buttonGroup | object | - | 操作按钮组，透传 `@kne/button-group` 的 `ButtonGroup` 属性；桌面端显示在 `SearchInput` 右侧，移动端通过 `ButtonFooter` 固定在列表底部 |
+| buttonGroup | object | - | 操作按钮组，透传 `@kne/button-group` 的 `ButtonGroup` 属性；桌面端显示在 `SearchInput` 右侧，移动端与筛选同行（筛选靠左、按钮组靠右） |
+| renderCard | boolean \| function \| string | - | PC 端卡片渲染，取值与 `renderMobile` 一致：`true` 使用默认卡片 List；function 完全接管渲染（签名同 `renderMobile`）；string 从 `preset({ renderCard })` 按名称取渲染函数，未注册则视为未开启。生效后可在表格/卡片间切换，切换状态按 `name` 存 localStorage（未传 `name` 则不持久化）；卡片模式下外框透明，数据默认触底下拉加载；移动端忽略 |
+| forceCard | boolean | `false` | 与 `renderCard` 配合：为 `true` 时强制卡片模式，不显示切换按钮 |
 | selectedRows | array | - | 已选行数据，传给 `batchActions` 的 `onClick` 上下文 |
 | className | string | - | 自定义类名 |
 | ...fetchProps | - | - | 其余属性透传给 `@kne/react-fetch`（如 `url`、`params`、`auto` 等） |
@@ -3572,7 +3634,7 @@ render(<BaseExample />);
 | showTotal | function | - | 自定义总数展示 `(total) => ReactNode` |
 | onChange | function | - | 自定义翻页回调 `(page, size) => void`，传入后覆盖默认请求逻辑 |
 | onShowSizeChange | function | - | 每页条数变化回调，组件内部已处理持久化 |
-| forcePagination | boolean | `false` | 移动端（`renderMobile` 激活时）默认改为触底下拉加载；设为 `true` 时强制仍使用分页器 |
+| forcePagination | boolean | `false` | 移动端（`renderMobile` 激活时）与 PC 卡片模式（`renderCard` 生效且切到卡片视图时）默认改为触底下拉加载；设为 `true` 时强制仍使用分页器 |
 | mergeList | function | 合并 `pageData` | 下拉加载时合并新旧数据 `(prev, next) => data`，需与 `loader` 返回结构一致 |
 | loadMore | object | - | 透传给 `@kne/scroll-loader` 的额外配置（如 `completeTips`、`maxFullCount`） |
 | mobile | object | - | 强制分页时的移动端分页器微调（如 `showSizeChanger`、`showLessItems`） |
@@ -3606,7 +3668,7 @@ render(<BaseExample />);
 操作按钮组配置，透传给 `@kne/button-group` 的 `ButtonGroup`（如 `list`、`compact` 等）。
 
 - 桌面端：显示在工具栏右侧（`SearchInput` 右侧）；默认 `size="small"`、至少展示 1 个按钮（`showLength` 默认 `1`）、「更多」为三点图标（`moreType="link"`）
-- 移动端：使用 `ButtonFooter` 渲染在列表底部，按钮组居中；默认至少展示 2 个按钮（`showLength` 默认 `2`）、按钮为正常尺寸，其余收入「更多」
+- 移动端：与筛选同行两端对齐（筛选靠左、按钮组靠右），同样为 `size="small"`、外露 1 个主要按钮，其余收入「更多」；批量操作显示在「全选/排序」行的排序后面
 
 ```jsx
 <TablePage
@@ -3624,7 +3686,7 @@ render(<BaseExample />);
 
 #### tab
 
-顶部 Tab 分类切换。默认选中「全部」（不写入筛选值）；切换到具体项时，将 `{ name, label, value: { value, label } }` 写入 filter value，并触发 `reload` 回到第 1 页。桌面端显示在表格边框外侧上方；移动端（含 `renderMobile`）显示在 `SearchInput` 下方。选中值会出现在已选筛选标签中，清除标签会回到「全部」。
+顶部 Tab 分类切换。默认选中「全部」（不写入筛选值）；切换到具体项时，将 `{ name, label, value: { value, label } }` 写入 filter value，并触发 `reload` 回到第 1 页。桌面端显示在表格边框外侧上方；移动端（含 `renderMobile`）显示在 `SearchInput` 下方。选中值参与请求参数，但 Tab 本身已有选中态，不在已选筛选标签中重复展示。
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
