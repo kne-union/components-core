@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, Space, Tooltip } from 'antd';
 import classnames from 'classnames';
+import { IS_MOBILE_QUERY } from '@kne/responsive-utils';
 import { renderTagItem } from '@kne/table-page';
 import Enum from '@components/Enum';
 import StateTag from '@components/StateTag';
@@ -126,26 +127,64 @@ const normalizeFileValue = value => {
   return value;
 };
 
+const useIsViewportMobile = () => {
+  const [isViewportMobile, setIsViewportMobile] = useState(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+    return window.matchMedia(IS_MOBILE_QUERY).matches;
+  });
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+    const mediaQuery = window.matchMedia(IS_MOBILE_QUERY);
+    const handleChange = event => setIsViewportMobile(event.matches);
+    setIsViewportMobile(mediaQuery.matches);
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
+  return isViewportMobile;
+};
+
+const FileLinkCell = ({ modalProps, ...props }) => {
+  const isViewportMobile = useIsViewportMobile();
+  return (
+    <FileLink
+      {...props}
+      modalProps={{
+        ...modalProps,
+        ...(isViewportMobile ? {} : { mobileFullscreen: false }),
+      }}
+    />
+  );
+};
+
 const fileRender = (value, { column } = {}) => {
   const props = normalizeFileValue(value);
   if (!props) {
     return null;
   }
-  const { id, url, filename, originName, children, ...rest } = props;
+  const { id, url, filename, originName, children, modalProps, ...rest } = props;
   if (!id && !url) {
     return null;
   }
   return (
-    <FileLink
+    <FileLinkCell
       id={id}
       url={url}
       filename={filename}
       originName={originName}
       apis={rest.apis ?? column?.fileApis}
+      modalProps={modalProps}
       {...rest}
     >
       {children ?? '查看'}
-    </FileLink>
+    </FileLinkCell>
   );
 };
 

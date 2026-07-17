@@ -10,6 +10,7 @@ export const FileButton = (p) => {
     return (<FileButtonBase
         {...Object.assign({}, p, {
             modalProps: {
+                ...p?.modalProps,
                 renderModal: ({onCancel, ...modalProps}) => {
                     return (<Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>);
                 },

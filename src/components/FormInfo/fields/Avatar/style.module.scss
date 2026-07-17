@@ -1,3 +1,5 @@
+@use '~@kne/responsive-utils/scss' as resp;
+
 .upload-btn {
   height: 64px;
   border-radius: 50%;
@@ -11,7 +13,8 @@
     pointer-events: none;
   }
 
-  &:not(.is-loading):hover {
+  &:not(.is-loading):hover,
+  &.is-mobile:not(.is-loading) {
     .upload-btn-tips {
       transform: translateY(0);
       opacity: 1;
@@ -46,5 +49,28 @@
     .ant-avatar img {
       object-fit: fill;
     }
+  }
+}
+
+@include resp.mobile-container {
+  .upload-btn:not(.is-loading) {
+    .upload-btn-tips {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .drop-tips {
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  .preview-area {
+    padding-left: 0;
+    transform: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
   }
 }

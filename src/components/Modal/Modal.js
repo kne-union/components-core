@@ -341,27 +341,29 @@ const computedCommonProps = ({
                                  withDecorator,
                                  childrenRef,
                                  isMobile,
+                                 mobileFullscreen = true,
                                  fixedModeClass,
                                  wrapClassName,
                                  classNames: propsClassNames,
                                  styles: propsStyles,
                                  ...props
                              }) => {
-    const sizeProps = sizeMap(size, !(footer === null && !footerButtons), isMobile);
+    const useMobileLayout = isMobile && mobileFullscreen !== false;
+    const sizeProps = sizeMap(size, !(footer === null && !footerButtons), useMobileLayout);
     return {
         ...props,
         icon: null,
-        centered: !isMobile,
+        centered: !useMobileLayout,
         wrapClassName: classnames(
             wrapClassName,
-            isMobile && style["modal-wrap-fullscreen"],
-            isMobile && fixedModeClass
+            useMobileLayout && style["modal-wrap-fullscreen"],
+            useMobileLayout && fixedModeClass
         ),
         classNames: Object.assign({}, propsClassNames, {
             mask: classnames(
                 propsClassNames?.mask,
-                isMobile && style["modal-mask-fullscreen"],
-                isMobile && fixedModeClass
+                useMobileLayout && style["modal-mask-fullscreen"],
+                useMobileLayout && fixedModeClass
             ),
         }),
         title: null,
@@ -372,7 +374,7 @@ const computedCommonProps = ({
         onCancel: onClose,
         className: classnames(className, style["modal"], style[size], {
             [style["right-options-modal"]]: rightOptions,
-            [style["is-mobile"]]: isMobile,
+            [style["is-mobile"]]: useMobileLayout,
         }),
         ...sizeProps,
         styles: {
@@ -405,13 +407,13 @@ const computedCommonProps = ({
                 noPadding,
                 children,
                 childrenRef,
-                isMobile,
+                isMobile: useMobileLayout,
             })}
         </IntlProvider>),
     };
 };
 
-const Modal = ({size = 'default', getContainer, open, ...props}) => {
+const Modal = ({size = 'default', getContainer, open, mobileFullscreen = true, ...props}) => {
     const childrenRef = useRef(null);
     const {
         isMobile,
@@ -429,7 +431,9 @@ const Modal = ({size = 'default', getContainer, open, ...props}) => {
     return (<>
         <span ref={anchorRef} className={style["modal-host"]} aria-hidden="true" />
         <AntdModal
-            {...computedCommonProps(Object.assign({}, props, {size, childrenRef, isMobile, open, fixedModeClass}))}
+            {...computedCommonProps(Object.assign({}, props, {
+                size, childrenRef, isMobile, open, fixedModeClass, mobileFullscreen,
+            }))}
             open={open}
             getContainer={getPopupContainer}
         />
