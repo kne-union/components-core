@@ -13,6 +13,7 @@ import classnames from "classnames";
 import {useDebouncedCallback} from "use-debounce";
 import {hooks} from "@kne/react-form-antd";
 import merge from "lodash/merge";
+import {useIsMobile} from "@kne/responsive-utils";
 import style from "./style.module.scss";
 import defaultAvatarIcon from "../../../../defaultAvatar.svg";
 import {IntlProvider, FormattedMessage, useIntl} from "@components/Intl";
@@ -39,6 +40,7 @@ const UploadButton = withInputFile(({
                                         displayAvatar,
                                         apis,
                                     }) => {
+    const isMobile = useIsMobile();
     const inner = (<>
         <AvatarDisplay
             {...Object.assign({}, typeof displayAvatar === 'function' ? displayAvatar(value) : {id: get(value, "id")})}
@@ -56,7 +58,9 @@ const UploadButton = withInputFile(({
     </>);
     return (<div
         className={classnames(className, style["upload-btn"], {
-            [style["is-loading"]]: loading, [style["square"]]: shape === "square" || !(width && width === height),
+            [style["is-loading"]]: loading,
+            [style["square"]]: shape === "square" || !(width && width === height),
+            [style["is-mobile"]]: isMobile,
         })}
         style={{width: (64 * width) / height}}
     >
@@ -92,6 +96,7 @@ const ControlAvatarEditor = forwardRef(({
                                             ...props
                                         }, ref) => {
     const intl = useIntl({moduleName: localeModuleName});
+    const isMobile = useIsMobile();
     const [baseWidth, setBaseWidth] = useState(0);
     const outerRef = useRef(null);
     const [image, setImage] = useState(propsImage);
@@ -99,10 +104,12 @@ const ControlAvatarEditor = forwardRef(({
     const [rotate, setRotate] = useState(0);
     const [previewImg, setPreviewImg] = useState("");
     const editorRef = useRef(null);
+    const showPreview = preview && !isMobile;
 
     useLayoutEffect(() => {
-        setBaseWidth((outerRef.current.clientWidth * 2) / 3);
-    }, []);
+        const clientWidth = outerRef.current.clientWidth;
+        setBaseWidth(isMobile ? clientWidth : (clientWidth * 2) / 3);
+    }, [isMobile]);
     getApi({
         getImage: () => {
             const canvas = editorRef.current.getImage();
@@ -121,11 +128,12 @@ const ControlAvatarEditor = forwardRef(({
         setPreviewImg(editorRef.current.getImage().toDataURL());
     };
     const makePreview = useDebouncedCallback(makePreviewInner, 500);
+    const previewSize = baseWidth / 2 - 36;
 
     return (<div ref={outerRef}>
-        <Row wrap={false} align="middle">
-            <Col span={preview ? 16 : 24}>
-                {baseWidth && (<Space direction="vertical">
+        <Row wrap={isMobile} align={isMobile ? "top" : "middle"}>
+            <Col span={showPreview ? 16 : 24}>
+                {baseWidth && (<Space direction="vertical" style={{width: "100%"}}>
                     <AvatarEditor
                         {...props}
                         ref={editorRef}
@@ -149,7 +157,7 @@ const ControlAvatarEditor = forwardRef(({
                             accept, fileSize,
                         })}
                     </div>
-                    <Row gutter={14} align="middle">
+                    <Row gutter={[14, 8]} align="middle" wrap={isMobile}>
                         <Col>
                             <Tooltip
                                 title={intl.formatMessage({id: "Rotate"})}
@@ -178,7 +186,7 @@ const ControlAvatarEditor = forwardRef(({
                                 />
                             </Tooltip>
                         </Col>
-                        <Col flex={1}>
+                        <Col flex={isMobile ? "100%" : 1} style={isMobile ? {minWidth: 0} : undefined}>
                             <Slider
                                 tooltip={{
                                     placement: "bottom", formatter: () => intl.formatMessage({id: "Size"}),
@@ -211,7 +219,7 @@ const ControlAvatarEditor = forwardRef(({
                     </Row>
                 </Space>)}
             </Col>
-            {preview && (<Col span={8}>
+            {showPreview && (<Col span={8}>
                 <div className={style["preview-area"]}>
                     <Space direction="vertical">
                         <AntdAvatar
@@ -219,7 +227,7 @@ const ControlAvatarEditor = forwardRef(({
                             // alt="预览"
                             shape={shape}
                             style={{
-                                width: baseWidth / 2 - 36, height: ((baseWidth / 2 - 36) * height) / width,
+                                width: previewSize, height: (previewSize * height) / width,
                             }}
                         />
                         <div
@@ -282,7 +290,7 @@ const useDropModal = () => {
 const AvatarField = createWithIntl({importMessages, moduleName: "FormInfo"})(({
                                                                                   value,
                                                                                   gender,
-                                                                                  fileSize = 2,
+                                                                                  fileSize = 10,
                                                                                   accept = [".jpg", ".png", ".jpeg"],
                                                                                   openEditor = true,
                                                                                   apis: currentApis,
