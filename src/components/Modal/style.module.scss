@@ -1,3 +1,4 @@
+@use '~@kne/responsive-utils/scss' as resp;
 @import "../../common/warning-color";
 
 .modal {
@@ -350,6 +351,12 @@
 
   .content {
     height: 100%;
+  }
+}
+
+@include resp.mobile-container {
+  .modal-body-inner {
+    padding: 12px;
   }
 }
 
