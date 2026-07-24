@@ -166,50 +166,47 @@ render(<BaseExample />);
 
 ```
 
-- FileButton
-- 预览文件按钮
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+- PrintButton
+- 打印按钮
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd)
 
 ```jsx
-const { FileButton } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { PrintButton } = _ReactFile;
+const { useRef } = React;
+const { Flex, Typography } = antd;
 
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    ajax: async api => {
-      return { data: { code: 0, data: api.loader() } };
-    }, apis: {
-      file: {
-        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
-        getUrl: {
-          loader: async ({ params }) => {
-            const urlMap = {
-              1: '/mock/resume.png',
-              2: '/mock/resume.pdf',
-              3: '/mock/resume.html',
-              4: '/mock/resume.txt',
-              5: '/mock/audio.wav',
-              6: '/mock/resume.docx'
-            };
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve(urlMap[params.id]);
-              }, 1000);
-            });
-          }
-        }
-      }
-    }
-  }}>
-    <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>预览demo.jpg</FileButton>
-    <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>预览demo2.pdf</FileButton>
-    <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>预览demo2.html</FileButton>
-    <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
-  </PureGlobal>;
-});
+const { Title, Paragraph } = Typography;
+
+const BaseExample = () => {
+  const contentRef = useRef(null);
+
+  return (
+    <Flex vertical gap={16}>
+      <div
+        ref={contentRef}
+        style={{
+          padding: 24,
+          border: '1px solid #f0f0f0',
+          borderRadius: 8,
+          background: '#fff'
+        }}
+      >
+        <Title level={4} style={{ marginTop: 0 }}>
+          打印内容示例
+        </Title>
+        <Paragraph>
+          这是一段将被打印的内容。点击下方「打印」按钮会打开浏览器打印对话框，仅打印该区域内容。
+        </Paragraph>
+        <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+          支持传入 onBeforePrint / onSuccess / onError 回调，以及 printProps 透传给 react-to-print。
+        </Paragraph>
+      </div>
+      <PrintButton contentRef={contentRef} type="primary">
+        打印
+      </PrintButton>
+    </Flex>
+  );
+};
 
 render(<BaseExample />);
 

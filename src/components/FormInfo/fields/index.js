@@ -162,15 +162,15 @@ const TimePicker = createWithFieldDecorator([withLang, withSelectDefaultPlacehol
 
 TimePicker.RangePicker = createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(ReactTimePicker.RangePicker);
 
-const DatePickerToday = createWithFieldDecorator([withLang])(({placeholder, label, soFarText, ...props}) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+const DatePickerToday = createWithFieldDecorator([withLang])(withLocale(({placeholder, label, soFarText, ...props}) => {
+    const {formatMessage} = useIntl();
     return (<ReactDatePickerToday
         {...props}
         label={label}
-        placeholder={[formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
+        placeholder={placeholder || [formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
         soFarText={soFarText || formatMessage({id: "soFarText"})}
     />);
-});
+}));
 
 const fields = {
     Signature,

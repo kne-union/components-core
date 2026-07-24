@@ -7,14 +7,6 @@ global.matchMedia = () => {
   return { addListener: jest.fn(), removeListener: jest.fn() };
 };
 
-jest.mock("@components/Intl", () => {
-  return {
-    IntlProvider: ({ children }) => {
-      return children;
-    },
-  };
-});
-
 test("弹出正常Modal", async () => {
   const closeFn = jest.fn();
   const cancelFn = jest.fn();

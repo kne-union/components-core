@@ -1,11 +1,11 @@
 import {DatePicker, Select, Space} from "antd";
 import useControlValue from "@kne/use-control-value";
 import dayjs from "dayjs";
-import importMessages from "../locale";
-import {createWithIntl, useIntl} from "@components/Intl";
+import {useIntl} from "@kne/react-intl";
+import withLocale from "../withLocale";
 
 const TypeDatePickerField = ({...props}) => {
-    const {formatMessage} = useIntl({moduleName: "Common"});
+    const {formatMessage} = useIntl();
     const typeList = new Map([["date", formatMessage({id: "customTime"})], ["month", formatMessage({id: "monthly"})], ["week", formatMessage({id: "weekly"})],]);
     const [value, onChange] = useControlValue(props);
     return (<Space.Compact>
@@ -46,4 +46,4 @@ const TypeDatePickerField = ({...props}) => {
     </Space.Compact>);
 };
 
-export default createWithIntl({importMessages, moduleName: "Common"})(TypeDatePickerField);
+export default withLocale(TypeDatePickerField);

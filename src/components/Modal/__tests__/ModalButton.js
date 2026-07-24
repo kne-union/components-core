@@ -14,14 +14,6 @@ global.matchMedia = () => {
   return { addListener: jest.fn(), removeListener: jest.fn() };
 };
 
-jest.mock("@components/Intl", () => {
-  return {
-    IntlProvider: ({ children }) => {
-      return children;
-    },
-  };
-});
-
 test("普通ModalButton", async () => {
   const TestComponent = () => {
     return (

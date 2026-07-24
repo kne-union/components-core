@@ -4,11 +4,11 @@ import classnames from "classnames";
 import style from "./style.module.scss";
 import {TableList as TableListBase} from '@kne/react-form-plus';
 import InfoPage from "@components/InfoPage";
-import {createWithIntl, useIntl} from "@components/Intl";
-import importMessages from "./locale";
+import {useIntl} from "@kne/react-intl";
+import withLocale from "./withLocale";
 
-const TableList = createWithIntl({moduleName: "FormInfo", importMessages})(({className, ...props}) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+const TableList = withLocale(({className, ...props}) => {
+    const {formatMessage} = useIntl();
     return <div className={classnames(className, style['table-list'])}>
         <TableListBase {...props}
                        className={classnames(className, style["table-list"])}

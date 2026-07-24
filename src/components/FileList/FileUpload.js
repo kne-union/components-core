@@ -5,10 +5,10 @@ import {useFileUpload} from "@kne/react-file";
 import {usePreset} from "@components/Global";
 import useControlValue from "@kne/use-control-value";
 import get from "lodash/get";
-import {FormattedMessage, IntlProvider} from "@components/Intl";
-import importMessages from "./locale";
+import {FormattedMessage} from "@kne/react-intl";
+import withLocale from "./withLocale";
 
-const FileUpload = ({
+const FileUpload = withLocale(({
                         maxLength = Number.MAX_VALUE,
                         apis: currentApis,
                         getPermission = () => true,
@@ -44,9 +44,7 @@ const FileUpload = ({
                 <Space split={<Divider type="vertical"/>}>
                     <DragButton/>
                     <UploadButton>
-                        <IntlProvider importMessages={importMessages} moduleName="FileList">
-                            <FormattedMessage id="upload" moduleName="FileList"/>
-                        </IntlProvider>
+                        <FormattedMessage id="upload"/>
                     </UploadButton>
                 </Space>
             </Col>
@@ -63,6 +61,6 @@ const FileUpload = ({
         />
         <DragArea/>
     </DragAreaOuter>);
-};
+});
 
 export default FileUpload;

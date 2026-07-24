@@ -13,6 +13,60 @@ FilePreview 是一个功能全面的文件预览组件库，支持多种常见�
 
 #### 示例代码
 
+- FileUpload
+- 文件上传
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { FileUpload } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+
+const urls = {};
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(urls[params.id]);
+              }, 1000);
+            });
+          }
+        }, upload: ({ file }) => {
+          urls[file.name] = URL.createObjectURL(file);
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: {
+                  code: 0, data: {
+                    id: file.name, filename: file.name
+                  }
+                }
+              });
+            }, 1000);
+          });
+        }
+      }
+    }
+  }}>
+    <FileUpload />
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+
+```
+
 - FilePreview
 - 文件预览
 - _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
@@ -107,57 +161,6 @@ const BaseExample = createWithRemoteLoader({
         <MarkdownPreview url={&#96;${getPublicPath('react-file')}/mock/example.md&#96;} />
       </InfoPage.Part>
     </InfoPage>
-  );
-});
-
-render(<BaseExample />);
-
-
-```
-
-- JsonPreview
-- JSON文件预览
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),remoteLoader(@kne/remote-loader)
-
-```jsx
-const { JsonPreview } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
-})(({ remoteModules }) => {
-  const [PureGlobal, InfoPage] = remoteModules;
-  return (
-    <PureGlobal preset={{
-      ajax: async api => {
-        return { data: { code: 0, data: api.loader() } };
-      },
-      apis: {
-        file: {
-          staticUrl: getPublicPath('react-file') || window.PUBLIC_URL
-        }
-      }
-    }}>
-      <InfoPage>
-        <InfoPage.Part title="JSON文件预览 - 默认黑色主题">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-          />
-        </InfoPage.Part>
-        <InfoPage.Part title="JSON文件预览 - 白色主题">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-            theme="light"
-          />
-        </InfoPage.Part>
-        <InfoPage.Part title="JSON文件预览 - 从第2级开始收起">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-            collapsedFrom={2}
-          />
-        </InfoPage.Part>
-      </InfoPage>
-    </PureGlobal>
   );
 });
 

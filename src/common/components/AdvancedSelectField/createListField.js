@@ -7,19 +7,20 @@ import merge from "lodash/merge";
 import style from "./create-list.module.scss";
 import SearchInput from "@common/components/SearchInput";
 import {Col, Row, Flex, Checkbox, Typography, Space} from "antd";
-import {FormattedMessage, useIntl} from "@components/Intl";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
+import withLocale from "../withLocale";
 
 const useSelectInnerContext = SelectInnerInput.useContext;
 
 const createListField = ({renderList, defaultProps}) => {
-    const ListInner = ({value, setValue}) => {
+    const ListInner = withLocale(({value, setValue}) => {
         const {fetchApi, searchText, setSearchText, props, mapping} = useSelectInnerContext();
         const pagination = Object.assign({}, {
             paramsType: "data", current: "currentPage", pageSizeName: "perPage", pageSize: 20,
         }, props.pagination);
         const current = get(fetchApi.requestParams, [pagination.paramsType, pagination.current], 1),
             pageSize = get(fetchApi.requestParams, [pagination.paramsType, pagination.pageSizeName,]) || pagination.pageSize;
-        const {formatMessage} = useIntl({moduleName: "Common"});
+        const {formatMessage} = useIntl();
         const formatData = props.dataFormat(fetchApi.data);
         const {right, leftBottom, leftSpan = 24} = props;
         const isSelectedAll = value.length === 1 && value[0] === "all";
@@ -88,8 +89,7 @@ const createListField = ({renderList, defaultProps}) => {
                     {props.showSelectedCount ? (<Space>
                         <Typography>已选:</Typography>
                         <Typography.Link>
-                            {isSelectedAll ? props.allLabel || (<FormattedMessage id="all"
-                                                                                  moduleName="Common"/>) : `${value.length}${props.countUnit || formatMessage({id: "items"})}`}
+                            {isSelectedAll ? props.allLabel || (<FormattedMessage id="all"/>) : `${value.length}${props.countUnit || formatMessage({id: "items"})}`}
                         </Typography.Link>
                     </Space>) : (<div/>)}
                     {props.allowSelectAll ? (<div>
@@ -101,9 +101,8 @@ const createListField = ({renderList, defaultProps}) => {
                         >
                             <FormattedMessage
                                 id="selectAll"
-                                moduleName="Common"
                                 values={{
-                                    label: props.allLabel || (<FormattedMessage id="all" moduleName="Common"/>),
+                                    label: props.allLabel || (<FormattedMessage id="all"/>),
                                 }}
                             />
                         </Checkbox>
@@ -135,7 +134,7 @@ const createListField = ({renderList, defaultProps}) => {
                 value, mapping, fetchApi,
             })}
         </Row>);
-    };
+    });
 
     return (p) => {
         const {extra, ...props} = Object.assign({}, {

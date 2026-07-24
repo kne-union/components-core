@@ -21,6 +21,56 @@ FileList 组件提供了一套完整的文件管理解决方案，集成了文�
 
 #### 示例代码
 
+- FileButton
+- 预览文件按钮
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+
+```jsx
+const { FileButton } = _ReactFile;
+const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [PureGlobal] = remoteModules;
+  return <PureGlobal preset={{
+    ajax: async api => {
+      return { data: { code: 0, data: api.loader() } };
+    }, apis: {
+      file: {
+        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+        getUrl: {
+          loader: async ({ params }) => {
+            const urlMap = {
+              1: '/mock/resume.png',
+              2: '/mock/resume.pdf',
+              3: '/mock/resume.html',
+              4: '/mock/resume.txt',
+              5: '/mock/audio.wav',
+              6: '/mock/resume.docx'
+            };
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(urlMap[params.id]);
+              }, 1000);
+            });
+          }
+        }
+      }
+    }
+  }}>
+    <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>预览demo.jpg</FileButton>
+    <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>预览demo2.pdf</FileButton>
+    <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>预览demo2.html</FileButton>
+    <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+
+```
+
 - FileList
 - 文件列表
 - _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
@@ -81,89 +131,18 @@ render(<BaseExample />);
 
 ```
 
-- FileUpload
-- 文件上传
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+- JsonPreview
+- JSON文件预览
+- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { FileUpload } = _ReactFile;
+const { JsonPreview } = _ReactFile;
 const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-
-const urls = {};
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    ajax: async api => {
-      return { data: { code: 0, data: api.loader() } };
-    }, apis: {
-      file: {
-        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
-        getUrl: {
-          loader: async ({ params }) => {
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve(urls[params.id]);
-              }, 1000);
-            });
-          }
-        }, upload: ({ file }) => {
-          urls[file.name] = URL.createObjectURL(file);
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                data: {
-                  code: 0, data: {
-                    id: file.name, filename: file.name
-                  }
-                }
-              });
-            }, 1000);
-          });
-        }
-      }
-    }
-  }}>
-    <FileUpload />
-  </PureGlobal>;
-});
-
-render(<BaseExample />);
-
-
-```
-
-- FileSystem
-- 文件系统浏览
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
-
-```jsx
-const { FileSystem } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-const { Segmented } = antd;
-const { useState } = React;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
 })(({ remoteModules }) => {
   const [PureGlobal, InfoPage] = remoteModules;
-  const [items] = useState([
-    { kind: 'folder', path: 'documents/', name: 'Documents' },
-    { kind: 'folder', path: 'documents/reports/', name: 'Reports' },
-    { kind: 'file', path: 'documents/reports/Q3-report.pdf', name: 'Q3-report.pdf', size: 1024000 },
-    { kind: 'file', path: 'documents/reports/Q4-report.xlsx', name: 'Q4-report.xlsx', size: 512000 },
-    { kind: 'file', path: 'documents/meeting-notes.docx', name: 'meeting-notes.docx', size: 256000 },
-    { kind: 'folder', path: 'images/', name: 'Images' },
-    { kind: 'file', path: 'images/logo.png', name: 'logo.png', size: 45000 },
-    { kind: 'file', path: 'images/banner.jpg', name: 'banner.jpg', size: 89000 },
-    { kind: 'folder', path: 'archives/', name: 'Archives' },
-    { kind: 'file', path: 'archives/project-backup.zip', name: 'project-backup.zip', size: 15728640 },
-    { kind: 'file', path: 'readme.md', name: 'readme.md', size: 3200 },
-    { kind: 'file', path: 'config.json', name: 'config.json', size: 1200 }
-  ]);
-
   return (
     <PureGlobal preset={{
       ajax: async api => {
@@ -176,17 +155,21 @@ const BaseExample = createWithRemoteLoader({
       }
     }}>
       <InfoPage>
-        <InfoPage.Part title="文件系统浏览">
-          <FileSystem
-            items={items}
-            title="My Files"
-            defaultView="list"
-            onFileOpen={entry => {
-              console.log('Open file:', entry);
-            }}
-            onSelectionChange={entry => {
-              console.log('Selection changed:', entry);
-            }}
+        <InfoPage.Part title="JSON文件预览 - 默认黑色主题">
+          <JsonPreview 
+            url="https://jsonplaceholder.typicode.com/users"
+          />
+        </InfoPage.Part>
+        <InfoPage.Part title="JSON文件预览 - 白色主题">
+          <JsonPreview 
+            url="https://jsonplaceholder.typicode.com/users"
+            theme="light"
+          />
+        </InfoPage.Part>
+        <InfoPage.Part title="JSON文件预览 - 从第2级开始收起">
+          <JsonPreview 
+            url="https://jsonplaceholder.typicode.com/users"
+            collapsedFrom={2}
           />
         </InfoPage.Part>
       </InfoPage>

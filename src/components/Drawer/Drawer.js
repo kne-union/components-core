@@ -1,14 +1,16 @@
 import {Button, Col, Drawer as AntdDrawer, Row, Space} from "antd";
 import classnames from "classnames";
 import style from "./style.module.scss";
-import importMessages from "./locale";
-import {IntlProvider} from "@components/Intl";
+import {FormattedMessage} from '@kne/react-intl';
+import withLocale from './withLocale';
 import AppDrawer from "./AppDrawer";
 import LoadingButton from "@components/LoadingButton";
 import React, {useEffect, useRef} from "react";
 import SimpleBar from "simplebar";
 import Icon from "@components/Icon";
 import {useMobilePopupMount} from "@kne/responsive-utils";
+
+const DrawerLocaleRoot = withLocale(({children}) => children);
 
 const renderWithOptions = (footer, options) => {
     if (typeof footer === "function") {
@@ -47,8 +49,8 @@ const Footer = ({footer, footerButtons, onConfirm, onCancel, onClose, isMobile})
         {(!isMobile || footer) ? <Col flex={isMobile ? undefined : 1}>{footer}</Col> : null}
         {Array.isArray(footerButtons) && footerButtons.length === 0 ? null : (<Col>
             <Space>
-                {(footerButtons || [{children: "取消", onClick: onCancel}, {
-                    type: "primary", children: "确定", onClick: onConfirm,
+                {(footerButtons || [{children: <FormattedMessage id="cancel"/>, onClick: onCancel}, {
+                    type: "primary", children: <FormattedMessage id="confirm"/>, onClick: onConfirm,
                 },]).map(({ButtonComponent, onClick, autoClose = true, ...props}, index) => {
                     const CurrentButton = ButtonComponent || LoadingButton;
                     return (<CurrentButton
@@ -205,7 +207,7 @@ export const computedCommonProps = ({
             },
         } : customStyles,
         ...sizeMap(size, isMobile),
-        children: (<IntlProvider importMessages={importMessages} moduleName="Drawer">
+        children: (<DrawerLocaleRoot>
             {runWithDecorator({
                 withDecorator,
                 title,
@@ -219,11 +221,11 @@ export const computedCommonProps = ({
                 isMobile,
                 children,
             })}
-        </IntlProvider>),
+        </DrawerLocaleRoot>),
     };
 };
 
-const Drawer = ({size = "small", getContainer, ...props}) => {
+const Drawer = withLocale(({size = "small", getContainer, ...props}) => {
     const {
         isMobile,
         fixedModeClass,
@@ -242,7 +244,7 @@ const Drawer = ({size = "small", getContainer, ...props}) => {
             />
         </>
     );
-};
+});
 
 export const useDrawer = () => {
     const {drawer} = AppDrawer.useAppDrawer();

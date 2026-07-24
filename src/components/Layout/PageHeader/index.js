@@ -1,10 +1,9 @@
 import {Space, Row, Col} from "antd";
 import classnames from "classnames";
-import importMessages from "../locale";
 import Icon from "@components/Icon";
 import {isValidElement} from 'react';
 import ButtonGroup from "@components/ButtonGroup";
-import {IntlProvider} from "@components/Intl";
+import withLocale from '../withLocale';
 import {useIsMobile} from "@kne/responsive-utils";
 import style from "./style.module.scss";
 
@@ -77,10 +76,8 @@ export const PageHeaderInner = ({
     </Row>);
 };
 
-const PageHeader = (props) => {
-    return (<IntlProvider importMessages={importMessages} moduleName="PageHeader">
-        <PageHeaderInner {...props} />
-    </IntlProvider>);
-};
+const PageHeader = withLocale((props) => {
+    return <PageHeaderInner {...props} />;
+});
 
 export default PageHeader;

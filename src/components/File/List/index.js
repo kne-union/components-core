@@ -3,15 +3,15 @@ import dropRight from "lodash/dropRight";
 import last from "lodash/last";
 import FormInfo, {Input, useFormModal} from "@components/FormInfo";
 import Modal from "@components/Modal";
-import importMessages from "../locale";
-import {FormattedMessage, IntlProvider} from '@components/Intl';
+import {useIntl} from '@kne/react-intl';
+import withLocale from '../withLocale';
 
 const useEdit = ({apis}) => {
+    const {formatMessage} = useIntl();
     const formModal = useFormModal();
     return typeof apis?.onEditModalShow === 'function' ? apis.onEditModalShow : (item, apis) => {
         const modalApi = formModal({
-            size: "small", title: <IntlProvider importMessages={importMessages} moduleName="File"><FormattedMessage
-                id="editDocumentName" moduleName="File"/></IntlProvider>, formProps: {
+            size: "small", title: formatMessage({id: "editDocumentName"}), formProps: {
                 data: {
                     name: dropRight(item.filename.split(".")).join("."),
                 }, onSubmit: async (data) => {
@@ -27,14 +27,13 @@ const useEdit = ({apis}) => {
             }, children: (<FormInfo
                 column={1}
                 list={[<Input name="name"
-                              label={<IntlProvider importMessages={importMessages} moduleName="File"><FormattedMessage
-                                  id="documentName" moduleName="File"/></IntlProvider>} rule="REQ LEN-0-100"/>]}
+                              label={formatMessage({id: "documentName"})} rule="REQ LEN-0-100"/>]}
             />),
         });
     };
 };
 
-const List = ({apis, ...p}) => {
+const List = withLocale(({apis, ...p}) => {
     const handlerEdit = useEdit({apis});
     return (<FileList
         {...p}
@@ -45,9 +44,9 @@ const List = ({apis, ...p}) => {
             return <Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>;
         }}
     />);
-};
+});
 
-const OptionButtons = (props) => {
+const OptionButtons = withLocale((props) => {
     const handlerEdit = useEdit({apis: props.apis});
     return (<FileListOptionButtons
         {...props}
@@ -57,7 +56,7 @@ const OptionButtons = (props) => {
             return <Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>;
         }}
     />);
-};
+});
 
 export default List;
 

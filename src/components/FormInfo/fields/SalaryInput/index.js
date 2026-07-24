@@ -4,8 +4,8 @@ import {hooks} from "@kne/react-form-antd";
 import useSimulationBlur from "@kne/use-simulation-blur";
 import {Col, Input, InputNumber, Row, Select, Flex} from "antd";
 import style from "./style.module.scss";
-import {IntlProvider, useIntl} from "@components/Intl";
-import importMessages from "../../locale";
+import {useIntl} from "@kne/react-intl";
+import withLocale from "../../withLocale";
 import Enum from "@components/Enum";
 import useControlValue from "@kne/use-control-value";
 import {get} from "lodash";
@@ -39,7 +39,7 @@ const FormField = ({children, isError}) => {
     </div>);
 };
 
-const SalaryInputField = ({
+const SalaryInputField = withLocale(({
                               getPopupContainer,
                               onBlur,
                               api,
@@ -52,7 +52,7 @@ const SalaryInputField = ({
                               ...props
                           }) => {
     const [value, onChange] = useControlValue(props);
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+    const {formatMessage} = useIntl();
     const _placeholder = formatMessage({id: "defaultSelectPlaceholder"}, {label: ""});
     const _placeholderInput = formatMessage({id: "defaultInputPlaceholder"}, {label: ""});
 
@@ -197,7 +197,7 @@ const SalaryInputField = ({
             </Col>)}
         </Row>
     </div>);
-};
+});
 
 const defaultPropsApi = {
     loader: () => {
@@ -222,9 +222,7 @@ const defaultPropsValue = {
 };
 
 const SalaryField = ({api = defaultPropsApi, defaultValue = defaultPropsValue, ...props}) => {
-    return (<IntlProvider moduleName="FormInfo" importMessages={importMessages}>
-        <SalaryInputField {...props} api={api} defaultValue={defaultValue}/>
-    </IntlProvider>);
+    return <SalaryInputField {...props} api={api} defaultValue={defaultValue}/>;
 };
 
 const SalaryInput = (props) => {
