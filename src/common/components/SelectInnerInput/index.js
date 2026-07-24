@@ -17,8 +17,8 @@ import SimpleBarBox from "@common/components/SimpleBarBox";
 import useRefCallback from "@kne/use-ref-callback";
 import useResize from "@common/hooks/useResize";
 import {numberToPx, pxToNumber} from "@common/utils/px";
-import {createWithIntl, FormattedMessage, useIntl} from "@components/Intl";
-import importMessages from "../locale";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
+import withLocale from "../withLocale";
 import usePreset from "@common/hooks/usePreset";
 
 const createValueWithMaxLength = ({maxLength, single, setValue, value, message}) => (newValue) => setValue((() => {
@@ -44,7 +44,7 @@ const renderDisplayLabel = ({
 
     if (value.length === 1 && value[0] === (allValue || "all")) {
         return (<span className={style["text-inner"]}>
-        {allLabel || <FormattedMessage id="all" moduleName="Common"/>}
+        {allLabel || <FormattedMessage id="all"/>}
       </span>);
     }
 
@@ -77,7 +77,7 @@ const ModalContent = forwardRef(({
                                  }, ref) => {
     const [value, setValue] = useState(propsValue);
     const propsValueRef = useRef(propsValue);
-    const {formatMessage} = useIntl({moduleName: "Common"});
+    const {formatMessage} = useIntl();
     propsValueRef.current = propsValue;
     const [modalOpen, setModalOpenBase] = useState(false);
     const setModalOpen = (modalOpen) => {
@@ -196,7 +196,7 @@ const DisplayLabel = withFetch(({setFetchApi, wrapClassName, getContentRef, ...f
     const selectInnerContext = useContext();
     const {valueState, mapping, props, inputWidth} = selectInnerContext;
     const [value, setValue] = valueState;
-    const {formatMessage} = useIntl({moduleName: "Common"});
+    const {formatMessage} = useIntl();
     const {
         single,
         placement,
@@ -240,7 +240,6 @@ const DisplayLabel = withFetch(({setFetchApi, wrapClassName, getContentRef, ...f
             <div>
                 <FormattedMessage
                     id="selectedTextAdvanced"
-                    moduleName="Common"
                     defaultMessage="已选"
                 />
                 {!props.single && Number.isInteger(props.maxLength) && props.maxLength > 0 ? `(${value.length}/${props.maxLength})` : ""}
@@ -371,7 +370,7 @@ const _SelectInnerInput = (p) => {
     const {locale} = usePreset();
     const [searchText, setSearchText] = useState("");
     const [mapping, setMapping] = useState(new Map(displayItems.map((item) => [item.value, item])));
-    const {formatMessage} = useIntl({moduleName: "Common"});
+    const {formatMessage} = useIntl();
     const [inputWidth, setInputWidth] = useState(0);
 
     const inputRef = useResize((el) => {
@@ -447,9 +446,7 @@ const _SelectInnerInput = (p) => {
     </Provider>);
 };
 
-const SelectInnerInput = createWithIntl({
-    importMessages, moduleName: "Common",
-})(_SelectInnerInput);
+const SelectInnerInput = withLocale(_SelectInnerInput);
 
 SelectInnerInput.useContext = useContext;
 

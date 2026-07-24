@@ -149,17 +149,17 @@ DatePicker.RangePicker = withSelectDefaultPlaceholder(ReactDatePicker.RangePicke
 
 DatePicker.WeekPicker = withSelectDefaultPlaceholder(ReactDatePicker.WeekPicker);
 
-export const DatePickerToday = ({
+export const DatePickerToday = withLocale(({
                                     placeholder, label, soFarText, ...props
                                 }) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+    const {formatMessage} = useIntl();
     return (<ReactDatePickerToday
         {...props}
         label={label}
         placeholder={[formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
         soFarText={soFarText || formatMessage({id: "soFarText"})}
     />);
-};
+});
 
 export {Form};
 

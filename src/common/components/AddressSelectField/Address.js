@@ -11,8 +11,8 @@ import memoize from "lodash/memoize";
 import get from "lodash/get";
 import style from "./style.module.scss";
 import Fetch, {withFetch} from "@kne/react-fetch";
-import importMessages from "./locale";
-import {IntlProvider, FormattedMessage, useIntl} from "@components/Intl";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
+import withLocale from "./withLocale";
 
 const useSelectInnerContext = SelectInnerInput.useContext;
 
@@ -132,11 +132,11 @@ const addressDefaultApi = {
     },
 };
 
-const AddressInner = ({value, setValue}) => {
+const AddressInner = withLocale(({value, setValue}) => {
     const {fetchApi, props} = useSelectInnerContext();
     const [searchText, setSearchText] = useState("");
     const [menuKey, setMenuKey] = useState("2");
-    const {formatMessage} = useIntl({moduleName: "AddressSelect"});
+    const {formatMessage} = useIntl();
     const {locale} = usePreset();
 
     const {
@@ -211,7 +211,6 @@ const AddressInner = ({value, setValue}) => {
                         items={[{
                             key: "2", label: (<FormattedMessage
                                 id="domestic"
-                                moduleName="AddressSelect"
                                 defaultMessage="国内"
                             />), children: (<SimpleBarBox className={style["scroll-box"]}>
                                 <Menu
@@ -227,7 +226,6 @@ const AddressInner = ({value, setValue}) => {
                         }, {
                             key: "1", label: (<FormattedMessage
                                 id="abroad"
-                                moduleName="AddressSelect"
                                 defaultMessage="国外"
                             />), children: (<SimpleBarBox className={style["scroll-box"]}>
                                 <Menu
@@ -266,17 +264,12 @@ const AddressInner = ({value, setValue}) => {
             </Row>)}
         </div>
     </div>);
-};
+});
 
 const AddressSelectField = (props) => {
     return (<SelectInnerInput {...props}>
         {({value, setValue}) => {
-            return (<IntlProvider
-                moduleName="AddressSelect"
-                importMessages={importMessages}
-            >
-                <AddressInner value={value} setValue={setValue}/>
-            </IntlProvider>);
+            return <AddressInner value={value} setValue={setValue}/>;
         }}
     </SelectInnerInput>);
 };

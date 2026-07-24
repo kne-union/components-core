@@ -4,17 +4,15 @@ import useControlValue from "@kne/use-control-value";
 import style from "./style.module.scss";
 import {List as FileList} from "@components/File";
 import {hooks} from "@kne/react-form-antd";
-import {createWithIntl, useIntl} from '@components/Intl';
+import {useIntl} from '@kne/react-intl';
 import omit from "lodash/omit";
 import {InputFileButton, useFileUpload} from "@common/hocs/withInputFile";
-import importMessages from "@components/FormInfo/locale";
+import withLocale from "@components/FormInfo/withLocale";
 
 const {useOnChange} = hooks;
 
-const UploadField = createWithIntl({
-    importMessages, moduleName: 'FormInfo'
-})((p) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+const UploadField = withLocale((p) => {
+    const {formatMessage} = useIntl();
     const {
         className,
         fileSize,

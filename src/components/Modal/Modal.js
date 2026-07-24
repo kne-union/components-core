@@ -2,15 +2,15 @@ import React, {useEffect, useRef} from "react";
 import {App, Button, Col, Modal as AntdModal, Row, Space} from "antd";
 import classnames from "classnames";
 import style from "./style.module.scss";
-import importMessages from "./locale";
-import {FormattedMessage, IntlProvider} from "@components/Intl";
+import {FormattedMessage} from '@kne/react-intl';
+import withLocale from './withLocale';
 import Icon from "@components/Icon";
 import renderWithOptions from "./renderWithOptions";
 import LoadingButton from "@components/LoadingButton";
 import SimpleBar from "@common/components/SimpleBar";
 import {useMobilePopupMount, useScrollElement} from "@kne/responsive-utils";
 
-const localeModuleName = "Modal";
+const ModalLocaleRoot = withLocale(({children}) => children);
 
 const wrapCustomGetContainer = (customGetContainer) => {
     if (!customGetContainer) {
@@ -150,25 +150,9 @@ const Footer = ({
         {Array.isArray(footerButtons) && footerButtons.length === 0 ? null : (<Col>
             <Space>
                 {(footerButtons || [{
-                    children: cancelText || (<IntlProvider
-                        importMessages={importMessages}
-                        moduleName={localeModuleName}
-                    >
-                        <FormattedMessage
-                            id={"Cancel"}
-                            moduleName={localeModuleName}
-                        />
-                    </IntlProvider>), onClick: onCancel,
+                    children: cancelText || <FormattedMessage id="Cancel"/>, onClick: onCancel,
                 }, {
-                    type: "primary", children: (<IntlProvider
-                        importMessages={importMessages}
-                        moduleName={localeModuleName}
-                    >
-                        <FormattedMessage
-                            id={"Confirm"}
-                            moduleName={localeModuleName}
-                        />
-                    </IntlProvider>), onClick: onConfirm,
+                    type: "primary", children: <FormattedMessage id="Confirm"/>, onClick: onConfirm,
                 },])
                     .filter((item) => {
                         if (typeof item?.display === "function") {
@@ -389,7 +373,7 @@ const computedCommonProps = ({
                 ...sizeProps.styles?.body,
             },
         },
-        children: (<IntlProvider importMessages={importMessages} moduleName="Modal">
+        children: (<ModalLocaleRoot>
             {runWithDecorator({
                 withDecorator,
                 title,
@@ -409,11 +393,11 @@ const computedCommonProps = ({
                 childrenRef,
                 isMobile: useMobileLayout,
             })}
-        </IntlProvider>),
+        </ModalLocaleRoot>),
     };
 };
 
-const Modal = ({size = 'default', getContainer, open, mobileFullscreen = true, ...props}) => {
+const Modal = withLocale(({size = 'default', getContainer, open, mobileFullscreen = true, ...props}) => {
     const childrenRef = useRef(null);
     const {
         isMobile,
@@ -438,7 +422,7 @@ const Modal = ({size = 'default', getContainer, open, mobileFullscreen = true, .
             getContainer={getPopupContainer}
         />
     </>);
-};
+});
 
 export const useModal = () => {
     const {modal} = App.useApp();

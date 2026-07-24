@@ -7,14 +7,6 @@ global.matchMedia = () => {
   return { addListener: jest.fn(), removeListener: jest.fn() };
 };
 
-jest.mock("@components/Intl", () => {
-  return {
-    IntlProvider: ({ children }) => {
-      return children;
-    },
-  };
-});
-
 test("普通的tabsModal", async () => {
   const TestComponent = () => {
     const [open, setOpen] = useState(false);

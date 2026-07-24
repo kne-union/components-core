@@ -2,13 +2,10 @@ import Modal, {useModal} from "@components/Modal";
 import {useState, useRef} from "react";
 import {CancelButton, SubmitButton} from "@kne/react-form-antd";
 import FetchButton from "@common/components/FetchButton";
-import {IntlProvider, FormattedMessage} from "@components/Intl";
+import {FormattedMessage} from "@kne/react-intl";
 import style from "./style.module.scss";
-import importMessages from "./locale";
 import {Button, Steps, Flex} from "antd";
 import computedModalCommonProps from "./computedModalCommonProps";
-
-const localeModuleName = "FormInfo";
 
 const FormStepState = ({items, children}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,28 +33,13 @@ const computedCommonProps = ({
         footerButtons: ({currentIndex, isLastStep}) => {
             const {footerButtons} = Object.assign({}, items[currentIndex]);
             return (footerButtons || [{
-                children: (<IntlProvider
-                    importMessages={importMessages}
-                    moduleName={localeModuleName}
-                >
-                    {cancelText || (<FormattedMessage
-                        id={"Cancel"}
-                        moduleName={localeModuleName}
-                    />)}
-                </IntlProvider>), ButtonComponent: CancelButton,
+                children: cancelText || <FormattedMessage id={"Cancel"}/>, ButtonComponent: CancelButton,
             }, {
-                type: "primary", children: (<IntlProvider
-                    importMessages={importMessages}
-                    moduleName={localeModuleName}
-                >
-                    {isLastStep ? completeText || (<FormattedMessage
-                        id={"Complete"}
-                        moduleName={localeModuleName}
-                    />) : nextText || (<FormattedMessage
-                        id={"Next"}
-                        moduleName={localeModuleName}
-                    />)}
-                </IntlProvider>), ButtonComponent: SubmitButton, autoClose: false,
+                type: "primary",
+                children: isLastStep ? completeText || <FormattedMessage id={"Complete"}/> : nextText ||
+                    <FormattedMessage id={"Next"}/>,
+                ButtonComponent: SubmitButton,
+                autoClose: false,
             },]);
         },
         withDecorator: (render, args) => {

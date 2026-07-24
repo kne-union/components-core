@@ -1,14 +1,14 @@
 import {Button} from "antd";
-import {createWithIntl, useIntl} from "@components/Intl";
+import {useIntl} from "@kne/react-intl";
 import Icon from "@components/Icon";
 import style from "./style.module.scss";
 import classnames from "classnames";
-import importMessages from "./locale";
+import withLocale from "./withLocale";
 import {MultiField as MultiFieldBase} from '@kne/react-form-plus';
 
 
-const MultiField = createWithIntl({moduleName: "FormInfo", importMessages})((props) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+const MultiField = withLocale((props) => {
+    const {formatMessage} = useIntl();
     return <MultiFieldBase {...props} itemRender={(children, {id, index, allowRemove, onRemove}) => {
         return <div
             key={id}

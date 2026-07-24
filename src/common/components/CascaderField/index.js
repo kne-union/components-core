@@ -12,7 +12,8 @@ import SimpleBar from "@common/components/SimpleBar";
 import classnames from "classnames";
 import style from "./style.module.scss";
 import { withFetch } from "@kne/react-fetch";
-import { useIntl } from "@components/Intl";
+import { useIntl } from "@kne/react-intl";
+import withLocale from "../withLocale";
 import commonStyle from "@common/components/SelectInnerInput/common.module.scss";
 
 const useSelectInnerContext = SelectInnerInput.useContext;
@@ -42,11 +43,11 @@ const SearchInner = withFetch(({ data, computedIsChecked, onSelect }) => {
     </SimpleBar>
   );
 });
-const CascaderInner = ({ value, setValue, size, selectLevel }) => {
+const CascaderInner = withLocale(({ value, setValue, size, selectLevel }) => {
   const { fetchApi, props } = useSelectInnerContext();
   const [searchText, setSearchText] = useState("");
   const dataFormat = useRefCallback(props.dataFormat);
-  const { formatMessage } = useIntl({ moduleName: "Common" });
+  const { formatMessage } = useIntl();
   const fetchData = fetchApi.data;
   const mapping = useMemo(() => {
     return new Map(
@@ -312,7 +313,7 @@ const CascaderInner = ({ value, setValue, size, selectLevel }) => {
       )}
     </div>
   );
-};
+});
 
 const CascaderField = ({ maxLength, nodeFormat, dataFormat, ...props }) => {
   return (

@@ -6,27 +6,27 @@ import InfoPage from "@components/InfoPage";
 import ConfirmButton from "@components/ConfirmButton";
 import FormInfo from "./FormInfo";
 import classnames from "classnames";
-import importMessages from "./locale";
-import {createWithIntl, FormattedMessage, useIntl} from "@components/Intl";
+import withLocale from "./withLocale";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
 import style from "./style.module.scss";
 
-const List = createWithIntl({moduleName: "FormInfo", importMessages})(({
-                                                                           addText,
-                                                                           className,
-                                                                           important,
-                                                                           outer = <Outer/>,
-                                                                           renderChildren = (children) => children,
-                                                                           deleteButtonProps,
-                                                                           title,
-                                                                           ...props
-                                                                       }) => {
-    const {formatMessage} = useIntl({moduleName: "FormInfo"});
+const List = withLocale(({
+                             addText,
+                             className,
+                             important,
+                             outer = <Outer/>,
+                             renderChildren = (children) => children,
+                             deleteButtonProps,
+                             title,
+                             ...props
+                         }) => {
+    const {formatMessage} = useIntl();
     return <SubList {...props} listRender={({list, title, id, allowRemove, onRemove, ...others}) => {
         return <div key={id} className={classnames(style["list-item"], {
             [style["is-important"]]: important,
         })}>
             <FormInfo {...others} title={title} list={list} className={style["list-item-part"]} gap={16}
-                      extra={<FormattedMessage id="delText" moduleName="FormInfo">
+                      extra={<FormattedMessage id="delText">
                           {(text) => allowRemove ? (<ConfirmButton
                               danger
                               className={"btn-no-padding"}
@@ -60,7 +60,7 @@ const Outer = ({add, addText, className, allowAdd, ...props}) => {
     return (<InfoPage.Part
         {...props}
         className={className}
-        extra={allowAdd && (<FormattedMessage id="addText" moduleName="FormInfo">
+        extra={allowAdd && (<FormattedMessage id="addText">
             {(text) => (<Typography.Text className={style["list-btn"]} onClick={add}>
                 <Icon type="icon-tianjia"/>
                 {addText || text}

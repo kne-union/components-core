@@ -33,6 +33,7 @@ npm i --save @kne/table-page
 - **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 参与请求但不在已选标签中重复展示；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
 - **批量操作（batchActions）**：配合 `rowSelection` 和 `useSelectedRow`，提供下拉菜单形式的批量操作（如批量导出、批量通知），未选中时自动禁用
 - **PC 卡片视图（renderCard）**：取值同 `renderMobile`（true / function / preset 字符串），生效后 PC 端可切换表格/卡片（状态按 `name` 存 localStorage）；`forceCard` 强制卡片并不显示切换按钮；卡片模式下外框透明、默认触底下拉加载；移动端忽略
+- **树形数据**：透传 `dataType`（`tree` / `treeList`）、`expandedKeys`、`onLoadChildren`、`rowSelection.checkRelation` 等给内部 Table / TableView
 - **已选筛选值展示**：工具栏下方展示当前生效的筛选条件标签，支持快速清除
 
 #### Table
@@ -44,6 +45,7 @@ npm i --save @kne/table-page
 - **配置持久化**：设置 `name` 后，列宽和显示状态自动保存到 localStorage
 - **分组表头**：通过 `groupHeader` 配置实现多级表头结构
 - **浮动横向滚动条**：当表格宽度超出容器时，底部自动显示横向滚动条（通过 `horizontalScroller` 控制）
+- **树形数据**：支持与 `TableView` 相同的 `dataType`（`tree` / `treeList`），映射为 antd Table 树形展开，含懒加载与 `checkRelation` 勾选关联
 
 #### TableView
 
@@ -54,6 +56,7 @@ npm i --save @kne/table-page
 - 行选择（checkbox 多选 / radio 单选）
 - 行点击事件
 - 通过 `render` 属性自定义渲染，可拆分表头和表体
+- 树形数据（`dataType: 'tree' | 'treeList'`）：展开收起、懒加载、移动端面包屑卡片
 
 ### 核心 Hooks
 
@@ -107,7 +110,8 @@ npm i --save @kne/table-page
 
 - `useTableConfig` 管理列宽拖动、显示/隐藏、localStorage 持久化
 - `useGroupHeader` 生成分组表头
-- `rowSelection` 映射为 antd 行选择（含 `allowSelectedAll` 全选）
+- `rowSelection` 映射为 antd 行选择（含 `allowSelectedAll` 全选；树形下支持 `checkRelation`）
+- `dataType` 为 `tree` / `treeList` 时归一化为嵌套数据并接入 antd `expandable`
 - `render={({ header, renderBody }) => ...}` 可自定义表格外层，`renderBody()` 返回完整 antd Table
 
 #### 移动端：`renderMobile`
@@ -186,15 +190,15 @@ npm i --save @kne/table-page
 #### 示例代码
 
 - TablePage
-- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、renderCard PC 卡片视图切换、tab 分类切换、列配置、总结栏；空数据（total 为 0）时不显示分页器。文末含仅 SearchInput + renderMobile 自定义卡片示例（验证工具栏与卡片间距）
+- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、renderCard PC 卡片视图切换、tab 分类切换、列配置、总结栏、树形 dataType（含筛选/批量/操作列/卡片切换/懒加载）；空数据（total 为 0）时不显示分页器。文末含仅 SearchInput + renderMobile 自定义卡片示例（验证工具栏与卡片间距）
 - _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
 
 ```jsx
-const { default: TablePage, Table } = _TablePage;
+const { default: TablePage, Table, mergeTreeChildren } = _TablePage;
 const { fields } = _ReactFilter;
 const { SuperSelectFilterItem } = fields;
-const { Table: AntTable, Col, Flex, Row, Tag, Button, Space, Switch, message } = antd;
-const { useMemo, useState } = React;
+const { Table: AntTable, Col, Flex, Row, Tag, Button, Space, Switch, Radio, message } = antd;
+const { useMemo, useState, useRef } = React;
 
 const TOTAL = 156;
 
@@ -770,12 +774,353 @@ const SearchMobileExample = () => (
   </Flex>
 );
 
+
+
+const orgStatusMap = {
+  active: { type: 'success', text: '启用' },
+  paused: { type: 'warning', text: '停用' }
+};
+
+const orgRegionOptions = [
+  { value: 'east', label: '华东' },
+  { value: 'north', label: '华北' },
+  { value: 'south', label: '华南' }
+];
+
+const orgStatusOptions = Object.entries(orgStatusMap).map(([value, { text }]) => ({ value, label: text }));
+
+const treeColumns = [
+  { name: 'name', title: '名称', width: 200, renderType: 'main' },
+  { name: 'code', title: '编码', width: 120 },
+  { name: 'owner', title: '负责人', width: 100 },
+  {
+    name: 'status',
+    title: '状态',
+    width: 100,
+    renderType: 'status',
+    getValueOf: item => orgStatusMap[item.status] || { type: 'default', text: item.status }
+  },
+  {
+    name: 'options',
+    title: '操作',
+    width: 160,
+    renderType: 'options',
+    fixed: 'right',
+    getValueOf: item => [
+      { children: '查看', onClick: () => message.info(&#96;查看 ${item.name}&#96;) },
+      { children: '编辑', onClick: () => message.info(&#96;编辑 ${item.name}&#96;) },
+      {
+        children: '删除',
+        isDelete: true,
+        message: &#96;确定删除 ${item.name} 吗？&#96;,
+        onClick: () => message.warning(&#96;已删除 ${item.name}&#96;)
+      }
+    ]
+  }
+];
+
+const orgTreeData = [
+  {
+    id: '1',
+    name: '华东区',
+    code: 'EAST',
+    owner: '张三',
+    region: 'east',
+    status: 'active',
+    children: [
+      {
+        id: '1-1',
+        name: '上海',
+        code: 'SH',
+        owner: '李四',
+        region: 'east',
+        status: 'active',
+        children: [
+          { id: '1-1-1', name: '浦东分部', code: 'SH-PD', owner: '王五', region: 'east', status: 'active' },
+          { id: '1-1-2', name: '徐汇分部', code: 'SH-XH', owner: '赵六', region: 'east', status: 'paused' }
+        ]
+      },
+      { id: '1-2', name: '杭州', code: 'HZ', owner: '钱七', region: 'east', status: 'active' }
+    ]
+  },
+  {
+    id: '2',
+    name: '华北区',
+    code: 'NORTH',
+    owner: '孙八',
+    region: 'north',
+    status: 'active',
+    children: [{ id: '2-1', name: '北京', code: 'BJ', owner: '周九', region: 'north', status: 'paused' }]
+  }
+];
+
+const orgTreeListData = [
+  { id: '1', name: '华东区', code: 'EAST', owner: '张三', parentId: null, region: 'east', status: 'active' },
+  { id: '1-1', name: '上海', code: 'SH', owner: '李四', parentId: '1', region: 'east', status: 'active' },
+  { id: '1-1-1', name: '浦东分部', code: 'SH-PD', owner: '王五', parentId: '1-1', region: 'east', status: 'active' },
+  { id: '1-1-2', name: '徐汇分部', code: 'SH-XH', owner: '赵六', parentId: '1-1', region: 'east', status: 'paused' },
+  { id: '1-2', name: '杭州', code: 'HZ', owner: '钱七', parentId: '1', region: 'east', status: 'active' },
+  { id: '2', name: '华北区', code: 'NORTH', owner: '孙八', parentId: '', region: 'north', status: 'active' },
+  { id: '2-1', name: '北京', code: 'BJ', owner: '周九', parentId: '2', region: 'north', status: 'paused' }
+];
+
+const lazyOrgRoot = [
+  { id: 'org-1', name: '集团总部', code: 'HQ', owner: '张三', parentId: null, region: 'east', status: 'active', hasChildren: true },
+  { id: 'org-2', name: '分公司', code: 'BR', owner: '李四', parentId: null, region: 'south', status: 'active', hasChildren: true }
+];
+
+const lazyOrgChildrenMap = {
+  'org-1': [
+    { id: 'org-1-1', name: '研发中心', code: 'RD', owner: '王五', region: 'east', status: 'active', hasChildren: true },
+    { id: 'org-1-2', name: '市场部', code: 'MKT', owner: '赵六', region: 'east', status: 'paused', hasChildren: false }
+  ],
+  'org-1-1': [
+    { id: 'org-1-1-1', name: '前端组', code: 'FE', owner: '钱七', region: 'east', status: 'active', hasChildren: false },
+    { id: 'org-1-1-2', name: '后端组', code: 'BE', owner: '孙八', region: 'east', status: 'active', hasChildren: false }
+  ],
+  'org-2': [{ id: 'org-2-1', name: '华南办', code: 'SC', owner: '周九', region: 'south', status: 'active', hasChildren: false }]
+};
+
+const OrgTreeCard = ({ item }) => (
+  <div
+    style={{
+      boxSizing: 'border-box',
+      border: '1px solid #f0f0f0',
+      borderRadius: 8,
+      padding: 16,
+      background: '#fff'
+    }}
+  >
+    <Flex justify="space-between" align="center" style={{ marginBottom: 8 }}>
+      <strong>{item.name}</strong>
+      <Tag color={orgStatusMap[item.status]?.type}>{orgStatusMap[item.status]?.text || item.status}</Tag>
+    </Flex>
+    <Flex align="center" gap={8} wrap style={{ marginBottom: 4, fontSize: 13, color: 'rgba(0,0,0,0.65)' }}>
+      <span>编码 {item.code}</span>
+      <span style={{ color: 'rgba(0,0,0,0.25)' }}>·</span>
+      <span>负责人 {item.owner}</span>
+    </Flex>
+    <Flex justify="flex-end" gap={4} style={{ marginTop: 12, paddingTop: 8, borderTop: '1px solid #f0f0f0' }}>
+      <Button type="link" size="small" onClick={() => message.info(&#96;查看 ${item.name}&#96;)}>
+        查看
+      </Button>
+      <Button type="link" size="small" onClick={() => message.info(&#96;编辑 ${item.name}&#96;)}>
+        编辑
+      </Button>
+    </Flex>
+  </div>
+);
+
+const renderOrgTreeCard = ({ displayDataSource, dataSource = [] }) => {
+  const list = displayDataSource || dataSource;
+  return (
+    <Row gutter={[12, 12]}>
+      {list.map(item => (
+        <Col span={12} key={item.id}>
+          <OrgTreeCard item={item} />
+        </Col>
+      ))}
+    </Row>
+  );
+};
+
+const applyOrgTreeFilters = (list, data, requestParams) => {
+  const params = Object.assign({}, requestParams?.data, data);
+  const keyword = String(params.keyword || '').trim().toLowerCase();
+  const region = normalizeFilterValue(params.region);
+  const status = normalizeFilterValue(params.status);
+  return (list || []).filter(item => {
+    if (keyword) {
+      const hit = [item.name, item.code, item.owner].some(v => String(v || '').toLowerCase().includes(keyword));
+      if (!hit) return false;
+    }
+    if (region && item.region !== region) return false;
+    if (status && item.status !== status) return false;
+    return true;
+  });
+};
+
+/** TablePage 树形：筛选 / 搜索 / 批量 / 操作列 / 卡片切换 / 懒加载 */
+const TreePageExample = () => {
+  const treePageRef = useRef(null);
+  const { selectedRowKeys, selectedRows, getRowSelection, clearSelectedRows } = Table.useSelectedRow({ rowKey: 'id' });
+  const [checkRelation, setCheckRelation] = useState('parent');
+  const lazyDataRef = useRef(lazyOrgRoot);
+  const lazyPageRef = useRef(null);
+
+  const handleLoadChildren = (item, { key }) =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        lazyDataRef.current = mergeTreeChildren(lazyDataRef.current, lazyOrgChildrenMap[key] || [], {
+          parentKeyValue: key,
+          dataType: 'treeList',
+          rowKey: 'id',
+          parentKey: 'parentId',
+          hasChildrenKey: 'hasChildren'
+        });
+        lazyPageRef.current?.reload?.();
+        resolve();
+      }, 800);
+    });
+
+  return (
+    <Flex vertical gap={24}>
+      <div style={{ color: '#666', fontSize: 13, lineHeight: 1.7 }}>
+        <Tag color="blue" style={{ marginRight: 8 }}>
+          tree
+        </Tag>
+        树形 TablePage：支持 <code>dataType</code>、<code>checkRelation</code>，并演示筛选 / 搜索 / 批量操作 / 行操作 / <code>renderCard</code> 卡片切换 / 懒加载。
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8, color: '#666' }}>treeList + 工具栏（筛选 / 批量 / 操作 / 卡片切换）</div>
+        <Space style={{ marginBottom: 8 }} wrap>
+          <span style={{ color: '#666' }}>checkRelation：</span>
+          <Radio.Group
+            value={checkRelation}
+            optionType="button"
+            options={[
+              { label: 'parent', value: 'parent' },
+              { label: 'all', value: 'all' },
+              { label: 'independent', value: 'independent' }
+            ]}
+            onChange={e => {
+              setCheckRelation(e.target.value);
+              clearSelectedRows();
+            }}
+          />
+        </Space>
+        <TablePage
+          ref={treePageRef}
+          name="demo-table-page-tree-list"
+          pagination={{ open: false }}
+          columns={treeColumns}
+          dataType="treeList"
+          defaultExpandedKeys
+          controllerOpen={false}
+          renderMobile
+          renderCard={renderOrgTreeCard}
+          rowSelection={getRowSelection(orgTreeListData, { type: 'checkbox', allowSelectedAll: true, checkRelation })}
+          selectedRows={selectedRows}
+          search={{ name: 'keyword', label: '关键词', placeholder: '搜索名称/编码/负责人', style: { width: 240 } }}
+          buttonGroup={{
+            list: [
+              {
+                type: 'primary',
+                children: '新建组织',
+                onClick: () => message.success('打开新建组织')
+              },
+              {
+                children: '导出组织树',
+                onClick: () => message.info('正在导出组织树')
+              }
+            ]
+          }}
+          tab={{
+            name: 'region',
+            label: '大区',
+            list: orgRegionOptions
+          }}
+          filter={{
+            list: [
+              [
+                {
+                  type: SuperSelectFilterItem,
+                  props: { name: 'status', label: '状态', single: true, options: orgStatusOptions }
+                }
+              ]
+            ],
+            displayLine: 1
+          }}
+          batchActions={[
+            {
+              key: 'export',
+              label: '批量导出',
+              onClick: ({ selectedRowKeys: keys }) => {
+                message.info(&#96;正在导出 ${keys.length} 个节点&#96;);
+              }
+            },
+            {
+              key: 'enable',
+              label: '批量启用',
+              onClick: ({ selectedRowKeys: keys }) => {
+                message.success(&#96;已启用 ${keys.length} 个节点&#96;);
+              }
+            },
+            {
+              key: 'disable',
+              label: '批量停用',
+              danger: true,
+              onClick: ({ selectedRowKeys: keys }) => {
+                message.warning(&#96;已停用 ${keys.length} 个节点&#96;);
+              }
+            }
+          ]}
+          loader={({ data, requestParams }) => {
+            const filtered = applyOrgTreeFilters(orgTreeListData, data, requestParams);
+            return Promise.resolve({
+              pageData: filtered,
+              totalCount: filtered.length
+            });
+          }}
+        />
+        <div style={{ marginTop: 8, color: '#666', fontSize: 13 }}>已选 key：{selectedRowKeys.join(', ') || '无'}</div>
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8, color: '#666' }}>dataType="tree"（嵌套 children）</div>
+        <TablePage
+          name="demo-table-page-tree"
+          pagination={{ open: false }}
+          columns={treeColumns}
+          dataType="tree"
+          defaultExpandedKeys
+          controllerOpen={false}
+          renderMobile
+          renderCard={renderOrgTreeCard}
+          buttonGroup={{
+            list: [{ type: 'primary', children: '新建', onClick: () => message.success('新建') }]
+          }}
+          loader={() =>
+            Promise.resolve({
+              pageData: orgTreeData,
+              totalCount: orgTreeData.length
+            })
+          }
+        />
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8, color: '#666' }}>懒加载：hasChildren + onLoadChildren + mergeTreeChildren</div>
+        <TablePage
+          ref={lazyPageRef}
+          name="demo-table-page-tree-lazy"
+          pagination={{ open: false }}
+          columns={treeColumns}
+          dataType="treeList"
+          controllerOpen={false}
+          onLoadChildren={handleLoadChildren}
+          loader={() =>
+            Promise.resolve({
+              pageData: lazyDataRef.current,
+              totalCount: lazyDataRef.current.length
+            })
+          }
+        />
+      </div>
+    </Flex>
+  );
+};
+
+
 render(
   <Flex vertical gap={32}>
     <BaseExample />
+    <TreePageExample />
     <SearchMobileExample />
   </Flex>
 );
+
 
 ```
 
@@ -1368,6 +1713,163 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
+
+```
+
+- tree
+- 树状数据：Table / TableView 支持 dataType 为 tree / treeList，含展开收起、懒加载、checkRelation 勾选关联
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd)
+
+```jsx
+const { Table, TableView, mergeTreeChildren } = _TablePage;
+const { Space, Button, Radio } = antd;
+const { useState } = React;
+
+const columns = [
+  { name: 'name', title: '名称', renderType: 'main' },
+  { name: 'code', title: '编码', width: 120 },
+  { name: 'owner', title: '负责人', width: 100 }
+];
+
+const treeData = [
+  {
+    id: '1',
+    name: '华东区',
+    code: 'EAST',
+    owner: '张三',
+    children: [
+      {
+        id: '1-1',
+        name: '上海',
+        code: 'SH',
+        owner: '李四',
+        children: [
+          { id: '1-1-1', name: '浦东分部', code: 'SH-PD', owner: '王五' },
+          { id: '1-1-2', name: '徐汇分部', code: 'SH-XH', owner: '赵六' }
+        ]
+      },
+      { id: '1-2', name: '杭州', code: 'HZ', owner: '钱七' }
+    ]
+  },
+  {
+    id: '2',
+    name: '华北区',
+    code: 'NORTH',
+    owner: '孙八',
+    children: [{ id: '2-1', name: '北京', code: 'BJ', owner: '周九' }]
+  }
+];
+
+const treeListData = [
+  { id: '1', name: '华东区', code: 'EAST', owner: '张三', parentId: null },
+  { id: '1-1', name: '上海', code: 'SH', owner: '李四', parentId: '1' },
+  { id: '1-1-1', name: '浦东分部', code: 'SH-PD', owner: '王五', parentId: '1-1' },
+  { id: '1-1-2', name: '徐汇分部', code: 'SH-XH', owner: '赵六', parentId: '1-1' },
+  { id: '1-2', name: '杭州', code: 'HZ', owner: '钱七', parentId: '1' },
+  { id: '2', name: '华北区', code: 'NORTH', owner: '孙八', parentId: '' },
+  { id: '2-1', name: '北京', code: 'BJ', owner: '周九', parentId: '2' }
+];
+
+const lazyRootData = [
+  { id: 'org-1', name: '集团总部', code: 'HQ', owner: '张三', parentId: null, hasChildren: true },
+  { id: 'org-2', name: '分公司', code: 'BR', owner: '李四', parentId: null, hasChildren: true }
+];
+
+const lazyChildrenMap = {
+  'org-1': [
+    { id: 'org-1-1', name: '研发中心', code: 'RD', owner: '王五', hasChildren: true },
+    { id: 'org-1-2', name: '市场部', code: 'MKT', owner: '赵六', hasChildren: false }
+  ],
+  'org-1-1': [
+    { id: 'org-1-1-1', name: '前端组', code: 'FE', owner: '钱七', hasChildren: false },
+    { id: 'org-1-1-2', name: '后端组', code: 'BE', owner: '孙八', hasChildren: false }
+  ],
+  'org-2': [{ id: 'org-2-1', name: '华南办', code: 'SC', owner: '周九', hasChildren: false }]
+};
+
+const TreeExample = () => {
+  const { selectedRowKeys, getRowSelection, clearSelectedRows } = Table.useSelectedRow({ rowKey: 'id' });
+  const treeListSelection = Table.useSelectedRow({ rowKey: 'id' });
+  const [expandedKeys, setExpandedKeys] = useState(false);
+  const [checkRelation, setCheckRelation] = useState('parent');
+  const [lazyData, setLazyData] = useState(lazyRootData);
+
+  const handleLoadChildren = (item, { key }) =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        const children = lazyChildrenMap[key] || [];
+        setLazyData(prev =>
+          mergeTreeChildren(prev, children, {
+            parentKeyValue: key,
+            dataType: 'treeList',
+            rowKey: 'id',
+            parentKey: 'parentId',
+            hasChildrenKey: 'hasChildren'
+          })
+        );
+        resolve();
+      }, 800);
+    });
+
+  return (
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <div>
+        <div style={{ marginBottom: 8 }}>Table：dataType="tree"（嵌套 children）</div>
+        <Table dataSource={treeData} columns={columns} dataType="tree" defaultExpandedKeys controllerOpen={false} />
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8 }}>Table：dataType="treeList" + 勾选（checkRelation）</div>
+        <Space style={{ marginBottom: 8 }} wrap>
+          <Radio.Group
+            value={checkRelation}
+            optionType="button"
+            options={[
+              { label: 'parent', value: 'parent' },
+              { label: 'all', value: 'all' },
+              { label: 'independent', value: 'independent' }
+            ]}
+            onChange={e => {
+              setCheckRelation(e.target.value);
+              clearSelectedRows();
+            }}
+          />
+        </Space>
+        <Table dataSource={treeListData} columns={columns} dataType="treeList" defaultExpandedKeys controllerOpen={false} rowSelection={getRowSelection(treeListData, { allowSelectedAll: true, checkRelation })} />
+        <div style={{ marginTop: 8 }}>已选 key：{selectedRowKeys.join(', ') || '无'}</div>
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8 }}>Table：懒加载（hasChildren + onLoadChildren + mergeTreeChildren）</div>
+        <Table dataSource={lazyData} columns={columns} dataType="treeList" onLoadChildren={handleLoadChildren} controllerOpen={false} />
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8 }}>Table：受控展开 true / false / key 数组</div>
+        <Space style={{ marginBottom: 8 }}>
+          <Button size="small" onClick={() => setExpandedKeys(true)}>
+            全部展开
+          </Button>
+          <Button size="small" onClick={() => setExpandedKeys(false)}>
+            全部收起
+          </Button>
+          <Button size="small" onClick={() => setExpandedKeys(['1', '1-1'])}>
+            展开指定节点
+          </Button>
+        </Space>
+        <Table dataSource={treeData} columns={columns} dataType="tree" expandedKeys={expandedKeys} onExpandedKeysChange={setExpandedKeys} controllerOpen={false} />
+      </div>
+
+      <div>
+        <div style={{ marginBottom: 8 }}>TableView：同样 API（CSS Grid 树形）</div>
+        <TableView dataSource={treeListData} columns={columns} dataType="treeList" defaultExpandedKeys rowSelection={treeListSelection.getRowSelection(treeListData, { allowSelectedAll: true, checkRelation: 'parent' })} />
+      </div>
+    </Space>
+  );
+};
+
+render(<TreeExample />);
 
 
 ```
@@ -3615,7 +4117,7 @@ render(<BaseExample />);
 | selectedRows | array | - | 已选行数据，传给 `batchActions` 的 `onClick` 上下文 |
 | className | string | - | 自定义类名 |
 | ...fetchProps | - | - | 其余属性透传给 `@kne/react-fetch`（如 `url`、`params`、`auto` 等） |
-| ...tableProps | - | - | 其余属性透传给内部 `Table` / `TableView`（如 `rowKey`、`rowSelection`、`scroll`、`size`、`renderMobile`、`sortRender`、`mobileSortToolbar`） |
+| ...tableProps | - | - | 其余属性透传给内部 `Table` / `TableView`（如 `rowKey`、`rowSelection`、`scroll`、`size`、`renderMobile`、`sortRender`、`mobileSortToolbar`、`dataType`、`expandedKeys`、`onLoadChildren` 等树形属性） |
 
 #### pagination
 
@@ -3802,6 +4304,16 @@ render(<BaseExample />);
 | sortRender | function | - | 排序按钮渲染，由 `useSort` 提供（桌面端表头） |
 | mobileSortToolbar | function | - | 移动端排序工具栏，由 `useSort` 提供；传入 TableView 后由 `renderToolbar` / 默认卡片复用 |
 | size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖 |
+| dataType | `'list'` \| `'tree'` \| `'treeList'` | `'list'` | 数据形态。`list` 扁平；`tree` 使用 `childrenKey` 嵌套；`treeList` 按 `parentKey` 组装为树 |
+| parentKey | string | `'parentId'` | `treeList` 父子关联字段 |
+| childrenKey | string | `'children'` | 子节点字段名 |
+| hasChildrenKey | string | `'hasChildren'` | 懒加载标记；为 `true` 时即使尚无子节点也显示展开图标 |
+| treeTitleKey | string \| function | `'name'` | 移动端树形面包屑文案字段（委托 TableView） |
+| onLoadChildren | function | - | 懒加载：`(item, { key }) => void \| Promise`；请用 `mergeTreeChildren` 合并回 dataSource |
+| expandedKeys | `true` \| `false` \| `Array` | - | 受控展开。`true` 全开，`false` 全关，数组为展开 key |
+| defaultExpandedKeys | `true` \| `false` \| `Array` | `false` | 非受控初始展开 |
+| onExpandedKeysChange | function | - | 展开变化回调 `(keys) => void` |
+| indentSize | number | `16` | 树形每层缩进（px），映射 antd `expandable.indentSize` |
 
 `renderMobile` 为 function 时，TableView 会传入已接好 `rowSelection` / `mobileSortToolbar` 的能力，自定义布局只需选用：
 
@@ -3869,6 +4381,7 @@ renderMobile={({ dataSource, renderToolbar, getSelectionProps, getRowKey }) => (
 | allowSelectedAll | boolean | - | 是否允许全选（仅 checkbox 模式） |
 | isSelectedAll | boolean | - | 是否全选状态 |
 | onIsSelectAllChange | function | - | 全选状态变化回调 |
+| checkRelation | `'parent'` \| `'all'` \| `'independent'` | `'parent'` | 树形 checkbox 父子勾选关联（仅 `dataType` 为 `tree` / `treeList`）：`parent` 勾父级时子级 UI 全勾但值只留父级；`all` 值含父级与子孙；`independent` 互不影响 |
 
 ### useSelectedRow
 
@@ -3978,7 +4491,12 @@ const sortedData = useMemo(() => Table.sortDataSource(dataSource, sort, columns)
 | controllerOpen | boolean | `true` | 是否开启列宽拖动与列配置面板 |
 | tableServerApis | object | - | 自定义列配置存储 API，默认使用 `localStorage` |
 | size | `'small'` \| `'large'` | - | 单元格内边距：默认 `8px`，`small` 为 `4px`，`large` 为 `14px 8px`；可通过 CSS 变量覆盖（同 TableView） |
-| ...antdTableProps | - | - | 其余属性透传给 antd `Table`（如 `scroll`、`bordered`） |
+| dataType | `'list'` \| `'tree'` \| `'treeList'` | `'list'` | 同 TableView；`tree` / `treeList` 时使用与 TableView 一致的自绘展开列（三角 + 缩进），并隐藏 antd 默认展开列 |
+| parentKey / childrenKey / hasChildrenKey | string | 见 TableView | 同 TableView |
+| onLoadChildren | function | - | 同 TableView；展开时触发懒加载，三角显示 loading |
+| expandedKeys / defaultExpandedKeys / onExpandedKeysChange | - | - | 同 TableView |
+| indentSize | number | `16` | 同 TableView；作用于自绘展开列缩进 |
+| ...antdTableProps | - | - | 其余属性透传给 antd `Table`（如 `scroll`、`bordered`）；树形下内部会合并 `expandable`（`showExpandColumn: false`） |
 
 #### 与 TableView 的差异
 

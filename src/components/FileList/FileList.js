@@ -5,13 +5,13 @@ import Title from "./Title";
 import DragArea, {DragAreaOuter, DragButton, UploadButton} from "./DragArea";
 import {List} from "@components/File";
 import FilePreview from "@components/FilePreview";
-import {useIntl, IntlProvider} from "@components/Intl";
+import {useIntl} from "@kne/react-intl";
+import withLocale from "./withLocale";
 import {useFileUpload} from "@kne/react-file";
 import {usePreset} from "@components/Global";
-import importMessages from "./locale";
 import style from "./style.module.scss";
 
-const FileListInner = ({
+const FileList = withLocale(({
                            className,
                            maxLength = Number.MAX_VALUE,
                            list: _previewList,
@@ -45,7 +45,7 @@ const FileListInner = ({
         }, onUpload: apis.onUpload || apis.ossUpload,
     });
     const [currentTab, setCurrentTab] = useState(defaultTab);
-    const {formatMessage} = useIntl({moduleName: "FileList"});
+    const {formatMessage} = useIntl();
     const {message} = App.useApp();
     const previewMap = useMemo(() => {
         return new Map(previewList.map((item) => {
@@ -146,12 +146,6 @@ const FileListInner = ({
             <DragArea/>
         </DragAreaOuter>
     </div>);
-};
-
-const FileList = (props) => {
-    return (<IntlProvider importMessages={importMessages} moduleName="FileList">
-        <FileListInner {...props} />
-    </IntlProvider>);
-};
+});
 
 export default FileList;

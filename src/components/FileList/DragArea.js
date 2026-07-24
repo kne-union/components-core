@@ -1,12 +1,12 @@
 import style from "./style.module.scss";
 import {useRef, useState} from "react";
 import {Button, Flex} from "antd";
-import importMessages from "./locale";
 import useOutside from "@kne/use-click-outside";
 import classnames from "classnames";
 import {Provider, useContext} from "./context";
 import Icon from "@components/Icon";
-import {FormattedMessage, useIntl, IntlProvider} from "@components/Intl";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
+import withLocale from "./withLocale";
 import {FileInput} from "@kne/react-file";
 import acceptFunc from "@common/utils/accept";
 
@@ -21,7 +21,7 @@ export const DragButton = ({children}) => {
     >
         <Button type="text" className="btn-no-padding">
             <Icon type="icon-tuozhuaishangchuan"/>
-            {children || <FormattedMessage id="dragText" moduleName="FileList"/>}
+            {children || <FormattedMessage id="dragText"/>}
         </Button>
     </div>);
 };
@@ -43,7 +43,7 @@ export const UploadButton = ({children}) => {
         }}
     </FileInput>);
 };
-export const DragAreaOuter = ({
+export const DragAreaOuter = withLocale(({
                                   title,
                                   accept = [".png", ".jpg", ".pdf", ".docx", ".doc"],
                                   fileSize = 20,
@@ -64,8 +64,7 @@ export const DragAreaOuter = ({
         }
         onOpenChange(false);
     });
-    return (<IntlProvider importMessages={importMessages} moduleName="FileList">
-        <Provider
+    return (<Provider
             value={{
                 open, onOpenChange, accept, fileSize, maxLength, onFileSelected, getDragButtonEl: (el) => {
                     dragButtonRef.current = el;
@@ -84,9 +83,8 @@ export const DragAreaOuter = ({
                     {children}
                 </div>
             </Flex>
-        </Provider>
-    </IntlProvider>);
-};
+        </Provider>);
+});
 
 export const UploadTips = ({
                                icon, title, renderTips = (defaultTips) => {
@@ -94,8 +92,8 @@ export const UploadTips = ({
     }
                            }) => {
     const {accept, fileSize, maxLength} = useContext();
-    const intl = useIntl({moduleName: "FileList"});
-    const tipsText = renderTips(intl.formatMessage({id: "dragTips"}, {
+    const {formatMessage} = useIntl();
+    const tipsText = renderTips(formatMessage({id: "dragTips"}, {
         accept: accept.map((str) => str.replace(/^\./, "")).join("、"), size: fileSize,
     }), {
         fileSize, maxLength, accept,
@@ -106,7 +104,7 @@ export const UploadTips = ({
             {icon || <Icon type="icon-shangchuan" size={64}/>}
         </div>
         <div className={style["upload-drag-title"]}>
-            {title || <FormattedMessage id="dragTitle" moduleName="FileList"/>}
+            {title || <FormattedMessage id="dragTitle"/>}
         </div>
         <div className={style["upload-drag-text"]}>{tipsText}</div>
     </div>);

@@ -16,15 +16,14 @@ import merge from "lodash/merge";
 import {useIsMobile} from "@kne/responsive-utils";
 import style from "./style.module.scss";
 import defaultAvatarIcon from "../../../../defaultAvatar.svg";
-import {IntlProvider, FormattedMessage, useIntl} from "@components/Intl";
-import importMessages from "@components/FormInfo/locale";
-import {createWithIntl} from "../../../Intl";
+import {FormattedMessage, useIntl} from "@kne/react-intl";
+import withLocale from "@components/FormInfo/withLocale";
 
 const {useOnChange} = hooks;
 
 const AvatarDisplay = Image.Avatar;
 
-const localeModuleName = "FormInfo";
+const CropTitle = withLocale(() => <FormattedMessage id={"Crop"}/>);
 
 const UploadButton = withInputFile(({
                                         className,
@@ -81,7 +80,7 @@ const dataURLtoBlob = (dataURL) => {
     });
 };
 
-const ControlAvatarEditor = forwardRef(({
+const ControlAvatarEditor = withLocale(forwardRef(({
                                             image: propsImage,
                                             width,
                                             height,
@@ -95,7 +94,7 @@ const ControlAvatarEditor = forwardRef(({
                                             border = 1,
                                             ...props
                                         }, ref) => {
-    const intl = useIntl({moduleName: localeModuleName});
+    const intl = useIntl();
     const isMobile = useIsMobile();
     const [baseWidth, setBaseWidth] = useState(0);
     const outerRef = useRef(null);
@@ -242,7 +241,7 @@ const ControlAvatarEditor = forwardRef(({
             </Col>)}
         </Row>
     </div>);
-});
+}));
 
 const useDropModal = () => {
     const modal = useModal();
@@ -287,39 +286,34 @@ const useDropModal = () => {
     };
 };
 
-const AvatarField = createWithIntl({importMessages, moduleName: "FormInfo"})(({
-                                                                                  value,
-                                                                                  gender,
-                                                                                  fileSize = 10,
-                                                                                  accept = [".jpg", ".png", ".jpeg"],
-                                                                                  openEditor = true,
-                                                                                  apis: currentApis,
-                                                                                  renderTips = (defaultTips) => {
-                                                                                      return defaultTips;
-                                                                                  },
-                                                                                  onChange,
-                                                                                  shape = "circle",
-                                                                                  width = 200,
-                                                                                  height = 200,
-                                                                                  title = <IntlProvider
-                                                                                      importMessages={importMessages}
-                                                                                      moduleName="FormInfo">
-                                                                                      <FormattedMessage id={"Crop"}
-                                                                                                        moduleName="FormInfo"/>
-                                                                                  </IntlProvider>,
-                                                                                  border = 1,
-                                                                                  icon,
-                                                                                  dropModalSize = "small",
-                                                                                  defaultAvatar = defaultAvatarIcon,
-                                                                                  displayAvatar,
-                                                                              }) => {
+const AvatarField = withLocale(({
+                                    value,
+                                    gender,
+                                    fileSize = 10,
+                                    accept = [".jpg", ".png", ".jpeg"],
+                                    openEditor = true,
+                                    apis: currentApis,
+                                    renderTips = (defaultTips) => {
+                                        return defaultTips;
+                                    },
+                                    onChange,
+                                    shape = "circle",
+                                    width = 200,
+                                    height = 200,
+                                    title = <CropTitle/>,
+                                    border = 1,
+                                    icon,
+                                    dropModalSize = "small",
+                                    defaultAvatar = defaultAvatarIcon,
+                                    displayAvatar,
+                                }) => {
     const [loading, setLoading] = useState(false);
     const {apis: baseApis} = usePreset();
     const apis = merge({}, baseApis, currentApis);
     const ossUpload = apis.ossUpload || apis.upload || apis.file?.upload;
     const dropRef = useRef(null);
     const dropModal = useDropModal();
-    const intl = useIntl({moduleName: localeModuleName});
+    const intl = useIntl();
     return (<UploadButton
         value={value}
         gender={gender}

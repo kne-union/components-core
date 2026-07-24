@@ -3,21 +3,19 @@ import Icon from "@components/Icon";
 import ConfirmButton from "@components/ConfirmButton";
 import DownloadButton from "../Download";
 import FormInfo, {Input, useFormModal} from "@components/FormInfo";
-import {createWithIntl, useIntl} from "@components/Intl";
+import {useIntl} from "@kne/react-intl";
+import withLocale from "../withLocale";
 import last from "lodash/last";
 import dropRight from "lodash/dropRight";
 import useFileModal from "../useFileModal";
-import importMessages from "../locale";
 
-const OptionButtons = createWithIntl({
-    moduleName: "File", importMessages,
-})(({
+const OptionButtons = withLocale(({
         item, hasPreview = true, getPermission = (type, item) => {
         return true;
     }, apis = {}
     }) => {
     const {filename, id} = item;
-    const {formatMessage} = useIntl({moduleName: "File"});
+    const {formatMessage} = useIntl();
     const formModal = useFormModal();
     const fileModal = useFileModal();
     return (<Space size={0}>

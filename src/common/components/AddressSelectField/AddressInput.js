@@ -2,8 +2,8 @@ import AddressSelect from "./Address";
 import { Col, Input, Row } from "antd";
 import useControlValue from "@kne/use-control-value";
 import useSimulationBlur from "@kne/use-simulation-blur";
-import { useIntl, createWithIntl } from "@components/Intl";
-import importMessages from "../locale";
+import { useIntl } from "@kne/react-intl";
+import withLocale from "../withLocale";
 import get from "lodash/get";
 import pick from "lodash/pick";
 import omit from "lodash/omit";
@@ -27,7 +27,7 @@ const AddressInputField = (props) => {
     "api",
     "dataFormat",
   ];
-  const { formatMessage } = useIntl({ moduleName: "Common" });
+  const { formatMessage } = useIntl();
   const ref = useSimulationBlur((e) => {
     onBlur && onBlur(e);
   });
@@ -67,6 +67,4 @@ const AddressInputField = (props) => {
   );
 };
 
-export default createWithIntl({ importMessages, moduleName: "Common" })(
-  AddressInputField
-);
+export default withLocale(AddressInputField);

@@ -5,10 +5,11 @@ import last from "lodash/last";
 import dayjs from "dayjs";
 import Icon from "@components/Icon";
 import {OptionButtons} from "@components/File";
-import {FormattedMessage} from "@components/Intl";
+import {FormattedMessage} from "@kne/react-intl";
+import withLocale from "./withLocale";
 import classnames from 'classnames';
 
-const Title = ({
+const Title = withLocale(({
                    currentTab,
                    setCurrentTab,
                    previewMap,
@@ -31,15 +32,12 @@ const Title = ({
                         options={[{
                             label: (<Space size={4}>
                                 <Icon type="icon-shitu-liebiao"/>
-                                <FormattedMessage id="listText" moduleName="FileList"/>
+                                <FormattedMessage id="listText"/>
                             </Space>), value: "list",
                         }, {
                             label: (<Space size={4}>
                                 <Icon type="icon-shitu-yulan"/>
-                                <FormattedMessage
-                                    id="previewText"
-                                    moduleName="FileList"
-                                />
+                                <FormattedMessage id="previewText"/>
                             </Space>), value: "preview",
                         },]}
                     />
@@ -77,17 +75,11 @@ const Title = ({
                                             size={24}
                                         >
                                             <div>
-                                                <FormattedMessage
-                                                    id="uploadUser"
-                                                    moduleName="FileList"
-                                                />
+                                                <FormattedMessage id="uploadUser"/>
                                                 :{userName}
                                             </div>
                                             <div>
-                                                <FormattedMessage
-                                                    id="uploadTime"
-                                                    moduleName="FileList"
-                                                />
+                                                <FormattedMessage id="uploadTime"/>
                                                 :
                                                 {date && dayjs(date).format("YYYY-MM-DD HH:mm:ss")}
                                             </div>
@@ -106,7 +98,6 @@ const Title = ({
                             <FormattedMessage
                                 id="totalCount"
                                 values={{count: previewList.length}}
-                                moduleName="FileList"
                             />
                         </div>
                     </>)}
@@ -115,6 +106,6 @@ const Title = ({
             <Col>{children}</Col>
         </Row>
     </div>);
-};
+});
 
 export default Title;
