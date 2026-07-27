@@ -5,7 +5,7 @@ import enUS from './locale/en-US';
 const withLocale = createWithIntlProvider({
   defaultLocale: 'zh-CN',
   messages: { 'zh-CN': zhCN, 'en-US': enUS },
-  namespace: 'Modal'
+  namespace: 'components-core'
 });
 
 export default withLocale;
