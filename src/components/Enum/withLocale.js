@@ -5,7 +5,7 @@ import enUS from './locale/en-US';
 const withLocale = createWithIntlProvider({
     defaultLocale: 'zh-CN', messages: {
         'zh-CN': zhCN, 'en-US': enUS
-    }, namespace: 'Enum'
+    }, namespace: 'components-core'
 });
 
 export const createFormatMessage = locale => {
@@ -14,7 +14,7 @@ export const createFormatMessage = locale => {
         messages: {
             'zh-CN': zhCN, 'en-US': enUS
         },
-        namespace: 'Enum'
+        namespace: 'components-core'
     });
     return formatMessage;
 };
