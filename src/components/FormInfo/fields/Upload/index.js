@@ -109,10 +109,31 @@ const UploadField = withLocale((p) => {
                     }
                     apis={{
                         onDelete: (target) => {
+                            // FileList passes a copied item ({...item, index}); index is against previewFileList
                             const newList = value.slice(0);
-                            const index = newList.indexOf(target);
-                            index > -1 && newList.splice(index, 1);
-                            onChange(newList);
+                            const valueIndex =
+                                typeof target.index === "number"
+                                    ? target.index - uploadingList.length
+                                    : -1;
+                            if (valueIndex >= 0 && valueIndex < newList.length) {
+                                newList.splice(valueIndex, 1);
+                                onChange(newList);
+                                return;
+                            }
+                            onChange(
+                                value.filter((item) => {
+                                    if (target.uuid && item.uuid) {
+                                        return item.uuid !== target.uuid;
+                                    }
+                                    if (target.id && item.id) {
+                                        return item.id !== target.id;
+                                    }
+                                    if (target.src && item.src) {
+                                        return item.src !== target.src;
+                                    }
+                                    return item !== target;
+                                })
+                            );
                         },
                     }}
                 />
