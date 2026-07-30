@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.23",
+  "version": "0.5.24",
   "files": [
     "build"
   ],
@@ -21,7 +21,7 @@
     "url": "git+https://github.com/kne-union/components-core.git"
   },
   "dependencies": {
-    "@kne/button-group": "^0.1.24",
+    "@kne/button-group": "^0.1.27",
     "@kne/compose": "^0.1.0",
     "@kne/create-deferred": "^0.1.0",
     "@kne/ensure-slash": "^0.1.0",
@@ -47,7 +47,7 @@
     "@kne/scroll-loader": "^0.1.14",
     "@kne/super-select": "^0.1.42",
     "@kne/super-select-plus": "^0.1.2",
-    "@kne/table-page": "^0.1.17",
+    "@kne/table-page": "^0.1.18",
     "@kne/use-click-outside": "^0.2.1",
     "@kne/use-control-value": "^0.1.7",
     "@kne/use-ref-callback": "^0.1.2",
