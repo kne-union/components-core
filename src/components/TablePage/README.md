@@ -421,6 +421,10 @@ const TIP_TAG_STYLE = { marginRight: 8 };
 const Tips = () => (
   <div style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
     <div>
+      <Tag style={TIP_TAG_STYLE} color="geekblue">渲染组件</Tag>
+      通过 <code>renderType</code> 在 <code>Table</code>（antd）与 <code>TableView</code>（纯 CSS Grid）间切换；点下方切换可对比表头、选择列与骨架屏表现。
+    </div>
+    <div>
       <Tag style={TIP_TAG_STYLE} color="blue">数据加载</Tag>
       通过 <code>loader</code> 模拟分页接口，请求参数为 <code>data.currentPage</code>、<code>data.perPage</code>。
     </div>
@@ -523,6 +527,7 @@ const BaseExample = () => {
   const tableRef = React.useRef();
   const [empty, setEmpty] = useState(false);
   const [cardForcePagination, setCardForcePagination] = useState(false);
+  const [renderType, setRenderType] = useState('Table');
   const emptyRef = React.useRef(false);
   const slowReloadRef = React.useRef(false);
   const allEmployees = useMemo(() => range(0, TOTAL).map(buildEmployee), []);
@@ -541,6 +546,20 @@ const BaseExample = () => {
       <Tips />
       <SortState sort={sort} />
       <Space wrap>
+        <Flex align="center" gap={8}>
+          <span>表格组件：</span>
+          <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            size="small"
+            value={renderType}
+            onChange={e => setRenderType(e.target.value)}
+            options={[
+              { label: 'Table', value: 'Table' },
+              { label: 'TableView', value: 'TableView' }
+            ]}
+          />
+        </Flex>
         <Flex align="center" gap={8}>
           <Switch
             checked={empty}
@@ -591,8 +610,9 @@ const BaseExample = () => {
       <TablePage
         ref={tableRef}
         name="demo-employee-table"
-        sticky
-        scroll={{ x: 1600, y: 400 }}
+        renderType={renderType}
+        sticky={renderType === 'Table'}
+        scroll={renderType === 'Table' ? { x: 1600, y: 400 } : undefined}
         size="large"
         renderMobile
         renderCard={renderEmployeeCard}

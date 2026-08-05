@@ -6,30 +6,21 @@
   min-height: 100vh;
   position: relative;
 
+  // 页面高度链：只铺到 TablePage 根节点，表格内部样式由 @kne/table-page 负责
   .page-content,
   .page-main,
   .page-main-content,
   .table-page,
   :global(.ant-layout-content),
-  :global(.loading-container),
-  :global(.table-page-scroller),
-  :global(.table-page-columns-width-changer),
-  :global(.ant-table-wrapper),
-  :global(.ant-spin-nested-loading),
-  :global(.ant-spin-container),
-  :global(.ant-table),
-  :global(.ant-table-container),
-  :global(.ant-table-body) {
+  :global(.loading-container) {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
 
-  :global(.ant-table-row-indent + .ant-table-row-expand-icon) {
-    margin: 6px 0;
-  }
-
   .table-page {
+    min-height: 0;
+
     .helper-guide {
       padding: 0;
       margin-bottom: 8px;
