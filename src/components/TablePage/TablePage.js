@@ -1,6 +1,9 @@
 import '@kne/table-page/dist/index.css';
 import BaseTablePage from '@kne/table-page';
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
+import { getScrollEl } from '@common/utils/importantContainer';
+import { useScrollElement } from '@components/Global';
+import useRefCallback from '@kne/use-ref-callback';
 import initPreset from './initPreset';
 import { withFeatureTablePage } from './featureGate';
 
@@ -63,7 +66,31 @@ const isDynamicColumns = (columns, getColumns) =>
   typeof getColumns === 'function' || typeof columns === 'function';
 
 const TablePageInner = forwardRef(
-  ({ columns, getColumns, summary, hiddenColumns, columnsRef, ...props }, ref) => {
+  (
+    {
+      columns,
+      getColumns,
+      summary,
+      hiddenColumns,
+      columnsRef,
+      horizontalScroller = true,
+      getScrollContainer,
+      sticky = true,
+      scrollTopInset = 'var(--nav-height)',
+      stickyOffset,
+      ...props
+    },
+    ref
+  ) => {
+    const resolvedScrollTopInset = scrollTopInset ?? stickyOffset;
+    const getScrollElement = useScrollElement();
+    const resolvedGetScrollContainer = useRefCallback(() => {
+      if (typeof getScrollContainer === 'function') {
+        return getScrollContainer();
+      }
+      return getScrollElement() || getScrollEl();
+    });
+
     const resolveColumns = useCallback(
       data => {
         const raw =
@@ -102,9 +129,14 @@ const TablePageInner = forwardRef(
       <BaseTablePage
         ref={ref}
         {...props}
+        sticky={sticky}
+        scrollTopInset={resolvedScrollTopInset}
+        stickyOffset={resolvedScrollTopInset}
         columns={staticFilteredColumns !== null ? staticFilteredColumns : columns}
         getColumns={staticFilteredColumns !== null ? undefined : resolveColumns}
         summary={typeof summary === 'function' ? adaptedSummary : null}
+        horizontalScroller={horizontalScroller}
+        getScrollContainer={resolvedGetScrollContainer}
       />
     );
   }

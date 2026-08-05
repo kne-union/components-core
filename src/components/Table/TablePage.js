@@ -39,7 +39,8 @@ const TablePageInner = forwardRef(
       columnsRef,
       horizontalScroller = true,
       getScrollContainer,
-      scrollTopInset,
+      sticky = true,
+      scrollTopInset = 'var(--nav-height)',
       stickyOffset,
       ...props
     },
@@ -94,6 +95,7 @@ const TablePageInner = forwardRef(
       <BaseTablePage
         ref={ref}
         {...props}
+        sticky={sticky}
         scrollTopInset={resolvedScrollTopInset}
         stickyOffset={resolvedScrollTopInset}
         columns={staticResolvedColumns !== null ? staticResolvedColumns : columns}
