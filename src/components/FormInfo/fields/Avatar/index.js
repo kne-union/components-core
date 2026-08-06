@@ -18,6 +18,7 @@ import style from "./style.module.scss";
 import defaultAvatarIcon from "../../../../defaultAvatar.svg";
 import {FormattedMessage, useIntl} from "@kne/react-intl";
 import withLocale from "@components/FormInfo/withLocale";
+import {uploadFile} from "@kne/react-file";
 
 const {useOnChange} = hooks;
 
@@ -293,6 +294,7 @@ const AvatarField = withLocale(({
                                     accept = [".jpg", ".png", ".jpeg"],
                                     openEditor = true,
                                     apis: currentApis,
+                                    directory,
                                     renderTips = (defaultTips) => {
                                         return defaultTips;
                                     },
@@ -310,7 +312,6 @@ const AvatarField = withLocale(({
     const [loading, setLoading] = useState(false);
     const {apis: baseApis} = usePreset();
     const apis = merge({}, baseApis, currentApis);
-    const ossUpload = apis.ossUpload || apis.upload || apis.file?.upload;
     const dropRef = useRef(null);
     const dropModal = useDropModal();
     const intl = useIntl();
@@ -335,7 +336,7 @@ const AvatarField = withLocale(({
             }
             const doUpload = (file) => {
                 setLoading(true);
-                return ossUpload({file})
+                return uploadFile({file, directory, apis})
                     .then(({data}) => {
                         if (data.code !== 0) {
                             message.error(intl.formatMessage({id: "UploadFailed"}, {msg: data.msg ? ":" + data.msg : ""}));
