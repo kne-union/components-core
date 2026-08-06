@@ -158,12 +158,14 @@ const BaseExample = createWithRemoteLoader({
         <InfoPage.Part title="JSON文件预览 - 默认黑色主题">
           <JsonPreview 
             url="https://jsonplaceholder.typicode.com/users"
+            collapsedFrom={0}
           />
         </InfoPage.Part>
         <InfoPage.Part title="JSON文件预览 - 白色主题">
           <JsonPreview 
             url="https://jsonplaceholder.typicode.com/users"
             theme="light"
+            collapsedFrom={0}
           />
         </InfoPage.Part>
         <InfoPage.Part title="JSON文件预览 - 从第2级开始收起">

@@ -44,3 +44,4 @@ export {download};
 export {default as Download, downloadBlobFile, useDownload} from "./Download";
 export {default as List, OptionButtons} from "./List";
 export {default, PrintButton} from "./File";
+export {FileSystem, PropertiesPanel, preset, globalParams} from "@kne/react-file";
