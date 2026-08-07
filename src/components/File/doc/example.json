@@ -1,21 +1,3 @@
 {
-  "isFull": false,
-  "list": [
-    {
-      "reference": "@kne/react-file",
-      "path": "list[0]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[1]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[2]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[3]"
-    }
-  ]
+  "reference": "@kne/react-file"
 }
