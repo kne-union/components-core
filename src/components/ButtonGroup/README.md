@@ -1571,9 +1571,12 @@ render(<BaseExample />);
 |--------|------|--------|------|
 | list | Array\<object \| function\> | [] | 按钮列表，可以是配置对象或渲染函数 |
 | compact | boolean | false | 是否使用紧凑模式（Space.Compact） |
-| showLength | number | - | 指定显示的按钮数量，不指定则自动计算 |
+| showLength | number | - | 固定外露按钮数；传入后为受控模式，根节点宽度变为 fit-content |
+| className | string | - | 根节点额外 className |
 | more | ReactNode | - | 自定义"更多"按钮 |
 | moreType | 'default' \| 'link' | 'default' | 更多按钮类型 |
+| placement | string | 'bottomLeft' | 更多下拉菜单位置（antd Dropdown placement） |
+| menuClassName | string | - | 更多下拉菜单额外 className |
 | getPopupContainer | function | - | 下拉菜单渲染父节点 |
 | trigger | string | - | 下拉菜单触发方式 |
 | itemClassName | string | - | 按钮项的自定义类名 |

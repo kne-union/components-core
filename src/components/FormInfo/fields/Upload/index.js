@@ -26,6 +26,7 @@ const UploadField = withLocale((p) => {
         onSave,
         ossUpload,
         onUpload,
+        directory,
         getPermission,
         concurrentCount,
         ...props
@@ -61,6 +62,7 @@ const UploadField = withLocale((p) => {
         multiple,
         onSave,
         onUpload: ossUpload || onUpload,
+        directory,
         fileSize,
         maxLength,
         value,
