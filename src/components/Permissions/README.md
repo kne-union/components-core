@@ -2,15 +2,15 @@
 
 ### 概述
 
-### 概述
+#### 概述
 
 Permissions 是一个权限控制组件，用于根据用户权限控制页面内容的显示。支持多种权限控制方式和展示形式，适用于各种需要权限控制的场景。
 
-### 何时使用
+#### 何时使用
 
 在系统中存在一些功能和操作只允许某些角色用户使用，使用该组件可以让其包裹的组件或者区域根据系统的权限列表配置展示不同的状态
 
-### 特点
+#### 特点
 
 通过在Global中的preset中设置permissions作为当前用户的权限列表，在Permissions组件配置permissions作为该功能要求具备的权限项，当要求具备的权限项全部在用户的权限列表中找到时为权限通过状态否则为权限不通过状态
 
@@ -20,7 +20,7 @@ Permissions 是一个权限控制组件，用于根据用户权限控制页面�
 2. 用户不能看到操作功能或者数据呈现，对应区域显示错误原因，一般用在要数据展示等场景
 3. 隐藏内部组件，一般用在不需要干扰到用户或用户不需要了解其没有权限的功能或数据等场景
 
-### 高级特性
+#### 高级特性
 
 * 支持权限数组、权限函数和权限组合等多种权限验证方式
 * 提供权限判断的 Hook，方便在组件外部进行权限判断
@@ -544,9 +544,9 @@ render(<CustomTagExample />);
 | request  | 权限列表可以为字符串数组、函数或混合类型，每个item为一项权限的key，所有权限在全局的permissions中存在则判断为权限通过                          | array,function | []           |
 | children | 该参数可以传function类型，children({isPass, type, request})，isPass为权限校验是否通过，type为提示类型，request为所需权限列表，可以自行实现权限的展示 | jsx,function  | -            |
 
-### Hooks
+#### Hooks
 
-#### usePermissions
+##### usePermissions
 
 获取当前用户的权限列表
 
@@ -554,7 +554,7 @@ render(<CustomTagExample />);
 const { permissions } = usePermissions();
 ```
 
-#### usePermissionsPass
+##### usePermissionsPass
 
 检查是否拥有指定权限
 
@@ -562,9 +562,9 @@ const { permissions } = usePermissions();
 const isPass = usePermissionsPass({ request: ['user:view'] });
 ```
 
-### 工具函数
+#### 工具函数
 
-#### computedIsPass
+##### computedIsPass
 
 计算权限验证结果
 

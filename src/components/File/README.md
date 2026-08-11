@@ -1512,7 +1512,9 @@ render(<BaseExample />);
 | children | ReactNode | '文件上传' | 上传按钮文字 |
 | renderTips | function(defaultTips, { fileSize, maxLength, accept }) | v => v | 自定义提示信息渲染 |
 | onSave | function(data, file, uuid) | - | 上传成功后数据处理回调，返回值将作为新的文件对象 |
-| ossUpload | function | - | 自定义上传函数 |
+| onUpload | function({ file, path? }) | - | 自定义上传函数；优先于 `ossUpload` / preset `apis.file.upload` |
+| ossUpload | function | - | 自定义上传函数（兼容旧写法，等价于 `onUpload`） |
+| directory | string | - | 上传目录；内部映射为后端 `path` 传给上传接口 |
 | getPermission | function(type) | - | 文件列表操作权限控制函数，type为'preview'/'delete'等 |
 | apis | object | - | API配置对象 |
 | renderModal | function(modalProps) | props => Modal | 自定义弹窗渲染函数 |
@@ -1807,9 +1809,12 @@ ZIP压缩包文件预览组件，支持查看压缩包内部的文件列表和�
 | entries | array | - | 异步分页：当前目录稀疏数组（`length === totalCount`，未加载为 empty） |
 | totalCount | number | - | 异步分页：当前目录总数量；与 `onVisibleRangeChange` 同时传入即开启虚拟滚动 |
 | loadingIndexes | Set \| array | - | 异步分页：正在加载的下标，显示骨架占位 |
-| onVisibleRangeChange | function(range) | - | 异步分页：可视范围变化；`range` 含 `startIndex` / `endIndex` / `view` / `viewport` / `pageSize` / `currentPath` / `keyword` |
+| ready | boolean | - | 异步分页：当前目录是否已确认首屏数据；`false` 时即使 `totalCount === 0` 仍挂载虚拟列表以测量视口；未传时保持旧逻辑 |
+| columnListings | object | - | 异步分页（分栏）：按目录 path 隔离的列表数据，形如 `{ [path]: { entries, totalCount, loadingIndexes?, ready? } }`；展开列从这里读，避免只靠当前目录 `entries` |
+| onRegisterFolder | function(path, id) | - | 分栏单击文件夹展开下一列时回调；用于业务侧登记 folderId 与 path 的映射 |
+| onVisibleRangeChange | function(range) | - | 异步分页：可视范围变化。`range` 含：`startIndex` / `endIndex` / `view` / `viewport` / `pageSize` / `currentPath` / `keyword` / `path` / `columnPath`。分栏展开列以 `columnPath`（或合并后的 `path`）为准拉目录；其它视图 `path` 等于 `currentPath` |
 
-`FileSystem.calcPageSize({ view, width, height })` 可按视口估算建议 `perPage`。
+`calcPageSize({ view, width, height, buffer? })` 可按视口估算建议 `perPage`（也可写作 `FileSystem.calcPageSize`）。`view` 为 `icons` / `list` / `columns` / `gallery`；`buffer` 默认 `2`，结果夹在 20–200。
 
 #### FileSystem.PropertiesPanel
 
@@ -1890,6 +1895,50 @@ const MyComponent = withOSSFile(({ data, id, ...props }) => {
 
 ---
 
+### uploadFile
+
+统一上传入口。库内上传应走此 API；会解析自定义 `onUpload` 或 preset `apis.file.upload` / `ossUpload` / `upload`，并将 `directory` 映射为后端 `path`。
+
+#### 参数
+
+| 参数 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| file | File | - | 待上传文件 |
+| directory | string | - | 上传目录，映射为请求体 `path` |
+| onUpload | function({ file, path? }) | - | 自定义上传函数；不传则读 `apis` |
+| apis | object | - | API 配置；默认取自 preset |
+
+#### 返回值
+
+上传接口的原始返回值（通常为 `{ data: { code, data, msg } }` 形态，由业务 `apis.file.upload` 决定）。
+
+```jsx
+import { uploadFile } from '@kne/react-file';
+
+await uploadFile({ file, directory: 'docs/2026' });
+```
+
+---
+
+### useUploadFile
+
+返回绑定当前 preset `apis` 的 `uploadFile` 函数，便于在组件内直接调用。
+
+#### 返回值
+
+| 类型 | 描述 |
+|------|------|
+| function(params) | 同 `uploadFile`；可再传 `apis` 覆盖 preset |
+
+```jsx
+import { useUploadFile } from '@kne/react-file';
+
+const upload = useUploadFile();
+await upload({ file, directory: 'avatars' });
+```
+
+---
+
 ### useFileUpload
 
 文件上传Hook，处理文件上传逻辑。
@@ -1907,7 +1956,8 @@ const MyComponent = withOSSFile(({ data, id, ...props }) => {
 | onError | function({ file, error, errMsg }) | - | 上传失败回调 |
 | onSave | function(data, file, uuid) | - | 上传成功后数据处理回调 |
 | onChange | function(list) | - | 文件列表变化回调 |
-| onUpload | function({ file }) | - | 自定义上传函数 |
+| onUpload | function({ file, path? }) | - | 自定义上传函数 |
+| directory | string | - | 上传目录；内部映射为后端 `path` |
 
 #### 返回值
 

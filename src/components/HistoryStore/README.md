@@ -646,11 +646,11 @@ render(<RealScenarioExample />);
 
 ### API
 
-### HistoryStore
+#### HistoryStore
 
 HistoryStore 组件用于管理用户的历史记录，支持将搜索、选择等操作保存到 localStorage，并在需要时展示历史记录列表供用户快速选择。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 类型 | 必填 | 默认值 | 说明 |
 |--------|------|------|--------|------|
@@ -664,7 +664,7 @@ HistoryStore 组件用于管理用户的历史记录，支持将搜索、选择�
 | zIndex | number | 否 | - | 弹窗的 z-index 层级 |
 | getPopupContainer | function | 否 | - | 获取弹窗容器的函数 |
 
-#### Render Props
+##### Render Props
 
 children 是一个函数，接收以下参数：
 
@@ -676,7 +676,7 @@ children 是一个函数，接收以下参数：
 | setOnSelect | function | 设置选中回调的方法，参数：callback |
 | close | function | 关闭弹窗的方法 |
 
-#### 历史记录数据格式
+##### 历史记录数据格式
 
 每条历史记录是一个对象，包含以下字段：
 

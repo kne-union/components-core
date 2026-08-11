@@ -864,7 +864,7 @@ render(<BaseExample/>);
 
 ### API
 
-### Tooltip 组件
+#### Tooltip 组件
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
@@ -880,7 +880,7 @@ render(<BaseExample/>);
 | placement | 气泡框位置 | string | 'top' |
 | overlayClassName | 自定义气泡框类名 | string | - |
 
-### TooltipFetch 组件
+#### TooltipFetch 组件
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
@@ -890,7 +890,7 @@ render(<BaseExample/>);
 | loadingClassName | 加载动画的自定义类名 | string | - |
 | force | 是否每次显示都重新加载数据 | boolean | false |
 
-### TooltipInfoLabel 组件
+#### TooltipInfoLabel 组件
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |

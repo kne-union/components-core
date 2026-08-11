@@ -26,3 +26,5 @@ package-lock.json
 .codebuddy
 prompts
 /.cursor
+
+graphify-out
