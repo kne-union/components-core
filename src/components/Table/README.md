@@ -1820,7 +1820,7 @@ render(<BaseExample />);
 
 ### API
 
-### Table 组件
+#### Table 组件
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
 | columns | 列配置 | array | - |
@@ -1839,7 +1839,7 @@ render(<BaseExample />);
 | scroller | 滚动器配置 | object | - |
 | onTablePropsReady | 表格属性就绪回调 | function | - |
 
-### TablePage 组件
+#### TablePage 组件
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
 | loader | 数据加载函数 | function | - |
@@ -1854,7 +1854,7 @@ render(<BaseExample />);
 | columns | 列配置 | array/function | - |
 | getColumns | 获取列配置的函数 | function | - |
 
-### useSelectedRow Hook
+#### useSelectedRow Hook
 
 与 `@kne/table-page` 保持一致，推荐通过 `getRowSelection(dataSource)` 生成 `rowSelection` 配置。
 
@@ -1875,7 +1875,7 @@ render(<BaseExample />);
 | clearSelectedRows | 清空选择 | function |
 | setSelectedRowKeys | 按 key 设置选中行 | `(keys, dataSource) => void` |
 
-### 列配置（Column）
+#### 列配置（Column）
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
 | name | 列名称（唯一标识） | string | - |
@@ -1895,7 +1895,7 @@ render(<BaseExample />);
 | groupHeader | 分组表头配置 | array | - |
 | disableColItem | 是否禁用ColItem包装 | boolean | false |
 
-### 列类型（Type）
+#### 列类型（Type）
 | 属性名 | 说明 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
 | date | 日期（YYYY-MM-DD） | width: 160, min: 120, max: 400 |

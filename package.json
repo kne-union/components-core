@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.33",
+  "version": "0.5.34",
   "files": [
     "build"
   ],
@@ -83,7 +83,8 @@
     "create": "modules-dev-create",
     "start": "cross-env PORT=3001 COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/ craco start",
     "build": "cross-env COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/components-core  craco build",
-    "test": "craco test --coverage"
+    "test": "craco test --coverage",
+    "build:docs": "modules-dev-build-docs"
   },
   "eslintConfig": {
     "extends": [

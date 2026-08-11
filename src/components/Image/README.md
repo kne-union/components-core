@@ -532,7 +532,7 @@ render(<RealScenarioExample />);
 
 ### API
 
-### Image 基础图片组件
+#### Image 基础图片组件
 
 | 属性名     | 说明         | 类型     | 默认值 |
 |---------|------------|--------|-----|
@@ -545,7 +545,7 @@ render(<RealScenarioExample />);
 | onClick | 点击图片的回调函数 | function | -   |
 | apis    | API配置，用于加载OSS图片 | object | -   |
 
-### Image.Avatar 头像组件
+#### Image.Avatar 头像组件
 
 基于Antd的Avatar组件，支持图片头像和默认性别图标头像，其他参数参考Antd的Avatar组件
 

@@ -467,18 +467,18 @@ render(<RealScenarioExample />);
 
 ### API
 
-### HelperGuide
+#### HelperGuide
 
 HelperGuide 组件用于给用户提供帮助文档提示，显示帮助内容和可选的帮助链接。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 类型 | 必填 | 默认值 | 说明 |
 |--------|------|------|--------|------|
 | name | string | 是 | - | 帮助文档的标识符，用于从枚举中获取对应的帮助信息 |
 | className | string | 否 | - | 自定义类名 |
 
-#### 枚举配置
+##### 枚举配置
 
 HelperGuide 组件通过 preset.enums.helperGuide 配置帮助文档内容，该配置应该是一个函数，返回帮助文档数组。
 

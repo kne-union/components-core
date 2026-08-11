@@ -6,7 +6,7 @@
 
 FormInfo 是一个全功能的表单解决方案，集成了数据录入、校验规则管理、样式布局等功能，适用于各种复杂场景的表单需求。
 
-### 核心特性
+#### 核心特性
 
 **分层校验规则管理**
 - 支持默认级、preset 级、Form 级三层校验规则覆盖
@@ -43,7 +43,7 @@ FormInfo 是一个全功能的表单解决方案，集成了数据录入、校�
 - 可实现 Field 值和 Form Data 之间的转换
 - 解决日期格式化、数据映射等常见问题
 
-### 适用场景
+#### 适用场景
 
 **数据采集场景**
 - 用户注册、信息录入、问卷调查等基础表单
@@ -64,7 +64,7 @@ FormInfo 是一个全功能的表单解决方案，集成了数据录入、校�
 - 与数据加载组件结合的表单编辑
 - 自定义业务组件的表单集成
 
-### 技术亮点
+#### 技术亮点
 
 **上下文与 Ref 双重 API**
 - 提供 useFormContext Hook 在组件内获取表单实例
@@ -2217,11 +2217,11 @@ render(<PureGlobal
 
 ### API
 
-### Form
+#### Form
 
 表单核心组件，提供数据域管理、校验规则、事件驱动等功能。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2236,11 +2236,11 @@ render(<PureGlobal
 | helperGuideName | 帮助指引配置名称 | string | 否 | - |
 | lang | 语言配置，支持多语言 | array | 否 | - |
 
-### FormInfo
+#### FormInfo
 
 表单信息分组组件，用于组织和管理表单字段的布局。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2250,11 +2250,11 @@ render(<PureGlobal
 | gap | 字段间距 | number | 否 | - |
 | extra | 额外内容，显示在标题右侧 | ReactNode | 否 | - |
 
-### List
+#### List
 
 多段式列表表单组件，支持动态添加和删除表单项。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2271,11 +2271,11 @@ render(<PureGlobal
 | renderChildren | 子项渲染函数 | function | 否 | - |
 | deleteButtonProps | 删除按钮属性 | object | 否 | - |
 
-### TableList
+#### TableList
 
 表格形式的列表表单组件，继承自 List，提供表格展示方式。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2286,11 +2286,11 @@ render(<PureGlobal
 | minLength | 最小数量 | number | 否 | 0 |
 | isUnshift | 新增项是否添加到开头 | boolean | 否 | true |
 
-### FormModal
+#### FormModal
 
 弹窗表单组件，将 Form 和 Modal 组合使用。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2303,11 +2303,11 @@ render(<PureGlobal
 | width | 弹窗宽度 | string | 否 | 520 |
 | withDecorator | 装饰器函数，用于包装表单内容 | function | 否 | - |
 
-### FormDrawer
+#### FormDrawer
 
 抽屉表单组件，将 Form 和 Drawer 组合使用。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2320,11 +2320,11 @@ render(<PureGlobal
 | width | 抽屉宽度 | string | 否 | - |
 | withDecorator | 装饰器函数 | function | 否 | - |
 
-### FormStepModal
+#### FormStepModal
 
 分步表单弹窗组件，支持多步骤数据收集。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2338,7 +2338,7 @@ render(<PureGlobal
 | completeText | 完成按钮文本 | ReactNode | 否 | - |
 | nextText | 下一步按钮文本 | ReactNode | 否 | - |
 
-#### items 配置说明
+##### items 配置说明
 
 items 数组中每个元素为步骤配置对象：
 
@@ -2348,35 +2348,35 @@ items 数组中每个元素为步骤配置对象：
 | formProps | Form 组件属性，可以是对象或函数 | object | 否 | - |
 | footerButtons | 步骤底部按钮配置 | array | 否 | - |
 
-### useFormModal
+#### useFormModal
 
 获取表单弹窗 Hook，返回一个可调用函数来弹出表单弹窗。
 
-#### 返回值
+##### 返回值
 
 返回一个函数，调用该函数弹出 FormModal 弹窗，参数同 FormModal 组件属性。
 
-### useFormDrawer
+#### useFormDrawer
 
 获取表单抽屉 Hook，返回一个可调用函数来弹出表单抽屉。
 
-#### 返回值
+##### 返回值
 
 返回一个函数，调用该函数弹出 FormDrawer 抽屉，参数同 FormDrawer 组件属性。
 
-### useFormStepModal
+#### useFormStepModal
 
 获取分步表单弹窗 Hook，返回一个可调用函数来弹出分步表单弹窗。
 
-#### 返回值
+##### 返回值
 
 返回一个函数，调用该函数弹出 FormStepModal 弹窗，参数同 FormStepModal 组件属性。
 
-### FormModalButton
+#### FormModalButton
 
 按钮触发表单弹窗组件，支持加载数据后弹出。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2384,7 +2384,7 @@ items 数组中每个元素为步骤配置对象：
 | modalProps | FormModal 弹窗属性，可以是对象或函数 | object | 否 | - |
 | children | 按钮内容 | ReactNode | 是 | - |
 
-#### modalProps 函数形式参数
+##### modalProps 函数形式参数
 
 当 modalProps 为函数时，接收以下参数：
 
@@ -2394,11 +2394,11 @@ items 数组中每个元素为步骤配置对象：
 | fetchApi | fetch 实例 | object |
 | close | 关闭弹窗方法 | function |
 
-### FormStepModalButton
+#### FormStepModalButton
 
 按钮触发的分步表单弹窗组件。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2406,11 +2406,11 @@ items 数组中每个元素为步骤配置对象：
 | modalProps | FormStepModal 弹窗属性 | object | 否 | - |
 | children | 按钮内容 | ReactNode | 是 | - |
 
-### FormDrawerButton
+#### FormDrawerButton
 
 按钮触发的表单抽屉组件。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2418,32 +2418,32 @@ items 数组中每个元素为步骤配置对象：
 | drawerProps | FormDrawer 抽屉属性 | object | 否 | - |
 | children | 按钮内容 | ReactNode | 是 | - |
 
-### SubmitButton
+#### SubmitButton
 
 提交按钮组件，点击后触发表单校验和提交。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
 | autoClose | 提交成功后是否自动关闭弹窗 | boolean | 否 | true |
 | children | 按钮内容 | ReactNode | 是 | - |
 
-### CancelButton
+#### CancelButton
 
 取消按钮组件，点击后重置表单或关闭弹窗。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
 | children | 按钮内容 | ReactNode | 是 | - |
 
-### FormApiButton
+#### FormApiButton
 
 表单 API 按钮组件，可执行表单操作。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2451,7 +2451,7 @@ items 数组中每个元素为步骤配置对象：
 | autoClose | 点击后是否自动关闭弹窗 | boolean | 否 | true |
 | children | 按钮内容 | ReactNode | 是 | - |
 
-#### onClick 回调参数
+##### onClick 回调参数
 
 onClick 回调接收包含表单操作 API 的对象：
 
@@ -2464,11 +2464,11 @@ onClick 回调接收包含表单操作 API 的对象：
 | setFields | 设置字段值方法 | function |
 | getFields | 获取字段值方法 | function |
 
-### useFormContext
+#### useFormContext
 
 表单上下文 Hook，在 Form 内部获取表单实例和方法。
 
-#### 返回值
+##### 返回值
 
 返回表单 API 对象，包含以下属性和方法：
 
@@ -2487,11 +2487,11 @@ openApi 包含以下方法：
 | setFields | 设置字段值 | fields: array, options: object | void |
 | getFields | 获取字段值 | names: array | object |
 
-### MultiField
+#### MultiField
 
 多字段组件，支持在单个 Field 中包含多个子字段。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2500,11 +2500,11 @@ openApi 包含以下方法：
 | rule | 校验规则 | string | 否 | - |
 | children | 子字段组件 | ReactNode | 是 | - |
 
-### ErrorTip
+#### ErrorTip
 
 错误提示组件，可自定义字段错误信息的展示方式。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2512,7 +2512,7 @@ openApi 包含以下方法：
 | errorRender | 自定义错误渲染函数 | function | 否 | - |
 | children | 字段组件 | ReactNode | 是 | - |
 
-#### errorRender 回调参数
+##### errorRender 回调参数
 
 errorRender 回调接收以下参数：
 
@@ -2522,11 +2522,11 @@ errorRender 回调接收以下参数：
 | hasError | 是否有错误 | boolean |
 | errorMsg | 错误信息 | string |
 
-### FormItem
+#### FormItem
 
 表单项容器组件，用于包装表单字段。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2537,7 +2537,7 @@ errorRender 回调接收以下参数：
 | labelHidden | 是否隐藏标签 | boolean | 否 | false |
 | children | 字段组件 | ReactNode | 是 | - |
 
-### Field 类型：基础组件
+#### Field 类型：基础组件
 
 以下为基础表单字段组件，请参考 antd 文档：
 
@@ -2581,7 +2581,7 @@ errorRender 回调接收以下参数：
 
 **TreeSelect** - 树选择
 
-### Field 类型：业务组件
+#### Field 类型：业务组件
 
 **AddressSelect** - 地址选择组件
 
@@ -2682,7 +2682,7 @@ errorRender 回调接收以下参数：
 | name | 字段名 | string | 是 | - |
 | label | 字段标签 | ReactNode | 否 | - |
 
-### Field 类型：高级选择组件
+#### Field 类型：高级选择组件
 
 **AdvancedSelect** - 高级选择组件，支持列表和表格两种形态
 
@@ -2696,7 +2696,7 @@ errorRender 回调接收以下参数：
 | isPopup | 是否使用弹窗形式 | boolean | 否 | - |
 | getSearchProps | 搜索框配置 | function | 否 | - |
 
-#### api 配置说明
+##### api 配置说明
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2719,7 +2719,7 @@ errorRender 回调接收以下参数：
 
 **SuperSelectTree** - 树选择组件
 
-### Field 类型：特殊组件
+#### Field 类型：特殊组件
 
 **TypeDateRangePicker** - 类型日期范围选择器
 
@@ -2738,11 +2738,11 @@ errorRender 回调接收以下参数：
 | rule | 校验规则 | string | 否 | - |
 | soFarText | 至今文本 | string | 否 | 至今 |
 
-### fieldDecorator
+#### fieldDecorator
 
 字段装饰器工具，用于创建自定义 Field 组件。
 
-#### 属性说明
+##### 属性说明
 
 | 属性名 | 说明 | 类型 |
 |--------|------|------|
@@ -2751,11 +2751,11 @@ errorRender 回调接收以下参数：
 | withSelectDefaultPlaceholder | 添加选择器默认占位符 | function |
 | withLang | 添加多语言支持 | function |
 
-### hooks
+#### hooks
 
 表单相关 Hooks 集合。
 
-#### 常用 Hooks
+##### 常用 Hooks
 
 | Hook 名 | 说明 |
 |---------|------|
@@ -2763,23 +2763,23 @@ errorRender 回调接收以下参数：
 | useReset | 获取重置方法 |
 | useSubmit | 获取提交方法 |
 
-### widget
+#### widget
 
 表单组件工具集。
 
-### utils
+#### utils
 
 表单工具函数集。
 
-### formUtils
+#### formUtils
 
 表单实用工具集。
 
-### RULES
+#### RULES
 
 内置校验规则。
 
-#### 常用规则
+##### 常用规则
 
 | 规则名 | 说明 | 参数 |
 |--------|------|------|
@@ -2790,11 +2790,11 @@ errorRender 回调接收以下参数：
 | NUM | 数字 | - |
 | INT | 整数 | - |
 
-### interceptors
+#### interceptors
 
 内置拦截器。
 
-#### 使用方式
+##### 使用方式
 
 ```javascript
 // 注册拦截器
@@ -2810,14 +2810,14 @@ interceptors.output.use("date-string", (value) => {
 <Input name="date" label="日期" interceptor="date-string"/>
 ```
 
-### SelectInnerInput
+#### SelectInnerInput
 
 选择器内部输入框组件，用于自定义选择器开发。
 
-### FormSteps
+#### FormSteps
 
 表单步骤组件，用于 FormStepModal 中显示步骤条。
 
-### formModule
+#### formModule
 
 表单模块，导出所有表单相关的组件和工具。

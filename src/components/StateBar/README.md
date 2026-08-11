@@ -2,18 +2,18 @@
 
 ### 概述
 
-### 概述
+#### 概述
 
 StateBar 是一个基于 Ant Design Tabs 组件的状态栏组件，支持多种展示类型（tab、radio、step），适用于需要状态切换和流程展示的场景。
 
-### 何时使用
+#### 何时使用
 
 当需要在页面中展示不同状态的选项卡或步骤流程时使用，例如：
 - 数据列表的状态筛选（全部、待处理、已完成等）
 - 表单或流程的步骤展示
 - 选项卡切换界面
 
-### 特点
+#### 特点
 
 * 支持三种展示类型：tab（标签页）、radio（单选）、step（步骤）
 * 可自定义样式和尺寸（small、default、large）
@@ -264,8 +264,8 @@ render(<ControlledModeExample />);
 | tabBarExtraContent | 展示在state bar右侧   | ReactNode               | null                            |
 | isInner            | 底部线延展至总长         | boolean                 | false                           |
 
-### Mapping
-#### stateOption
+#### Mapping
+##### stateOption
 
 | 属性名                 | 说明                | 类型                     | 默认值                |
 |-----------------------|--------------------|-------------------------|-----------------------|
