@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.35",
+  "version": "0.5.36",
   "files": [
     "build"
   ],
@@ -107,7 +107,7 @@
   "devDependencies": {
     "@kne/craco": "^7.1.4",
     "@kne/md-doc": "^0.1.24",
-    "@kne/modules-dev": "^2.4.3",
+    "@kne/modules-dev": "^2.4.10",
     "@kne/react-error-boundary": "^0.1.1",
     "antd": "6.0.0",
     "http-proxy-middleware": "^2.0.6",
