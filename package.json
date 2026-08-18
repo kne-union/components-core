@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.36",
+  "version": "0.5.37",
   "files": [
     "build"
   ],
@@ -21,7 +21,7 @@
     "url": "git+https://github.com/kne-union/components-core.git"
   },
   "dependencies": {
-    "@kne/button-group": "^0.1.40",
+    "@kne/button-group": "^0.1.41",
     "@kne/compose": "^0.1.0",
     "@kne/create-deferred": "^0.1.1",
     "@kne/ensure-slash": "^0.1.0",
