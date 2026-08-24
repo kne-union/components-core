@@ -156,7 +156,7 @@ export const DatePickerToday = withLocale(({
     return (<ReactDatePickerToday
         {...props}
         label={label}
-        placeholder={[formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
+        placeholder={placeholder || [formatMessage({id: "startDate"}), formatMessage({id: "endDate"}),]}
         soFarText={soFarText || formatMessage({id: "soFarText"})}
     />);
 });
