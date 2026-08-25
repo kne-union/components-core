@@ -23,6 +23,7 @@ npm i --save @kne/button-group
 - 支持紧凑模式（Space.Compact）
 - 支持链接样式（适用于表格操作列）
 - 可指定显示的按钮数量
+- 支持 `place` 在满宽容器内九点定位（不占用下拉 `placement`）
 - 支持禁用、隐藏状态
 - 支持自定义按钮渲染
 - 支持禁用按钮的工具提示
@@ -87,11 +88,12 @@ npm i --save @kne/button-group
 
 ### ButtonFooter
 
-页面底部按钮区域组件，可以自动计算高度并设置 CSS 变量，方便页面布局和样式调整。在小屏幕下，会自动将内容渲染到 body，确保按钮始终可见。
+页面底部按钮区域组件，可以自动计算高度并设置 CSS 变量，方便页面布局和样式调整。在小屏幕下，会自动将内容渲染到 body，确保按钮始终可见；可通过 `placement` 控制移动端固定条的垂直位置与内容水平对齐。
 
 **主要特性：**
 - 自动计算高度并设置 CSS 变量
-- 响应式设计，小屏幕下固定到底部
+- 响应式设计，小屏幕下固定到顶部/底部
+- 支持 `placement` 控制垂直位置与水平对齐
 - 支持多种布局方式（居中、左右分布等）
 - 适用于表单页面的底部操作区
 
@@ -99,7 +101,7 @@ npm i --save @kne/button-group
 - 表单页面底部操作按钮
 - 详情页面底部操作按钮
 - 对话框底部按钮
-- 任何需要固定在底部的操作按钮区域
+- 任何需要固定在顶部/底部的操作按钮区域
 
 ## 组件关系
 
@@ -146,12 +148,12 @@ ButtonFooter (底部固定区域)
 #### 示例代码
 
 - ButtonGroup 基础用法
-- ButtonGroup 能够根据容器宽度自动调整显示的按钮数量，并将多余的按钮放入下拉菜单中。适用于操作栏、工具栏等场景。
+- ButtonGroup 能够根据容器宽度自动调整显示的按钮数量，并将多余的按钮放入下拉菜单中。可通过 place 控制按钮在满宽容器内的九点定位。
 - _ButtonGroup(@kne/button-group)[import * as _ButtonGroup from "@kne/button-group"],antd(antd)
 
 ```jsx
 const { default: ButtonGroup } = _ButtonGroup;
-const { Flex, Button, Space, Typography } = antd;
+const { Flex, Button, Space, Typography, Radio } = antd;
 const { useState } = React;
 const { Text } = Typography;
 
@@ -289,6 +291,51 @@ const StateExample = () => {
   );
 };
 
+const PLACE_OPTIONS = [
+  { label: 'start', value: 'start' },
+  { label: 'center', value: 'center' },
+  { label: 'end', value: 'end' },
+  { label: 'topStart', value: 'topStart' },
+  { label: 'top', value: 'top' },
+  { label: 'topEnd', value: 'topEnd' },
+  { label: 'bottomStart', value: 'bottomStart' },
+  { label: 'bottom', value: 'bottom' },
+  { label: 'bottomEnd', value: 'bottomEnd' }
+];
+
+// 容器内位置
+const PlaceExample = () => {
+  const [place, setPlace] = useState('end');
+  const list = [
+    { type: 'primary', children: '编辑' },
+    { children: '删除', isDelete: true }
+  ];
+  return (
+    <Flex gap={16} vertical>
+      <Text type="secondary">place：按钮在满宽容器内的九点定位。根节点铺满外部槽位，不占用 placement（下拉位置）。</Text>
+      <Radio.Group
+        optionType="button"
+        buttonStyle="solid"
+        options={PLACE_OPTIONS}
+        value={place}
+        onChange={e => setPlace(e.target.value)}
+      />
+      <Flex
+        style={{
+          width: 480,
+          height: 160,
+          padding: 12,
+          background: '#f5f5f5',
+          borderRadius: 8,
+          boxSizing: 'border-box'
+        }}
+      >
+        <ButtonGroup place={place} list={list} />
+      </Flex>
+    </Flex>
+  );
+};
+
 // 工具提示
 const TooltipExample = () => {
   return (
@@ -344,6 +391,11 @@ const BaseExample = () => {
         <div>
           <Typography.Title level={4}>指定显示数量</Typography.Title>
           <FixedLengthExample />
+        </div>
+
+        <div>
+          <Typography.Title level={4}>容器内位置（place）</Typography.Title>
+          <PlaceExample />
         </div>
 
         <div>
@@ -1490,69 +1542,82 @@ render(<BaseExample />);
 ```
 
 - ButtonFooter 底部按钮区(全屏)
-- ButtonFooter 是页面底部按钮区域组件。请切换到手机模式预览：移动端会将操作栏固定到可视区域底部。
+- ButtonFooter 是页面操作条组件。切换 placement 可预览操作条固定到顶部/底部，以及左、中、右对齐。
 - _ButtonGroup(@kne/button-group)[import * as _ButtonGroup from "@kne/button-group"],(@kne/button-group/dist/index.css),antd(antd)
 
 ```jsx
 const { ButtonFooter } = _ButtonGroup;
-const { Flex, Button, Card, Form, Input, Typography, Alert, message } = antd;
+const { Flex, Button, Typography, Alert, Radio, Space, Tag } = antd;
+
+const PLACEMENT_OPTIONS = [
+  { label: 'bottom', value: 'bottom' },
+  { label: 'bottomStart', value: 'bottomStart' },
+  { label: 'bottomEnd', value: 'bottomEnd' },
+  { label: 'top', value: 'top' },
+  { label: 'topStart', value: 'topStart' },
+  { label: 'topEnd', value: 'topEnd' }
+];
 
 const BaseExample = () => {
-  const [form] = Form.useForm();
+  const frameRef = React.useRef(null);
+  const [placement, setPlacement] = React.useState('bottom');
 
   return (
-    <Flex vertical gap={16} style={{ width: '100%', minHeight: 360 }}>
+    <Flex vertical gap={16} style={{ width: '100%' }}>
+      <style>{&#96;
+        .demo-button-footer-bar {
+          background: #e6f4ff !important;
+        }
+      &#96;}</style>
       <Alert
         type="info"
         showIcon
-        message="请切换到手机模式预览"
-        description="ButtonFooter 在移动端会将操作栏固定到底部。请点击示例预览工具栏中的「手机」图标，切换为手机模式后查看效果。"
+        message="切换 placement 查看操作条位置"
+        description="预览框模拟页面容器。操作条会按 placement 固定到顶部或底部，Start / 默认 / End 分别对应左、中、右对齐。"
       />
-      <Typography.Paragraph type="secondary" style={{ marginBottom: 0 }}>
-        桌面端按钮跟随文档流排列；移动端会将下方操作栏 Portal 到可视区域底部并固定显示。
-      </Typography.Paragraph>
-      <Card title="用户信息编辑" style={{ flex: 1 }}>
-        <Form form={form} layout="vertical">
-          <Form.Item name="username" label="用户名">
-            <Input placeholder="请输入用户名" />
-          </Form.Item>
-          <Form.Item name="email" label="邮箱">
-            <Input placeholder="请输入邮箱" />
-          </Form.Item>
-          <Form.Item name="phone" label="手机号">
-            <Input placeholder="请输入手机号" />
-          </Form.Item>
-          <Form.Item name="department" label="部门">
-            <Input placeholder="请输入部门" />
-          </Form.Item>
-          <Form.Item name="position" label="职位">
-            <Input placeholder="请输入职位" />
-          </Form.Item>
-          <Form.Item name="company" label="公司">
-            <Input placeholder="请输入公司名称" />
-          </Form.Item>
-          <Form.Item name="address" label="联系地址">
-            <Input placeholder="请输入联系地址" />
-          </Form.Item>
-          <Form.Item name="emergencyContact" label="紧急联系人">
-            <Input placeholder="请输入紧急联系人" />
-          </Form.Item>
-          <Form.Item name="emergencyPhone" label="紧急联系电话">
-            <Input placeholder="请输入紧急联系电话" />
-          </Form.Item>
-          <Form.Item name="remark" label="备注">
-            <Input.TextArea placeholder="请输入备注" rows={6} />
-          </Form.Item>
-        </Form>
-      </Card>
-      <ButtonFooter>
-        <Flex justify="flex-end" gap={8} style={{ padding: '16px 24px' }}>
-          <Button onClick={() => form.resetFields()}>重置</Button>
-          <Button type="primary" onClick={() => message.success('保存成功')}>
-            保存
-          </Button>
-        </Flex>
-      </ButtonFooter>
+      <Space direction="vertical" size={4}>
+        <Typography.Text type="secondary">placement</Typography.Text>
+        <Radio.Group
+          optionType="button"
+          buttonStyle="solid"
+          options={PLACEMENT_OPTIONS}
+          value={placement}
+          onChange={e => setPlacement(e.target.value)}
+        />
+      </Space>
+      <div
+        ref={frameRef}
+        className="kne-responsive-boundary"
+        style={{
+          position: 'relative',
+          minHeight: 520,
+          background: '#f5f5f5',
+          borderRadius: 8,
+          overflow: 'hidden',
+          border: '1px solid #f0f0f0'
+        }}
+      >
+        <div style={{ padding: 24 }}>
+          <Space direction="vertical" size={12} style={{ width: '100%' }}>
+            <Space>
+              <Typography.Title level={5} style={{ margin: 0 }}>
+                春季外套
+              </Typography.Title>
+              <Tag color="orange">待支付</Tag>
+            </Space>
+            <Typography.Text type="secondary">订单号 OD20260818001</Typography.Text>
+            <Typography.Text>数量：1 件</Typography.Text>
+            <Typography.Text>应付金额：¥299.00</Typography.Text>
+            <Typography.Paragraph type="secondary" style={{ marginBottom: 0 }}>
+              请在 29:59 内完成支付，超时订单将自动取消。
+            </Typography.Paragraph>
+          </Space>
+        </div>
+        <ButtonFooter placement={placement} target={() => frameRef.current} innerClassName="demo-button-footer-bar">
+          <Button>取消订单</Button>
+          <Button type="primary">去支付</Button>
+        </ButtonFooter>
+      </div>
     </Flex>
   );
 };
@@ -1571,16 +1636,31 @@ render(<BaseExample />);
 |--------|------|--------|------|
 | list | Array\<object \| function\> | [] | 按钮列表，可以是配置对象或渲染函数 |
 | compact | boolean | false | 是否使用紧凑模式（Space.Compact） |
-| showLength | number | - | 固定外露按钮数；传入后为受控模式，根节点宽度变为 fit-content |
-| className | string | - | 根节点额外 className |
+| showLength | number | - | 指定显示的按钮数量，不指定则自动计算 |
 | more | ReactNode | - | 自定义"更多"按钮 |
 | moreType | 'default' \| 'link' | 'default' | 更多按钮类型 |
-| placement | string | 'bottomLeft' | 更多下拉菜单位置（antd Dropdown placement） |
-| menuClassName | string | - | 更多下拉菜单额外 className |
 | getPopupContainer | function | - | 下拉菜单渲染父节点 |
 | trigger | string | - | 下拉菜单触发方式 |
 | itemClassName | string | - | 按钮项的自定义类名 |
+| place | `'start'` \| `'center'` \| `'end'` \| `'topStart'` \| `'top'` \| `'topEnd'` \| `'bottomStart'` \| `'bottom'` \| `'bottomEnd'` | `'start'` | 按钮在满宽容器内的九点定位。根节点仍铺满外部 Flex 槽位，只改变内部对齐；不占用 `placement` |
+| placement | string | `'bottomLeft'` | 更多下拉菜单位置（antd Dropdown placement） |
 | ...SpaceProps | - | - | Space 组件的其他属性（size、split、align、style等） |
+
+### place 说明
+
+| 值 | 垂直 | 水平 |
+|----|------|------|
+| `start` | center | start |
+| `center` | center | center |
+| `end` | center | end |
+| `topStart` | top | start |
+| `top` | top | center |
+| `topEnd` | top | end |
+| `bottomStart` | bottom | start |
+| `bottom` | bottom | center |
+| `bottomEnd` | bottom | end |
+
+非法值回退为 `start`。垂直方向仅在外部容器被撑高（如 Flex stretch）时可见。
 
 ### list 配置项
 
@@ -1731,9 +1811,24 @@ api: async ({ params }) => {
 | className | string | - | 容器的自定义类名 |
 | innerClassName | string | - | 内部容器的自定义类名 |
 | target | HTMLElement | document.body | 移动端渲染的目标容器 |
+| placement | `'top'` \| `'topStart'` \| `'topEnd'` \| `'bottom'` \| `'bottomStart'` \| `'bottomEnd'` | `'bottom'` | 移动端固定条位置：垂直方向（top/bottom）+ 内容水平对齐（Start/中/End） |
+
+### placement 说明
+
+| 值 | 垂直 | 水平（内容对齐） |
+|----|------|------------------|
+| `bottom` | 底部 | center |
+| `bottomStart` | 底部 | start |
+| `bottomEnd` | 底部 | end |
+| `top` | 顶部 | center |
+| `topStart` | 顶部 | start |
+| `topEnd` | 顶部 | end |
+
+> `placement` 仅影响移动端固定条；桌面端仍跟随文档流。固定条仍为全宽，Start/End 只改变内容的 `justify-content`。非法值回退为 `bottom`。
 
 ### 特性
 
 - 在小屏幕（≤768px）下，会将内容使用 Portal 渲染到 body
 - 自动计算高度并设置 CSS 变量
-- 适用于固定在页面底部的操作按钮区域
+- 支持通过 `placement` 控制移动端固定位置与内容对齐
+- 适用于固定在页面顶部/底部的操作按钮区域
