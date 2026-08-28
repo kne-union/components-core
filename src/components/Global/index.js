@@ -206,21 +206,23 @@ export const GlobalProvider = ({
     }, get(preset, "global"))}>
         <GlobalResponsiveScope>
             <GlobalValue globalKey="locale">{({value: locale}) => {
-            return <ConfigProvider
-                loader={loadAntdLocale}
-                params={{locale}}
-                themeToken={themeToken}
-            >
-                <App message={{top: 100}}>
-                    <AppDrawer>
-                        {typeof init === "function" ? (<Fetch
-                            loader={() => init()}
-                            render={() => children}
-                        />) : (children)}
-                    </AppDrawer>
-                </App>
-                <GlobalFontLoader/>
-            </ConfigProvider>;
+            return <GlobalValue globalKey="themeToken">{({value: liveThemeToken}) => (
+                <ConfigProvider
+                    loader={loadAntdLocale}
+                    params={{locale}}
+                    themeToken={liveThemeToken || themeToken}
+                >
+                    <App message={{top: 100}}>
+                        <AppDrawer>
+                            {typeof init === "function" ? (<Fetch
+                                loader={() => init()}
+                                render={() => children}
+                            />) : (children)}
+                        </AppDrawer>
+                    </App>
+                    <GlobalFontLoader/>
+                </ConfigProvider>
+            )}</GlobalValue>;
         }}</GlobalValue>
         </GlobalResponsiveScope>
     </GlobalContext>);
