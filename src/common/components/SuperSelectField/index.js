@@ -1,8 +1,8 @@
-import {forwardRef} from "react";
+import {forwardRef, useContext} from "react";
 import SuperSelect, {
     SelectedTagList, SelectTableList, SelectTree
 } from "@kne/super-select";
-import Modal from "@components/Modal";
+import Modal, {ModalLayerContext} from "@components/Modal";
 import Image from "@components/Image";
 import {Flex} from "antd";
 import style from './style.module.scss';
@@ -30,7 +30,13 @@ const renderModal = (contextProps) => {
     </Modal>);
 };
 
+const useSelectInModalLayer = () => {
+    const isInModal = useContext(ModalLayerContext);
+    return isInModal ? {isPopup: false, disableMobileSheet: true} : {};
+};
+
 const SuperSelectField = forwardRef((p, ref) => {
+    const inModal = useSelectInModalLayer();
     const props = Object.assign({}, {
         children: ({components}) => {
             return (<Flex vertical>
@@ -41,7 +47,7 @@ const SuperSelectField = forwardRef((p, ref) => {
                 {props.isPopup !== false && components.selectedTag}
             </Flex>);
         }, renderModal
-    }, p);
+    }, inModal, p);
 
     return <SuperSelect {...props} ref={ref}/>;
 });
@@ -49,16 +55,18 @@ const SuperSelectField = forwardRef((p, ref) => {
 export default SuperSelectField;
 
 export const SuperSelectTableListField = forwardRef((p, ref) => {
+    const inModal = useSelectInModalLayer();
     const props = Object.assign({}, {
         renderModal,
-    }, p);
+    }, inModal, p);
     return <SelectTableList {...props} ref={ref}/>;
 });
 
 export const SuperSelectTreeField = forwardRef((p, ref) => {
+    const inModal = useSelectInModalLayer();
     const props = Object.assign({}, {
         renderModal,
-    }, p);
+    }, inModal, p);
     return <SelectTree {...props} ref={ref}/>;
 });
 

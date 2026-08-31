@@ -186,4 +186,35 @@ test("withDecorator弹窗", async () => {
   expect(screen.getByText("内层内容")).toBeInTheDocument();
 });
 
+test("嵌套 Modal 挂到外层 modal-root 外侧", async () => {
+  const TestComponent = () => {
+    const [innerOpen, setInnerOpen] = useState(true);
+    return (
+      <div className="kne-responsive-boundary">
+        <Modal open title="外层弹窗">
+          <button type="button">外层触发</button>
+          <Modal open={innerOpen} title="内层弹窗" onClose={() => setInnerOpen(false)}>
+            内层内容
+          </Modal>
+        </Modal>
+      </div>
+    );
+  };
+
+  render(<TestComponent />);
+  await screen.findByText("内层内容");
+  await waitFor(() => {
+    const innerTitle = screen.getByText("内层弹窗");
+    const innerRoot = innerTitle.closest(".ant-modal-root");
+    const outerBody = screen.getByText("外层触发").closest(".ant-modal-body");
+    expect(innerRoot).toBeTruthy();
+    expect(outerBody).toBeTruthy();
+    expect(outerBody.contains(innerRoot)).toBe(false);
+    const innerZ = Number(innerRoot.querySelector(".ant-modal-wrap")?.style.zIndex || 0);
+    const outerRoot = screen.getByText("外层触发").closest(".ant-modal-root");
+    const outerZ = Number(outerRoot.querySelector(".ant-modal-wrap")?.style.zIndex || 0);
+    expect(innerZ).toBeGreaterThan(outerZ);
+  });
+});
+
 //fireEvent.click(screen.getByText("components-core-modal-close-btn"));

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {createContext, useContext, useEffect, useRef} from "react";
 import {App, Button, Col, Modal as AntdModal, Row, Space} from "antd";
 import classnames from "classnames";
 import style from "./style.module.scss";
@@ -12,6 +12,8 @@ import {useMobilePopupMount, useScrollElement} from "@kne/responsive-utils";
 
 const ModalLocaleRoot = withLocale(({children}) => children);
 
+export const ModalLayerContext = createContext(false);
+
 const wrapCustomGetContainer = (customGetContainer) => {
     if (!customGetContainer) {
         return undefined;
@@ -20,6 +22,48 @@ const wrapCustomGetContainer = (customGetContainer) => {
         return (triggerNode) => customGetContainer(triggerNode) || null;
     }
     return () => customGetContainer;
+};
+
+// 只认文档示例手机框。kne-responsive-boundary 也会出现在真实移动端 layout / FormCreator 上，
+// 当成 example frame 会把弹窗挂进页面或外层 Modal 内部，层级盖不住导航和外层 footer。
+const VIEWPORT_EXAMPLE_SELECTORS = [".example-driver-device-scroll"];
+
+const viewportPopupMountOptions = {
+    cover: "viewport",
+    exampleSelectors: VIEWPORT_EXAMPLE_SELECTORS,
+};
+
+const findParentModalMountHost = (node) => {
+    if (!node || typeof node.closest !== "function") {
+        return null;
+    }
+    const parentRoot = node.closest(".ant-modal-root");
+    if (!parentRoot) {
+        return null;
+    }
+    return parentRoot.parentElement || (typeof document !== "undefined" ? document.body : null);
+};
+
+const resolveModalGetContainer = ({customGetContainer, getPopupContainer, getHostNode, isNested}) => {
+    const wrappedCustom = wrapCustomGetContainer(customGetContainer);
+    return (triggerNode) => {
+        if (wrappedCustom) {
+            const custom = wrappedCustom(triggerNode);
+            if (custom) {
+                return custom;
+            }
+        }
+        const from = triggerNode || (typeof getHostNode === "function" ? getHostNode() : null);
+        const nestedHost = findParentModalMountHost(from);
+        if (nestedHost) {
+            return nestedHost;
+        }
+        // 嵌套且 host 尚未进 DOM：返回 undefined，让 rc-portal 等下一拍再解析
+        if (isNested && !from) {
+            return undefined;
+        }
+        return getPopupContainer(triggerNode);
+    };
 };
 
 let parentScrollLockCount = 0;
@@ -374,52 +418,65 @@ const computedCommonProps = ({
             },
         },
         children: (<ModalLocaleRoot>
-            {runWithDecorator({
-                withDecorator,
-                title,
-                closable,
-                onClose,
-                onConfirm,
-                confirmText,
-                onCancel,
-                cancelText,
-                footer,
-                footerButtons,
-                rightOptions,
-                rightSpan,
-                disabledScroller,
-                noPadding,
-                children,
-                childrenRef,
-                isMobile: useMobileLayout,
-            })}
+            <ModalLayerContext.Provider value={true}>
+                {runWithDecorator({
+                    withDecorator,
+                    title,
+                    closable,
+                    onClose,
+                    onConfirm,
+                    confirmText,
+                    onCancel,
+                    cancelText,
+                    footer,
+                    footerButtons,
+                    rightOptions,
+                    rightSpan,
+                    disabledScroller,
+                    noPadding,
+                    children,
+                    childrenRef,
+                    isMobile: useMobileLayout,
+                })}
+            </ModalLayerContext.Provider>
         </ModalLocaleRoot>),
     };
 };
 
 const Modal = withLocale(({size = 'default', getContainer, open, mobileFullscreen = true, ...props}) => {
     const childrenRef = useRef(null);
+    const hostRef = useRef(null);
+    const isNested = useContext(ModalLayerContext);
     const {
         isMobile,
         fixedModeClass,
         getPopupContainer,
         anchorRef,
     } = useMobilePopupMount({
-        // 真实移动端用 fixed 罩可视区；example/container 仍会自动走 boundary+absolute
-        cover: 'viewport',
+        ...viewportPopupMountOptions,
         getPopupContainer: wrapCustomGetContainer(getContainer),
     });
     const getScrollElement = useScrollElement();
     useLockParentScroll(!!open, getScrollElement);
+    const setAnchorRef = (node) => {
+        hostRef.current = node;
+        anchorRef(node);
+    };
+    const getModalContainer = resolveModalGetContainer({
+        customGetContainer: getContainer,
+        getPopupContainer,
+        getHostNode: () => hostRef.current,
+        isNested,
+    });
 
     return (<>
-        <span ref={anchorRef} className={style["modal-host"]} aria-hidden="true" />
+        <span ref={setAnchorRef} className={style["modal-host"]} aria-hidden="true" />
         <AntdModal
             {...computedCommonProps(Object.assign({}, props, {
                 size, childrenRef, isMobile, open, fixedModeClass, mobileFullscreen,
             }))}
             open={open}
-            getContainer={getPopupContainer}
+            getContainer={getModalContainer}
         />
     </>);
 });
@@ -427,7 +484,8 @@ const Modal = withLocale(({size = 'default', getContainer, open, mobileFullscree
 export const useModal = () => {
     const {modal} = App.useApp();
     const childrenRef = useRef(null);
-    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'viewport'});
+    const isNested = useContext(ModalLayerContext);
+    const {resolveMount, getPopupContainer} = useMobilePopupMount(viewportPopupMountOptions);
     const getScrollElement = useScrollElement();
     return (props) => {
         const anchor = typeof document !== "undefined" ? document.activeElement : null;
@@ -446,12 +504,18 @@ export const useModal = () => {
             },
             ...restProps,
         });
-        const resolveContainer = wrapCustomGetContainer(customGetContainer ?? getContainer);
         const {destroy} = modal.info({
             ...otherProps,
+            // ConfirmDialog 默认 zIndex=2000，会压过内层 SuperSelect 下拉/弹层
+            zIndex: otherProps.zIndex ?? 1100,
             afterClose,
             content: children,
-            getContainer: () => (resolveContainer ? resolveContainer(anchor) : null) || getPopupContainer(anchor),
+            getContainer: resolveModalGetContainer({
+                customGetContainer: customGetContainer ?? getContainer,
+                getPopupContainer,
+                getHostNode: () => anchor,
+                isNested,
+            }),
         });
         api.close = destroy;
 
@@ -461,7 +525,8 @@ export const useModal = () => {
 
 export const useConfirmModal = () => {
     const {modal} = App.useApp();
-    const {resolveMount, getPopupContainer} = useMobilePopupMount({cover: 'viewport'});
+    const isNested = useContext(ModalLayerContext);
+    const {resolveMount, getPopupContainer} = useMobilePopupMount(viewportPopupMountOptions);
     const getScrollElement = useScrollElement();
     return (props) => {
         const anchor = typeof document !== "undefined" ? document.activeElement : null;
@@ -481,10 +546,15 @@ export const useConfirmModal = () => {
             success: "icon-chenggong",
         }, iconSetting);
         if (modal[type]) {
-            const resolveContainer = wrapCustomGetContainer(customGetContainer);
             const {destroy} = modal[type]({
                 ...otherProps,
-                getContainer: () => (resolveContainer ? resolveContainer(anchor) : null) || getPopupContainer(anchor),
+                zIndex: otherProps.zIndex ?? 1100,
+                getContainer: resolveModalGetContainer({
+                    customGetContainer,
+                    getPopupContainer,
+                    getHostNode: () => anchor,
+                    isNested,
+                }),
                 centered: true,
                 afterClose: (...args) => {
                     unlock();
