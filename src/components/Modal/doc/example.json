@@ -21,6 +21,29 @@
       ]
     },
     {
+      "title": "嵌套弹窗与层级",
+      "description": "在 Form / FormModal 里用 SuperSelect 验收嵌套弹层挂载：选择层应盖住外层 footer，不能挂进表单内容区或 boundary 里",
+      "code": "./nested-modal.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@components/Modal"
+        },
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "高级功能",
       "description": "展示Modal组件的高级功能，包括withDecorator装饰器、rightOptions右侧选项和高级命令式调用",
       "code": "./advanced-modal.js",
