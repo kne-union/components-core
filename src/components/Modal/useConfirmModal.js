@@ -97,7 +97,8 @@ export const useConfirmModal = () => {
         },
         icon: null,
         classNames: {
-          mask: classnames(isMobile && style['modal-mask-fullscreen'], isMobile && fixedModeClass)
+          mask: classnames(isMobile && style['modal-mask-fullscreen'], isMobile && fixedModeClass),
+          container: classnames(style['confirm-modal-container'], isMobile && style['is-mobile'])
         },
         wrapClassName: classnames(style['confirm-modal-wrap'], wrapClassName, {
           [style['is-danger']]: danger,
