@@ -1,122 +1,139 @@
-import Modal, {useModal} from "@components/Modal";
-import {useState, useRef} from "react";
-import {CancelButton, SubmitButton} from "@kne/react-form-antd";
-import FetchButton from "@common/components/FetchButton";
-import {FormattedMessage} from "@kne/react-intl";
+import classnames from "classnames";
+import { FormStepsModal as BaseFormStepsModal, FormSteps } from "@kne/form-info";
+import {
+  createModalRender,
+  useModal,
+  modalClassNames,
+} from "@components/Modal";
+import { CancelButton, SubmitButton } from "@kne/react-form-antd";
+import { FormattedMessage } from "@kne/react-intl";
+import { Flex } from "antd";
 import style from "./style.module.scss";
-import {Button, Steps, Flex} from "antd";
-import computedModalCommonProps from "./computedModalCommonProps";
 
-const FormStepState = ({items, children}) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const stepCacheRef = useRef({});
-    return children({
-        currentIndex,
-        setCurrentIndex,
-        stepCacheRef,
-        isLastStep: currentIndex === items.length - 1,
-        currentProps: Object.assign({}, items[currentIndex]),
-    });
-};
+const mapHostToOverlayProps = ({
+  onCancel,
+  footer,
+  modalRender,
+  formProps: _formProps,
+  saveText: _saveText,
+  autoClose: _autoClose,
+  children,
+  ...props
+}) => ({
+  ...props,
+  onClose: onCancel,
+  footer: typeof footer === "function" ? footer() : footer,
+  modalRender,
+  children,
+});
 
-const computedCommonProps = ({
-                                 footerButtons,
-                                 cancelText,
-                                 completeText,
-                                 nextText,
-                                 items,
-                                 withDecorator,
-                                 autoClose = true,
-                                 ...others
-                             }) => {
-    return computedModalCommonProps(Object.assign({}, others, {
-        footerButtons: ({currentIndex, isLastStep}) => {
-            const {footerButtons} = Object.assign({}, items[currentIndex]);
-            return (footerButtons || [{
-                children: cancelText || <FormattedMessage id={"Cancel"}/>, ButtonComponent: CancelButton,
-            }, {
-                type: "primary",
-                children: isLastStep ? completeText || <FormattedMessage id={"Complete"}/> : nextText ||
-                    <FormattedMessage id={"Next"}/>,
-                ButtonComponent: SubmitButton,
-                autoClose: false,
-            },]);
-        },
-        withDecorator: (render, args) => {
-            const innerRender = (props) => {
-                return (<FormStepState items={items}>
-                    {({
-                          currentIndex, isLastStep, setCurrentIndex, currentProps, stepCacheRef,
-                      }) => {
-                        const {formProps, title, ...otherProps} = currentProps;
-                        const {
-                            onSubmit, ..._formProps
-                        } = typeof formProps === "function" ? formProps(props) : formProps;
+const defaultRenderModal = (() => {
+  const render = createModalRender({
+    footerButtons: [],
+    bodyScroll: true,
+    className: classnames(style["form-modal"], modalClassNames.stepsForm),
+  });
+  return (hostProps) => render(mapHostToOverlayProps(hostProps));
+})();
 
-                        const formData = Object.assign({}, _formProps.data, stepCacheRef.current[currentIndex]?.data);
-
-                        return render(Object.assign({}, props, otherProps, {
-                            currentIndex, isLastStep, setCurrentIndex, stepCacheRef, stepSection: (<Steps
-                                className={style["form-step-section"]}
-                                current={currentIndex}
-                                items={items.map(({title}) => ({title}))}
-                            />), formProps: Object.assign({}, _formProps, {
-                                key: currentIndex, data: formData, onSubmit: async (data, ...args) => {
-                                    stepCacheRef.current[currentIndex] = {data};
-                                    const res = onSubmit && (await onSubmit(data, Object.assign({}, props, {
-                                        currentIndex, isLastStep, setCurrentIndex, currentProps, stepCacheRef,
-                                    }), ...args));
-                                    stepCacheRef.current[currentIndex] = Object.assign({}, stepCacheRef.current[currentIndex], {
-                                        output: res
-                                    });
-                                    if (autoClose && !isLastStep && res !== false) {
-                                        setCurrentIndex((currentIndex) => currentIndex + 1);
-                                    }
-                                    if (!isLastStep) {
-                                        return false;
-                                    }
-                                    return res;
-                                },
-                            }),
-                        }));
-                    }}
-                </FormStepState>);
-            };
-            return typeof withDecorator === "function" ? withDecorator(innerRender, args) : innerRender(args);
-        },
-        formProps: ({formProps, ...others}) => Object.assign({}, others, formProps),
-        children: ({children, stepSection, ...props}) => {
-            return (<Flex vertical gap={24}>
-                <Flex justify="center">{stepSection}</Flex>
-                {typeof children === "function" ? children(props) : children}
-            </Flex>);
-        },
-    }));
-};
-
-const FormStepModal = (props) => {
-    return (<Modal
-        {...computedCommonProps(Object.assign({}, props, {className: style["form-modal"]}))}
-    />);
-};
+const FormStepModal = ({
+  className,
+  completeText,
+  nextText,
+  items,
+  onComplete,
+  autoClose = true,
+  open,
+  onClose,
+  onCancel,
+  title,
+  size,
+  renderModal = defaultRenderModal,
+  ...others
+}) => (
+  <BaseFormStepsModal
+    completeText={completeText}
+    nextText={nextText}
+    items={items}
+    onComplete={onComplete}
+    className={classnames(style["form-modal"], className)}
+    modalProps={{
+      autoClose,
+      open,
+      title,
+      size,
+      onCancel: onCancel || onClose,
+      renderModal,
+      ...others,
+    }}
+  />
+);
 
 export default FormStepModal;
 
 export const useFormStepModal = () => {
-    const modal = useModal();
-    return (props) => modal({...computedCommonProps(Object.assign({}, props, {className: style["form-modal"]}))});
-};
+  const modal = useModal();
+  return (props) => {
+    const {
+      items = [],
+      completeText,
+      nextText,
+      cancelText,
+      onComplete,
+      autoClose = true,
+      className,
+      children,
+      ...rest
+    } = props;
+    const api = {};
+    const close = () => api.close?.();
 
-export const FormStepModalButton = (props) => {
-    const formModal = useFormStepModal();
-    if (!props.api) {
-        const {modalProps, ...others} = props;
-        return (<Button
-            {...others}
-            onClick={() => {
-                formModal(modalProps);
-            }}
-        />);
-    }
-    return <FetchButton {...props} modalFunc={formModal}/>;
+    const opened = modal({
+      ...rest,
+      className: classnames(
+        style["form-modal"],
+        modalClassNames.stepsForm,
+        className
+      ),
+      footerButtons: [],
+      footer: null,
+      bodyScroll: true,
+      onClose: close,
+      children: (
+        <FormSteps
+          items={items}
+          autoStep
+          onComplete={async (cache) => {
+            const res = await onComplete?.(cache);
+            if (autoClose && res !== false) {
+              close();
+            }
+            return res;
+          }}
+        >
+          {({ children: stepInner, isLastStep, ...stepCtx }) => (
+            <Flex vertical gap={24} style={{ minHeight: "100%" }}>
+              <div style={{ flex: 1 }}>
+                {typeof children === "function"
+                  ? children({ ...stepCtx, isLastStep, close, children: stepInner })
+                  : stepInner}
+              </div>
+              <Flex justify="flex-end" gap={8}>
+                <CancelButton onClick={close}>
+                  {cancelText || <FormattedMessage id="Cancel" />}
+                </CancelButton>
+                <SubmitButton type="primary">
+                  {isLastStep
+                    ? completeText || <FormattedMessage id="Complete" />
+                    : nextText || <FormattedMessage id="Next" />}
+                </SubmitButton>
+              </Flex>
+            </Flex>
+          )}
+        </FormSteps>
+      ),
+    });
+    api.close = opened.close;
+    return opened;
+  };
 };

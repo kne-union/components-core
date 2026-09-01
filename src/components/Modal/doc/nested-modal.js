@@ -89,51 +89,11 @@ const UseFormModalSelect = () => {
   );
 };
 
-const BoundaryFormSelect = () => {
-  const formModal = useFormModal();
-  return (
-    <CaseCard
-      title="3. FormCreator 模拟：boundary 里的 SuperSelect"
-      expect="字段包在 kne-responsive-boundary 里时，SuperSelect 弹层仍要挂到外层外面，盖住 footer。"
-    >
-      <Button
-        type="primary"
-        onClick={() => {
-          formModal({
-            title: "外层 FormModal",
-            formProps: {
-              onSubmit: () => {},
-            },
-            children: (
-              <div
-                className="kne-responsive-boundary"
-                style={{
-                  minHeight: 160,
-                  padding: 12,
-                  border: "1px dashed #bbb",
-                  borderRadius: 6,
-                }}
-              >
-                <div style={{ ...hintStyle, marginBottom: 8 }}>
-                  模拟 FormCreator 根节点上的 kne-responsive-boundary。
-                </div>
-                <CourseSelect name="boundaryCourse" />
-              </div>
-            ),
-          });
-        }}
-      >
-        打开带 boundary 的表单
-      </Button>
-    </CaseCard>
-  );
-};
-
 const ModalWithFormSelect = () => {
   const [open, setOpen] = useState(false);
   return (
     <CaseCard
-      title="4. 声明式 Modal 内的 Form + SuperSelect"
+      title="3. 声明式 Modal 内的 Form + SuperSelect"
       expect="普通 Modal 包一层 Form 后，SuperSelect 弹层同样盖住外层 footer。"
     >
       <Button type="primary" onClick={() => setOpen(true)}>
@@ -180,7 +140,7 @@ const NestedFormModals = () => {
   const formModal = useFormModal();
   return (
     <CaseCard
-      title="5. FormModal 套 FormModal，两层都是 SuperSelect"
+      title="4. FormModal 套 FormModal，两层都是 SuperSelect"
       expect="先点外层 SuperSelect 看弹层；再开内层表单，内层 SuperSelect 应盖住内层和外层 footer。"
     >
       <Button
@@ -206,7 +166,7 @@ const ConfirmInForm = () => {
   const [open, setOpen] = useState(false);
   return (
     <CaseCard
-      title="6. FormModal 里 SuperSelect + 确认框"
+      title="5. FormModal 里 SuperSelect + 确认框"
       expect="SuperSelect 弹层和确认框都要叠在表单弹窗之上，关闭后表单还在。"
     >
       <Button type="primary" onClick={() => setOpen(true)}>
@@ -249,7 +209,6 @@ const NestedModalExamples = () => (
     />
     <DeclarativeFormModal />
     <UseFormModalSelect />
-    <BoundaryFormSelect />
     <ModalWithFormSelect />
     <NestedFormModals />
     <ConfirmInForm />

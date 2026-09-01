@@ -82,7 +82,7 @@
 | children | 表单内容 | ReactNode | 是 | - |
 | footerButtons | 底部按钮配置 | array | 否 | - |
 | width | 弹窗宽度 | string | 否 | 520 |
-| withDecorator | 装饰器函数，用于包装表单内容 | function | 否 | - |
+| modalRender | 自定义弹层渲染 | function | 否 | - |
 
 ### FormDrawer
 
@@ -99,7 +99,7 @@
 | children | 表单内容 | ReactNode | 是 | - |
 | footerButtons | 底部按钮配置 | array | 否 | - |
 | width | 抽屉宽度 | string | 否 | - |
-| withDecorator | 装饰器函数 | function | 否 | - |
+| modalRender | 自定义抽屉渲染 | function | 否 | - |
 
 ### FormStepModal
 
@@ -113,7 +113,6 @@
 | items | 步骤配置数组 | array | 是 | - |
 | onClose | 关闭回调 | function | 否 | - |
 | footerButtons | 底部按钮配置 | array | 否 | - |
-| withDecorator | 装饰器函数 | function | 否 | - |
 | autoClose | 最后一步完成后是否自动关闭 | boolean | 否 | true |
 | cancelText | 取消按钮文本 | ReactNode | 否 | - |
 | completeText | 完成按钮文本 | ReactNode | 否 | - |

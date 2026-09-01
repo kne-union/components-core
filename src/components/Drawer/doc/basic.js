@@ -1,4 +1,4 @@
-const { default: Drawer, useDrawer, DrawerButton } = _Drawer;
+const { default: Drawer, useDrawer } = _Drawer;
 const { Button, Space, Typography, Descriptions, Avatar, Tag } = _antd;
 const { useState } = React;
 const {PureGlobal} = _Global;

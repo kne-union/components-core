@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.5.50",
+  "version": "0.6.0",
   "files": [
     "build"
   ],
@@ -8,8 +8,12 @@
     "moduleNameMapper": {
       "^@common/(.*)": "<rootDir>/src/common/$1",
       "^@components/(.*)": "<rootDir>/src/components/$1",
-      "^@utils/(.*)": "<rootDir>/src/common/utils/$1"
-    }
+      "^@utils/(.*)": "<rootDir>/src/common/utils/$1",
+      "^.+\\.(css|sass|scss|less)$": "identity-obj-proxy"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@kne/react-modal|@ant-design/icons|@ant-design/colors|@ant-design/fast-color|simplebar-react|simplebar)/)"
+    ]
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
@@ -40,6 +44,7 @@
     "@kne/react-form-plus": "^0.1.7",
     "@kne/react-icon": "^0.1.4",
     "@kne/react-intl": "^0.1.15",
+    "@kne/react-modal": "^0.1.7",
     "@kne/react-pdf-sign": "^1.1.8",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.4.6",

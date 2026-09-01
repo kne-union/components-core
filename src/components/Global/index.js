@@ -14,7 +14,7 @@ import Fetch, {withFetch} from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
 import get from "lodash/get";
-import {AppDrawer} from "@components/Drawer";
+import {DrawerContextHolder} from "@components/Drawer";
 import {FontLoader} from '@components/Icon';
 import useRefCallback from "@kne/use-ref-callback";
 import transform from "lodash/transform";
@@ -214,12 +214,11 @@ export const GlobalProvider = ({
                     themeToken={liveThemeToken || themeToken}
                 >
                     <App message={{top: 100}}>
-                        <AppDrawer>
-                            {typeof init === "function" ? (<Fetch
-                                loader={() => init()}
-                                render={() => children}
-                            />) : (children)}
-                        </AppDrawer>
+                        <DrawerContextHolder />
+                        {typeof init === "function" ? (<Fetch
+                            loader={() => init()}
+                            render={() => children}
+                        />) : (children)}
                     </App>
                     <GlobalFontLoader/>
                 </ConfigProvider>

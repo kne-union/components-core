@@ -1136,27 +1136,25 @@ render(<BaseExample />);
 ```
 
 - FileSystem 扩展顶部菜单
-- 通过 toolbarExtra 在导航栏追加上传、新建文件夹、刷新、删除选中等自定义操作
+- 通过 toolbarExtra 在导航栏追加上传、新建文件夹、刷新、删除选中等自定义操作；上传请使用 FileUpload（在 FileSystem 内会自动带上当前 uploadPath）
 - _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),icons(@ant-design/icons),remoteLoader(@kne/remote-loader)
 
 ```jsx
-const { FileSystem } = _ReactFile;
+const { FileSystem, FileUpload } = _ReactFile;
 const { createWithRemoteLoader, getPublicPath } = remoteLoader;
 const { Button, message, Space } = antd;
-const { DeleteOutlined, ReloadOutlined, UploadOutlined, FolderAddOutlined } = icons;
-const { useState } = React;
+const { DeleteOutlined, ReloadOutlined, FolderAddOutlined } = icons;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
 })(({ remoteModules }) => {
   const [PureGlobal, InfoPage] = remoteModules;
-  const [selectedEntries, setSelectedEntries] = useState([]);
-  const [items] = useState([
+  const items = [
     { kind: 'folder', path: 'documents/', name: 'Documents' },
     { kind: 'file', path: 'documents/Q3-report.pdf', name: 'Q3-report.pdf', size: 1024000 },
     { kind: 'file', path: 'documents/notes.md', name: 'notes.md', size: 3200 },
     { kind: 'file', path: 'readme.txt', name: 'readme.txt', size: 1200 }
-  ]);
+  ];
 
   return (
     <PureGlobal
@@ -1164,7 +1162,16 @@ const BaseExample = createWithRemoteLoader({
         ajax: async api => ({ data: { code: 0, data: api.loader?.() } }),
         apis: {
           file: {
-            staticUrl: getPublicPath('react-file') || window.PUBLIC_URL
+            staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+            upload: async ({ file, path }) => {
+              console.log('upload to', path || '(root)', file?.name);
+              return {
+                data: {
+                  code: 0,
+                  data: { id: `mock-${Date.now()}`, filename: file.name, path: path || '' }
+                }
+              };
+            }
           }
         }
       }}
@@ -1175,19 +1182,15 @@ const BaseExample = createWithRemoteLoader({
             items={items}
             title="My Files"
             defaultView="list"
-            toolbarExtra={
+            toolbarExtra={({ uploadPath, selectedEntries, clearSelection }) => (
               <Space size={8}>
-                <Button size="small" icon={<UploadOutlined />} onClick={() => message.info('自定义上传')}>
+                <FileUpload showUploadList={false} size="small">
                   上传
-                </Button>
-                <Button size="small" icon={<FolderAddOutlined />} onClick={() => message.info('自定义新建文件夹')}>
+                </FileUpload>
+                <Button size="small" icon={<FolderAddOutlined />} onClick={() => message.info(`新建文件夹于 ${uploadPath || '/'}`)}>
                   新建文件夹
                 </Button>
-                <Button
-                  size="small"
-                  icon={<ReloadOutlined />}
-                  onClick={() => message.success('已刷新')}
-                >
+                <Button size="small" icon={<ReloadOutlined />} onClick={() => message.success('已刷新')}>
                   刷新
                 </Button>
                 <Button
@@ -1195,15 +1198,15 @@ const BaseExample = createWithRemoteLoader({
                   danger
                   icon={<DeleteOutlined />}
                   disabled={!selectedEntries.length}
-                  onClick={() => message.info(&#96;已选择 ${selectedEntries.length} 项&#96;)}
+                  onClick={() => {
+                    message.info(`已选择 ${selectedEntries.length} 项`);
+                    clearSelection();
+                  }}
                 >
                   删除选中
                 </Button>
               </Space>
-            }
-            onSelectionChange={entries => {
-              setSelectedEntries(entries || []);
-            }}
+            )}
             onFileOpen={entry => {
               console.log('Open file:', entry);
             }}
@@ -1514,7 +1517,7 @@ render(<BaseExample />);
 | onSave | function(data, file, uuid) | - | 上传成功后数据处理回调，返回值将作为新的文件对象 |
 | onUpload | function({ file, path? }) | - | 自定义上传函数；优先于 `ossUpload` / preset `apis.file.upload` |
 | ossUpload | function | - | 自定义上传函数（兼容旧写法，等价于 `onUpload`） |
-| directory | string | - | 上传目录；内部映射为后端 `path` 传给上传接口 |
+| directory | string | - | 上传目录；内部映射为后端 `path`。在 `FileSystem` 内未传时自动使用当前 `uploadPath` |
 | getPermission | function(type) | - | 文件列表操作权限控制函数，type为'preview'/'delete'等 |
 | apis | object | - | API配置对象 |
 | renderModal | function(modalProps) | props => Modal | 自定义弹窗渲染函数 |
@@ -1796,7 +1799,7 @@ ZIP压缩包文件预览组件，支持查看压缩包内部的文件列表和�
 | defaultView | 'icons' \| 'list' \| 'columns' \| 'gallery' | 'list' | 默认视图模式 |
 | defaultPath | string | '' | 默认路径 |
 | className | string | - | 自定义类名 |
-| toolbarExtra | ReactNode \| (ctx) => ReactNode | - | 工具栏扩展；函数时接收 `{ selectedEntries, clearSelection, currentPath }` |
+| toolbarExtra | ReactNode \| (ctx) => ReactNode | - | 工具栏扩展；函数时接收 `{ selectedEntries, clearSelection, currentPath, uploadPath }`。`uploadPath` 为实际上传目录；在 `FileSystem` 内使用 `FileUpload` / `useUploadFile` 且未传 `directory` 时自动使用 |
 | propertiesPanel | boolean \| ReactNode \| (ctx) => ReactNode | true | 右侧属性面板；`false` 关闭；函数时接收 `{ selectedEntries, index, currentPath, close, actions, onAction, defaultActions }` |
 | propertiesActions | false \| ActionItem[] \| (ctx) => ActionItem[] \| object | 内置默认 | 属性面板操作；`false` 关闭；数组按 key 合并；函数完全自定义；`{ list, replace?, ...ButtonGroupProps }` 可替换或合并 |
 | onPropertiesAction | (key, ctx) => void | - | 操作点击回调；`ctx` 含 `entry` / `selectedEntries` / `clearSelection` / `currentPath` |

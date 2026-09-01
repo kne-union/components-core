@@ -1,33 +1,15 @@
 {
+  "reference": "@kne/react-modal",
   "isFull": false,
   "list": [
     {
-      "title": "基础弹窗",
-      "description": "展示Modal组件的基本用法，包括不同尺寸、异步确认、自定义按钮和命令式调用等",
-      "code": "./basic-modal.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
       "title": "嵌套弹窗与层级",
-      "description": "在 Form / FormModal 里用 SuperSelect 验收嵌套弹层挂载：选择层应盖住外层 footer，不能挂进表单内容区或 boundary 里",
+      "description": "在 Form / FormModal 里用 SuperSelect 验收嵌套弹层挂载：选择层应盖住外层 footer，不能挂进表单内容区里",
       "code": "./nested-modal.js",
       "scope": [
         {
           "name": "_Modal",
-          "packageName": "@components/Modal"
+          "packageName": "@kne/react-modal"
         },
         {
           "name": "_FormInfo",
@@ -36,25 +18,6 @@
         {
           "name": "global",
           "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "高级功能",
-      "description": "展示Modal组件的高级功能，包括withDecorator装饰器、rightOptions右侧选项和高级命令式调用",
-      "code": "./advanced-modal.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
         },
         {
           "name": "antd",
@@ -68,173 +31,12 @@
       "code": "./form-modal.js",
       "scope": [
         {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
           "name": "_FormInfo",
           "packageName": "@components/FormInfo"
         },
         {
           "name": "global",
           "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "TabsModal选项卡弹窗",
-      "description": "展示TabsModal组件的用法，包括选项卡内容和装饰器功能",
-      "code": "./tabs-modal.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        }
-      ]
-    },
-    {
-      "title": "ModalButton数据加载弹窗",
-      "description": "展示ModalButton组件的用法，点击按钮加载数据后弹出弹窗",
-      "code": "./modal-button.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        },
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        }
-      ]
-    },
-    {
-      "title": "业务场景示例",
-      "description": "展示Modal组件在真实业务场景中的应用，包括用户管理、订单详情、产品多标签页和审批流程",
-      "code": "./business-scenario.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "_FormInfo",
-          "packageName": "@components/FormInfo"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "数据加载弹窗",
-      "description": "展示使用withDecorator实现弹窗加载数据或加载远程组件的逻辑",
-      "code": "./fetch-data.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        }
-      ]
-    },
-    {
-      "title": "消息确认和提示",
-      "description": "展示命令式调用的消息确认和提示功能",
-      "code": "./modal-method.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "fetch",
-          "packageName": "@kne/react-fetch"
-        },
-        {
-          "name": "_Content",
-          "packageName": "@components/Content"
-        }
-      ]
-    },
-    {
-      "title": "childrenRef的使用",
-      "description": "展示如何使用childrenRef获取弹窗内容的引用",
-      "code": "./children-ref.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
-        },
-        {
-          "name": "antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "去掉内容区内边距",
-      "description": "通过 noPadding 去掉 Modal Content 默认 padding，由内容区自行控制内边距",
-      "code": "./no-padding.js",
-      "scope": [
-        {
-          "name": "_Modal",
-          "packageName": "@components/Modal"
         },
         {
           "name": "antd",

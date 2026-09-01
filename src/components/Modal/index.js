@@ -1,3 +1,11 @@
-export { default, useModal, useConfirmModal, ModalLayerContext } from "./Modal";
-export { default as TabsModal, useTabsModal } from "./TabsModal";
-export { default as ModalButton, TabsModalButton } from "./ModalButton";
+import "@kne/react-modal/dist/index.css";
+export {
+    default,
+    useModal,
+    useConfirmModal,
+    createModalRender,
+    TabsLayout,
+    ColumnsLayout,
+    ScrollRegion,
+    modalClassNames,
+} from "@kne/react-modal";
