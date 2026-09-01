@@ -9,7 +9,7 @@ import {useEffect, useState, useRef, useMemo, useCallback} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import {getScrollEl} from "@common/utils/importantContainer";
-import getPopupContainer from "@common/utils/getPopupContainer";
+import getPopupContainer, {hoistOutOfModalRoot} from "@common/utils/getPopupContainer";
 import Fetch, {withFetch} from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
@@ -84,8 +84,9 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
     const getPopupContainerFromContext = usePopupContainer();
     const resolvePopupContainer = useCallback((triggerNode) => {
         const contextContainer = getPopupContainerFromContext();
+        // Modal 无 trigger：不要挂进外层 modal 内部，否则从 (0,0) 弹出
         if (!triggerNode) {
-            return contextContainer;
+            return hoistOutOfModalRoot(contextContainer);
         }
         const walked = getPopupContainer(triggerNode);
         const pageScroll = getScrollEl();

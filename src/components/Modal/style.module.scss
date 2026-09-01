@@ -22,118 +22,20 @@
         min-width: 0;
       }
     }
-
-    :global {
-      .ant-modal-container,
-      .ant-modal-content {
-        border-radius: 0 !important;
-        height: 100% !important;
-        max-height: 100% !important;
-        overflow: hidden !important;
-        box-sizing: border-box;
-        padding: 0 !important;
-      }
-
-      .ant-modal-body {
-        height: 100% !important;
-        max-height: 100% !important;
-        overflow: hidden !important;
-        padding: 0 !important;
-      }
-
-      // useModal / useFormModal: modal.info confirm wrappers
-      .ant-modal-confirm-body-wrapper,
-      .ant-modal-confirm-body,
-      .ant-modal-confirm-paragraph,
-      .ant-modal-confirm-content {
-        display: flex !important;
-        flex-direction: column;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 100% !important;
-        max-height: 100% !important;
-        min-height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        row-gap: 0 !important;
-        align-items: stretch !important;
-      }
-
-      .ant-modal-confirm-body-wrapper {
-        box-sizing: border-box;
-      }
-
-      .ant-modal-confirm-btns {
-        display: none !important;
-      }
-
-      // Form wraps ModalOuter in useFormModal
-      .ant-modal-confirm-content > form,
-      .ant-modal-confirm-content > .react-form,
-      .ant-modal-body > form,
-      .ant-modal-body > .react-form {
-        display: flex !important;
-        flex-direction: column;
-        width: 100%;
-        height: 100% !important;
-        max-height: 100% !important;
-        min-height: 0;
-        overflow: hidden;
-        margin: 0;
-      }
-
-      .ant-modal-confirm-content > form > .ant-flex,
-      .ant-modal-confirm-content > .react-form > .ant-flex,
-      .ant-modal-body > form > .ant-flex,
-      .ant-modal-body > .react-form > .ant-flex,
-      .ant-modal-confirm-content > form > span > .ant-flex,
-      .ant-modal-confirm-content > .react-form > span > .ant-flex {
-        display: flex !important;
-        flex-direction: column;
-        flex: 1;
-        width: 100%;
-        height: 100% !important;
-        max-height: 100% !important;
-        min-height: 0;
-        overflow: hidden;
-        gap: 0 !important;
-      }
-
-      .ant-spin,
-      .ant-spin-nested-loading,
-      .ant-spin-container {
-        border-radius: 0 !important;
-        width: 100%;
-        height: 100%;
-        max-height: 100%;
-        min-height: 0;
-      }
-    }
   }
 
-  :global {
-    .ant-modal-confirm-btns,
-    .ant-modal-footer,
-    .ant-modal-confirm-title {
-      display: none;
-    }
+  // 两个 hashed class，特异性和旧的 `.modal .ant-modal-container` 对齐，才能盖住 antd token padding
+  .modal-container {
+    padding: 0;
+    border-radius: 8px;
 
-    .ant-modal-container {
-      padding: 0;
-      border-radius: 8px;
-    }
-
-    .ant-modal-content {
-      padding: 0;
-      border-radius: 8px;
-    }
-
-    .ant-modal-confirm-body {
-      display: block;
-    }
-
-    .ant-spin {
-      border-radius: 8px;
+    &.is-mobile {
+      border-radius: 0 !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      overflow: hidden !important;
+      box-sizing: border-box;
+      padding: 0 !important;
     }
   }
 
@@ -155,41 +57,203 @@
       flex: 1;
     }
 
-    :global {
-      .ant-modal-header {
+    .modal-antd-header {
+      display: none;
+    }
+
+    .modal-antd-body {
+      padding: 0;
+    }
+
+    .modal-outer {
+      :global {
+        .ant-tabs .ant-tabs-content {
+          position: static;
+          min-height: $body-min-height;
+        }
+
+        .ant-tabs-nav {
+          padding: 0 86px 0 24px;
+          margin: 0;
+        }
+
+        .ant-tabs-tab {
+          padding: 17px 0;
+        }
+      }
+    }
+  }
+}
+
+// 只打在 classNames.body / footer 上，原生 antd Modal 没有这些 class，不会被改到
+.modal-antd-footer {
+  display: none;
+}
+
+.modal-antd-body {
+  > :global(.ant-modal-confirm-body-wrapper) {
+    > :global(.ant-modal-confirm-btns) {
+      display: none;
+    }
+
+    > :global(.ant-modal-confirm-body) {
+      display: block;
+
+      > :global(.ant-modal-confirm-title) {
         display: none;
       }
 
-      .ant-modal-body {
-        padding: 0;
+      > :global(.ant-modal-confirm-paragraph) {
+        max-width: unset;
       }
 
-      .ant-tabs .ant-tabs-content {
-        position: static;
-        min-height: $body-min-height;
+      > :global(.ant-modal-confirm-content) {
+        margin-block-start: unset;
+        max-width: unset;
+      }
+    }
+  }
+
+  > :global(.ant-spin) {
+    border-radius: 8px;
+  }
+
+  &.is-mobile {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+
+    > form,
+    > :global(.react-form) {
+      display: flex !important;
+      flex-direction: column;
+      width: 100%;
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    > form > :global(.ant-flex),
+    > :global(.react-form) > :global(.ant-flex) {
+      display: flex !important;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0;
+      overflow: hidden;
+      gap: 0 !important;
+    }
+
+    > :global(.ant-spin),
+    > :global(.ant-spin-nested-loading),
+    > :global(.ant-spin-container) {
+      border-radius: 0 !important;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+    }
+
+    > :global(.ant-modal-confirm-body-wrapper) {
+      box-sizing: border-box;
+      display: flex !important;
+      flex-direction: column;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      row-gap: 0 !important;
+      align-items: stretch !important;
+
+      > :global(.ant-modal-confirm-btns) {
+        display: none !important;
       }
 
-      .ant-tabs-nav {
-        padding: 0 86px 0 24px;
+      > :global(.ant-modal-confirm-body),
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-paragraph),
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) {
+        display: flex !important;
+        flex-direction: column;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        row-gap: 0 !important;
+        align-items: stretch !important;
+      }
+
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > form,
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > :global(.react-form) {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        height: 100% !important;
+        max-height: 100% !important;
+        min-height: 0;
+        overflow: hidden;
         margin: 0;
       }
 
-      .ant-tabs-tab {
-        padding: 17px 0;
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > form > :global(.ant-flex),
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > :global(.react-form) > :global(.ant-flex),
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > form > span > :global(.ant-flex),
+      > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-content) > :global(.react-form) > span > :global(.ant-flex) {
+        display: flex !important;
+        flex-direction: column;
+        flex: 1;
+        width: 100%;
+        height: 100% !important;
+        max-height: 100% !important;
+        min-height: 0;
+        overflow: hidden;
+        gap: 0 !important;
       }
     }
   }
+}
 
-  &:global {
-    &.ant-modal-confirm .ant-modal-confirm-paragraph {
-      max-width: unset;
+.confirm-modal-container {
+  border-radius: 8px;
+  max-width: 400px;
+  box-sizing: border-box;
+
+  &.is-mobile {
+    max-width: calc(var(--kne-viewport-width, 100vw) - 32px);
+    width: calc(var(--kne-viewport-width, 100vw) - 32px);
+  }
+
+  > :global(.ant-modal-body) > :global(.ant-modal-confirm-body-wrapper) {
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+
+    > :global(.ant-modal-confirm-btns) {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex: 1;
     }
 
-    &.ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-content {
-      margin-block-start: unset;
-      max-width: unset;
+    > :global(.ant-modal-confirm-body) > :global(.ant-modal-confirm-title) + :global(.ant-modal-confirm-content) {
+      max-width: 100% !important;
     }
   }
+}
+
+.confirm-modal-wrap.is-danger .confirm-modal-container > :global(.ant-modal-body) > :global(.ant-modal-confirm-body-wrapper) > :global(.ant-modal-confirm-btns) :global(.ant-btn-primary) {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 .right-options-modal {
@@ -413,7 +477,7 @@
     display: none !important;
   }
 
-  :global(.ant-modal) {
+  > .modal {
     top: auto !important;
     display: block;
     padding-bottom: 0 !important;
@@ -456,7 +520,7 @@
     content: none !important;
   }
 
-  :global(.ant-modal) {
+  > .modal {
     top: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -466,24 +530,6 @@
     margin: 0 !important;
     vertical-align: initial;
     touch-action: auto;
-  }
-
-  :global(.ant-modal-container),
-  :global(.ant-modal-content) {
-    border-radius: 0 !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow: hidden !important;
-    box-sizing: border-box;
-    overscroll-behavior: none;
-  }
-
-  :global(.ant-modal-body) {
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    overscroll-behavior: none;
   }
 
   // container / boundary：absolute 铺满挂载边界
@@ -539,53 +585,17 @@
         color: $error-color;
       }
     }
-
-    .ant-modal-confirm
-    .ant-modal-confirm-body
-    .ant-modal-confirm-title
-    + .ant-modal-confirm-content {
-      max-width: 100% !important;
-    }
-
-    .ant-modal-confirm-body-wrapper {
-      min-height: 96px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ant-modal-content {
-      border-radius: 8px;
-      max-width: 400px;
-      box-sizing: border-box;
-    }
-
-    .ant-modal-confirm-btns {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      flex: 1;
-    }
-  }
-
-  &.is-mobile {
-    :global {
-      .ant-modal-content {
-        max-width: calc(var(--kne-viewport-width, 100vw) - 32px);
-        width: calc(var(--kne-viewport-width, 100vw) - 32px);
-      }
-    }
   }
 
   &.is-danger {
     --color-warning: #d14343;
 
-    :global {
-      .ant-popover-buttons .ant-btn-primary,
-      .ant-modal-confirm-btns .ant-btn-primary {
-        background: var(--color-warning);
-        border-color: var(--color-warning);
-      }
+    :global(.ant-popover-buttons) :global(.ant-btn-primary) {
+      background: var(--color-warning);
+      border-color: var(--color-warning);
+    }
 
+    :global {
       .title-icon {
         color: var(--color-warning);
       }

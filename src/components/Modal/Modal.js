@@ -44,6 +44,15 @@ const findParentModalMountHost = (node) => {
     return parentRoot.parentElement || (typeof document !== "undefined" ? document.body : null);
 };
 
+const findLastModalRootParent = () => {
+    if (typeof document === "undefined") {
+        return null;
+    }
+    const roots = document.querySelectorAll(".ant-modal-root");
+    const last = roots[roots.length - 1];
+    return last && last.parentElement ? last.parentElement : null;
+};
+
 const resolveModalGetContainer = ({customGetContainer, getPopupContainer, getHostNode, isNested}) => {
     const wrappedCustom = wrapCustomGetContainer(customGetContainer);
     return (triggerNode) => {
@@ -54,12 +63,12 @@ const resolveModalGetContainer = ({customGetContainer, getPopupContainer, getHos
             }
         }
         const from = triggerNode || (typeof getHostNode === "function" ? getHostNode() : null);
-        const nestedHost = findParentModalMountHost(from);
+        const nestedHost = findParentModalMountHost(from) || (isNested ? findLastModalRootParent() : null);
         if (nestedHost) {
             return nestedHost;
         }
         // 嵌套且 host 尚未进 DOM：返回 undefined，让 rc-portal 等下一拍再解析
-        if (isNested && !from) {
+        if (isNested) {
             return undefined;
         }
         return getPopupContainer(triggerNode);
@@ -374,6 +383,7 @@ const computedCommonProps = ({
                                  wrapClassName,
                                  classNames: propsClassNames,
                                  styles: propsStyles,
+                                 isNested = false,
                                  ...props
                              }) => {
     const useMobileLayout = isMobile && mobileFullscreen !== false;
@@ -381,6 +391,8 @@ const computedCommonProps = ({
     return {
         ...props,
         icon: null,
+        // useModal 外层是 1100；嵌套必须更高，否则内层 mask 会被外层 footer 盖住
+        zIndex: props.zIndex ?? (isNested ? 1200 : undefined),
         centered: !useMobileLayout,
         wrapClassName: classnames(
             wrapClassName,
@@ -392,6 +404,23 @@ const computedCommonProps = ({
                 propsClassNames?.mask,
                 useMobileLayout && style["modal-mask-fullscreen"],
                 useMobileLayout && fixedModeClass
+            ),
+            container: classnames(
+                style["modal-container"],
+                useMobileLayout && style["is-mobile"],
+                propsClassNames?.container
+            ),
+            body: classnames(
+                style["modal-antd-body"],
+                useMobileLayout && style["is-mobile"],
+                propsClassNames?.body
+            ),
+            footer: classnames(style["modal-antd-footer"], propsClassNames?.footer),
+            header: classnames(style["modal-antd-header"], propsClassNames?.header),
+            content: classnames(
+                style["modal-container"],
+                useMobileLayout && style["is-mobile"],
+                propsClassNames?.content
             ),
         }),
         title: null,
@@ -409,8 +438,14 @@ const computedCommonProps = ({
             ...propsStyles,
             ...sizeProps.styles,
             container: {
+                padding: 0,
                 ...propsStyles?.container,
                 ...sizeProps.styles?.container,
+            },
+            content: {
+                padding: 0,
+                ...propsStyles?.content,
+                ...sizeProps.styles?.content,
             },
             body: {
                 ...propsStyles?.body,
@@ -473,7 +508,7 @@ const Modal = withLocale(({size = 'default', getContainer, open, mobileFullscree
         <span ref={setAnchorRef} className={style["modal-host"]} aria-hidden="true" />
         <AntdModal
             {...computedCommonProps(Object.assign({}, props, {
-                size, childrenRef, isMobile, open, fixedModeClass, mobileFullscreen,
+                size, childrenRef, isMobile, open, fixedModeClass, mobileFullscreen, isNested,
             }))}
             open={open}
             getContainer={getModalContainer}
@@ -497,6 +532,7 @@ export const useModal = () => {
             onClose: () => api.close(),
             childrenRef,
             isMobile,
+            isNested,
             fixedModeClass,
             afterClose: (...args) => {
                 unlock();
@@ -506,8 +542,8 @@ export const useModal = () => {
         });
         const {destroy} = modal.info({
             ...otherProps,
-            // ConfirmDialog 默认 zIndex=2000，会压过内层 SuperSelect 下拉/弹层
-            zIndex: otherProps.zIndex ?? 1100,
+            // ConfirmDialog 默认 2000 会压过内层 SuperSelect；嵌套须高于外层 1100 才能盖住 footer
+            zIndex: otherProps.zIndex ?? (isNested ? 1200 : 1100),
             afterClose,
             content: children,
             getContainer: resolveModalGetContainer({
@@ -548,7 +584,7 @@ export const useConfirmModal = () => {
         if (modal[type]) {
             const {destroy} = modal[type]({
                 ...otherProps,
-                zIndex: otherProps.zIndex ?? 1100,
+                zIndex: otherProps.zIndex ?? (isNested ? 1200 : 1100),
                 getContainer: resolveModalGetContainer({
                     customGetContainer,
                     getPopupContainer,
@@ -563,6 +599,7 @@ export const useConfirmModal = () => {
                 icon: null,
                 classNames: {
                     mask: classnames(isMobile && style["modal-mask-fullscreen"], isMobile && fixedModeClass),
+                    container: classnames(style["confirm-modal-container"], isMobile && style["is-mobile"]),
                 },
                 wrapClassName: classnames(style["confirm-modal-wrap"], wrapClassName, {
                     [style["is-danger"]]: danger,
