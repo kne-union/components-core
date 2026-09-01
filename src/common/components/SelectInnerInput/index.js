@@ -326,7 +326,7 @@ const DisplayLabel = withFetch(({setFetchApi, wrapClassName, getContentRef, ...f
             single={props.single}
             maxLength={props.maxLength}
             onOpenChange={props.onOpenChange}
-            disabledScroller
+            bodyScroll={false}
             wrapClassName={classnames(style["overlay"], style["is-modal"], wrapClassName)}
             title={props.placeholder || formatMessage({id: "pleaseSelect"})}
             value={value}

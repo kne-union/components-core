@@ -2,11 +2,9 @@ import preset from "./preset";
 import fields, {fieldDecorator} from "./fields";
 import {List, TableList, default as FormInfo, FormSteps} from "@kne/form-info";
 import FormApiButton from "./FormApiButton";
-import FormModal, {useFormModal, FormModalButton} from "./FormModal";
-import FormStepModal, {
-    useFormStepModal, FormStepModalButton,
-} from "./FormStepModal";
-import FormDrawer, {useFormDrawer, FormDrawerButton} from "./FormDrawer";
+import FormModal, {useFormModal} from "./FormModal";
+import FormStepModal, {useFormStepModal} from "./FormStepModal";
+import FormDrawer, {useFormDrawer} from "./FormDrawer";
 import Form from "./Form";
 import FormItem from "./FormItem";
 import ErrorTip from "./ErrorTip";
@@ -24,13 +22,10 @@ FormInfo.FormApiButton = FormApiButton;
 FormInfo.FormModal = FormModal;
 FormInfo.FormSteps = FormSteps;
 FormInfo.useFormModal = useFormModal;
-FormInfo.FormModalButton = FormModalButton;
 FormInfo.FormStepModal = FormStepModal;
 FormInfo.useFormStepModal = useFormStepModal;
-FormInfo.FormStepModalButton = FormStepModalButton;
 FormInfo.FormDrawer = FormDrawer;
 FormInfo.useFormDrawer = useFormDrawer;
-FormInfo.FormDrawerButton = FormDrawerButton;
 FormInfo.Form = Form;
 FormInfo.FormItem = FormItem;
 FormInfo.ErrorTip = ErrorTip;
@@ -59,14 +54,11 @@ export {
     FormApiButton,
     FormModal,
     useFormModal,
-    FormModalButton,
     FormStepModal,
     FormSteps,
     useFormStepModal,
-    FormStepModalButton,
     FormDrawer,
     useFormDrawer,
-    FormDrawerButton,
     MultiField,
 };
 

@@ -376,7 +376,7 @@ const DisplayLabel = withFetch(
           ref={modalRef}
           single={props.single}
           maxLength={props.maxLength}
-          disabledScroller
+          bodyScroll={false}
           wrapClassName={classnames(
             style["overlay"],
             style["is-modal"],

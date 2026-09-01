@@ -3,7 +3,7 @@
   "list": [
     {
       "title": "基础用法",
-      "description": "展示 Drawer 组件的三种使用方式：受控组件、Hook调用、按钮触发",
+      "description": "展示 Drawer 受控组件与 Hook 调用",
       "code": "./basic.js",
       "scope": [
         {
@@ -17,29 +17,6 @@
         {
           "name": "_antd",
           "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "用户详情",
-      "description": "使用 DrawerButton 加载数据后展示用户详细信息，模拟真实业务场景",
-      "code": "./user-detail.js",
-      "scope": [
-        {
-          "name": "_Drawer",
-          "packageName": "@components/Drawer"
-        },
-        {
-          "name": "_Global",
-          "packageName": "@components/Global"
-        },
-        {
-          "name": "_antd",
-          "packageName": "antd"
-        },
-        {
-          "name": "lodash",
-          "packageName": "lodash"
         }
       ]
     },
@@ -87,7 +64,7 @@
     },
     {
       "title": "自定义操作",
-      "description": "自定义底部按钮、添加额外功能按钮，支持异步操作",
+      "description": "自定义底部按钮，支持异步操作",
       "code": "./custom-actions.js",
       "scope": [
         {

@@ -1,31 +1,36 @@
+import classnames from "classnames";
 import Drawer, { useDrawer } from "@components/Drawer";
-import FetchButton from "@common/components/FetchButton";
 import style from "./style.module.scss";
-import computedCommonProps from "./computedModalCommonProps";
+import { buildFormOverlayProps } from "./FormModal";
 
-const FormDrawer = (props) => {
-  return (
-    <Drawer
-      {...computedCommonProps(
-        Object.assign({}, props, { className: style["form-drawer"] })
-      )}
-    />
-  );
+const buildFormDrawerProps = (props, options) => {
+  const { placement = "right", className, ...rest } = props;
+  return {
+    ...buildFormOverlayProps({ ...rest, className }, options),
+    placement,
+    className: classnames(style["form-drawer"], className),
+  };
 };
+
+const FormDrawer = (props) => <Drawer {...buildFormDrawerProps(props)} />;
 
 export default FormDrawer;
 
 export const useFormDrawer = () => {
   const drawer = useDrawer();
-  return (props) =>
-    drawer({
-      ...computedCommonProps(
-        Object.assign({}, props, { className: style["form-drawer"] })
+  return (props) => {
+    const api = {};
+    const close = () => api.close?.();
+    const opened = drawer(
+      buildFormDrawerProps(
+        {
+          ...props,
+          onClose: props.onClose || close,
+        },
+        { close },
       ),
-    });
-};
-
-export const FormDrawerButton = (props) => {
-  const formDrawer = useFormDrawer();
-  return <FetchButton {...props} modalFunc={formDrawer} />;
+    );
+    api.close = opened.close;
+    return opened;
+  };
 };
