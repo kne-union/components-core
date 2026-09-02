@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run build:docs
-git add src/components/*/README.md README.md
+git add docs README.md src/components/*/README.md
 npm run lint-staged -- --allow-empty
