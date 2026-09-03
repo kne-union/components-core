@@ -45,6 +45,8 @@ export {
     useIsMobile,
     useBreakpoint,
     useMediaQuery,
+    usePopupMount,
+    /** @deprecated 用 usePopupMount */
     usePopupContainer,
     useScrollElement,
     useResponsiveContext,

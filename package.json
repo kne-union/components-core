@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "files": [
     "build"
   ],
@@ -44,13 +44,13 @@
     "@kne/react-form-plus": "^0.1.7",
     "@kne/react-icon": "^0.1.4",
     "@kne/react-intl": "^0.1.15",
-    "@kne/react-modal": "^0.1.7",
+    "@kne/react-modal": "^0.1.11",
     "@kne/react-pdf-sign": "^1.1.8",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.4.6",
-    "@kne/responsive-utils": "^0.1.15",
+    "@kne/responsive-utils": "^0.1.16",
     "@kne/scroll-loader": "^0.1.15",
-    "@kne/super-select": "^0.1.50",
+    "@kne/super-select": "^0.1.51",
     "@kne/super-select-plus": "^0.1.3",
     "@kne/table-page": "^0.1.35",
     "@kne/use-click-outside": "^0.2.1",

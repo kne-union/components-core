@@ -9,7 +9,6 @@ import {useEffect, useState, useRef, useMemo, useCallback} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import {getScrollEl} from "@common/utils/importantContainer";
-import getPopupContainer, {hoistOutOfModalRoot} from "@common/utils/getPopupContainer";
 import Fetch, {withFetch} from "@kne/react-fetch";
 import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
@@ -25,7 +24,7 @@ import isEqual from './isEqual';
 import {
     ResponsiveProvider,
     useScrollElement,
-    usePopupContainer,
+    usePopupMount,
     useResponsiveContext,
     useIsMobile,
     defaultResponsiveContextValue,
@@ -81,20 +80,7 @@ export const containerClassName = style["container"]
 
 const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
     const getScrollElement = useScrollElement();
-    const getPopupContainerFromContext = usePopupContainer();
-    const resolvePopupContainer = useCallback((triggerNode) => {
-        const contextContainer = getPopupContainerFromContext();
-        // Modal 无 trigger：不要挂进外层 modal 内部，否则从 (0,0) 弹出
-        if (!triggerNode) {
-            return hoistOutOfModalRoot(contextContainer);
-        }
-        const walked = getPopupContainer(triggerNode);
-        const pageScroll = getScrollEl();
-        if (contextContainer && walked === pageScroll) {
-            return contextContainer;
-        }
-        return walked || contextContainer;
-    }, [getPopupContainerFromContext]);
+    const {getPopupContainer: resolvePopupContainer} = usePopupMount();
     const [isInit, setIsInit] = useState(false);
     const {colorPrimary, components, ...otherToken} = Object.assign({}, {colorPrimary: "#4096ff"}, themeToken);
     const colorPrimaryObject = useMemo(() => {
@@ -258,6 +244,8 @@ export {
     useIsMobile,
     useBreakpoint,
     useMediaQuery,
+    usePopupMount,
+    /** @deprecated 用 usePopupMount */
     usePopupContainer,
     useScrollElement,
     useResponsiveContext,
