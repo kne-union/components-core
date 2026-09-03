@@ -10,7 +10,7 @@ import get from "lodash/get";
 import isNotEmpty from "@utils/isNotEmpty";
 import localStorage from "@utils/localStorage";
 import {useMemo, useState} from "react";
-import {useMobilePopupMount} from "@kne/responsive-utils";
+import {usePopupMount} from "@kne/responsive-utils";
 
 const pageMenuOpenKey = "CORE_PAGE_MENU_OPEN_KEY";
 
@@ -29,7 +29,7 @@ const Menu = ({isMobile}) => {
     const {pageProps, setPageProps} = useContext();
     const {menu, menuOpen, menuWidth, menuCloseWidth, menuFixed, menuCloseButton} = pageProps;
     const [drawerVisible, setDrawerVisible] = useState(false);
-    const {fixedModeClass, getPopupContainer, anchorRef} = useMobilePopupMount({cover: "boundary"});
+    const {fixedModeClass, getPopupContainer, anchorRef} = usePopupMount({cover: "boundary"});
 
     const location = useLocation();
     const pathModuleName = location.pathname.split("/")[1];

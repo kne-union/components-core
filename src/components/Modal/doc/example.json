@@ -3,6 +3,29 @@
   "isFull": false,
   "list": [
     {
+      "title": "isPopup 挂载验收（保存模版场景）",
+      "description": "外层 Modal + responsive-boundary 内打开 useFormModal，内层 isPopup SuperSelect 下拉应盖在内层弹窗上且可选中文件夹",
+      "code": "./popup-mount-isPopup.js",
+      "scope": [
+        {
+          "name": "_Modal",
+          "packageName": "@kne/react-modal"
+        },
+        {
+          "name": "_FormInfo",
+          "packageName": "@components/FormInfo"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "嵌套弹窗与层级",
       "description": "在 Form / FormModal 里用 SuperSelect 验收嵌套弹层挂载：选择层应盖住外层 footer，不能挂进表单内容区里",
       "code": "./nested-modal.js",
