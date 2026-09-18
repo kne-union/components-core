@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "files": [
     "build"
   ],
@@ -44,7 +44,7 @@
     "@kne/react-form-plus": "^0.1.8",
     "@kne/react-icon": "^0.1.4",
     "@kne/react-intl": "^0.1.15",
-    "@kne/react-modal": "^0.1.11",
+    "@kne/react-modal": "^0.1.13",
     "@kne/react-pdf-sign": "^1.1.8",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.4.6",
@@ -114,7 +114,7 @@
     "@kne/md-doc": "^0.1.27",
     "@kne/modules-dev": "^2.4.14",
     "@kne/react-error-boundary": "^0.1.1",
-    "antd": "6.0.0",
+    "antd": "^6.6.4",
     "http-proxy-middleware": "^2.0.6",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
