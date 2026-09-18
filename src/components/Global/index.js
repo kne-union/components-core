@@ -14,6 +14,7 @@ import loadAntdLocale from "./loadAntdLocale";
 import style from "./style.module.scss";
 import get from "lodash/get";
 import {DrawerContextHolder} from "@components/Drawer";
+import {ModalContextHolder} from "@components/Modal";
 import {FontLoader} from '@components/Icon';
 import useRefCallback from "@kne/use-ref-callback";
 import transform from "lodash/transform";
@@ -200,6 +201,7 @@ export const GlobalProvider = ({
                     themeToken={liveThemeToken || themeToken}
                 >
                     <App message={{top: 100}}>
+                        <ModalContextHolder />
                         <DrawerContextHolder />
                         {typeof init === "function" ? (<Fetch
                             loader={() => init()}

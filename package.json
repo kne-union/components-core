@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "files": [
     "build"
   ],
@@ -44,7 +44,7 @@
     "@kne/react-form-plus": "^0.1.8",
     "@kne/react-icon": "^0.1.4",
     "@kne/react-intl": "^0.1.15",
-    "@kne/react-modal": "^0.1.11",
+    "@kne/react-modal": "^0.1.12",
     "@kne/react-pdf-sign": "^1.1.8",
     "@kne/react-text-escape": "^0.1.4",
     "@kne/remote-loader": "^1.4.6",
