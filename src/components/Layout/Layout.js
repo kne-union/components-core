@@ -9,7 +9,7 @@ import classnames from "classnames";
 import style from "./style.module.scss";
 import HelperGuide from "@components/HelperGuide";
 import {usePermissions} from "../Permissions";
-import {useIsMobile as useResponsiveIsMobile} from "@kne/responsive-utils";
+import {RESPONSIVE_CONTAINER_CLASS, useIsMobile as useResponsiveIsMobile} from "@kne/responsive-utils";
 
 const {Content} = AntdLayout;
 
@@ -104,9 +104,18 @@ const Layout = ({className, children, theme, navigation = {}, isMobile: isMobile
                                 <ErrorBoundary>
                                     <Menu isMobile={isMobile}/>
                                 </ErrorBoundary>
-                                <Col className={classnames(style["page-content"], 'core-page-content', {
-                                    [style["no-margin"]]: pageProps.noMargin,
-                                })} flex={1} style={{"--background-color": pageProps.backgroundColor}}>
+                                <Col
+                                    className={classnames(
+                                        style["page-content"],
+                                        'core-page-content',
+                                        RESPONSIVE_CONTAINER_CLASS,
+                                        {
+                                            [style["no-margin"]]: pageProps.noMargin,
+                                        }
+                                    )}
+                                    flex={1}
+                                    style={{"--background-color": pageProps.backgroundColor}}
+                                >
                                     <div className={classnames(style["page-main"], 'core-page-main')}>
                                         <ErrorBoundary>
                                             <PageTitle

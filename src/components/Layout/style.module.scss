@@ -1,3 +1,5 @@
+@use '~@kne/responsive-utils/scss' as resp;
+
 .layout {
   --margin-width: 10px;
   --padding-width: 16px;
@@ -38,6 +40,13 @@
 
 .page-content {
   margin: var(--margin-width);
+  // 对齐 system-layout：Col 自身作为 kne-responsive 容器查询宿主
+  // 只设 container + 宽度约束，不额外改 flex/height，避免打断页面高度链
+  @include resp.responsive-container;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 
   &.no-margin {
     margin: 0;
@@ -465,10 +474,24 @@
 }
 
 .mobile-menu-trigger {
-  position: absolute;
   left: 0;
   top: calc(var(--nav-height, 48px) + 22px);
   z-index: 1000;
+
+  // 真实移动端固定视口，不随页面滚动带走
+  &:global(.kne-is-viewport) {
+    position: fixed;
+  }
+
+  // 示例框 / boundary：相对挂载边界
+  &:global(.kne-is-boundary) {
+    position: absolute;
+  }
+
+  // 无 mode class 时兜底 fixed（移动端默认）
+  &:not(:global(.kne-is-viewport)):not(:global(.kne-is-boundary)) {
+    position: fixed;
+  }
 }
 
 .mobile-menu-edge-btn {
@@ -489,10 +512,13 @@
 }
 
 .mobile-menu-close-btn {
+  // 钉在侧栏右缘外侧，不随列表 / 页面滚动
   position: absolute;
   left: 100%;
+  right: auto;
   top: calc(var(--nav-height, 48px) + 22px);
   z-index: 1001;
+  transform: none;
 }
 
 .mobile-menu-anchor {
@@ -507,21 +533,48 @@
   overflow: visible !important;
 
   :global {
+    // 整条 overflow 链保持 visible，否则 left:100% 的关闭钮会被裁掉
     .ant-drawer-content-wrapper,
     .ant-drawer-content,
     .ant-drawer-body,
     .ant-drawer-section {
       overflow: visible !important;
     }
+
+    .ant-drawer-content-wrapper {
+      // 对齐 system-layout menuMaxWidth；变量在 rootStyle 上，带 fallback 防塌缩
+      width: var(--menu-width, 254px) !important;
+      max-width: var(--menu-width, 254px) !important;
+    }
+
+    .ant-drawer-body {
+      height: 100%;
+      position: relative;
+    }
   }
 
-  // container / boundary：相对挂载边界 absolute，避免罩住整个页面
+  // viewport：固定罩住视口，抽屉与关闭钮不被页面滚动带走
+  &:global(.kne-is-viewport) {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  // boundary：示例框 / container 模式相对挂载边界
   &:global(.kne-is-boundary) {
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
   }
+}
+
+:global(.ant-drawer-mask.kne-is-viewport) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 :global(.ant-drawer-mask.kne-is-boundary) {
@@ -536,12 +589,31 @@
   max-height: 100%;
   padding: var(--menu-padding-width);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .mobile-menu-content {
   height: 100%;
   max-height: 100%;
   overflow-y: auto;
+
+  // 移动端侧栏菜单项触控高度（对齐 system-layout MENU_ITEM_HEIGHT≈52）
+  :global(.ant-menu-item),
+  :global(.ant-menu-submenu-title) {
+    display: flex !important;
+    align-items: center;
+    min-height: 48px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+    margin-inline: 0 !important;
+    padding-block: 12px !important;
+    font-size: 16px;
+  }
+
+  :global(.ant-menu-item .ant-menu-title-content),
+  :global(.ant-menu-submenu-title .ant-menu-title-content) {
+    font-size: 16px;
+  }
 }
 
 .page-menu-btn-outer.in-drawer {
