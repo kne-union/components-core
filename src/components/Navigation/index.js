@@ -163,6 +163,9 @@ const Navigation = withLocale(({
                                     trigger={['click']}
                                     open={mobileMenuVisible}
                                     onOpenChange={setMobileMenuVisible}
+                                    classNames={{
+                                        root: classnames(style["mobile-dropdown-overlay"], 'navigation-mobile-dropdown-overlay'),
+                                    }}
                                     dropdownRender={(menu) => (<div
                                         className={classnames(style["mobile-dropdown-content"], 'navigation-mobile-dropdown-content')}>
                                         {menu}

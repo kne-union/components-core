@@ -13,6 +13,8 @@ import {useMemo, useState} from "react";
 import {usePopupMount} from "@kne/responsive-utils";
 
 const pageMenuOpenKey = "CORE_PAGE_MENU_OPEN_KEY";
+// 对齐 system-layout Layout.menuMaxWidth 默认值
+const MOBILE_MENU_WIDTH = "254px";
 
 export const useMenuOpen = () => {
     const location = useLocation();
@@ -29,13 +31,17 @@ const Menu = ({isMobile}) => {
     const {pageProps, setPageProps} = useContext();
     const {menu, menuOpen, menuWidth, menuCloseWidth, menuFixed, menuCloseButton} = pageProps;
     const [drawerVisible, setDrawerVisible] = useState(false);
-    const {fixedModeClass, getPopupContainer, anchorRef} = usePopupMount({cover: "boundary"});
+    const {fixedModeClass, getPopupContainer, anchorRef} = usePopupMount({cover: "viewport"});
 
     const location = useLocation();
     const pathModuleName = location.pathname.split("/")[1];
     const menuCssVars = {
         "--menu-width": menuWidth,
         "--menu-close-width": menuCloseWidth,
+    };
+    const mobileMenuCssVars = {
+        ...menuCssVars,
+        "--menu-width": MOBILE_MENU_WIDTH,
     };
 
     // 移动端渲染
@@ -44,7 +50,10 @@ const Menu = ({isMobile}) => {
             <>
                 <span ref={anchorRef} className={style["mobile-menu-anchor"]} aria-hidden="true"/>
                 {!drawerVisible ? (
-                    <div className={style["mobile-menu-trigger"]} style={menuCssVars}>
+                    <div
+                        className={classnames(style["mobile-menu-trigger"], fixedModeClass)}
+                        style={mobileMenuCssVars}
+                    >
                         <Button
                             className={style["mobile-menu-edge-btn"]}
                             icon={<Icon type="icon-arrow-bold-right"/>}
@@ -56,15 +65,20 @@ const Menu = ({isMobile}) => {
                     placement="left"
                     open={drawerVisible}
                     onClose={() => setDrawerVisible(false)}
-                    width={menuWidth}
+                    size={MOBILE_MENU_WIDTH}
                     getContainer={getPopupContainer}
                     rootClassName={classnames(style["mobile-menu-drawer"], fixedModeClass)}
                     className={style["mobile-menu-drawer"]}
-                    style={menuCssVars}
+                    rootStyle={mobileMenuCssVars}
                     closable={false}
                     classNames={{mask: fixedModeClass}}
                     styles={{
-                        wrapper: {overflow: "visible"},
+                        // 宽度写死在 wrapper，避免 portal 后 CSS 变量丢失导致面板塌缩
+                        wrapper: {
+                            overflow: "visible",
+                            width: MOBILE_MENU_WIDTH,
+                            maxWidth: MOBILE_MENU_WIDTH,
+                        },
                         section: {overflow: "visible"},
                         body: {padding: 0, position: "relative", height: "100%", overflow: "visible"},
                     }}
