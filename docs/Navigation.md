@@ -984,7 +984,7 @@ render(<ForceMobileExample />);
 |  ---  | ---  | --- | --- |
 |base|导航基础路径|string|-|
 |className|自定义类名|string|-|
-|defaultTitle|默认页面标题|string|-|
+|defaultTitle|默认页面标题；移动端顶部标题在首页或未匹配到导航项时显示它，否则显示当前导航项的 `title`|string|-|
 |headerLogo|导航栏Logo配置|object|内置logo|
 |indexLabel|首页导航标签|string|ReactNode|首页|
 |isFixed|是否固定在页面顶部|boolean|true|
