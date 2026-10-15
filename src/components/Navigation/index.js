@@ -274,7 +274,7 @@ const Navigation = withLocale(({
                         </Col>)}
                         {isMobile && (
                             <Col className={classnames(style["navigation-mobile-title"], 'navigation-mobile-title')}>
-                                {defaultTitle || formatMessage({id: 'defaultTitle'})}
+                                {get(mapping.get(name), "title") || defaultTitle || formatMessage({id: 'defaultTitle'})}
                             </Col>)}
                         {rightOptions && (<Col
                             className={classnames(style["navigation-options"], "navigation-options", {
