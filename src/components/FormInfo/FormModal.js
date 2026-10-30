@@ -17,6 +17,7 @@ export const buildFormOverlayProps = (props, {close} = {}) => {
         onClose,
         onCancel,
         className,
+        bodyScroll = true,
         ...rest
     } = props;
     const resolvedClose = close ?? onCancel ?? onClose;
@@ -27,7 +28,7 @@ export const buildFormOverlayProps = (props, {close} = {}) => {
         ...rest,
         className: classnames(style["form-modal"], className),
         onClose: resolvedClose,
-        bodyScroll: true,
+        bodyScroll,
         footerButtons: footerButtons || [{
             children: cancelText || <FormattedMessage id="Cancel"/>, ButtonComponent: CancelButton,
         }, {

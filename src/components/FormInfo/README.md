@@ -2301,6 +2301,7 @@ render(<PureGlobal
 | children | 表单内容 | ReactNode | 是 | - |
 | footerButtons | 底部按钮配置 | array | 否 | - |
 | width | 弹窗宽度 | string | 否 | 520 |
+| bodyScroll | 弹层 body 是否使用 SimpleBar 滚动；分栏（`Modal@ColumnsLayout`）/ Tabs 等自管滚动内容传 `false` | boolean | 否 | true |
 | modalRender | 自定义弹层渲染 | function | 否 | - |
 
 #### FormDrawer
