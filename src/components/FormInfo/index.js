@@ -62,6 +62,5 @@ export {
     MultiField,
 };
 
-export {default as SelectInnerInput} from "./SelectInnerInput";
 
 export default FormInfo;

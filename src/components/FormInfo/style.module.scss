@@ -9,3 +9,12 @@
     }
   }
 }
+
+/* 字段标签内的 HelperGuide：按内容宽度显示，超长时仍在整行内省略 */
+:global(.react-form__field_label-tips) .helper-guide-field {
+  width: fit-content;
+
+  > :global(.ant-space) {
+    width: auto;
+  }
+}

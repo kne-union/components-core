@@ -5,7 +5,7 @@ import {usePreset} from "@components/Global";
 import {useModal} from "@components/Modal";
 import Icon from "@components/Icon";
 import {
-    Avatar as AntdAvatar, Col, message, Row, Slider, Space, Spin, Tooltip,
+    App, Avatar as AntdAvatar, Col, Row, Slider, Space, Spin, Tooltip,
 } from "antd";
 import AvatarEditor from "react-avatar-editor";
 import get from "lodash/get";
@@ -96,6 +96,7 @@ const ControlAvatarEditor = withLocale(forwardRef(({
                                             ...props
                                         }, ref) => {
     const intl = useIntl();
+    const {message} = App.useApp();
     const isMobile = useIsMobile();
     const [baseWidth, setBaseWidth] = useState(0);
     const outerRef = useRef(null);
@@ -133,7 +134,7 @@ const ControlAvatarEditor = withLocale(forwardRef(({
     return (<div ref={outerRef}>
         <Row wrap={isMobile} align={isMobile ? "top" : "middle"}>
             <Col span={showPreview ? 16 : 24}>
-                {baseWidth && (<Space direction="vertical" style={{width: "100%"}}>
+                {baseWidth && (<Space orientation="vertical" style={{width: "100%"}}>
                     <AvatarEditor
                         {...props}
                         ref={editorRef}
@@ -221,7 +222,7 @@ const ControlAvatarEditor = withLocale(forwardRef(({
             </Col>
             {showPreview && (<Col span={8}>
                 <div className={style["preview-area"]}>
-                    <Space direction="vertical">
+                    <Space orientation="vertical">
                         <AntdAvatar
                             src={previewImg}
                             // alt="预览"
@@ -315,6 +316,7 @@ const AvatarField = withLocale(({
     const dropRef = useRef(null);
     const dropModal = useDropModal();
     const intl = useIntl();
+    const {message} = App.useApp();
     return (<UploadButton
         value={value}
         gender={gender}

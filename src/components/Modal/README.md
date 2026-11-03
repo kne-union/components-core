@@ -2905,6 +2905,8 @@ render(
 
 命令式内容弹窗。须在 antd `App` 内挂载 **`<ModalContextHolder />`**（页面根层）；弹窗内容树内另有 `ModalLayerProvider`，嵌套 `useModal` 会就近 patch，叠层交给 antd `ZIndexContext`。**不**再走 `App.modal.info` / ConfirmDialog。
 
+打开时用 `document.activeElement` 解析示例手机框（`.example-driver-device-scroll`，与 `useDrawer` / FileModal 一致），使 `useFormModal` 在手机预览内挂进设备框，而不是落到 Global Holder 外层。
+
 命令式打开弹窗，参数同 Modal。需在 antd `App`（或 `App.useApp` 可用）上下文中使用。
 
 ##### 返回值

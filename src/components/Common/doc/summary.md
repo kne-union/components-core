@@ -5,24 +5,12 @@
 1. **FetchButton** - Button触发加载数据，支持弹窗展示加载结果
 2. **ScrollLoader** - 下拉滚动加载组件，配合 Fetch 实现分页加载
 3. **SearchInput** - 提供防抖的查询输入框
-4. **SimpleBarBox** - 自定义滚动条容器（已废弃，请勿使用）
-5. **TreeField** - 树形选择组件，支持单选和多选
-6. **CascaderField** - 级联选择组件，支持多级联动选择
-7. **TypeDateRangePickerField** - 类型日期范围选择器，支持按日、周、月选择
-8. **SuperSelectField** - 新版高级选择组件，提供更强的自定义能力
-9. **SuperSelectUserField** - 用户选择组件，展示用户头像和描述
-10. **SuperSelectTableListField** - 表格列表选择组件
-11. **SuperSelectTreeField** - 树形选择组件
-12. **AdvancedSelectField** - 高级选择组件，支持用户选择、列表选择
-13. **UserField** - 用户选择组件（旧版）
-14. **TableField** - 表格选择组件
-15. **AddressSelectField** - 地址选择组件
-16. **AddressInputField** - 地址输入组件
-17. **AddressEnum** - 地址枚举展示
-18. **FunctionSelectField** - 职能选择组件
-19. **FunctionEnum** - 职能枚举展示
-20. **IndustrySelectField** - 行业选择组件
-21. **IndustryEnum** - 行业枚举展示
+4. **SuperSelectCascaderField** - 级联选择组件，基于 @kne/super-select 的 SelectCascader，支持 api 远程加载
+5. **TypeDateRangePickerField** - 类型日期范围选择器，支持按日、周、月选择
+6. **SuperSelectField** - 新版高级选择组件，提供更强的自定义能力
+7. **SuperSelectUserField** - 用户选择组件，展示用户头像和描述
+8. **SuperSelectTableListField** - 表格列表选择组件
+9. **SuperSelectTreeField** - 树形选择组件
 
 ### 方法
 
@@ -54,5 +42,3 @@
 
 1. **createTreeUtils** - 创建树形数据工具函数
 2. **getScrollEl** - 获取滚动元素
-3. **Scroller** - 横向滚动组件
-4. **SelectInnerInput** - 内部选择输入框基础组件

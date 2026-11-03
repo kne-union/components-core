@@ -255,6 +255,7 @@ render(<BaseExample />);
 ```jsx
 const { FileButton } = _ReactFile;
 const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const { Flex, Typography } = antd;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
@@ -274,7 +275,9 @@ const BaseExample = createWithRemoteLoader({
               3: '/mock/resume.html',
               4: '/mock/resume.txt',
               5: '/mock/audio.wav',
-              6: '/mock/resume.docx'
+              6: '/mock/resume.docx',
+              9: '/mock/small-image.png',
+              10: '/mock/video.mp4'
             };
             return new Promise(resolve => {
               setTimeout(() => {
@@ -286,10 +289,36 @@ const BaseExample = createWithRemoteLoader({
       }
     }
   }}>
-    <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>预览demo.jpg</FileButton>
-    <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>预览demo2.pdf</FileButton>
-    <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>预览demo2.html</FileButton>
-    <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
+    <Flex vertical gap={16}>
+      <Flex vertical gap={8}>
+        <Typography.Text type="secondary">图片</Typography.Text>
+        <Flex wrap gap={8}>
+          <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>demo.jpg</FileButton>
+          <FileButton id="9" filename="small-image.png" openPrint modalProps={{ width: 800 }}>小尺寸图片</FileButton>
+        </Flex>
+      </Flex>
+      <Flex vertical gap={8}>
+        <Typography.Text type="secondary">文档</Typography.Text>
+        <Flex wrap gap={8}>
+          <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>demo2.pdf</FileButton>
+          <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>demo2.html</FileButton>
+          <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }}>resume.docx</FileButton>
+        </Flex>
+      </Flex>
+      <Flex vertical gap={8}>
+        <Typography.Text type="secondary">音视频</Typography.Text>
+        <Flex wrap gap={8}>
+          <FileButton id="10" filename="video.mp4" modalProps={{ width: 800 }}>video.mp4</FileButton>
+          <FileButton id="5" filename="audio.wav" modalProps={{ width: 800 }}>audio.wav</FileButton>
+        </Flex>
+      </Flex>
+      <Flex vertical gap={8}>
+        <Typography.Text type="secondary">链接样式</Typography.Text>
+        <Flex wrap gap={8}>
+          <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
+        </Flex>
+      </Flex>
+    </Flex>
   </PureGlobal>;
 });
 
@@ -440,7 +469,8 @@ const BaseExample = createWithRemoteLoader({
                   5: '/mock/audio.wav',
                   6: '/mock/resume.docx',
                   7: '/mock/example.zip',
-                  8: '/mock/resume.xlsx'
+                  8: '/mock/resume.xlsx',
+                  9: '/mock/small-image.png'
                 };
                 return new Promise(resolve => {
                   setTimeout(() => {
@@ -455,6 +485,9 @@ const BaseExample = createWithRemoteLoader({
       <InfoPage>
         <InfoPage.Part title="预览图片">
           <FilePreview id="1" />
+        </InfoPage.Part>
+        <InfoPage.Part title="预览小尺寸图片">
+          <FilePreview id="9" />
         </InfoPage.Part>
         <InfoPage.Part title="预览PDF">
           <FilePreview id="2" />
@@ -1136,7 +1169,7 @@ render(<BaseExample />);
 ```
 
 - FileSystem 扩展顶部菜单
-- 通过 toolbarExtra 在导航栏追加上传、新建文件夹、刷新、删除选中等自定义操作；上传请使用 FileUpload（在 FileSystem 内会自动带上当前 uploadPath）
+- 通过 toolbarExtra 在导航栏追加上传、新建文件夹、刷新、删除选中等自定义操作；FileUpload 会自动上传到当前 uploadPath
 - _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),icons(@ant-design/icons),remoteLoader(@kne/remote-loader)
 
 ```jsx
@@ -1164,11 +1197,12 @@ const BaseExample = createWithRemoteLoader({
           file: {
             staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
             upload: async ({ file, path }) => {
+              // path 为当前文件夹（进入目录或分栏展开后的 uploadPath）
               console.log('upload to', path || '(root)', file?.name);
               return {
                 data: {
                   code: 0,
-                  data: { id: `mock-${Date.now()}`, filename: file.name, path: path || '' }
+                  data: { id: &#96;mock-${Date.now()}&#96;, filename: file.name, path: path || '' }
                 }
               };
             }
@@ -1184,10 +1218,11 @@ const BaseExample = createWithRemoteLoader({
             defaultView="list"
             toolbarExtra={({ uploadPath, selectedEntries, clearSelection }) => (
               <Space size={8}>
-                <FileUpload showUploadList={false} size="small">
+                {/* 在 FileSystem 内未传 directory 时，FileUpload 会自动使用当前 uploadPath */}
+                <FileUpload showUploadList={false} size="small" renderTips={() => null}>
                   上传
                 </FileUpload>
-                <Button size="small" icon={<FolderAddOutlined />} onClick={() => message.info(`新建文件夹于 ${uploadPath || '/'}`)}>
+                <Button size="small" icon={<FolderAddOutlined />} onClick={() => message.info(&#96;新建文件夹于 ${uploadPath || '/'}&#96;)}>
                   新建文件夹
                 </Button>
                 <Button size="small" icon={<ReloadOutlined />} onClick={() => message.success('已刷新')}>
@@ -1199,7 +1234,7 @@ const BaseExample = createWithRemoteLoader({
                   icon={<DeleteOutlined />}
                   disabled={!selectedEntries.length}
                   onClick={() => {
-                    message.info(`已选择 ${selectedEntries.length} 项`);
+                    message.info(&#96;已选择 ${selectedEntries.length} 项&#96;);
                     clearSelection();
                   }}
                 >
@@ -1517,7 +1552,7 @@ render(<BaseExample />);
 | onSave | function(data, file, uuid) | - | 上传成功后数据处理回调，返回值将作为新的文件对象 |
 | onUpload | function({ file, path? }) | - | 自定义上传函数；优先于 `ossUpload` / preset `apis.file.upload` |
 | ossUpload | function | - | 自定义上传函数（兼容旧写法，等价于 `onUpload`） |
-| directory | string | - | 上传目录；内部映射为后端 `path`。在 `FileSystem` 内未传时自动使用当前 `uploadPath` |
+| directory | string | - | 上传目录；内部映射为后端 `path` 传给上传接口。在 `FileSystem` 内未传时自动使用当前 `uploadPath` |
 | getPermission | function(type) | - | 文件列表操作权限控制函数，type为'preview'/'delete'等 |
 | apis | object | - | API配置对象 |
 | renderModal | function(modalProps) | props => Modal | 自定义弹窗渲染函数 |
@@ -1716,7 +1751,7 @@ ZIP压缩包文件预览组件，支持查看压缩包内部的文件列表和�
 | originName | string | - | 原始文件名，作为filename的备选 |
 | title | string | - | 弹窗标题，默认使用filename |
 | modalProps | object | - | 传递给弹窗的属性，如{ width: 800 } |
-| openDownload | boolean | false | 弹窗中是否显示下载按钮 |
+| openDownload | boolean | true | 弹窗中是否显示下载按钮，传 false 隐藏 |
 | openPrint | boolean | false | 弹窗中是否显示打印按钮（仅txt/pdf/image/html类型支持） |
 | children | ReactNode \| function(filename) | - | 按钮内容，支持函数返回 |
 | ...antd Button props | - | - | 支持所有antd Button属性（默认icon为LinkOutlined） |
@@ -1738,7 +1773,7 @@ ZIP压缩包文件预览组件，支持查看压缩包内部的文件列表和�
 | open | boolean | - | 是否显示（受控） |
 | defaultOpen | boolean | - | 默认是否显示 |
 | onOpenChange | function(open) | - | 显示状态变化回调 |
-| openDownload | boolean | false | 是否显示下载按钮 |
+| openDownload | boolean | true | 是否显示下载按钮，传 false 隐藏 |
 | openPrint | boolean | false | 是否显示打印按钮 |
 | footer | ReactNode | null | 弹窗底部内容 |
 | apis | object | - | API配置对象 |
@@ -1799,7 +1834,7 @@ ZIP压缩包文件预览组件，支持查看压缩包内部的文件列表和�
 | defaultView | 'icons' \| 'list' \| 'columns' \| 'gallery' | 'list' | 默认视图模式 |
 | defaultPath | string | '' | 默认路径 |
 | className | string | - | 自定义类名 |
-| toolbarExtra | ReactNode \| (ctx) => ReactNode | - | 工具栏扩展；函数时接收 `{ selectedEntries, clearSelection, currentPath, uploadPath }`。`uploadPath` 为实际上传目录；在 `FileSystem` 内使用 `FileUpload` / `useUploadFile` 且未传 `directory` 时自动使用 |
+| toolbarExtra | ReactNode \| (ctx) => ReactNode | - | 工具栏扩展；函数时接收 `{ selectedEntries, clearSelection, currentPath, uploadPath }`。`uploadPath` 为实际上传目录（进入的目录；分栏下为正在浏览的最深文件夹）。在 `FileSystem` 内使用 `FileUpload` / `useUploadFile` 且未传 `directory` 时，会自动使用 `uploadPath` |
 | propertiesPanel | boolean \| ReactNode \| (ctx) => ReactNode | true | 右侧属性面板；`false` 关闭；函数时接收 `{ selectedEntries, index, currentPath, close, actions, onAction, defaultActions }` |
 | propertiesActions | false \| ActionItem[] \| (ctx) => ActionItem[] \| object | 内置默认 | 属性面板操作；`false` 关闭；数组按 key 合并；函数完全自定义；`{ list, replace?, ...ButtonGroupProps }` 可替换或合并 |
 | onPropertiesAction | (key, ctx) => void | - | 操作点击回调；`ctx` 含 `entry` / `selectedEntries` / `clearSelection` / `currentPath` |
@@ -1907,7 +1942,8 @@ const MyComponent = withOSSFile(({ data, id, ...props }) => {
 | 参数 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
 | file | File | - | 待上传文件 |
-| directory | string | - | 上传目录，映射为请求体 `path` |
+| directory | string | - | 上传目录，映射为请求体 `path`；也可直接传 `path`（同义） |
+| path | string | - | 同 `directory`（兼容后端字段名；勿只传 `path` 却期望被忽略） |
 | onUpload | function({ file, path? }) | - | 自定义上传函数；不传则读 `apis` |
 | apis | object | - | API 配置；默认取自 preset |
 

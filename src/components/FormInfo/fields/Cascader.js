@@ -1,15 +1,15 @@
 import { hooks } from "@kne/react-form-antd";
-import { CascaderField, createTreeUtils } from "@components/Common";
+import { SuperSelectCascaderField, createTreeUtils } from "@components/Common";
 const { useOnChange } = hooks;
 
 const Cascader = (props) => {
   const render = useOnChange(
     Object.assign({}, { placeholder: "请选择" + props.label }, props)
   );
-  return render(CascaderField);
+  return render(SuperSelectCascaderField);
 };
 
-Cascader.Field = CascaderField;
+Cascader.Field = SuperSelectCascaderField;
 Cascader.createTreeUtils = createTreeUtils;
 
 export { createTreeUtils };

@@ -1628,7 +1628,7 @@ render(<BaseExample />);
 
 ### API
 
-自适应按钮组组件，能够根据容器宽度自动调整显示的按钮数量，并将多余的按钮放入下拉菜单中。
+自适应按钮组组件，能够根据容器宽度自动调整显示的按钮数量，并将多余的按钮放入下拉菜单中。移动端（`@kne/responsive-utils` 判定，宽度 < 768px）点击「更多」改为底部动作面板（bottom action），`getPopupContainer`、`trigger`、`placement` 仅作用于桌面端下拉。
 
 ### 属性
 

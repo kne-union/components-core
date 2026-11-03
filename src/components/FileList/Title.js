@@ -56,7 +56,7 @@ const Title = withLocale(({
                                     key={id}
                                     value={id}
                                 >
-                                    <Space direction="vertical">
+                                    <Space orientation="vertical">
                                         <Space size={4} align="start">
                                             <FileType
                                                 type={last(filename.split("."))}

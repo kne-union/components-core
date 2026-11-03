@@ -55,7 +55,7 @@ const TablePageExample = () => {
                             amount: 890.00,
                             status: '待处理',
                             createTime: '2024-01-15 14:45:00'
-                        }], total: 3
+                        }], totalCount: 3
                     };
                 }}
                 topArea={(tableData) => (<div style={{padding: '16px', background: '#fafafa', marginBottom: '16px'}}>

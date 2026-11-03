@@ -309,7 +309,6 @@ const { default: Layout, Page } = layout;
 const {
   InputFilterItem,
   CityFilterItem,
-  AdvancedSelectFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
@@ -346,24 +345,6 @@ const BaseExample = () => {
               [
                 <InputFilterItem label="文字" name="text" />,
                 <CityFilterItem label="城市" name="city" />,
-                <AdvancedSelectFilterItem
-                  label="高级选择"
-                  name="select"
-                  api={{
-                    loader: () => {
-                      return {
-                        pageData: [
-                          { label: "第一项", value: 1 },
-                          { label: "第二项", value: 2, disabled: true },
-                          {
-                            label: "第三项",
-                            value: 3,
-                          },
-                        ],
-                      };
-                    },
-                  }}
-                />,
                 <UserFilterItem
                   label="用户选择"
                   name="user"
@@ -992,7 +973,7 @@ const TablePageExample = () => {
                             amount: 890.00,
                             status: '待处理',
                             createTime: '2024-01-15 14:45:00'
-                        }], total: 3
+                        }], totalCount: 3
                     };
                 }}
                 topArea={(tableData) => (<div style={{padding: '16px', background: '#fafafa', marginBottom: '16px'}}>
@@ -1007,14 +988,14 @@ render(<TablePageExample/>);
 
 ```
 
-- TablePage isNext 新版表格
-- 展示 Layout.TablePage 的 isNext 参数：启用后使用 @components/TablePage（@kne/table-page 新 API，如 renderType、getValueOf），默认则使用 @components/Table 内置 legacy TablePage（兼容 type 列配置）。
+- TablePage 列渲染类型
+- 展示 Layout.TablePage 基于 @components/TablePage（@kne/table-page）的列配置，如 renderType、getValueOf、dataFormat。
 - _Layout(@components/Layout),global(@components/Global),antd(antd)
 
 ```jsx
 const { default: Layout, TablePage } = _Layout;
 const { PureGlobal } = global;
-const { Button, Flex, Tag } = antd;
+const { Button, Flex } = antd;
 
 const statusMap = {
   已完成: { type: 'success', text: '已完成' },
@@ -1080,7 +1061,7 @@ const TablePageNextExample = () => (
         helperGuide: () => [
           {
             value: 'order-list-next-help',
-            content: 'isNext 模式下使用 @components/TablePage，列配置采用 renderType / getValueOf 等新 API。',
+            content: 'TablePage 基于 @components/TablePage，列配置采用 renderType / getValueOf 等 API。',
             url: 'https://example.com/help/order-list'
           }
         ]
@@ -1090,21 +1071,14 @@ const TablePageNextExample = () => (
     <Layout navigation={{ isFixed: false }}>
       <Flex vertical gap={16}>
         <div style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
-          <div>
-            <Tag color="blue" style={{ marginRight: 8 }}>
-              isNext
-            </Tag>
-            设置 <code>isNext</code> 后，内部使用 <code>@components/TablePage</code>（基于{' '}
-            <code>@kne/table-page</code>）；未设置时默认使用 <code>@components/Table</code> 内置的 legacy TablePage（兼容旧版{' '}
-            <code>type</code> 列配置）。
-          </div>
+          TablePage 内部使用 <code>@components/TablePage</code>（基于 <code>@kne/table-page</code>），列配置支持{' '}
+          <code>renderType</code>、<code>getValueOf</code> 等。
         </div>
         <TablePage
-          isNext
           name="order-list-next"
           helperGuideName="order-list-next-help"
           page={{
-            title: '订单列表（isNext）',
+            title: '订单列表',
             titleExtra: <Button type="primary">新建订单</Button>
           }}
           dataFormat={data => ({
@@ -1567,9 +1541,9 @@ Layout 组件是页面布局的容器组件，包裹所有页面内容并提供�
 | openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
 | name | string | 是 | - | 页面名称，必填 |
 | topArea | ReactNode \| function | 否 | - | 顶部额外内容区，可以是组件或函数（接收 tableData 参数） |
-| isNext | boolean | 否 | false | 为 `true` 时使用 `@components/TablePage`（`@kne/table-page` 新 API）；默认使用 `@components/Table` 内置 legacy TablePage（兼容旧版 `type` 列配置） |
+| isNext | boolean | 否 | - | 已废弃，传入无效果；内部固定使用 `@components/TablePage` |
 
-注意：除了以上属性，TablePage 还支持内部表格组件的所有属性（如 `columns`、`loader`、`pagination` 等）。`isNext` 为 `true` 时列配置遵循 `@kne/table-page` 规范（`renderType`、`getValueOf`、`format` 等）；默认模式下遵循 legacy Table 列配置（`type`、`valueOf` 等）。
+注意：除了以上属性，TablePage 还支持 `@components/TablePage`（`@kne/table-page`）的所有属性（如 `columns`、`loader`、`dataFormat` 等），列配置遵循 `@kne/table-page` 规范（`renderType`、`getValueOf`、`format` 等）。
 
 #### StateBarPage
 

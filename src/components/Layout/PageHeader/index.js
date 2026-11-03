@@ -33,7 +33,7 @@ export const PageHeaderInner = ({
     >
         {addonBefore && <Col>{addonBefore}</Col>}
         <Col flex={1} className={style["content"]}>
-            <Space direction="vertical" size={isMobile ? 12 : 8} style={{width: '100%'}}>
+            <Space orientation="vertical" size={isMobile ? 12 : 8} style={{width: '100%'}}>
                 <Row wrap={isMobile} gutter={isMobile ? [0, 12] : 0}>
                     <Col flex={isMobile ? '100%' : 1} className={style["main"]}>
                         <div className={style["title-area"]}>

@@ -21,21 +21,6 @@
       ]
     },
     {
-      "title": "Enum",
-      "description": "枚举展示组件，展示地址、职能、行业等枚举信息",
-      "code": "./enum.js",
-      "scope": [
-        {
-          "name": "_Common",
-          "packageName": "@components/Common"
-        },
-        {
-          "name": "_antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
       "title": "ScrollLoader",
       "description": "下拉滚动加载组件，配合 Fetch 实现分页加载",
       "code": "./scrollLoader.js",
@@ -70,21 +55,6 @@
       ]
     },
     {
-      "title": "AdvancedSelect",
-      "description": "高级选择组件，支持用户选择、列表选择等功能",
-      "code": "./advanced-select.js",
-      "scope": [
-        {
-          "name": "_Common",
-          "packageName": "@components/Common"
-        },
-        {
-          "name": "_antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
       "title": "SuperSelect",
       "description": "新版高级选择组件，提供更强的自定义能力",
       "code": "./super-select.js",
@@ -100,23 +70,8 @@
       ]
     },
     {
-      "title": "TreeField",
-      "description": "树形选择组件，支持单选和多选",
-      "code": "./tree-field.js",
-      "scope": [
-        {
-          "name": "_Common",
-          "packageName": "@components/Common"
-        },
-        {
-          "name": "_antd",
-          "packageName": "antd"
-        }
-      ]
-    },
-    {
-      "title": "CascaderField",
-      "description": "级联选择组件，支持多级联动选择",
+      "title": "SuperSelectCascaderField",
+      "description": "级联选择组件，基于 @kne/super-select 的 SelectCascader，支持 api 远程加载",
       "code": "./cascader-field.js",
       "scope": [
         {

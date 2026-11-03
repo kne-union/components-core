@@ -41,7 +41,7 @@ const FileUpload = withLocale(({
         title={<Row>
             <Col flex={1}></Col>
             <Col>
-                <Space split={<Divider type="vertical"/>}>
+                <Space separator={<Divider orientation="vertical"/>}>
                     <DragButton/>
                     <UploadButton>
                         <FormattedMessage id="upload"/>

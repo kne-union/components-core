@@ -107,7 +107,7 @@ const FileList = withLocale(({
                 itemApis={itemApis}
                 getPopupContainer={getPopupContainer}
             >
-                <Space separator={<Divider type="vertical"/>}>
+                <Space separator={<Divider orientation="vertical"/>}>
                     {titleExtraInner}
                     {getPermission("add", {}) ? (<>
                         <DragButton>

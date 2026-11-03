@@ -64,11 +64,6 @@ body.container {
   --font-size-18: 18px;
   --font-size-24: 24px;
 
-  /*@media only screen and (max-width: 1300px) {
-    --font-size-default: 13px;
-    --font-size-small: 12px;
-    --font-size-large: 14px;
-  }*/
   --radius-small: 2px;
   --radius-default: 6px;
   --radius-large: 8px;
@@ -105,22 +100,12 @@ body.container {
   --state-error-color: #{$error-color};
   --state-warning-color: #{$warning-color};
 
-  //--primary-color: #5cb8b2;
-
   --tag-default: "#666666";
   --tag-success: "#027A48";
   --tag-progress: "#F09700";
   --tag-danger: "#D14343";
   --tag-info: "#155ACF";
   --tag-other: "#6740C3";
-
-  // @for $i from 1 through 10 {
-  //  --primary-color-#{$i}: 主题色与白色混合的不透明浅色，非 rgba 透明色
-  // }
-
-  /*--primary-color-red: 92;
-  --primary-color-green: 184;
-  --primary-color-blue: 178;*/
 
   :global(.ant-tooltip .ant-tooltip-container) {
     background: #FFFFFF;
@@ -345,13 +330,6 @@ body.container {
     }
   }
 
-  :global(.ant-tooltip) {
-    :global(.ant-tooltip-inner) {
-      background-color: #fff;
-      color: var(--font-color);
-    }
-  }
-
   :global(.ant-menu-submenu-popup) {
     :global(.ant-menu-sub) {
       margin: 0;
@@ -427,25 +405,6 @@ body.container {
           width: fit-content;
           height: 24px;
           font-size: 12px;
-
-          &:not(:global(.ant-select-customize-input)) {
-            .ant-select-selector {
-              height: 24px;
-              font-size: var(--font-size-small);
-              padding: 0 10px;
-            }
-          }
-
-          .ant-select-selector {
-            border-radius: var(--radius-default, 2px);
-            border: 1px solid var(--font-color-grey-3);
-            color: var(--font-color);
-
-            .ant-select-selection-item,
-            .ant-select-selection-placeholder {
-              line-height: var(--line-height-default) !important;
-            }
-          }
         }
 
         .ant-pagination-options-quick-jumper {

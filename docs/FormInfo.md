@@ -179,7 +179,6 @@ const {
   Switch,
   Rate,
   Slider,
-  MoneyInput,
   ColorPicker,
 } = fields;
 
@@ -201,7 +200,6 @@ const BaseExample = () => {
             <Input name="companyName" label="供应商名称" rule="REQ LEN-3-50" />,
             <TextArea name="description" label="公司简介" maxLength={500} />,
             <InputNumber name="creditScore" label="信用评分" min={0} max={100} />,
-            <MoneyInput name="annualRevenue" label="年营业额" />,
           ]}
         />
 
@@ -423,9 +421,27 @@ const {
   SuperSelectUser,
   Avatar,
   Upload,
-  SalaryInput,
   Input,
 } = fields;
+
+const fileUrls = {};
+
+const mockFileApis = {
+  file: {
+    upload: ({ file }) => {
+      const id = &#96;${Date.now()}-${file.name}&#96;;
+      fileUrls[id] = URL.createObjectURL(file);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ data: { code: 0, data: { id, filename: file.name } } });
+        }, 500);
+      });
+    },
+    getUrl: {
+      loader: ({ params }) => fileUrls[params.id],
+    },
+  },
+};
 
 const BaseExample = () => {
   const modal = useModal();
@@ -443,7 +459,35 @@ const BaseExample = () => {
           title="候选人基本信息"
           list={[
             <Avatar name="avatar" label="头像照片" />,
-            <SuperSelectUser name="userId" label="内部推荐人" rule="REQ" />,
+            <SuperSelectUser
+              name="userId"
+              label="内部推荐人"
+              rule="REQ"
+              api={{
+                loader: () => ({
+                  pageData: [
+                    {
+                      label: "张三",
+                      value: 1,
+                      avatar: { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=zhang" },
+                      description: "高级前端工程师",
+                    },
+                    {
+                      label: "李四",
+                      value: 2,
+                      avatar: { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=li" },
+                      description: "资深后端工程师",
+                    },
+                    {
+                      label: "王五",
+                      value: 3,
+                      avatar: { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=wang" },
+                      description: "产品经理",
+                    },
+                  ],
+                }),
+              }}
+            />,
             <PhoneNumber name="phone" label="联系电话" rule="REQ" />,
             <Input name="email" label="电子邮箱" rule="EMAIL" />,
           ]}
@@ -454,20 +498,13 @@ const BaseExample = () => {
           list={[
             <FunctionSelect name="function" label="职能领域" rule="REQ" />,
             <IndustrySelect name="industry" label="所属行业" rule="REQ" />,
-            <SalaryInput
-              name="salaryRange"
-              label="期望薪资范围"
-              rule="REQ"
-              showMonth
-              remindUnit
-            />,
           ]}
         />
 
         <FormInfo
           title="其他补充信息"
           list={[
-            <AddressSelect name="address" label="工作地址" level={3} />,
+            <AddressSelect name="address" label="工作地址" />,
             <Upload name="resume" label="简历附件" block />,
           ]}
         />
@@ -479,113 +516,10 @@ const BaseExample = () => {
 };
 
 render(
-  <PureGlobal>
+  <PureGlobal preset={{ apis: mockFileApis }}>
     <BaseExample />
   </PureGlobal>
 );
-
-```
-
-- 高级选择组件
-- 展示AdvancedSelect高级选择组件的使用，支持从API加载数据、自定义列配置、多选等功能
-- _FormInfo(@components/FormInfo),_Modal(@components/Modal),antd(antd)
-
-```jsx
-const { default: FormInfo, Form, SubmitButton, AdvancedSelect, fields } = _FormInfo;
-const { useModal } = _Modal;
-const { Space } = antd;
-
-const { Input, TextArea } = fields;
-
-const BaseExample = () => {
-  const modal = useModal();
-  return (
-    <Form
-      onSubmit={(data) => {
-        modal({
-          title: "培训计划配置成功",
-          children: <pre>{JSON.stringify(data, null, 2)}</pre>,
-        });
-      }}
-    >
-      <Space direction="vertical" size={16}>
-        <FormInfo
-          title="课程选择"
-          list={[
-            <AdvancedSelect
-              name="trainingCourses"
-              label="选择培训课程"
-              rule="REQ"
-              mode="multiple"
-              api={{
-                loader: () => {
-                  return {
-                    pageData: [
-                      {
-                        id: 1,
-                        name: "前端架构设计最佳实践",
-                        category: "前端技术",
-                        duration: 12,
-                        description: "深入学习企业级前端架构设计方法",
-                      },
-                      {
-                        id: 2,
-                        name: "微服务架构设计与实现",
-                        category: "后端技术",
-                        duration: 16,
-                        description: "掌握微服务架构的核心设计模式",
-                      },
-                      {
-                        id: 3,
-                        name: "云原生应用开发",
-                        category: "云原生",
-                        duration: 20,
-                        description: "基于Kubernetes的云原生应用开发",
-                      },
-                      {
-                        id: 4,
-                        name: "大数据处理与分析",
-                        category: "数据技术",
-                        duration: 18,
-                        description: "Hadoop/Spark大数据处理技术",
-                      },
-                      {
-                        id: 5,
-                        name: "AI与机器学习实战",
-                        category: "人工智能",
-                        duration: 24,
-                        description: "深度学习模型训练与部署",
-                      },
-                    ],
-                  };
-                },
-              }}
-              columns={[
-                { title: "课程名称", key: "name" },
-                { title: "技术方向", key: "category" },
-                { title: "课时", key: "duration" },
-              ]}
-              nameKey="id"
-              labelKey="name"
-            />,
-          ]}
-        />
-
-        <FormInfo
-          title="培训计划详情"
-          list={[
-            <Input name="trainingObjective" label="培训目标" />,
-            <TextArea name="trainingRequirements" label="培训要求与说明" block />,
-          ]}
-        />
-
-        <SubmitButton type="primary">提交培训计划</SubmitButton>
-      </Space>
-    </Form>
-  );
-};
-
-render(<BaseExample />);
 
 ```
 
@@ -1466,616 +1400,6 @@ render(<BaseExample />);
 
 ```
 
-- 地址选择
-- 展示AddressSelect地址选择组件，支持省市区三级联动选择
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content),antd(antd),lodash(lodash)
-
-```jsx
-const { AddressSelect: _AddressSelect, AddressInput: _AddressInput } =
-  _FormInfo;
-const { PureGlobal } = global;
-const { Space, Button } = antd;
-const { default: Content } = _Content;
-const { range, uniqueId } = lodash;
-
-const AddressSelect = _AddressSelect.Field;
-const AddressEnum = _AddressSelect.AddressEnum;
-const AddressInput = _AddressInput.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "业务区域多选",
-          content: (
-            <AddressSelect
-              maxLength={3}
-              defaultValue={["110"]}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "业务区域单选",
-          content: (
-            <AddressSelect
-              single
-              defaultValue={"110"}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "modal业务区域多选",
-          content: (
-            <AddressSelect
-              maxLength={3}
-              isPopup={false}
-              defaultValue={["110"]}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "modal业务区域单选",
-          content: (
-            <AddressSelect
-              isPopup={false}
-              single
-              defaultValue={"110"}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "valueType为all",
-          content: (
-            <AddressSelect
-              valueType="all"
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "地址显示",
-          content: <AddressEnum name="270070" />,
-        },
-        {
-          label: "显示父级",
-          content: <AddressEnum name="270070" displayParent />,
-        },
-        {
-          label: "详细地址输入",
-          content: (
-            <AddressInput
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <div className="input">
-    <BaseExample />
-  </div>
-);
-
-```
-
-- 级联选择
-- 展示级联选择组件，支持多级联动选择
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content),lodash(lodash)
-
-```jsx
-const { Cascader: _Cascader } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const { range, get } = lodash;
-
-const Cascader = _Cascader.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "一次性获取数据",
-          content: (
-            <Cascader
-              onlyAllowLastLevel
-              single
-              api={{
-                loader: async () => {
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve([
-                        {
-                          id: "client",
-                          value: "client",
-                          type: "module",
-                          name: "客户管理",
-                          label: "客户管理",
-                          children: [
-                            {
-                              id: "client-list",
-                              value: "client-list",
-                              type: "feature",
-                              name: "客户列表",
-                              label: "客户列表",
-                            },
-                            {
-                              id: "client-detail",
-                              value: "client-detail",
-                              type: "module",
-                              name: "客户详情",
-                              label: "客户详情",
-                              children: [
-                                {
-                                  id: "contract",
-                                  value: "contract",
-                                  type: "module",
-                                  name: "合同管理",
-                                  label: "合同管理",
-                                },
-                              ],
-                            },
-                            {
-                              id: "client-form",
-                              value: "client-form",
-                              type: "feature",
-                              name: "客户表单",
-                              label: "客户表单",
-                              children: [
-                                {
-                                  id: "taxpayerIdNumber",
-                                  value: "taxpayerIdNumber",
-                                  type: "feature",
-                                  name: "税号",
-                                  label: "税号",
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                        {
-                          id: "position",
-                          value: "position",
-                          type: "module",
-                          name: "招聘管理",
-                          label: "招聘管理",
-                          children: [
-                            {
-                              id: "position-list",
-                              value: "position-list",
-                              type: "feature",
-                              name: "职位列表",
-                              label: "职位列表",
-                            },
-                            {
-                              id: "position-detail",
-                              value: "position-detail",
-                              type: "module",
-                              name: "职位详情",
-                              label: "职位详情",
-                            },
-                            {
-                              id: "position-form",
-                              value: "position-form",
-                              type: "feature",
-                              name: "职位表单",
-                              label: "职位表单",
-                              children: [
-                                {
-                                  id: "industry",
-                                  value: "industry",
-                                  type: "feature",
-                                  name: "行业选择",
-                                  label: "行业选择",
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ]);
-                    }, 1000);
-                  });
-                },
-              }}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "分层加载数据",
-          content: (
-            <Cascader
-              openLoadData
-              onSearch={async (searchText) => {
-                return range(0, 20).map((key) => {
-                  const parentId = "2";
-                  return {
-                    id: &#96;${parentId ? &#96;${parentId}-&#96; : ""}${key + 1}&#96;,
-                    label: &#96;部门-${searchText}-${
-                      parentId ? &#96;${parentId}-&#96; : ""
-                    }${key + 1}&#96;,
-                    parentId,
-                  };
-                });
-              }}
-              api={{
-                loader: async ({ data }) => {
-                  const parentId = get(data, "id", "");
-                  const level = parentId.split("-").length;
-                  console.log("loadData", parentId, level);
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve(
-                        range(0, 20).map((key) => {
-                          return Object.assign(
-                            {
-                              id: &#96;${parentId ? &#96;${parentId}-&#96; : ""}${key + 1}&#96;,
-                              label: &#96;部门-${parentId ? &#96;${parentId}-&#96; : ""}${
-                                key + 1
-                              }&#96;,
-                              parentId,
-                            },
-                            level >= 3 ? { children: null } : {}
-                          );
-                        })
-                      );
-                    }, 1000);
-                  });
-                },
-              }}
-            />
-          ),
-        },
-        {
-          label: "modal分层加载数据",
-          content: (
-            <Cascader
-              openLoadData
-              isPopup={false}
-              api={{
-                loader: async ({ data }) => {
-                  const parentId = get(data, "id", "");
-                  const level = parentId.split("-").length;
-                  console.log("loadData", parentId, level);
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve(
-                        range(0, 20).map((key) => {
-                          return Object.assign(
-                            {
-                              id: &#96;${parentId ? &#96;${parentId}-&#96; : ""}${key + 1}&#96;,
-                              label: &#96;部门-${parentId ? &#96;${parentId}-&#96; : ""}${
-                                key + 1
-                              }&#96;,
-                              parentId,
-                            },
-                            level >= 3 ? { children: null } : {}
-                          );
-                        })
-                      );
-                    }, 1000);
-                  });
-                },
-              }}
-            />
-          ),
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <PureGlobal>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
-);
-
-```
-
-- 职能选择
-- 展示FunctionSelect职能选择组件，支持多级职能树选择
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content),lodash(lodash)
-
-```jsx
-const { FunctionSelect: _FunctionSelect } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const { range, get } = lodash;
-
-const FunctionSelect = _FunctionSelect.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "职能选择",
-          content: (
-            <FunctionSelect
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "modal职能选择",
-          content: (
-            <FunctionSelect
-              isPopup={false}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "职能选择无搜索",
-          content: (
-            <FunctionSelect
-              search={null}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "职能枚举显示",
-          content: <FunctionSelect.Enum name="001" />,
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <div className="input">
-    <BaseExample />
-  </div>
-);
-
-```
-
-- 行业选择
-- 展示IndustrySelect行业选择组件，支持多级行业树选择
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content),lodash(lodash)
-
-```jsx
-const { IndustrySelect: _IndustrySelect } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const { range, get } = lodash;
-
-const IndustrySelect = _IndustrySelect.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "所属行业",
-          content: (
-            <IndustrySelect
-              defaultValue={["001"]}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "modal所属行业",
-          content: (
-            <IndustrySelect
-              isPopup={false}
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-        {
-          label: "行业枚举显示",
-          content: <IndustrySelect.Enum name="004" />,
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <div className="input">
-    <BaseExample />
-  </div>
-);
-
-```
-
-- 金额输入
-- 展示MoneyInput金额输入组件，支持金额格式化和单位选择
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content)
-
-```jsx
-const { MoneyInput: _MoneyInput } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const MoneyInput = _MoneyInput.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "合同金额输入",
-          content: <MoneyInput />,
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <PureGlobal>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
-);
-
-```
-
-- 电话号码
-- 展示PhoneNumber手机号输入组件，支持手机号格式化和校验
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content)
-
-```jsx
-const { PhoneNumber: _PhoneNumber } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const PhoneNumber = _PhoneNumber.Field;
-
-const BaseExample = () => {
-  return (
-    <Content
-      col={2}
-      list={[
-        {
-          label: "联系电话",
-          content: (
-            <PhoneNumber
-              onChange={(value) => {
-                console.log(value);
-              }}
-            />
-          ),
-        },
-      ]}
-    />
-  );
-};
-
-render(
-  <PureGlobal>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
-);
-
-```
-
-- 薪资范围
-- 展示SalaryInput薪资范围输入组件，支持薪资类型、月薪/年薪选择和范围校验
-- _FormInfo(@components/FormInfo),global(@components/Global),_Content(@components/Content)
-
-```jsx
-const { SalaryInput, Form } = _FormInfo;
-const { PureGlobal } = global;
-const { default: Content } = _Content;
-
-const SalaryInputField = SalaryInput.Field;
-
-const BaseExample = () => {
-  return (
-    <div>
-      <Content
-        col={1}
-        list={[
-          {
-            label: "薪资范围",
-            content: (
-              <SalaryInputField
-                onChange={(value) => {
-                  console.log(value);
-                }}
-              />
-            ),
-          },
-        ]}
-      />
-      <Form
-        rules={{
-          SALARYRANGE: ({ min, max, type }) => {
-            if (type !== 1) {
-              if (!min || !max) {
-                return {
-                  result: false,
-                  errMsg: &#96;${!min ? "最低薪资" : "最高薪资"}不能为空&#96;,
-                };
-              }
-              if (min > max) {
-                return {
-                  result: false,
-                  errMsg: "最高薪资应大于最低薪资",
-                };
-              }
-            }
-            return {
-              result: true,
-              errMsg: "",
-            };
-          },
-        }}
-        data={{ salaryRange: { type: 5, month: 12 } }}
-      >
-        <SalaryInput
-          name="salaryRange"
-          label="薪资范围"
-          rule="REQ SALARYRANGE"
-          showMonth
-          remindUnit
-        />
-      </Form>
-    </div>
-  );
-};
-
-render(
-  <PureGlobal>
-    <div className="input">
-      <BaseExample />
-    </div>
-  </PureGlobal>
-);
-
-```
-
 - helperGuideName 和 lang
 - 展示 helperGuideName 为字段添加帮助指引功能，以及 lang 配置实现多语言支持
 - _FormInfo(@components/FormInfo),_Modal(@components/Modal),antd(antd),global(@components/Global)
@@ -2301,6 +1625,7 @@ render(<PureGlobal
 | children | 表单内容 | ReactNode | 是 | - |
 | footerButtons | 底部按钮配置 | array | 否 | - |
 | width | 弹窗宽度 | string | 否 | 520 |
+| bodyScroll | 弹层 body 是否使用 SimpleBar 滚动；分栏（`Modal@ColumnsLayout`）/ Tabs 等自管滚动内容传 `false` | boolean | 否 | true |
 | modalRender | 自定义弹层渲染 | function | 否 | - |
 
 #### FormDrawer
@@ -2582,7 +1907,7 @@ errorRender 回调接收以下参数：
 
 #### Field 类型：业务组件
 
-**AddressSelect** - 地址选择组件
+**AddressSelect** - 城市选择组件，基于 `@kne/super-select-plus` 的 `SelectAddress`
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2590,18 +1915,14 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 | rule | 校验规则 | string | 否 | - |
 | single | 是否单选 | boolean | 否 | false |
-| isPopup | 是否使用弹窗形式 | boolean | 否 | - |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
 
-**FunctionSelect** - 职能选择组件
+值为城市对象（单选）或对象数组（多选），可直接传入城市编码字符串或编码数组回显。静态属性：`Field`、`AddressEnum`、`createAddressApi`。
 
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| name | 字段名 | string | 是 | - |
-| label | 字段标签 | ReactNode | 否 | - |
-| rule | 校验规则 | string | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
+**AddressInput** - 城市 + 详细地址输入，值为 `{ city, detail }`
 
-**IndustrySelect** - 行业选择组件
+**FunctionSelect** - 职能选择组件，基于 `@kne/super-select-plus` 的 `SelectFunction`
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2609,8 +1930,25 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 | rule | 校验规则 | string | 否 | - |
 | single | 是否单选 | boolean | 否 | false |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
 
-**Cascader** - 级联选择组件
+值为 `{ id, name }` 对象（单选）或对象数组（多选），可直接传入职能编码回显。静态属性：`Field`、`Enum`（`FunctionEnum`）。
+
+**IndustrySelect** - 行业选择组件，基于 `@kne/super-select-plus` 的 `SelectIndustry`
+
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| name | 字段名 | string | 是 | - |
+| label | 字段标签 | ReactNode | 否 | - |
+| rule | 校验规则 | string | 否 | - |
+| single | 是否单选 | boolean | 否 | false |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
+
+值为 `{ id, name }` 对象（单选）或对象数组（多选），可直接传入行业编码回显。静态属性：`Field`、`Enum`（`IndustryEnum`）。
+
+**Cascader** - 级联选择组件，基于 `@components/Common` 的 `SuperSelectCascaderField`（`@kne/super-select` SelectCascader），值为选项对象
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -2682,25 +2020,6 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 
 #### Field 类型：高级选择组件
-
-**AdvancedSelect** - 高级选择组件，支持列表和表格两种形态
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| name | 字段名 | string | 是 | - |
-| label | 字段标签 | ReactNode | 否 | - |
-| api | 数据加载 API 配置 | object | 是 | - |
-| rule | 校验规则 | string | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-| isPopup | 是否使用弹窗形式 | boolean | 否 | - |
-| getSearchProps | 搜索框配置 | function | 否 | - |
-
-##### api 配置说明
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| loader | 数据加载函数 | function | 是 | - |
-| params | 加载参数 | object | 否 | - |
 
 **SuperSelect** - 超级选择组件
 
@@ -2808,10 +2127,6 @@ interceptors.output.use("date-string", (value) => {
 // 在字段中使用
 <Input name="date" label="日期" interceptor="date-string"/>
 ```
-
-#### SelectInnerInput
-
-选择器内部输入框组件，用于自定义选择器开发。
 
 #### FormSteps
 

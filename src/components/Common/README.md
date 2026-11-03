@@ -9,24 +9,12 @@
 1. **FetchButton** - Button触发加载数据，支持弹窗展示加载结果
 2. **ScrollLoader** - 下拉滚动加载组件，配合 Fetch 实现分页加载
 3. **SearchInput** - 提供防抖的查询输入框
-4. **SimpleBarBox** - 自定义滚动条容器（已废弃，请勿使用）
-5. **TreeField** - 树形选择组件，支持单选和多选
-6. **CascaderField** - 级联选择组件，支持多级联动选择
-7. **TypeDateRangePickerField** - 类型日期范围选择器，支持按日、周、月选择
-8. **SuperSelectField** - 新版高级选择组件，提供更强的自定义能力
-9. **SuperSelectUserField** - 用户选择组件，展示用户头像和描述
-10. **SuperSelectTableListField** - 表格列表选择组件
-11. **SuperSelectTreeField** - 树形选择组件
-12. **AdvancedSelectField** - 高级选择组件，支持用户选择、列表选择
-13. **UserField** - 用户选择组件（旧版）
-14. **TableField** - 表格选择组件
-15. **AddressSelectField** - 地址选择组件
-16. **AddressInputField** - 地址输入组件
-17. **AddressEnum** - 地址枚举展示
-18. **FunctionSelectField** - 职能选择组件
-19. **FunctionEnum** - 职能枚举展示
-20. **IndustrySelectField** - 行业选择组件
-21. **IndustryEnum** - 行业枚举展示
+4. **SuperSelectCascaderField** - 级联选择组件，基于 @kne/super-select 的 SelectCascader，支持 api 远程加载
+5. **TypeDateRangePickerField** - 类型日期范围选择器，支持按日、周、月选择
+6. **SuperSelectField** - 新版高级选择组件，提供更强的自定义能力
+7. **SuperSelectUserField** - 用户选择组件，展示用户头像和描述
+8. **SuperSelectTableListField** - 表格列表选择组件
+9. **SuperSelectTreeField** - 树形选择组件
 
 #### 方法
 
@@ -58,8 +46,7 @@
 
 1. **createTreeUtils** - 创建树形数据工具函数
 2. **getScrollEl** - 获取滚动元素
-3. **Scroller** - 横向滚动组件
-4. **SelectInnerInput** - 内部选择输入框基础组件
+
 
 ### 示例
 
@@ -128,30 +115,6 @@ const BaseExample = () => {
 };
 
 render(<BaseExample/>);
-
-```
-
-- Enum
-- 枚举展示组件，展示地址、职能、行业等枚举信息
-- _Common(@components/Common),_antd(antd)
-
-```jsx
-const Common = _Common;
-const { Space } = _antd;
-
-const { AddressEnum, FunctionEnum, IndustryEnum } = Common;
-
-const BaseExample = () => {
-  return (
-    <Space direction={"vertical"}>
-      <AddressEnum name={"010"} />
-      <FunctionEnum name={"010"} />
-      <IndustryEnum name={"010"} />
-    </Space>
-  );
-};
-
-render(<BaseExample />);
 
 ```
 
@@ -325,82 +288,6 @@ render(<BaseExample />);
 
 ```
 
-- AdvancedSelect
-- 高级选择组件，支持用户选择、列表选择等功能
-- _Common(@components/Common),_antd(antd)
-
-```jsx
-const { UserField } = _Common;
-const { Space, Typography } = _antd;
-
-const BaseExample = () => {
-  const [value, setValue] = React.useState([]);
-
-  return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Typography.Text>
-        已选择 {value.length} 人
-      </Typography.Text>
-      <UserField
-        value={value}
-        onChange={setValue}
-        getSearchProps={(text) => {
-          return {
-            data: { keyword: text },
-          };
-        }}
-        allowSelectAll
-        showSelectedCount
-        countUnit="人"
-        allLabel="所有人"
-        placeholder="选择团队成员"
-        api={{
-          loader: () => {
-            return {
-              pageData: [
-                {
-                  label: "张三",
-                  value: 1,
-                  avatar: "avatar-001",
-                  description: "前端工程师",
-                },
-                {
-                  label: "李四",
-                  value: 2,
-                  avatar: "avatar-002",
-                  description: "后端工程师",
-                },
-                {
-                  label: "王五",
-                  value: 3,
-                  avatar: "avatar-003",
-                  description: "产品经理",
-                },
-                {
-                  label: "赵六",
-                  value: 4,
-                  avatar: "avatar-004",
-                  description: "UI设计师",
-                },
-                {
-                  label: "钱七",
-                  value: 5,
-                  avatar: "avatar-005",
-                  description: "测试工程师",
-                },
-              ],
-            };
-          },
-        }}
-      />
-    </Space>
-  );
-};
-
-render(<BaseExample />);
-
-```
-
 - SuperSelect
 - 新版高级选择组件，提供更强的自定义能力
 - _Common(@components/Common),_antd(antd)
@@ -547,12 +434,12 @@ render(<BaseExample />);
 
 ```
 
-- TreeField
-- 树形选择组件，支持单选和多选
+- SuperSelectCascaderField
+- 级联选择组件，基于 @kne/super-select 的 SelectCascader，支持 api 远程加载
 - _Common(@components/Common),_antd(antd)
 
 ```jsx
-const { TreeField } = _Common;
+const { SuperSelectCascaderField } = _Common;
 const { Space, Typography, Button } = _antd;
 const { useState } = React;
 
@@ -560,97 +447,12 @@ const BaseExample = () => {
   const [value, setValue] = useState([]);
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Typography.Text strong>组织架构选择（多选）</Typography.Text>
-      <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-        已选择: {value.length} 个部门
-      </Typography.Text>
-      <TreeField
-        api={{
-          loader: () => {
-            return [
-              {
-                key: 'tech',
-                title: '技术部',
-                children: [
-                  {
-                    key: 'frontend',
-                    title: '前端组',
-                    children: [
-                      { key: 'fe-web', title: 'Web前端' },
-                      { key: 'fe-mobile', title: '移动端' },
-                    ],
-                  },
-                  {
-                    key: 'backend',
-                    title: '后端组',
-                    children: [
-                      { key: 'be-java', title: 'Java后端' },
-                      { key: 'be-node', title: 'Node.js后端' },
-                    ],
-                  },
-                ],
-              },
-              {
-                key: 'product',
-                title: '产品部',
-                children: [
-                  { key: 'pm-web', title: 'Web产品' },
-                  { key: 'pm-mobile', title: '移动产品' },
-                ],
-              },
-              {
-                key: 'design',
-                title: '设计部',
-                children: [
-                  { key: 'ui', title: 'UI设计' },
-                  { key: 'ux', title: 'UX设计' },
-                ],
-              },
-              {
-                key: 'marketing',
-                title: '市场部',
-                children: [
-                  { key: 'market', title: '市场推广' },
-                  { key: 'operation', title: '运营' },
-                ],
-              },
-            ];
-          },
-        }}
-        value={value}
-        onChange={setValue}
-        placeholder="请选择部门"
-        single={false}
-      />
-      <Button onClick={() => setValue([])}>清空选择</Button>
-    </Space>
-  );
-};
-
-render(<BaseExample />);
-
-```
-
-- CascaderField
-- 级联选择组件，支持多级联动选择
-- _Common(@components/Common),_antd(antd)
-
-```jsx
-const { CascaderField } = _Common;
-const { Space, Typography, Button } = _antd;
-const { useState } = React;
-
-const BaseExample = () => {
-  const [value, setValue] = useState([]);
-
-  return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space orientation="vertical" style={{ width: '100%' }}>
       <Typography.Text strong>省市区级联选择（最多3个）</Typography.Text>
       <Typography.Text type="secondary" style={{ fontSize: 12 }}>
         已选择: {value.length} 个区域
       </Typography.Text>
-      <CascaderField
+      <SuperSelectCascaderField
         api={{
           loader: () => {
             return [
@@ -734,6 +536,8 @@ const BaseExample = () => {
         placeholder="请选择省市区"
         maxLength={3}
         isPopup={true}
+        menuItemWidth={160}
+        style={{ width: 320 }}
       />
       <Button onClick={() => setValue([])}>清空选择</Button>
     </Space>
@@ -931,41 +735,28 @@ render(<BaseExample />);
 | isPopup | 是否在弹窗中使用 | `boolean` | false |
 | ...InputProps | 继承 Input.Search 组件所有属性 | - | - |
 
-#### TreeField
+#### SuperSelectCascaderField
+
+基于 `@kne/super-select` 的 `SelectCascader`，其余属性透传给 `SelectCascader`。值为选项对象（单选为对象，多选为对象数组）。
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: Array<any>) => void` | - |
-| fieldNames | 字段名称映射 | `{ key, title, children }` | - |
-| placeholder | 占位符 | `string` | "请选择" |
+| options | 级联树数据，传入后不再走 api | `Array<object>` | - |
+| api | 远程加载配置（`@kne/react-fetch` 参数），加载结果作为 options | `{ loader: Function }` | - |
+| dataFormat | 将 api 返回数据转换为 options | `(data) => Array<object>` | - |
+| value | 当前选中的值 | `object \| Array<object>` | - |
+| onChange | 变化回调 | `(value) => void` | - |
 | single | 是否单选 | `boolean` | false |
-| maxLength | 最大选择数量 | `number` | MAX_VALUE |
-| isPopup | 是否弹窗展示 | `boolean` | true |
-| checkStrictly | 父子节点是否不关联 | `boolean` | false |
-| searchPlaceholder | 搜索框占位符 | `string` | "搜索" |
-
-#### CascaderField
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: Array<any>) => void` | - |
+| valueKey | 选项值字段名 | `string` | "id" |
+| labelKey | 选项文本字段名 | `string` | "label" |
 | placeholder | 占位符 | `string` | "请选择" |
 | maxLength | 最大选择数量 | `number` | MAX_VALUE |
 | isPopup | 是否弹窗展示 | `boolean` | true |
-| overlayWidth | 弹窗宽度 | `string` | "460px" |
-| menuItemWidth | 菜单项宽度 | `string` | "180px" |
+| menuItemWidth | 菜单项宽度 | `number` | 180 |
 | openLoadData | 是否开启懒加载 | `boolean` | false |
+| onLoadMore | 懒加载子节点 | `Function` | - |
 | onlyAllowLastLevel | 是否只允许选择最后一级 | `boolean` | false |
-| parentIdKey | 父级ID字段名 | `string` | "id" |
-| selectLevel | 选择层级 | `number` | - |
-| searchPlaceholder | 搜索框占位符 | `string` | "搜索" |
-| onSearch | 搜索回调函数 | `(text: string, options) => Array` | - |
-| dataFormat | 数据格式化函数 | `(data) => object` | - |
-| nodeFormat | 节点格式化函数 | `(node) => object` | - |
+| onSearch | 搜索回调函数 | `Function` | - |
 
 #### TypeDateRangePickerField
 
@@ -1027,54 +818,6 @@ render(<BaseExample />);
 | onChange | 变化回调 | `(value: any) => void` | - |
 | placeholder | 占位符 | `string` | "请选择" |
 | ...TreeProps | 继承 Tree 组件所有属性 | - | - |
-
-#### AdvancedSelectField
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: any) => void` | - |
-| placeholder | 占位符 | `string` | "请选择" |
-| allowSelectAll | 是否允许全选 | `boolean` | false |
-| showSelectedCount | 是否显示选中数量 | `boolean` | false |
-| countUnit | 数量单位 | `string` | "个" |
-| allLabel | 全选项标签 | `string` | "全部" |
-| showSelectedTag | 是否显示选中标签 | `boolean` | true |
-| single | 是否单选 | `boolean` | false |
-| getSearchProps | 获取搜索属性 | `(text: string) => object` | - |
-
-#### UserField (AdvancedSelect)
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| defaultValue | 默认值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: any) => void` | - |
-| getSearchProps | 获取搜索属性 | `(text: string) => object` | - |
-| allowSelectAll | 是否允许全选 | `boolean` | false |
-| showSelectedCount | 是否显示选中数量 | `boolean` | false |
-| countUnit | 数量单位 | `string` | "人" |
-| allLabel | 全选项标签 | `string` | "所有人" |
-| showSelectedTag | 是否显示选中标签 | `boolean` | true |
-
-#### AddressEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 地址编码 | `string` | - |
-
-#### FunctionEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 职能编码 | `string` | - |
-
-#### IndustryEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 行业编码 | `string` | - |
 
 #### InputFileButton / InputFileLink / InputFileText
 

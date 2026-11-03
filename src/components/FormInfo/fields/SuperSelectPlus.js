@@ -156,9 +156,11 @@ export {
     addressEnumToSelectValueSingle,
 };
 
-export default {
+const superSelectPlusFields = {
     SelectFunction,
     SelectIndustry,
     SelectAddress,
     AddressInput,
 };
+
+export default superSelectPlusFields;

@@ -11,16 +11,9 @@
     max-width: 240px;
   }
 
-  :global {
-    .ant-tooltip-inner {
-      background: #ffffff;
-      color: var(--font-color);
-      padding: 16px 18px;
-    }
-
-    .ant-tooltip-arrow-content {
-      --antd-arrow-background-color: #fff;
-    }
+  &:global(.ant-tooltip) :global(.ant-tooltip-container) {
+    color: var(--font-color);
+    padding: 16px 18px;
   }
 }
 

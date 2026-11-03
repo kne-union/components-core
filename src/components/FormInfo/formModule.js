@@ -17,18 +17,18 @@ import {useIntl} from '@kne/react-intl';
 import {forwardRef} from "react";
 import FormItem from "./FormItem";
 import style from "./style.module.scss";
-import AdvancedSelectField from "./fields/AdvancedSelect";
 import SuperSelectField, {
     SuperSelectTableList as SuperSelectTableListField,
     SuperSelectUser as SuperSelectUserField,
     SuperSelectTree as SuperSelectTreeField
 } from "./fields/SuperSelect";
-import AddressSelect, {
+import {
+    SelectAddress as AddressSelect,
     AddressInput as AddressInputField,
-} from "./fields/AddressSelect";
+    SelectFunction as FunctionSelect,
+    SelectIndustry as IndustrySelect,
+} from "./fields/SuperSelectPlus";
 import Cascader from "./fields/Cascader";
-import FunctionSelect from "./fields/FunctionSelect";
-import IndustrySelect from "./fields/IndustrySelect";
 import MoneyInput from "./fields/MoneyInput";
 import PhoneNumber from "./fields/PhoneNumber";
 import Upload from "./fields/Upload";
@@ -99,15 +99,13 @@ export {default as ErrorTip} from "./ErrorTip";
 
 export {default as FormItem} from "./FormItem";
 
-// export { default as AdvancedSelect } from "./fields/AdvancedSelect";
-export const AdvancedSelect = withSelectDefaultPlaceholder(AdvancedSelectField);
 export const SuperSelect = withSelectDefaultPlaceholder(SuperSelectField);
 export const SuperSelectTableList = withSelectDefaultPlaceholder(SuperSelectTableListField);
 export const SuperSelectUser = withSelectDefaultPlaceholder(SuperSelectUserField);
 
 export const SuperSelectTree = withSelectDefaultPlaceholder(SuperSelectTreeField);
 
-export {default as AddressSelect} from "./fields/AddressSelect";
+export {AddressSelect};
 export const AddressInput = withSelectDefaultPlaceholder(AddressInputField);
 
 export {
@@ -175,7 +173,6 @@ export const formModule = Object.assign({}, reactFormAntd, {
     DatePickerToday,
     Form,
     FormItem,
-    AdvancedSelect,
     SuperSelect,
     SuperSelectTableList,
     SuperSelectUser,
