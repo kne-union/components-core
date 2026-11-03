@@ -37,7 +37,6 @@
 | [Permissions](docs/Permissions.md) | ### 概述 Permissions 是一个权限控制组件，用于根据用户权限控制页面内容的显示。支持多种权限控制方式和展示形式，适用于各种需要权限控制的场景。 ### 何时使用… |
 | [StateBar](docs/StateBar.md) | ### 概述 StateBar 是一个基于 Ant Design Tabs 组件的状态栏组件，支持多种展示类型（tab、radio、step），适用于需要状态切换和流程展示的场景。 ### 何时使用… |
 | [StateTag](docs/StateTag.md) | ### 概述 StateTag 是一个状态标签组件，用于展示不同状态的数据。支持多种预设类型和自定义样式，适用于列表、详情页等场景的状态展示。 ### 何时使用 当需要展示数据的状态时使用，例如： - 列表页表格中的状态列 -… |
-| [Table](docs/Table.md) | Table 组件是一个功能强大的数据表格组件，基于 Ant Design Table 二次封装，提供了丰富的列类型、列配置、排序、分组表头、操作列等高级功能。 组件支持两种使用方式： - **Table**:… |
 | [TablePage](docs/TablePage.md) |  |
 | [Tooltip](docs/Tooltip.md) | Tooltip 组件是一个功能强大的文字提示气泡框，基于 Ant Design Tooltip 二次封装，提供了丰富的内容展示能力。 组件支持三种使用方式： - **Tooltip**:… |
 

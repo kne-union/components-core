@@ -30,41 +30,28 @@
 | isPopup | 是否在弹窗中使用 | `boolean` | false |
 | ...InputProps | 继承 Input.Search 组件所有属性 | - | - |
 
-## TreeField
+## SuperSelectCascaderField
+
+基于 `@kne/super-select` 的 `SelectCascader`，其余属性透传给 `SelectCascader`。值为选项对象（单选为对象，多选为对象数组）。
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: Array<any>) => void` | - |
-| fieldNames | 字段名称映射 | `{ key, title, children }` | - |
-| placeholder | 占位符 | `string` | "请选择" |
+| options | 级联树数据，传入后不再走 api | `Array<object>` | - |
+| api | 远程加载配置（`@kne/react-fetch` 参数），加载结果作为 options | `{ loader: Function }` | - |
+| dataFormat | 将 api 返回数据转换为 options | `(data) => Array<object>` | - |
+| value | 当前选中的值 | `object \| Array<object>` | - |
+| onChange | 变化回调 | `(value) => void` | - |
 | single | 是否单选 | `boolean` | false |
-| maxLength | 最大选择数量 | `number` | MAX_VALUE |
-| isPopup | 是否弹窗展示 | `boolean` | true |
-| checkStrictly | 父子节点是否不关联 | `boolean` | false |
-| searchPlaceholder | 搜索框占位符 | `string` | "搜索" |
-
-## CascaderField
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: Array<any>) => void` | - |
+| valueKey | 选项值字段名 | `string` | "id" |
+| labelKey | 选项文本字段名 | `string` | "label" |
 | placeholder | 占位符 | `string` | "请选择" |
 | maxLength | 最大选择数量 | `number` | MAX_VALUE |
 | isPopup | 是否弹窗展示 | `boolean` | true |
-| overlayWidth | 弹窗宽度 | `string` | "460px" |
-| menuItemWidth | 菜单项宽度 | `string` | "180px" |
+| menuItemWidth | 菜单项宽度 | `number` | 180 |
 | openLoadData | 是否开启懒加载 | `boolean` | false |
+| onLoadMore | 懒加载子节点 | `Function` | - |
 | onlyAllowLastLevel | 是否只允许选择最后一级 | `boolean` | false |
-| parentIdKey | 父级ID字段名 | `string` | "id" |
-| selectLevel | 选择层级 | `number` | - |
-| searchPlaceholder | 搜索框占位符 | `string` | "搜索" |
-| onSearch | 搜索回调函数 | `(text: string, options) => Array` | - |
-| dataFormat | 数据格式化函数 | `(data) => object` | - |
-| nodeFormat | 节点格式化函数 | `(node) => object` | - |
+| onSearch | 搜索回调函数 | `Function` | - |
 
 ## TypeDateRangePickerField
 
@@ -126,54 +113,6 @@
 | onChange | 变化回调 | `(value: any) => void` | - |
 | placeholder | 占位符 | `string` | "请选择" |
 | ...TreeProps | 继承 Tree 组件所有属性 | - | - |
-
-## AdvancedSelectField
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| value | 当前选中的值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: any) => void` | - |
-| placeholder | 占位符 | `string` | "请选择" |
-| allowSelectAll | 是否允许全选 | `boolean` | false |
-| showSelectedCount | 是否显示选中数量 | `boolean` | false |
-| countUnit | 数量单位 | `string` | "个" |
-| allLabel | 全选项标签 | `string` | "全部" |
-| showSelectedTag | 是否显示选中标签 | `boolean` | true |
-| single | 是否单选 | `boolean` | false |
-| getSearchProps | 获取搜索属性 | `(text: string) => object` | - |
-
-## UserField (AdvancedSelect)
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| api | API配置对象 | `{ loader: Function }` | - |
-| defaultValue | 默认值 | `Array<any>` | - |
-| onChange | 变化回调 | `(value: any) => void` | - |
-| getSearchProps | 获取搜索属性 | `(text: string) => object` | - |
-| allowSelectAll | 是否允许全选 | `boolean` | false |
-| showSelectedCount | 是否显示选中数量 | `boolean` | false |
-| countUnit | 数量单位 | `string` | "人" |
-| allLabel | 全选项标签 | `string` | "所有人" |
-| showSelectedTag | 是否显示选中标签 | `boolean` | true |
-
-## AddressEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 地址编码 | `string` | - |
-
-## FunctionEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 职能编码 | `string` | - |
-
-## IndustryEnum
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| name | 行业编码 | `string` | - |
 
 ## InputFileButton / InputFileLink / InputFileText
 

@@ -5,7 +5,7 @@ import {
     Global as GlobalContext, useGlobalContext as useContext, usePreset, GlobalValue, useGlobalValue, GlobalSetting
 } from "@kne/global-context";
 import {App, ConfigProvider as AntdConfigProvider, Result} from "antd";
-import {useEffect, useState, useRef, useMemo, useCallback} from "react";
+import {useEffect, useState, useRef, useMemo} from "react";
 import SimpleBar from "simplebar";
 import ErrorBoundary from "@kne/react-error-boundary";
 import {getScrollEl} from "@common/utils/importantContainer";
@@ -126,9 +126,6 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
             result.push(`${key}:${value};`);
         }, []).join("")}}`;
         setIsInit(true);
-        return () => {
-            // uninstall();
-        };
     }, [colorPrimary, colorPrimaryObject, mixPrimaryOnBg]);
     //设置主题色成功再展示页面
     if (!isInit) {

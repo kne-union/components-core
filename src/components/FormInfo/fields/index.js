@@ -13,15 +13,14 @@ import {
     Rate,
     Slider,
 } from "@kne/react-form-antd";
-import AdvancedSelectField from "./AdvancedSelect";
 import SuperSelectField, {
     SuperSelectTableList as SuperSelectTableListField, SuperSelectTree, SuperSelectUser as SuperSelectUserField,
 } from "./SuperSelect";
-import AddressSelect, {AddressInput} from "./AddressSelect";
+import {
+    SelectAddress as AddressSelect, AddressInput, SelectFunction as FunctionSelect, SelectIndustry as IndustrySelect,
+} from "./SuperSelectPlus";
 import Cascader from "./Cascader";
 import ColorPicker from './ColorPicker';
-import FunctionSelect from "./FunctionSelect";
-import IndustrySelect from "./IndustrySelect";
 import MoneyInput from "./MoneyInput";
 import PhoneNumber from "./PhoneNumber";
 import Switch from "./Switch";
@@ -207,7 +206,6 @@ const fields = {
     InputUpperCase: createWithFieldDecorator([withLang, withInputDefaultPlaceholder,])(InputUpperCaseField),
     Select: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder])(ReactSelect),
     TextArea: createWithFieldDecorator([withLang, withInputDefaultPlaceholder])(ReactTextArea),
-    AdvancedSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(AdvancedSelectField),
     SuperSelect: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectField),
     SuperSelectTableList: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectTableListField),
     SuperSelectUser: createWithFieldDecorator([withLang, withSelectDefaultPlaceholder,])(SuperSelectUserField),

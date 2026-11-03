@@ -83,7 +83,7 @@ const UploadField = withLocale((p) => {
     );
 
     return (
-        <Space direction="vertical">
+        <Space orientation="vertical">
             <Flex align="start" gap={8} vertical>
                 <InputFileButton
                     {...omit(props, ["value", "onChange"])}

@@ -12,7 +12,6 @@ const {
   Switch,
   Rate,
   Slider,
-  MoneyInput,
   ColorPicker,
 } = fields;
 
@@ -34,7 +33,6 @@ const BaseExample = () => {
             <Input name="companyName" label="供应商名称" rule="REQ LEN-3-50" />,
             <TextArea name="description" label="公司简介" maxLength={500} />,
             <InputNumber name="creditScore" label="信用评分" min={0} max={100} />,
-            <MoneyInput name="annualRevenue" label="年营业额" />,
           ]}
         />
 

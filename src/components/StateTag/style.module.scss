@@ -5,7 +5,6 @@
   line-height: 24px;
   border-radius: 12px;
   font-size: var(--font-size-small);
-  //cursor: pointer;
   display: inline-block;
   box-sizing: border-box;
 
@@ -37,14 +36,11 @@
   width: fit-content;
   max-width: 100%;
   background: var(--primary-color-1);
-  //height: 20px;
   min-height: 20px;
-  //display: inline-block;
   font-size: 12px;
   padding-right: 8px;
   padding-left: 8px;
   line-height: 20px !important;
-  //height: auto;
   display: flex;
   border-radius: var(--radius-default, 2px);
 

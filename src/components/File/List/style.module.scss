@@ -1,41 +1,107 @@
-.list-item-outer {
-  padding: 8px !important;
-}
+@use '~@kne/responsive-utils/scss' as resp;
 
-.list-item {
-  width: 100%;
+// Override @kne/react-file FileList mobile card layout into a flat single-row list.
+// FileList itself is a responsive container, so form fields (<768px) always hit mobile styles.
+.file-list {
+  background: transparent !important;
+  border: none !important;
 
-  :global(.ant-col) {
-    align-self: center;
+  :global(.ant-list-header),
+  :global(.ant-list-footer) {
+    padding-inline: 0;
+  }
 
-    .split {
-      margin-right: 4px;
+  :global(.ant-list-items) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0;
+  }
+
+  :global(.ant-list-item) {
+    border-block-end: none !important;
+    padding: 0 !important;
+  }
+
+  :global(.ant-list-empty-text) {
+    padding: 16px 0;
+  }
+
+  // Inner row from react-file (.list-item) — force one horizontal row
+  :global(.ant-list-item > div) {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: 0;
+    min-height: 40px;
+    max-height: 44px;
+    padding: 4px 8px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    grid-template-columns: unset !important;
+    grid-template-areas: unset !important;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04) !important;
     }
-    :global(.is-block) {
-      line-height: 32px;
+  }
+
+  // Icon cell
+  :global(.ant-list-item > div > div:first-child) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    grid-area: unset !important;
+
+    :global(svg),
+    :global(img) {
+      width: 16px !important;
+      height: 16px !important;
     }
   }
-}
 
-.loading {
-  margin-right: 10px;
-  line-height: 32px;
-
-  :global(.ant-typography) {
-    color: var(--font-color-grey-2) !important;
+  // Content / filename area — prefer single-line ellipsis
+  :global(.ant-list-item > div > div:nth-child(2)) {
+    display: contents !important;
+    grid-area: unset !important;
   }
 
-  :global(.ant-spin-dot-item) {
-    background-color: var(--font-color-grey-2);
+  // Actions / uploading status — stay on the same row, right-aligned
+  :global(.ant-list-item > div > div:last-child) {
+    grid-area: unset !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin-right: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    text-align: right;
+    align-self: center !important;
+
+    :global(.ant-flex),
+    :global(.ant-space) {
+      justify-content: flex-end;
+      width: auto !important;
+    }
   }
-}
 
-.list-options {
-  text-align: right;
-  flex: 0 0 128px;
-}
+  @include resp.mobile-container {
+    :global(.ant-list-item > div) {
+      min-height: 36px;
+      max-height: 40px;
+      padding: 2px 4px !important;
+      gap: 6px !important;
+    }
 
-.list-time {
-  width: 150px;
-  flex: none;
+    :global(.ant-list-item > div > div:last-child) {
+      flex: 0 0 auto !important;
+    }
+  }
 }

@@ -249,12 +249,12 @@
 }
 
 .mobile-dropdown-overlay {
-  // 全宽贴层：抵消 bottomLeft 的 inset，贴齐视口左右
+  // 抵消 bottomLeft 的 inset，左右贴齐挂载容器（不用 100vw，避免盖住滚动条、横向溢出）
   inset-inline-start: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  width: 100vw !important;
-  max-width: 100vw !important;
+  width: auto !important;
+  max-width: none !important;
   padding: 0;
   box-sizing: border-box;
 }
@@ -278,15 +278,16 @@
     width: 100%;
   }
 
-  // 移动端触控高度：约 48px 点击区
-  :global(.ant-dropdown-menu-item) {
+  // 移动端触控高度 44px（含内边距）；需压过 antd 的 .ant-dropdown-menu .ant-dropdown-menu-item
+  :global(.ant-dropdown-menu .ant-dropdown-menu-item) {
     display: flex;
     align-items: center;
-    min-height: 48px;
-    padding: 12px 16px;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0 16px;
     height: auto;
     line-height: 1.5;
-    font-size: 16px;
+    font-size: 15px;
     margin-inline: 0;
     border-radius: 0;
 
@@ -327,16 +328,5 @@
   :global(.ant-space) {
     width: 100%;
     justify-content: flex-end;
-  }
-}
-
-// 响应式断点
-@media (max-width: 767px) {
-  .navigation-list {
-    display: none;
-  }
-
-  .navigation-mobile-menu {
-    display: flex !important;
   }
 }

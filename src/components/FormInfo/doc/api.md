@@ -364,7 +364,7 @@ errorRender 回调接收以下参数：
 
 ### Field 类型：业务组件
 
-**AddressSelect** - 地址选择组件
+**AddressSelect** - 城市选择组件，基于 `@kne/super-select-plus` 的 `SelectAddress`
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -372,18 +372,14 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 | rule | 校验规则 | string | 否 | - |
 | single | 是否单选 | boolean | 否 | false |
-| isPopup | 是否使用弹窗形式 | boolean | 否 | - |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
 
-**FunctionSelect** - 职能选择组件
+值为城市对象（单选）或对象数组（多选），可直接传入城市编码字符串或编码数组回显。静态属性：`Field`、`AddressEnum`、`createAddressApi`。
 
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| name | 字段名 | string | 是 | - |
-| label | 字段标签 | ReactNode | 否 | - |
-| rule | 校验规则 | string | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
+**AddressInput** - 城市 + 详细地址输入，值为 `{ city, detail }`
 
-**IndustrySelect** - 行业选择组件
+**FunctionSelect** - 职能选择组件，基于 `@kne/super-select-plus` 的 `SelectFunction`
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -391,8 +387,25 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 | rule | 校验规则 | string | 否 | - |
 | single | 是否单选 | boolean | 否 | false |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
 
-**Cascader** - 级联选择组件
+值为 `{ id, name }` 对象（单选）或对象数组（多选），可直接传入职能编码回显。静态属性：`Field`、`Enum`（`FunctionEnum`）。
+
+**IndustrySelect** - 行业选择组件，基于 `@kne/super-select-plus` 的 `SelectIndustry`
+
+| 属性名 | 说明 | 类型 | 必填 | 默认值 |
+|--------|------|------|------|--------|
+| name | 字段名 | string | 是 | - |
+| label | 字段标签 | ReactNode | 否 | - |
+| rule | 校验规则 | string | 否 | - |
+| single | 是否单选 | boolean | 否 | false |
+| isPopup | 是否下拉模式，false 为弹窗模式 | boolean | 否 | true |
+| maxLength | 多选时最多可选数量 | number | 否 | - |
+
+值为 `{ id, name }` 对象（单选）或对象数组（多选），可直接传入行业编码回显。静态属性：`Field`、`Enum`（`IndustryEnum`）。
+
+**Cascader** - 级联选择组件，基于 `@components/Common` 的 `SuperSelectCascaderField`（`@kne/super-select` SelectCascader），值为选项对象
 
 | 属性名 | 说明 | 类型 | 必填 | 默认值 |
 |--------|------|------|------|--------|
@@ -464,25 +477,6 @@ errorRender 回调接收以下参数：
 | label | 字段标签 | ReactNode | 否 | - |
 
 ### Field 类型：高级选择组件
-
-**AdvancedSelect** - 高级选择组件，支持列表和表格两种形态
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| name | 字段名 | string | 是 | - |
-| label | 字段标签 | ReactNode | 否 | - |
-| api | 数据加载 API 配置 | object | 是 | - |
-| rule | 校验规则 | string | 否 | - |
-| single | 是否单选 | boolean | 否 | false |
-| isPopup | 是否使用弹窗形式 | boolean | 否 | - |
-| getSearchProps | 搜索框配置 | function | 否 | - |
-
-#### api 配置说明
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| loader | 数据加载函数 | function | 是 | - |
-| params | 加载参数 | object | 否 | - |
 
 **SuperSelect** - 超级选择组件
 
@@ -590,10 +584,6 @@ interceptors.output.use("date-string", (value) => {
 // 在字段中使用
 <Input name="date" label="日期" interceptor="date-string"/>
 ```
-
-### SelectInnerInput
-
-选择器内部输入框组件，用于自定义选择器开发。
 
 ### FormSteps
 

@@ -205,21 +205,6 @@
 | value | 数值范围值 | object | 否 | - |
 | onChange | 值变化回调函数 | function | 否 | - |
 
-### AdvancedSelectFilterItem 组件
-
-高级选择筛选项组件，支持远程数据加载、分页、搜索等功能。
-
-#### 组件属性
-
-| 属性名 | 说明 | 类型 | 必填 | 默认值 |
-|--------|------|------|------|--------|
-| label | 字段标签 | string | 否 | - |
-| name | 字段名 | string | 否 | - |
-| api | API 配置对象 | object | 否 | - |
-| api.loader | 数据加载函数 | function | 否 | - |
-| value | 选择值 | object | 否 | - |
-| onChange | 值变化回调函数 | function | 否 | - |
-
 ### SuperSelectFilterItem 组件
 
 超级选择筛选项组件，支持展示描述信息、图标等丰富的选项内容。

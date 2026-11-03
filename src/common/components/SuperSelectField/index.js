@@ -1,7 +1,8 @@
 import {forwardRef} from "react";
 import SuperSelect, {
-    SelectedTagList, SelectTableList, SelectTree
+    SelectCascader, SelectedTagList, SelectTableList, SelectTree
 } from "@kne/super-select";
+import Fetch from "@kne/react-fetch";
 import Modal from "@components/Modal";
 import Image from "@components/Image";
 import {Flex} from "antd";
@@ -61,6 +62,19 @@ export const SuperSelectTreeField = forwardRef((p, ref) => {
     }, p);
     return <SelectTree {...props} ref={ref}/>;
 });
+
+export const SuperSelectCascaderField = ({api, dataFormat, options, ...props}) => {
+    if (api && !options) {
+        return (<Fetch
+            {...api}
+            render={({data}) => (<SelectCascader
+                {...props}
+                options={typeof dataFormat === "function" ? dataFormat(data) : data}
+            />)}
+        />);
+    }
+    return <SelectCascader {...props} options={options}/>;
+};
 
 export const SuperSelectUserField = forwardRef((p, ref) => {
     return (<SuperSelectField

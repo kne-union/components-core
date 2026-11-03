@@ -1,4 +1,4 @@
-const { CascaderField } = _Common;
+const { SuperSelectCascaderField } = _Common;
 const { Space, Typography, Button } = _antd;
 const { useState } = React;
 
@@ -6,12 +6,12 @@ const BaseExample = () => {
   const [value, setValue] = useState([]);
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space orientation="vertical" style={{ width: '100%' }}>
       <Typography.Text strong>省市区级联选择（最多3个）</Typography.Text>
       <Typography.Text type="secondary" style={{ fontSize: 12 }}>
         已选择: {value.length} 个区域
       </Typography.Text>
-      <CascaderField
+      <SuperSelectCascaderField
         api={{
           loader: () => {
             return [
@@ -95,6 +95,8 @@ const BaseExample = () => {
         placeholder="请选择省市区"
         maxLength={3}
         isPopup={true}
+        menuItemWidth={160}
+        style={{ width: 320 }}
       />
       <Button onClick={() => setValue([])}>清空选择</Button>
     </Space>

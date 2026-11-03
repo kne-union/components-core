@@ -180,8 +180,8 @@
       ]
     },
     {
-      "title": "TablePage isNext 新版表格",
-      "description": "展示 Layout.TablePage 的 isNext 参数：启用后使用 @components/TablePage（@kne/table-page 新 API，如 renderType、getValueOf），默认则使用 @components/Table 内置 legacy TablePage（兼容 type 列配置）。",
+      "title": "TablePage 列渲染类型",
+      "description": "展示 Layout.TablePage 基于 @components/TablePage（@kne/table-page）的列配置，如 renderType、getValueOf、dataFormat。",
       "code": "./table-page-next.js",
       "scope": [
         {

@@ -2,7 +2,6 @@ const { default: Layout, Page } = layout;
 const {
   InputFilterItem,
   CityFilterItem,
-  AdvancedSelectFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
@@ -39,24 +38,6 @@ const BaseExample = () => {
               [
                 <InputFilterItem label="文字" name="text" />,
                 <CityFilterItem label="城市" name="city" />,
-                <AdvancedSelectFilterItem
-                  label="高级选择"
-                  name="select"
-                  api={{
-                    loader: () => {
-                      return {
-                        pageData: [
-                          { label: "第一项", value: 1 },
-                          { label: "第二项", value: 2, disabled: true },
-                          {
-                            label: "第三项",
-                            value: 3,
-                          },
-                        ],
-                      };
-                    },
-                  }}
-                />,
                 <UserFilterItem
                   label="用户选择"
                   name="user"

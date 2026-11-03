@@ -5,7 +5,6 @@ const {
   PopoverItem,
   InputFilterItem,
   CityFilterItem,
-  AdvancedSelectFilterItem,
   UserFilterItem,
   FunctionSelectFilterItem,
   IndustrySelectFilterItem,
@@ -78,23 +77,6 @@ const BaseExample = () => {
           [
             <InputFilterItem label="文字" />,
             <CityFilterItem label="城市" />,
-            <AdvancedSelectFilterItem
-              label="高级选择"
-              api={{
-                loader: () => {
-                  return {
-                    pageData: [
-                      { label: "第一项", value: 1 },
-                      { label: "第二项", value: 2, disabled: true },
-                      {
-                        label: "第三项",
-                        value: 3,
-                      },
-                    ],
-                  };
-                },
-              }}
-            />,
             <UserFilterItem
               label="用户选择"
               api={{

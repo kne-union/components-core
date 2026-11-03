@@ -95,13 +95,13 @@ const HistoryStore = withLocale(({
             arrow={false}
             open={open}
             getPopupContainer={getPopupContainer}
-            overlayClassName={classnames(overlayClassName, style["overlay"])}
+            rootClassName={classnames(overlayClassName, style["overlay"])}
             content={<div
                 className={style["overlay-content"]}
                 style={{width}}
                 ref={popoverContentRef}
             >
-                <Space direction="vertical">
+                <Space orientation="vertical">
                     <div>{label || formatMessage({ id: 'RecentSearch' })}</div>
                     <Space wrap>
                         {list.map((item) => (<StateTag

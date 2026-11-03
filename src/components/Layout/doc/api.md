@@ -94,9 +94,9 @@ Layout 组件是页面布局的容器组件，包裹所有页面内容并提供�
 | openFeatures | boolean | 否 | false | 是否启用 Features 功能特性 |
 | name | string | 是 | - | 页面名称，必填 |
 | topArea | ReactNode \| function | 否 | - | 顶部额外内容区，可以是组件或函数（接收 tableData 参数） |
-| isNext | boolean | 否 | false | 为 `true` 时使用 `@components/TablePage`（`@kne/table-page` 新 API）；默认使用 `@components/Table` 内置 legacy TablePage（兼容旧版 `type` 列配置） |
+| isNext | boolean | 否 | - | 已废弃，传入无效果；内部固定使用 `@components/TablePage` |
 
-注意：除了以上属性，TablePage 还支持内部表格组件的所有属性（如 `columns`、`loader`、`pagination` 等）。`isNext` 为 `true` 时列配置遵循 `@kne/table-page` 规范（`renderType`、`getValueOf`、`format` 等）；默认模式下遵循 legacy Table 列配置（`type`、`valueOf` 等）。
+注意：除了以上属性，TablePage 还支持 `@components/TablePage`（`@kne/table-page`）的所有属性（如 `columns`、`loader`、`dataFormat` 等），列配置遵循 `@kne/table-page` 规范（`renderType`、`getValueOf`、`format` 等）。
 
 ### StateBarPage
 

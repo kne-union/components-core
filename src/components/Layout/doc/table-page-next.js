@@ -1,6 +1,6 @@
 const { default: Layout, TablePage } = _Layout;
 const { PureGlobal } = global;
-const { Button, Flex, Tag } = antd;
+const { Button, Flex } = antd;
 
 const statusMap = {
   已完成: { type: 'success', text: '已完成' },
@@ -66,7 +66,7 @@ const TablePageNextExample = () => (
         helperGuide: () => [
           {
             value: 'order-list-next-help',
-            content: 'isNext 模式下使用 @components/TablePage，列配置采用 renderType / getValueOf 等新 API。',
+            content: 'TablePage 基于 @components/TablePage，列配置采用 renderType / getValueOf 等 API。',
             url: 'https://example.com/help/order-list'
           }
         ]
@@ -76,21 +76,14 @@ const TablePageNextExample = () => (
     <Layout navigation={{ isFixed: false }}>
       <Flex vertical gap={16}>
         <div style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
-          <div>
-            <Tag color="blue" style={{ marginRight: 8 }}>
-              isNext
-            </Tag>
-            设置 <code>isNext</code> 后，内部使用 <code>@components/TablePage</code>（基于{' '}
-            <code>@kne/table-page</code>）；未设置时默认使用 <code>@components/Table</code> 内置的 legacy TablePage（兼容旧版{' '}
-            <code>type</code> 列配置）。
-          </div>
+          TablePage 内部使用 <code>@components/TablePage</code>（基于 <code>@kne/table-page</code>），列配置支持{' '}
+          <code>renderType</code>、<code>getValueOf</code> 等。
         </div>
         <TablePage
-          isNext
           name="order-list-next"
           helperGuideName="order-list-next-help"
           page={{
-            title: '订单列表（isNext）',
+            title: '订单列表',
             titleExtra: <Button type="primary">新建订单</Button>
           }}
           dataFormat={data => ({

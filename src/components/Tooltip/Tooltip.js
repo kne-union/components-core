@@ -11,17 +11,19 @@ const Tooltip = ({
   importantInfo,
   importantInfoType,
   moreInfo,
+  color = "#ffffff",
   ...props
 }) => {
   return (
     <AntdTooltip
       {...props}
+      color={color}
       rootClassName={classnames(overlayClassName, style["tooltip"], {
         [style["small"]]: size === "small",
         [style["large"]]: size === "large",
       })}
       title={
-        <Space direction="vertical" className={style["popup-content"]}>
+        <Space orientation="vertical" className={style["popup-content"]}>
           {title && <div className={style["title"]}>{title}</div>}
           {importantInfo && (
             <div
