@@ -1686,6 +1686,17 @@ render(<BaseExample />);
 (props: { key: number; className: string }, context: { isDropdown: boolean }) => ReactNode
 ```
 
+### 更多按钮 CSS 变量
+
+`moreType="link"` 时「更多」按钮的尺寸可在祖先元素上通过 CSS 变量覆盖（例如移动端放大可点区域），无需写 `!important`：
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `--button-group-more-height` | `100%` | 按钮高度 |
+| `--button-group-more-min-width` | `0` | 按钮最小宽度 |
+| `--button-group-more-padding-inline` | `8px` | 按钮左右内边距 |
+| `--button-group-more-icon-size` | `16px`（`size="small"` 时 `14px`） | 三点图标字号 |
+
 ---
 
 ## LoadingButton
