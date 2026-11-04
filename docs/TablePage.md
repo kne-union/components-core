@@ -23,14 +23,14 @@ npm i --save @kne/table-page
 - **`Table` 模式**（默认）：基于 antd `Table`，支持列宽拖动、字段显示/隐藏、分组表头、粘性表头等
 - **`TableView` 模式**：基于 `@kne/table-view` CSS Grid，适合移动端或卡片式表格场景
 
-通过 `loader` 或 `url` 配置数据源，通过 `dataFormat` 适配不同的接口数据结构。分页器渲染在表格外侧，翻页默认采用 `reload` 方式（不显示全屏 loading）。在 `pagination` 上同时传入 `searchParams` 与 `setSearchParams` 可将当前页、每页条数同步到 URL（参数名复用 `currentName` / `pageSizeName`）。
+通过 `loader` 或 `url` 配置数据源，通过 `dataFormat` 适配不同的接口数据结构。分页器渲染在表格外侧，翻页默认采用 `reload` 方式（不显示全屏 loading）。默认 `hideOnSinglePage`：总数小于最小 `pageSizeOptions` 时不展示分页条；仅一页时只展示总数与每页条数切换。在 `pagination` 上同时传入 `searchParams` 与 `setSearchParams` 可将当前页、每页条数同步到 URL（参数名复用 `currentName` / `pageSizeName`）。
 
 同时内置了顶部工具栏（`TableToolbar`），整合筛选、搜索、Tab 分类、批量操作等能力：
 
 - **筛选（filter）**：基于 `@kne/react-filter` 的 `FilterLines`，支持多行多字段组合筛选，筛选值变化时自动 `reload` 并回到第 1 页；可通过 `filter.searchParamsValue`（与 `useSearchParamsValue` 同参）从 URL 平铺参数合并初始筛选并保证首包请求带上对应参数
 - **分页 URL 状态**：`pagination.searchParams` + `pagination.setSearchParams` 开启后，当前页与每页条数与 URL 双向同步（筛选重置页码时也会写回；`loadMore` 不写回）
 - **搜索（search）**：基于 `@kne/react-filter` 的 `SearchInput`，支持关键词搜索与防抖自动提交，与筛选器共享筛选值状态；移动端开启 `renderMobile` 时，SearchInput 与下方卡片列表之间保留间距
-- **操作按钮（buttonGroup）**：透传 `@kne/button-group` 参数；桌面端显示在 SearchInput 右侧（small、至少 1 个外露），移动端与筛选同行两端对齐（筛选靠左、按钮组靠右，small、外露 1 个），批量操作显示在「全选/排序」行的排序后面
+- **操作按钮（buttonGroup）**：透传 `@kne/button-group` 参数；桌面端显示在 SearchInput 右侧（small、至少 1 个外露），移动端与筛选同行两端对齐（筛选靠左、按钮组靠右，middle、外露 1 个），批量操作显示在「全选/排序」行的排序后面
 - **Tab（tab）**：顶部分类切换，默认「全部」，选中值写入 filter value 参与请求但不在已选标签中重复展示；桌面端在表格边框外侧，移动端显示在 SearchInput 下方；可通过 `tabProps` 透传 antd Tabs 属性
 - **批量操作（batchActions）**：配合 `rowSelection` 和 `useSelectedRow`，提供下拉菜单形式的批量操作（如批量导出、批量通知），未选中时自动禁用
 - **PC 卡片视图（renderCard）**：取值同 `renderMobile`（true / function / preset 字符串），生效后 PC 端可切换表格/卡片（状态按 `name` 存 localStorage）；`forceCard` 强制卡片并不显示切换按钮；卡片模式下外框透明、默认触底下拉加载；移动端忽略
@@ -191,7 +191,7 @@ npm i --save @kne/table-page
 #### 示例代码
 
 - TablePage
-- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、renderCard PC 卡片视图切换、pagination.forceLoadMore（PC Table 触底下拉）、tab 分类切换、列配置、总结栏、树形 dataType（含筛选/批量/操作列/卡片切换/懒加载）；空数据（total 为 0）时不显示分页器。文末对照仅 SearchInput 与 Search+全选/排序条两种移动端间距（开关可拆开全选/排序）
+- 表格页面组件，基于 @kne/react-fetch 实现数据加载与分页，支持 sticky 固定表头、useSort 服务端排序、renderMobile 移动端卡片、renderCard PC 卡片视图切换、pagination.forceLoadMore（PC Table 触底下拉）、tab 分类切换、列配置、总结栏、树形 dataType（含筛选/批量/操作列/卡片切换/懒加载）；total 为 0 或小于最小 pageSizeOptions 时不显示分页器，仅一页时只展示总数与每页条数。文末对照仅 SearchInput 与 Search+全选/排序条两种移动端间距（开关可拆开全选/排序）
 - _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
 
 ```jsx
@@ -2033,6 +2033,217 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
+
+```
+
+- TablePage large data
+- 大数据量加载：首包走骨架屏加载壳，每页 100~1000 行订单，含省略号、标签、固定操作列、多选与批量操作；实时显示数据返回到渲染完成、勾选响应耗时，可重新挂载反复观察首屏
+- _TablePage(@kne/table-page)[import * as _TablePage from "@kne/table-page"],(@kne/table-page/dist/index.css),antd(antd),_ReactFilter(@kne/react-filter)[import * as _ReactFilter from "@kne/react-filter"],(@kne/react-filter/dist/index.css)
+
+```jsx
+const { default: TablePage, Table } = _TablePage;
+const { fields } = _ReactFilter;
+const { SuperSelectFilterItem } = fields;
+const { Flex, Button, Segmented, Space, message } = antd;
+const { useState, useEffect, useRef, useMemo } = React;
+
+const TOTAL = 3000;
+
+const companies = ['深圳市腾讯计算机系统有限公司', '华为技术有限公司', '阿里巴巴集团控股有限公司', '北京字节跳动科技有限公司', '百度在线网络技术（北京）有限公司', '网易（杭州）网络有限公司', '小米科技有限责任公司', '京东世纪贸易有限公司'];
+const contacts = ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九', '吴十'];
+const statusList = ['pending', 'processing', 'done', 'canceled'];
+const statusMap = {
+  pending: { type: 'warning', text: '待发货' },
+  processing: { type: 'processing', text: '处理中' },
+  done: { type: 'success', text: '已完成' },
+  canceled: { type: 'default', text: '已取消' }
+};
+const statusOptions = Object.entries(statusMap).map(([value, { text }]) => ({ value, label: text }));
+const tagPool = ['加急', '物流', '评审', '大客户', '续约', '分期'];
+const remarks = ['客户要求春节前完成交付，需协调物流加急处理，并同步更新合同附件。', '项目处于需求评审阶段，待客户确认最终配置清单后安排发货。', '已完成付款，仓库正在拣货，预计两个工作日内发出第一批货物。'];
+
+const allOrders = Array.from({ length: TOTAL }, (_, index) => {
+  const status = statusList[index % statusList.length];
+  const day = String((index % 28) + 1).padStart(2, '0');
+  return {
+    id: &#96;ORD2024${String(index + 1).padStart(6, '0')}&#96;,
+    customerName: companies[index % companies.length],
+    contact: contacts[index % contacts.length],
+    phone: &#96;13${String(800138000 + index * 7919).slice(0, 9)}&#96;,
+    amount: 10000 + ((index * 3779) % 190000),
+    status,
+    tags: [tagPool[index % tagPool.length], tagPool[(index + 2) % tagPool.length]],
+    remark: remarks[index % remarks.length],
+    orderDate: &#96;2024-01-${day}&#96;,
+    deliveryDate: status === 'canceled' ? '' : &#96;2024-02-${day}&#96;
+  };
+});
+
+// 列定义放在组件外保持引用稳定，表格才能复用单元格渲染结果
+const columns = [
+  { name: 'id', title: '订单编号', width: 170, renderType: 'small' },
+  { name: 'customerName', title: '客户名称', renderType: 'main', onClick: ({ item }) => message.info(&#96;查看客户：${item}&#96;) },
+  { name: 'contact', title: '联系人', width: 90 },
+  { name: 'phone', title: '联系电话', width: 130, render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') },
+  {
+    name: 'amount',
+    title: '订单金额',
+    renderType: 'amount',
+    format: 'number-style:decimal-maximumFractionDigits:0-useGrouping:true-suffix:元'
+  },
+  {
+    name: 'tags',
+    title: '标签',
+    renderType: 'tagList',
+    getValueOf: item => item.tags.map(text => ({ type: text === '加急' ? 'error' : 'processing', text }))
+  },
+  { name: 'remark', title: '备注', renderType: 'description' },
+  { name: 'orderDate', title: '下单日期', format: 'date' },
+  { name: 'deliveryDate', title: '预计送达', format: 'date' },
+  { name: 'status', title: '订单状态', renderType: 'status', getValueOf: item => statusMap[item.status] },
+  {
+    name: 'options',
+    title: '操作',
+    renderType: 'options',
+    fixed: 'right',
+    getValueOf: item => [
+      { children: '查看', onClick: () => message.info(&#96;查看 ${item.id}&#96;) },
+      { children: '编辑', onClick: () => message.info(&#96;编辑 ${item.id}&#96;) },
+      { children: '删除', isDelete: true, message: &#96;确定删除 ${item.id} 吗？&#96;, onClick: () => message.success(&#96;已删除 ${item.id}&#96;) }
+    ]
+  }
+];
+
+const loader = ({ data }) => {
+  const currentPage = Number(data?.currentPage) || 1;
+  const perPage = Number(data?.perPage) || 100;
+  const status = Array.isArray(data?.status) ? data.status[0] : data?.status;
+  const keyword = data?.keyword ? String(data.keyword) : '';
+  const filtered = allOrders.filter(item => (!status || item.status === status) && (!keyword || item.id.includes(keyword) || item.customerName.includes(keyword)));
+  const start = (currentPage - 1) * perPage;
+  // 模拟接口请求 800ms
+  return new Promise(resolve => {
+    setTimeout(() => resolve({ pageData: filtered.slice(start, start + perPage), totalCount: filtered.length }), 800);
+  });
+};
+
+// 下一帧绘制完成后回调，用于近似测量「到用户看到」的耗时
+const afterPaint = callback => requestAnimationFrame(() => setTimeout(callback, 0));
+
+const LargeDataExample = () => {
+  const [count, setCount] = useState(100);
+  const [mountKey, setMountKey] = useState(0);
+  const [renderCost, setRenderCost] = useState(null);
+  const [selectCost, setSelectCost] = useState(null);
+  const pendingRenderRef = useRef(false);
+  const selectStartRef = useRef(null);
+  const { selectedRows, getRowSelection, clearSelectedRows } = Table.useSelectedRow({ rowKey: 'id' });
+
+  const measuredLoader = useMemo(
+    () => params =>
+      loader(params).then(result => {
+        pendingRenderRef.current = performance.now();
+        return result;
+      }),
+    []
+  );
+
+  const dataFormat = useMemo(
+    () => data => {
+      const start = pendingRenderRef.current;
+      if (start) {
+        pendingRenderRef.current = false;
+        afterPaint(() => setRenderCost(Math.round(performance.now() - start)));
+      }
+      return { list: data.pageData, total: data.totalCount };
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (selectStartRef.current === null) {
+      return;
+    }
+    const start = selectStartRef.current;
+    selectStartRef.current = null;
+    afterPaint(() => setSelectCost(Math.round(performance.now() - start)));
+  }, [selectedRows]);
+
+  const rowSelection = getRowSelection(allOrders, {
+    onChange: () => {
+      selectStartRef.current = performance.now();
+    }
+  });
+
+  // 切数量 / 重新加载都重新挂载 TablePage，每次都走首包骨架屏
+  const remount = () => {
+    clearSelectedRows();
+    setRenderCost(null);
+    setSelectCost(null);
+    setMountKey(key => key + 1);
+  };
+
+  return (
+    <Flex vertical gap={12}>
+      <div style={{ background: '#f5f5f5', padding: 12, borderRadius: 8 }}>大数据量加载：首包走 TablePage 骨架屏加载壳，接口返回后切到真实表格，观察表格区域是否塌陷空白；含省略号列、标签列、固定操作列与多选，可勾选行观察重渲染耗时</div>
+      <Flex gap={12} align="center" wrap>
+        <span>每页数量</span>
+        <Segmented
+          value={count}
+          onChange={value => {
+            setCount(value);
+            remount();
+          }}
+          options={[100, 300, 500, 1000].map(value => ({ value, label: &#96;${value} 行&#96; }))}
+        />
+        <Button type="primary" onClick={remount}>
+          重新加载
+        </Button>
+        <Space size={16} style={{ color: '#666' }}>
+          <span>
+            首屏渲染：<strong>{renderCost === null ? '-' : &#96;${renderCost} ms&#96;}</strong>
+          </span>
+          <span>
+            勾选响应：<strong>{selectCost === null ? '-' : &#96;${selectCost} ms&#96;}</strong>
+          </span>
+        </Space>
+      </Flex>
+      <TablePage
+        key={mountKey}
+        name="demo-table-page-large-data"
+        sticky
+        scroll={{ y: 400 }}
+        search={{ name: 'keyword', label: '关键词', placeholder: '搜索订单编号/客户名称', style: { width: 220 } }}
+        filter={{
+          list: [[{ type: SuperSelectFilterItem, props: { name: 'status', label: '订单状态', single: true, options: statusOptions } }]],
+          displayLine: 1
+        }}
+        batchActions={[
+          {
+            key: 'export',
+            label: '批量导出',
+            onClick: ({ selectedRowKeys }) => message.info(&#96;正在导出 ${selectedRowKeys.length} 个订单&#96;)
+          }
+        ]}
+        rowSelection={rowSelection}
+        selectedRows={selectedRows}
+        pagination={{
+          open: true,
+          pageSize: count,
+          cachePageSize: false,
+          showSizeChanger: false,
+          showQuickJumper: true
+        }}
+        dataFormat={dataFormat}
+        loader={measuredLoader}
+        columns={columns}
+      />
+    </Flex>
+  );
+};
+
+render(<LargeDataExample />);
 
 
 ```
@@ -4801,7 +5012,7 @@ render(<BaseExample />);
 | requestType | `'reload'` \| `'refresh'` | `'reload'` | 翻页时的请求方式，`reload` 不切换 loading，`refresh` 会重新 loading |
 | showSizeChanger | boolean | `true` | 是否展示每页条数切换 |
 | showQuickJumper | boolean | `true` | 是否展示快速跳转 |
-| hideOnSinglePage | boolean | `true` | 仅一页时是否隐藏分页器 |
+| hideOnSinglePage | boolean | `true` | 为 `true` 时：总数小于最小 `pageSizeOptions` 则不展示分页条；仅一页时只展示总数与每页条数切换（仍可改 pageSize）；多页时完整分页。为 `false` 时单页也展示完整分页器 |
 | pageSizeOptions | array | - | 每页条数选项 |
 | pageSize | number | `20` | 默认每页条数，会持久化到 localStorage |
 | showTotal | function | - | 自定义总数展示 `(total) => ReactNode` |
@@ -4811,7 +5022,7 @@ render(<BaseExample />);
 | forceLoadMore | boolean | `false` | PC Table / TableView（非移动端、非卡片视图）默认使用底部分页器；设为 `true` 时改为触底下拉加载并隐藏分页器。与 `forcePagination` 同时为 `true` 时以 `forcePagination` 为准。触底由外层 `ScrollLoader` 驱动，勿再给 Table 设 `scroll.y`（表体内滚动会导致触底不触发）；弹窗等场景请给外层定高 |
 | mergeList | function | 合并 `pageData` | 下拉加载时合并新旧数据 `(prev, next) => data`，需与 `loader` 返回结构一致 |
 | loadMore | object | - | 透传给 `@kne/scroll-loader` 的额外配置（如 `completeTips`、`maxFullCount`） |
-| mobile | object | - | 强制分页时的移动端分页器微调（如 `showSizeChanger`、`showLessItems`） |
+| mobile | object | - | 强制分页时的移动端分页器配置。移动端渲染为左侧总数、右侧「‹ 当前页 / 总页数 ›」胶囊翻页条，仅一页时只展示总数；`mobile.showSizeChanger: true` 时显示每页条数选择（默认不显示） |
 | searchParams | `URLSearchParams` | - | 与 `setSearchParams` 同时传入时开启分页 URL 状态同步；参数名复用 `currentName` / `pageSizeName`（默认 `currentPage`、`perPage`） |
 | setSearchParams | function | - | `(next: URLSearchParams, opts?) => void`；翻页、改每页条数、筛选重置到第 1 页时以 `replace: true` 写回 URL。触底下拉 `loadMore` 不写回。可与 `filter.searchParamsValue` 共用同一对实例 |
 
@@ -4845,7 +5056,7 @@ render(<BaseExample />);
 操作按钮组配置，透传给 `@kne/button-group` 的 `ButtonGroup`（如 `list`、`compact` 等）。
 
 - 桌面端：显示在工具栏右侧（`SearchInput` 右侧）；默认 `size="small"`、至少展示 1 个按钮（`showLength` 默认 `1`）、「更多」为三点图标（`moreType="link"`）
-- 移动端：与筛选同行两端对齐（筛选靠左、按钮组靠右），同样为 `size="small"`、外露 1 个主要按钮，其余收入「更多」；批量操作显示在「全选/排序」行的排序后面
+- 移动端：与筛选同行两端对齐（筛选靠左、按钮组靠右），默认 `size="middle"`（32px 便于触控）、外露 1 个主要按钮，其余收入「更多」；批量操作显示在「全选/排序」行的排序后面
 
 ```jsx
 <TablePage
@@ -4919,7 +5130,7 @@ render(<BaseExample />);
 
 #### 与 Table 分页的差异
 
-`TablePage` 的分页器渲染在表格外侧（`antd Pagination`），不会出现在 `Table` 边框内部。表格本身始终设置 `pagination={false}`。当 `dataFormat` 返回的 `total` 为 0（无数据）时，分页器不会渲染。
+`TablePage` 的分页器渲染在表格外侧（`antd Pagination`），不会出现在 `Table` 边框内部。表格本身始终设置 `pagination={false}`。当 `dataFormat` 返回的 `total` 为 0（无数据），或 `total` 小于最小可选每页条数（`pageSizeOptions` 最小值，默认 10）时，分页器不会渲染。默认 `hideOnSinglePage: true`：数据仅一页时只展示总数与每页条数切换，避免将 pageSize 调大后无法切回。
 
 移动端（`renderMobile` 激活）默认使用触底下拉加载（`@kne/scroll-loader` + `react-fetch` 的 `loadMore`），不再展示分页器。若需移动端仍使用分页，请设置 `pagination.forcePagination: true`。
 
