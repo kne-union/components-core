@@ -4,6 +4,14 @@
   "files": [
     "build"
   ],
+  "scripts": {
+    "lint-staged": "lint-staged",
+    "create": "modules-dev-create",
+    "start": "cross-env PORT=3001 COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/ craco start",
+    "build": "cross-env COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/components-core  craco build",
+    "test": "craco test --coverage",
+    "build:docs": "modules-dev-build-docs"
+  },
   "jest": {
     "moduleNameMapper": {
       "^@common/(.*)": "<rootDir>/src/common/$1",
@@ -69,14 +77,6 @@
     "simplebar": "^6.3.3",
     "simplebar-react": "^3.3.2",
     "use-debounce": "^9.0.4"
-  },
-  "scripts": {
-    "lint-staged": "lint-staged",
-    "create": "modules-dev-create",
-    "start": "cross-env PORT=3001 COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/ craco start",
-    "build": "cross-env COMPONENTS_NAME=components-core MODULES_DEV_PUBLIC_URL=/components-core  craco build",
-    "test": "craco test --coverage",
-    "build:docs": "modules-dev-build-docs"
   },
   "eslintConfig": {
     "extends": [
