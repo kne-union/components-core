@@ -26,5 +26,5 @@ package-lock.json
 .codebuddy
 prompts
 /.cursor
-
+.cache
 graphify-out

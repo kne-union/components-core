@@ -145,7 +145,11 @@ const ConfigProvider = withFetch(({data: message, themeToken, children}) => {
                 colorPrimaryBg: mixPrimaryOnBg(0.1),
                 colorLink: colorPrimary,
                 colorTextBase: "#222222",
-                colorText: "#222222"
+                colorText: "#222222",
+                // 与 Global/style.module.scss 的 --font-color-secondary / --font-color-placeholder 对齐：
+                // antd 派生的 placeholder 默认过浅（约 1.6:1），这里统一抬到 AA 正文对比度。
+                colorTextSecondary: "#4b5563",
+                colorTextPlaceholder: "#6b7280"
             }, otherToken),
         }}
     >

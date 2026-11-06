@@ -83,6 +83,11 @@ body.container {
   --font-color-grey-3: #dddddd;
   --font-color-grey-4: #eeeeee; // 标题栏下边缘分割线
 
+  // 语义化文本色：旧 grey-* 继续用于边框/装饰，正文级文本改用下面两个，
+  // 保证在白底与浅蓝底上均满足 WCAG 2.1 AA 正文 4.5:1。
+  --font-color-secondary: #4b5563;   // 次要文字，白底 7.56:1 / 侧栏浅蓝 4.75:1
+  --font-color-placeholder: #6b7280; // 占位文字，白底 4.83:1（旧 #cccccc 仅 1.61:1）
+
   color: var(--font-color);
 
   --bg-color-white: #ffffff;
