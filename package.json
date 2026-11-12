@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-core",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "files": [
     "build"
   ],
@@ -99,7 +99,7 @@
   "devDependencies": {
     "@kne/craco": "^7.1.4",
     "@kne/md-doc": "^0.1.27",
-    "@kne/modules-dev": "^2.4.20",
+    "@kne/modules-dev": "^2.4.21",
     "@kne/react-error-boundary": "^0.1.1",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^5.17.0",
