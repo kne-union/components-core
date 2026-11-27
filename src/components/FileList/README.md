@@ -17,199 +17,68 @@ FileList 组件提供了一套完整的文件管理解决方案，集成了文�
 适用于文档管理系统、人力资源系统、项目管理工具等需要文件处理的应用场景。
 
 
-### 示例(全屏)
+### 示例
 
 #### 示例代码
 
-- FileButton
-- 预览文件按钮
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+- List 预览
+- File.List 预览弹窗使用 components-core Modal（noPadding + bodyScroll=false），与 FileButton / useFileModal 一致
+- _File(@components/File),global(@components/Global),antd(antd)
 
 ```jsx
-const { FileButton } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-const { Flex, Typography } = antd;
+const {List} = _File;
+const {PureGlobal} = global;
+const {Flex, Typography} = antd;
 
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    ajax: async api => {
-      return { data: { code: 0, data: api.loader() } };
-    }, apis: {
-      file: {
-        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
-        getUrl: {
-          loader: async ({ params }) => {
-            const urlMap = {
-              1: '/mock/resume.png',
-              2: '/mock/resume.pdf',
-              3: '/mock/resume.html',
-              4: '/mock/resume.txt',
-              5: '/mock/audio.wav',
-              6: '/mock/resume.docx',
-              9: '/mock/small-image.png',
-              10: '/mock/video.mp4'
-            };
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve(urlMap[params.id]);
-              }, 1000);
-            });
-          }
-        }
-      }
-    }
-  }}>
-    <Flex vertical gap={16}>
-      <Flex vertical gap={8}>
-        <Typography.Text type="secondary">图片</Typography.Text>
-        <Flex wrap gap={8}>
-          <FileButton id="1" filename="demo.jpg" openPrint modalProps={{ width: 800 }}>demo.jpg</FileButton>
-          <FileButton id="9" filename="small-image.png" openPrint modalProps={{ width: 800 }}>小尺寸图片</FileButton>
-        </Flex>
-      </Flex>
-      <Flex vertical gap={8}>
-        <Typography.Text type="secondary">文档</Typography.Text>
-        <Flex wrap gap={8}>
-          <FileButton id="2" filename="demo2.pdf" openPrint modalProps={{ width: 800 }}>demo2.pdf</FileButton>
-          <FileButton id="3" filename="demo2.html" openPrint modalProps={{ width: 800 }}>demo2.html</FileButton>
-          <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }}>resume.docx</FileButton>
-        </Flex>
-      </Flex>
-      <Flex vertical gap={8}>
-        <Typography.Text type="secondary">音视频</Typography.Text>
-        <Flex wrap gap={8}>
-          <FileButton id="10" filename="video.mp4" modalProps={{ width: 800 }}>video.mp4</FileButton>
-          <FileButton id="5" filename="audio.wav" modalProps={{ width: 800 }}>audio.wav</FileButton>
-        </Flex>
-      </Flex>
-      <Flex vertical gap={8}>
-        <Typography.Text type="secondary">链接样式</Typography.Text>
-        <Flex wrap gap={8}>
-          <FileButton id="6" filename="resume.docx" openPrint modalProps={{ width: 800 }} type="link">resume.docx</FileButton>
-        </Flex>
-      </Flex>
-    </Flex>
-  </PureGlobal>;
-});
+const urlMap = {
+  1: "/mock/resume.png",
+  2: "/mock/resume.pdf",
+  3: "/mock/resume.html",
+  6: "/mock/resume.docx",
+  8: "/mock/resume.xlsx",
+  9: "/mock/small-image.png"
+};
 
-render(<BaseExample />);
+const dataSource = [
+  {id: "1", filename: "demo.png", date: "2024-07-15T11:09:15.000+08:00", userName: "用户"},
+  {id: "9", filename: "small-image.png", date: "2024-07-15T11:09:15.000+08:00", userName: "用户"},
+  {id: "2", filename: "demo.pdf", date: "2024-07-15T11:09:15.000+08:00", userName: "用户"},
+  {id: "6", filename: "resume.docx", date: "2024-07-15T11:09:15.000+08:00", userName: "用户"},
+  {id: "8", filename: "resume.xlsx", date: "2024-07-15T11:09:15.000+08:00", userName: "用户"}
+];
 
-
-```
-
-- FileList
-- 文件列表
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
-
-```jsx
-const { FileList } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-const { Divider } = antd;
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    ajax: async api => {
-      return { data: { code: 0, data: api.loader() } };
-    }, apis: {
-      file: {
-        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
-        getUrl: {
-          loader: async ({ params }) => {
-            const urlMap = {
-              1: '/mock/resume.png',
-              2: '/mock/resume.pdf',
-              3: '/mock/resume.html',
-              4: '/mock/resume.txt',
-              5: '/mock/audio.wav',
-              6: '/mock/resume.docx'
-            };
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve(urlMap[params.id]);
-              }, 1000);
-            });
-          }
-        }
-      }
-    }
-  }}>
-    <FileList dataSource={[{
-      uuid: '121233',
-      type: 'uploading',
-      filename: '张三的简历.doc'
-    },
-      {
-        id: '2',
-        filename: '我是一份简历.pdf',
-        date: '2022-07-15T11:09:15.000+08:00',
-        userName: '用户名'
-      }]} />
-    <Divider />
-    <FileList dataSource={[]} />
-  </PureGlobal>;
-});
-
-render(<BaseExample />);
-
-
-```
-
-- JsonPreview
-- JSON文件预览
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),remoteLoader(@kne/remote-loader)
-
-```jsx
-const { JsonPreview } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
-})(({ remoteModules }) => {
-  const [PureGlobal, InfoPage] = remoteModules;
+const BaseExample = () => {
   return (
-    <PureGlobal preset={{
-      ajax: async api => {
-        return { data: { code: 0, data: api.loader() } };
-      },
-      apis: {
-        file: {
-          staticUrl: getPublicPath('react-file') || window.PUBLIC_URL
+    <PureGlobal
+      preset={{
+        ajax: async api => ({data: {code: 0, data: api.loader()}}),
+        apis: {
+          file: {
+            staticUrl: window.PUBLIC_URL || "",
+            getUrl: {
+              loader: async ({params}) => urlMap[params.id]
+            }
+          }
         }
-      }
-    }}>
-      <InfoPage>
-        <InfoPage.Part title="JSON文件预览 - 默认黑色主题">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-            collapsedFrom={0}
-          />
-        </InfoPage.Part>
-        <InfoPage.Part title="JSON文件预览 - 白色主题">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-            theme="light"
-            collapsedFrom={0}
-          />
-        </InfoPage.Part>
-        <InfoPage.Part title="JSON文件预览 - 从第2级开始收起">
-          <JsonPreview 
-            url="https://jsonplaceholder.typicode.com/users"
-            collapsedFrom={2}
-          />
-        </InfoPage.Part>
-      </InfoPage>
+      }}
+    >
+      <Flex vertical gap={12}>
+        <Typography.Text type="secondary">
+          File.List 预览按钮走 components-core Modal（与 FileButton / useFileModal 同一套 renderModal）
+        </Typography.Text>
+        <List
+          dataSource={dataSource}
+          apis={{
+            onDelete: () => false,
+            onEdit: () => false
+          }}
+        />
+      </Flex>
     </PureGlobal>
   );
-});
+};
 
 render(<BaseExample />);
-
 
 ```
 

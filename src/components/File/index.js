@@ -1,21 +1,28 @@
 import "@kne/react-file/dist/index.css";
-import useRefCallback from "@kne/use-ref-callback";
+import {useCallback} from "react";
 import {
-    FileButton as FileButtonBase, useFileModalProps, download
+    FileButton as FileButtonBase,
+    FileModal as FileModalBase,
+    FileUpload as FileUploadBase,
+    getFileModalProps,
+    download
 } from "@kne/react-file";
-import Modal, {useModal} from "@components/Modal";
+import {useModal} from "@components/Modal";
+import renderModal from "./renderModal";
 import classnames from "classnames";
 
 export const FileButton = (p) => {
     return (<FileButtonBase
         {...Object.assign({}, p, {
-            modalProps: {
-                ...p?.modalProps,
-                renderModal: ({onCancel, ...modalProps}) => {
-                    return (<Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>);
-                },
-            },
+            modalProps: Object.assign({renderModal}, p?.modalProps),
         })}
+    />);
+};
+
+export const FileUpload = (p) => {
+    return (<FileUploadBase
+        {...p}
+        renderModal={typeof p.renderModal === "function" ? p.renderModal : renderModal}
     />);
 };
 
@@ -30,17 +37,27 @@ export const FileLink = (p) => {
     </FileButton>);
 };
 
-export const useFileModal = (p) => {
-    const {title, children, footer} = useFileModalProps(Object.assign({}, p));
-    const modal = useModal();
-    return useRefCallback(() => {
-        return modal({
-            title, children, footer,
-        });
-    });
+export const FileModal = ({onClose, onOpenChange, ...props}) => {
+    return (<FileModalBase
+        renderModal={renderModal}
+        {...props}
+        onOpenChange={(open) => {
+            onOpenChange && onOpenChange(open);
+            !open && onClose && onClose();
+        }}
+    />);
 };
 
-export {download};
+export const useFileModal = () => {
+    const modal = useModal();
+    return useCallback((props) => modal({
+        ...getFileModalProps(props),
+        noPadding: true,
+        bodyScroll: false,
+    }), [modal]);
+};
+
+export {download, getFileModalProps};
 export {default as Download, downloadBlobFile, useDownload} from "./Download";
 export {default as List, OptionButtons} from "./List";
 export {default, PrintButton} from "./File";

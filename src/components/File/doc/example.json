@@ -1,3 +1,81 @@
 {
-  "reference": "@kne/react-file"
+  "isFull": false,
+  "list": [
+    {
+      "title": "FileButton",
+      "description": "按钮/链接打开预览，默认 renderModal 使用 components-core Modal",
+      "code": "./file-button.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "FileUpload",
+      "description": "上传列表预览使用 components-core Modal",
+      "code": "./file-upload.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "useFileModal",
+      "description": "命令式打开文件预览（同 useModal）；core Modal 外壳，图片缩放/旋转可用",
+      "code": "./use-file-modal.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "FileModal",
+      "description": "声明式受控预览弹窗，默认 renderModal 使用 components-core Modal",
+      "code": "./file-modal.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    }
+  ]
 }

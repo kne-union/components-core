@@ -9,167 +9,108 @@ FilePreview 是一个功能全面的文件预览组件库，支持多种常见�
 适用于文档管理系统、在线办公平台、内容管理系统等需要文件预览功能的场景，特别适合需要处理多种文件类型的企业级应用。组件采用模块化设计，可以独立使用各个预览组件，也可使用统一的 FilePreview 组件自动判断文件类型。
 
 
-### 示例(全屏)
+### 示例
 
 #### 示例代码
 
 - FileUpload
-- 文件上传
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+- 上传列表预览使用 components-core Modal（与 FileButton / List 同一套 renderModal）
+- _File(@components/File),global(@components/Global),antd(antd)
 
 ```jsx
-const { FileUpload } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const {FileUpload} = _File;
+const {PureGlobal} = global;
+const {Flex, Typography} = antd;
 
 const urls = {};
 
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    ajax: async api => {
-      return { data: { code: 0, data: api.loader() } };
-    }, apis: {
-      file: {
-        staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
-        getUrl: {
-          loader: async ({ params }) => {
-            return new Promise(resolve => {
-              setTimeout(() => {
-                resolve(urls[params.id]);
-              }, 1000);
-            });
-          }
-        }, upload: ({ file }) => {
-          urls[file.name] = URL.createObjectURL(file);
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
+const BaseExample = () => {
+  return (
+    <PureGlobal
+      preset={{
+        ajax: async api => ({data: {code: 0, data: api.loader()}}),
+        apis: {
+          file: {
+            staticUrl: window.PUBLIC_URL || "",
+            getUrl: {
+              loader: async ({params}) => urls[params.id] || &#96;/mock/${params.id}&#96;
+            },
+            upload: ({file}) => {
+              const id = &#96;local-${Date.now()}-${file.name}&#96;;
+              urls[id] = URL.createObjectURL(file);
+              return Promise.resolve({
                 data: {
-                  code: 0, data: {
-                    id: file.name, filename: file.name
-                  }
+                  code: 0,
+                  data: {id, filename: file.name}
                 }
               });
-            }, 1000);
-          });
+            }
+          }
         }
-      }
-    }
-  }}>
-    <FileUpload />
-  </PureGlobal>;
-});
+      }}
+    >
+      <Flex vertical gap={12}>
+        <Typography.Text type="secondary">
+          上传列表预览走 components-core Modal（File.FileUpload 默认注入 renderModal）
+        </Typography.Text>
+        <FileUpload
+          defaultValue={[
+            {id: "resume.png", filename: "demo.png"},
+            {id: "small-image.png", filename: "small-image.png"},
+            {id: "resume.pdf", filename: "demo.pdf"},
+            {id: "resume.docx", filename: "resume.docx"}
+          ]}
+        />
+      </Flex>
+    </PureGlobal>
+  );
+};
 
 render(<BaseExample />);
-
 
 ```
 
 - FilePreview
-- 文件预览
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),antd(antd),remoteLoader(@kne/remote-loader)
+- 页面内嵌文件预览（非弹窗）
+- _FilePreview(@components/FilePreview),global(@components/Global),antd(antd)
 
 ```jsx
-const { FilePreview } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
+const {default: FilePreview} = _FilePreview;
+const {PureGlobal} = global;
+const {Flex, Typography} = antd;
 
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage']
-})(({ remoteModules }) => {
-  const [PureGlobal, InfoPage] = remoteModules;
+const urlMap = {
+  1: "/mock/resume.png",
+  2: "/mock/resume.pdf",
+  6: "/mock/resume.docx",
+  9: "/mock/small-image.png"
+};
+
+const BaseExample = () => {
   return (
     <PureGlobal
       preset={{
-        ajax: async api => {
-          return { data: { code: 0, data: api.loader() } };
-        },
+        ajax: async api => ({data: {code: 0, data: api.loader()}}),
         apis: {
           file: {
-            staticUrl: getPublicPath('react-file') || window.PUBLIC_URL,
+            staticUrl: window.PUBLIC_URL || "",
             getUrl: {
-              loader: async ({ params }) => {
-                const urlMap = {
-                  1: '/mock/resume.png',
-                  2: '/mock/resume.pdf',
-                  3: '/mock/resume.html',
-                  4: '/mock/resume.txt',
-                  5: '/mock/audio.wav',
-                  6: '/mock/resume.docx',
-                  7: '/mock/example.zip',
-                  8: '/mock/resume.xlsx',
-                  9: '/mock/small-image.png'
-                };
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve(urlMap[params.id]);
-                  }, 1000);
-                });
-              }
+              loader: async ({params}) => urlMap[params.id]
             }
           }
         }
-      }}>
-      <InfoPage>
-        <InfoPage.Part title="预览图片">
-          <FilePreview id="1" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览小尺寸图片">
-          <FilePreview id="9" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览PDF">
-          <FilePreview id="2" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览HTML">
-          <FilePreview id="3" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览TXT">
-          <FilePreview id="4" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览AUDIO">
-          <FilePreview id="5" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览OFFICE">
-          <FilePreview id="6" filename="resume.docx" />
-          <FilePreview id="8" filename="resume.xlsx" />
-        </InfoPage.Part>
-        <InfoPage.Part title="预览ZIP">
-          <FilePreview id="7" />
-        </InfoPage.Part>
-      </InfoPage>
+      }}
+    >
+      <Flex vertical gap={16}>
+        <Typography.Text type="secondary">页面内嵌预览（非弹窗）</Typography.Text>
+        <FilePreview id="1" filename="demo.png" />
+        <FilePreview id="2" filename="demo.pdf" />
+      </Flex>
     </PureGlobal>
   );
-});
+};
 
 render(<BaseExample />);
-
-
-```
-
-- MarkdownPreview
-- Markdown文件预览
-- _ReactFile(@kne/react-file)[import * as _ReactFile from "@kne/react-file"],(@kne/react-file/dist/index.css),remoteLoader(@kne/remote-loader)
-
-```jsx
-const { MarkdownPreview } = _ReactFile;
-const { createWithRemoteLoader, getPublicPath } = remoteLoader;
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:InfoPage']
-})(({ remoteModules }) => {
-  const [InfoPage] = remoteModules;
-  return (
-    <InfoPage>
-      <InfoPage.Part title="基础用法">
-        <MarkdownPreview url={&#96;${getPublicPath('react-file')}/mock/example.md&#96;} />
-      </InfoPage.Part>
-    </InfoPage>
-  );
-});
-
-render(<BaseExample />);
-
 
 ```
 
