@@ -2,7 +2,7 @@ import {FileList, FileListOptionButtons} from "@kne/react-file";
 import dropRight from "lodash/dropRight";
 import last from "lodash/last";
 import FormInfo, {Input, useFormModal} from "@components/FormInfo";
-import Modal from "@components/Modal";
+import renderModal from "../renderModal";
 import {useIntl} from '@kne/react-intl';
 import withLocale from '../withLocale';
 
@@ -40,9 +40,7 @@ const List = withLocale(({apis, ...p}) => {
         apis={apis}
         onEdit={(item) => handlerEdit(item, apis)}
         onDelete={apis?.onDelete}
-        renderModal={typeof p.renderModal === 'function' ? p.renderModal : ({onCancel, ...modalProps}) => {
-            return <Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>;
-        }}
+        renderModal={p.renderModal || renderModal}
     />);
 });
 
@@ -52,9 +50,7 @@ const OptionButtons = withLocale((props) => {
         {...props}
         onEdit={(item) => handlerEdit(item, props.apis)}
         onDelete={props.apis?.onDelete}
-        renderModal={typeof props.renderModal === 'function' ? props.renderModal : ({onCancel, ...modalProps}) => {
-            return <Modal {...Object.assign({}, modalProps)} onClose={onCancel}/>;
-        }}
+        renderModal={props.renderModal || renderModal}
     />);
 });
 

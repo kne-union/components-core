@@ -1,17 +1,24 @@
 {
-  "isFull": true,
+  "isFull": false,
   "list": [
     {
-      "reference": "@kne/react-file",
-      "path": "list[4]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[5]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[9]"
+      "title": "List 预览",
+      "description": "File.List 预览弹窗使用 components-core Modal（noPadding + bodyScroll=false），与 FileButton / useFileModal 一致",
+      "code": "./list-preview.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }

@@ -1,17 +1,43 @@
 {
-  "isFull": true,
+  "isFull": false,
   "list": [
     {
-      "reference": "@kne/react-file",
-      "path": "list[6]"
+      "title": "FileUpload",
+      "description": "上传列表预览使用 components-core Modal（与 FileButton / List 同一套 renderModal）",
+      "code": "./file-upload.js",
+      "scope": [
+        {
+          "name": "_File",
+          "packageName": "@components/File"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     },
     {
-      "reference": "@kne/react-file",
-      "path": "list[7]"
-    },
-    {
-      "reference": "@kne/react-file",
-      "path": "list[8]"
+      "title": "FilePreview",
+      "description": "页面内嵌文件预览（非弹窗）",
+      "code": "./file-preview.js",
+      "scope": [
+        {
+          "name": "_FilePreview",
+          "packageName": "@components/FilePreview"
+        },
+        {
+          "name": "global",
+          "packageName": "@components/Global"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
